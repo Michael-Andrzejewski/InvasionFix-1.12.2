@@ -1,49 +1,32 @@
 buildscript {
 	repositories {
-		mavenCentral()
-		maven {
-			name = "forge"
-			url = "http://files.minecraftforge.net/maven"
-		}
-		maven {
-			name = "sonatype"
-			url = "https://oss.sonatype.org/content/repositories/snapshots/"
-		}
+		jcenter()
+		maven { url = "http://files.minecraftforge.net/maven" }
 	}
 	dependencies {
-		classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+		classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
 	}
 }
-apply plugin: 'forge'
-apply plugin: 'maven'
+apply plugin: 'net.minecraftforge.gradle.forge'
 
 
-version = "1.1.2"
+version = "1.2.6"
 group = "com.whammich.invasion"
-archivesBaseName = "Invasion-1.7.10"
+archivesBaseName = "Invasion-1.10"
 
-minecraft {
-	version = "1.7.10-10.13.4.1614-1.7.10"
-	runDir = "run"
-
-    replace "@VERSION@", project.version
-    replaceIn "Reference.java"
+sourceCompatibility = targetCompatibility = "1.8"
+compileJava {
+	sourceCompatibility = targetCompatibility = "1.8"
 }
 
-repositories {
-    maven {
-        name = "chickenbones"
-        url = "http://chickenbones.net/maven"
-    }
-	maven {
-        name "waila"
-        url "http://mobiusstrip.eu/maven"
-    }
+minecraft {
+	version = "1.10.2-12.18.3.2185"
+	runDir = "run"
+	mappings = "stable_29"
+	makeObfSourceJar = false
 }
 
 dependencies {
-//	compile "mcp.mobius.waila:Waila:1.5.10_1.7.10"
-    compile fileTree(dir: 'libs', include: '*.jar')
 }
 
 processResources {
