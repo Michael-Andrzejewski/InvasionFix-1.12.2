@@ -72,13 +72,13 @@ public class EntityAIAttackNexus extends EntityAIBase
     {
       for (int j = 0; j < size.getX(); j++)
       {
-        if (this.theEntity.worldObj.getBlockState(new BlockPos(x + j, y, z - 1)).getBlock() == BlocksAndItems.blockNexus)
+        if (this.theEntity.world.getBlockState(new BlockPos(x + j, y, z - 1)).getBlock() == BlocksAndItems.blockNexus)
         {
           if (isCorrectNexus(x + j, y, z - 1)) {
             return true;
           }
         }
-        if (this.theEntity.worldObj.getBlockState(new BlockPos(x + j, y, z + 1 + size.getZ())).getBlock() == BlocksAndItems.blockNexus)
+        if (this.theEntity.world.getBlockState(new BlockPos(x + j, y, z + 1 + size.getZ())).getBlock() == BlocksAndItems.blockNexus)
         {
           if (isCorrectNexus(x + j, y, z + 1 + size.getZ())) {
             return true;
@@ -88,13 +88,13 @@ public class EntityAIAttackNexus extends EntityAIBase
 
       for (int j = 0; j < size.getZ(); j++)
       {
-        if (this.theEntity.worldObj.getBlockState(new BlockPos(x - 1, y, z + j)).getBlock() == BlocksAndItems.blockNexus)
+        if (this.theEntity.world.getBlockState(new BlockPos(x - 1, y, z + j)).getBlock() == BlocksAndItems.blockNexus)
         {
           if (isCorrectNexus(x - 1, y, z + j)) {
             return true;
           }
         }
-        if (this.theEntity.worldObj.getBlockState(new BlockPos(x + 1 + size.getX(), y, z + j)).getBlock() == BlocksAndItems.blockNexus)
+        if (this.theEntity.world.getBlockState(new BlockPos(x + 1 + size.getX(), y, z + j)).getBlock() == BlocksAndItems.blockNexus)
         {
           if (isCorrectNexus(x + 1 + size.getX(), y, z + j)) {
             return true;
@@ -107,13 +107,13 @@ public class EntityAIAttackNexus extends EntityAIBase
     {
       for (int j = 0; j < size.getZ(); j++)
       {
-        if (this.theEntity.worldObj.getBlockState(new BlockPos(x + i, y + 1 + size.getY(), z + j)).getBlock() == BlocksAndItems.blockNexus)
+        if (this.theEntity.world.getBlockState(new BlockPos(x + i, y + 1 + size.getY(), z + j)).getBlock() == BlocksAndItems.blockNexus)
         {
           if (isCorrectNexus(x + i, y + 1 + size.getY(), z + j)) {
             return true;
           }
         }
-        if (this.theEntity.worldObj.getBlockState(new BlockPos(x + i, y - 1, z + j)).getBlock() == BlocksAndItems.blockNexus)
+        if (this.theEntity.world.getBlockState(new BlockPos(x + i, y - 1, z + j)).getBlock() == BlocksAndItems.blockNexus)
         {
           if (isCorrectNexus(x + i, y - 1, z + j)) {
             return true;
@@ -126,7 +126,7 @@ public class EntityAIAttackNexus extends EntityAIBase
 
   private boolean isCorrectNexus(int x, int y, int z)
   {
-    INexusAccess nexus = (TileEntityNexus)this.theEntity.worldObj.getTileEntity(new BlockPos(x, y, z));
+    INexusAccess nexus = (TileEntityNexus)this.theEntity.world.getTileEntity(new BlockPos(x, y, z));
     if ((nexus != null) && (nexus == this.theEntity.getNexus())) {
       return true;
     }

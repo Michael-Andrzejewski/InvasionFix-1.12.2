@@ -17,9 +17,9 @@ public class ProxyCommon {
 
 	public void broadcastToAll(String message) {
 		//FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().sendChatMsg(new ChatComponentText(message));
-		List<EntityPlayerMP> playerList = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerList();
+		List<EntityPlayerMP> playerList = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayers();
 		for(int i=0; i<playerList.size(); i++){
-			playerList.get(i).addChatComponentMessage(new TextComponentString(message));
+			playerList.get(i).sendMessage(new TextComponentString(message));
 		}
 	}
 

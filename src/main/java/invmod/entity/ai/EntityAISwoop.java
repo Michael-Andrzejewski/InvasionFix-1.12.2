@@ -122,7 +122,7 @@ public void updateTask()
 				this.theEntity.getNavigatorNew().setPitchBias(0.0F, 1.0F);
 				if (isFinalRunLinedUp())
 				{
-					this.usingClaws = (this.theEntity.worldObj.rand.nextFloat() > 0.6F);
+					this.usingClaws = (this.theEntity.world.rand.nextFloat() > 0.6F);
 
 					this.theEntity.setClawsForward(true);
 
@@ -183,8 +183,8 @@ public void updateTask()
 			double x = -Math.sin(this.theEntity.rotationYaw / 180.0F * 3.141592653589793D) * dist;
 			double z = Math.cos(this.theEntity.rotationYaw / 180.0F * 3.141592653589793D) * dist;
 			Vec3d source = new Vec3d(x, y, z);
-			//MovingObjectPosition collide = this.theEntity.worldObj.rayTraceBlocks(source, target.getLook(1.0F));
-			RayTraceResult collide = this.theEntity.worldObj.rayTraceBlocks(source, target.getLook(1f), true, true, false);
+			//MovingObjectPosition collide = this.theEntity.world.rayTraceBlocks(source, target.getLook(1.0F));
+			RayTraceResult collide = this.theEntity.world.rayTraceBlocks(source, target.getLook(1f), true, true, false);
 			if (collide != null){
 				if (hitCount == 0) {
 					lowestCollide = y;

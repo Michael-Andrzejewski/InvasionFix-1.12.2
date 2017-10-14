@@ -116,7 +116,7 @@ protected void pathFollow(int time)
 protected void doMovementTo(int time)
 	{
 		PosRotate3D movePos = entityPositionAtParam(time);
-		this.theEntity.moveEntity(movePos.getPosX() - this.theEntity.posX, movePos.getPosY() - this.theEntity.posY, movePos.getPosZ() - this.theEntity.posZ);
+		this.theEntity.setVelocity(movePos.getPosX() - this.theEntity.posX, movePos.getPosY() - this.theEntity.posY, movePos.getPosZ() - this.theEntity.posZ);
 		((EntityIMBurrower)this.theEntity).setHeadRotation(movePos);
 
 		if (this.nodeChanged)

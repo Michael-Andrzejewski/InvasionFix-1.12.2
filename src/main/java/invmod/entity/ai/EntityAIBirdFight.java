@@ -100,6 +100,6 @@ public class EntityAIBirdFight<T extends EntityLivingBase> extends EntityAIMelee
 		int knockback = 2;
 		target.addVelocity(-MathHelper.sin(this.theEntity.rotationYaw * 3.141593F / 180.0F) * knockback * 0.5F, 0.4D, MathHelper.cos(this.theEntity.rotationYaw * 3.141593F / 180.0F) * knockback * 0.5F);
 		target.playSound(SoundEvents.ENTITY_GENERIC_BIG_FALL, 1f, 1f);
-		//target.worldObj.playSoundAtEntity(target, "damage.fallbig", 1.0F, 1.0F);
+		//target.world.playSoundAtEntity(target, "damage.fallbig", 1.0F, 1.0F);
 	}
 }

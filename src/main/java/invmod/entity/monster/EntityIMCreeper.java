@@ -69,7 +69,7 @@ public class EntityIMCreeper extends EntityIMMob {
 	
 	@Override
 	protected void initEntityAI(){
-		this.tasksIM = new EntityAITasks(this.worldObj.theProfiler);
+		this.tasksIM = new EntityAITasks(this.world.theProfiler);
 		this.tasksIM.addTask(0, new EntityAISwimming(this));
 		this.tasksIM.addTask(1, new EntityAICreeperIMSwell(this));
 		this.tasksIM.addTask(2, new EntityAIAvoidEntity(this, EntityOcelot.class, new Predicate(){
@@ -88,7 +88,7 @@ public class EntityIMCreeper extends EntityIMMob {
 		this.tasksIM.addTask(9, new EntityAIWatchClosest(this, EntityPlayer.class, 4.8F));
 		this.tasksIM.addTask(9, new EntityAILookIdle(this));
 		
-		this.targetTasksIM = new EntityAITasks(this.worldObj.theProfiler);
+		this.targetTasksIM = new EntityAITasks(this.world.theProfiler);
 		this.targetTasksIM.addTask(0, new EntityAITargetRetaliate(this, EntityLiving.class, 12.0F));
 		if(this.isNexusBound()){
 			this.targetTasksIM.addTask(1, new EntityAISimpleTarget(this, EntityPlayer.class, 20.0F, true));
@@ -157,7 +157,7 @@ public class EntityIMCreeper extends EntityIMMob {
 					getMoveHelper().setMoveTo(this.posX + invmod.util.Coords.offsetAdjX[this.explodeDirection], this.posY, this.posZ + invmod.util.Coords.offsetAdjZ[this.explodeDirection], 0.0D);
 				}
 				if (this.timeSinceIgnited == 0) {
-					//this.worldObj.playSoundAtEntity(this, "random.fuse", 1.0F, 0.5F);
+					//this.world.playSoundAtEntity(this, "random.fuse", 1.0F, 0.5F);
 					this.playSound(SoundEvents.ENTITY_CREEPER_PRIMED, 1f, 0.5f);
 				}
 			}
@@ -237,10 +237,10 @@ public class EntityIMCreeper extends EntityIMMob {
 	}
 
 	protected void doExplosion(){
-		Explosion explosion = new Explosion(this.worldObj,this, posX, posY, posZ, 2.1F, false, true);
-		if(!worldObj.isRemote) explosion.doExplosionA();
+		Explosion explosion = new Explosion(this.world,this, posX, posY, posZ, 2.1F, false, true);
+		if(!world.isRemote) explosion.doExplosionA();
 		explosion.doExplosionB(true);
-		//ExplosionUtil.doExplosionB(worldObj,explosion,true);
+		//ExplosionUtil.doExplosionB(world,explosion,true);
 	}
 	
 	public int getCreeperState(){

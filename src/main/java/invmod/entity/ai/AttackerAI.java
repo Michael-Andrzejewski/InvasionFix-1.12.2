@@ -85,7 +85,7 @@ public class AttackerAI {
 			return false;
 		}
 		this.nextScaffoldCalcTimer = 200;
-		List newScaffolds = findMinScaffolds(entity, new BlockPos(MathHelper.floor_double(entity.posX), MathHelper.floor_double(entity.posY), MathHelper.floor_double(entity.posZ)));
+		List newScaffolds = findMinScaffolds(entity, new BlockPos(MathHelper.floor(entity.posX), MathHelper.floor(entity.posY), MathHelper.floor(entity.posZ)));
 		if ((newScaffolds != null) && (newScaffolds.size() > 0)){
 			addNewScaffolds(newScaffolds);
 			return true;
@@ -267,7 +267,7 @@ public class AttackerAI {
 				}
 
 			} else if (node.action != PathAction.SCAFFOLD_UP) {
-				Scaffold scaffold = new Scaffold(node.getPrevious().pos.xCoord, startHeight, node.getPrevious().pos.zCoord, MathHelper.floor_double(node.pos.yCoord - startHeight), this.nexus);
+				Scaffold scaffold = new Scaffold(node.getPrevious().pos.xCoord, startHeight, node.getPrevious().pos.zCoord, MathHelper.floor(node.pos.yCoord - startHeight), this.nexus);
 				orientScaffold(scaffold, this.nexus.getWorld());
 				scaffold.setInitialIntegrity();
 				scaffoldPositions.add(scaffold);
@@ -304,13 +304,13 @@ public class AttackerAI {
 				if ((existingScaffold.getPos().xCoord == newScaffold.getPos().xCoord) && (existingScaffold.getPos().zCoord == newScaffold.getPos().zCoord)) {
 					if (newScaffold.getPos().yCoord > existingScaffold.getPos().yCoord) {
 						if (newScaffold.getPos().yCoord < existingScaffold.getPos().yCoord + existingScaffold.getTargetHeight()) {
-							existingScaffold.setHeight(MathHelper.floor_double(newScaffold.getPos().yCoord + newScaffold.getTargetHeight() - existingScaffold.getPos().yCoord));
+							existingScaffold.setHeight(MathHelper.floor(newScaffold.getPos().yCoord + newScaffold.getTargetHeight() - existingScaffold.getPos().yCoord));
 							break;
 						}
 
 					} else if (newScaffold.getPos().yCoord + newScaffold.getTargetHeight() > existingScaffold.getPos().yCoord) {
 						existingScaffold.setPosition(newScaffold.getPos());
-						existingScaffold.setHeight(MathHelper.floor_double(existingScaffold.getPos().yCoord + existingScaffold.getTargetHeight() - newScaffold.getPos().yCoord));
+						existingScaffold.setHeight(MathHelper.floor(existingScaffold.getPos().yCoord + existingScaffold.getTargetHeight() - newScaffold.getPos().yCoord));
 						break;
 					}
 				}

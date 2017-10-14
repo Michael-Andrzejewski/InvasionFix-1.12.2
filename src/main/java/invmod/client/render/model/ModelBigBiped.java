@@ -124,7 +124,7 @@ public class ModelBigBiped extends ModelBase {
 		//TODO: Removed some logic by changing OnGround
 		if (entity.onGround){
 			float f = 0.0F;
-			this.body.rotateAngleY = (MathHelper.sin(MathHelper.sqrt_float(f) * 3.141593F * 2.0F) * 0.2F);
+			this.body.rotateAngleY = (MathHelper.sin(MathHelper.sqrt(f) * 3.141593F * 2.0F) * 0.2F);
 			this.rightArm.rotationPointZ = (MathHelper.sin(this.body.rotateAngleY) * 5.0F);
 			this.rightArm.rotationPointX = (-MathHelper.cos(this.body.rotateAngleY) * 5.0F);
 			this.leftArm.rotationPointZ = (-MathHelper.sin(this.body.rotateAngleY) * 5.0F);

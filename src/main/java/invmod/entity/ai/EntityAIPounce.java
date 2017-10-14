@@ -67,14 +67,14 @@ public class EntityAIPounce extends EntityAIBase {
 		double dX = x - this.theEntity.posX;
 		double dY = y - this.theEntity.posY;
 		double dZ = z - this.theEntity.posZ;
-		double dXZ = MathHelper.sqrt_double(dX * dX + dZ * dZ);
+		double dXZ = MathHelper.sqrt(dX * dX + dZ * dZ);
 		double a = Math.atan(dY / dXZ);
 		if ((a > -0.7853981633974483D) && (a < 0.7853981633974483D)){
 			double rratio = (1.0D - Math.tan(a)) * (1.0D / Math.cos(a));
 			double r = dXZ / rratio;
 			double v = 1.0D / Math.sqrt(1.0F / this.theEntity.getGravity() / r);
 			if ((v > this.minPower) && (v < this.maxPower)){
-				double distance = MathHelper.sqrt_double(2.0D * (dXZ * dXZ));
+				double distance = MathHelper.sqrt(2.0D * (dXZ * dXZ));
 				this.theEntity.motionX = (v * dX / distance);
 				this.theEntity.motionY = (v * dXZ / distance);
 				this.theEntity.motionZ = (v * dZ / distance);

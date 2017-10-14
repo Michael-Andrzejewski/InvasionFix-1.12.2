@@ -12,7 +12,7 @@ public class PathNavigateAdapter extends PathNavigateGround {
     protected WalkNodeProcessor walkNodeProcessor;
     
 	public PathNavigateAdapter(NavigatorIM navigator) {
-		super(navigator.getEntity(), navigator.getEntity().worldObj);
+		super(navigator.getEntity(), navigator.getEntity().world);
 		this.navigator = navigator;
 		if(this.nodeProcessor == null) this.nodeProcessor = this.walkNodeProcessor;
 	}

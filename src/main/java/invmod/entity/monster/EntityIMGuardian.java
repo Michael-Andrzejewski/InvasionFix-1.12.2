@@ -79,8 +79,8 @@ public class EntityIMGuardian extends EntityIMMob implements ICanDig {
 	
 	@Override
 	public boolean canClearBlock(BlockPos pos){
-		IBlockState state = this.worldObj.getBlockState(pos);
-		return (state.getBlock() == Blocks.AIR) || (this.isBlockDestructible(this.worldObj, pos, state));
+		IBlockState state = this.world.getBlockState(pos);
+		return (state.getBlock() == Blocks.AIR) || (this.isBlockDestructible(this.world, pos, state));
 	}
 	
 	@Override
@@ -89,7 +89,7 @@ public class EntityIMGuardian extends EntityIMMob implements ICanDig {
 	}
 
 	public IBlockAccess getTerrain(){
-		return this.worldObj;
+		return this.world;
 	}
 	
 	
@@ -235,11 +235,11 @@ public class EntityIMGuardian extends EntityIMMob implements ICanDig {
 
 	public EntityLivingBase getTargetedEntity(){
 		if (!this.hasTargetedEntity()) return null;
-		if (this.worldObj.isRemote){
+		if (this.world.isRemote){
 			if (this.targetedEntity != null){
 				return this.targetedEntity;
 			} else {
-				Entity entity = this.worldObj.getEntityByID(((Integer)this.dataManager.get(TARGET_ENTITY)).intValue());
+				Entity entity = this.world.getEntityByID(((Integer)this.dataManager.get(TARGET_ENTITY)).intValue());
 
 				if (entity instanceof EntityLivingBase){
 					this.targetedEntity = (EntityLivingBase)entity;
@@ -296,7 +296,7 @@ public class EntityIMGuardian extends EntityIMMob implements ICanDig {
 	}
 
 	public float getBlockPathWeight(BlockPos pos){
-		return this.worldObj.getBlockState(pos).getMaterial() == Material.WATER ? 10.0F + this.worldObj.getLightBrightness(pos) - 0.5F : super.getBlockPathWeight(pos);
+		return this.world.getBlockState(pos).getMaterial() == Material.WATER ? 10.0F + this.world.getLightBrightness(pos) - 0.5F : super.getBlockPathWeight(pos);
 	}
 
 	/**
@@ -304,17 +304,17 @@ public class EntityIMGuardian extends EntityIMMob implements ICanDig {
 	 * use this to react to sunlight and start to burn.
 	 */
 	public void onLivingUpdate(){
-		if (this.worldObj.isRemote){
+		if (this.world.isRemote){
 			this.clientSideTailAnimationO = this.clientSideTailAnimation;
 
 			if (!this.isInWater()){
 				this.clientSideTailAnimationSpeed = 2.0F;
 
 				if (this.motionY > 0.0D && this.clientSideTouchedGround && !this.isSilent()){
-					this.worldObj.playSound(this.posX, this.posY, this.posZ, SoundEvents.ENTITY_GUARDIAN_FLOP, this.getSoundCategory(), 1.0F, 1.0F, false);
+					this.world.playSound(this.posX, this.posY, this.posZ, SoundEvents.ENTITY_GUARDIAN_FLOP, this.getSoundCategory(), 1.0F, 1.0F, false);
 				}
 
-				this.clientSideTouchedGround = this.motionY < 0.0D && this.worldObj.isBlockNormalCube((new BlockPos(this)).down(), false);
+				this.clientSideTouchedGround = this.motionY < 0.0D && this.world.isBlockNormalCube((new BlockPos(this)).down(), false);
 			} else if (this.isMoving()) {
 				if (this.clientSideTailAnimationSpeed < 0.5F)
 				{
@@ -343,7 +343,7 @@ public class EntityIMGuardian extends EntityIMMob implements ICanDig {
 				Vec3d vec3d = this.getLook(0.0F);
 
 				for (int i = 0; i < 2; ++i){
-					this.worldObj.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX + (this.rand.nextDouble() - 0.5D) * (double)this.width - vec3d.xCoord * 1.5D, this.posY + this.rand.nextDouble() * (double)this.height - vec3d.yCoord * 1.5D, this.posZ + (this.rand.nextDouble() - 0.5D) * (double)this.width - vec3d.zCoord * 1.5D, 0.0D, 0.0D, 0.0D, new int[0]);
+					this.world.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX + (this.rand.nextDouble() - 0.5D) * (double)this.width - vec3d.xCoord * 1.5D, this.posY + this.rand.nextDouble() * (double)this.height - vec3d.yCoord * 1.5D, this.posZ + (this.rand.nextDouble() - 0.5D) * (double)this.width - vec3d.zCoord * 1.5D, 0.0D, 0.0D, 0.0D, new int[0]);
 				}
 			}
 
@@ -367,7 +367,7 @@ public class EntityIMGuardian extends EntityIMMob implements ICanDig {
 
 					while (d4 < d3){
 						d4 += 1.8D - d5 + this.rand.nextDouble() * (1.7D - d5);
-						this.worldObj.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX + d0 * d4, this.posY + d1 * d4 + (double)this.getEyeHeight(), this.posZ + d2 * d4, 0.0D, 0.0D, 0.0D, new int[0]);
+						this.world.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX + d0 * d4, this.posY + d1 * d4 + (double)this.getEyeHeight(), this.posZ + d2 * d4, 0.0D, 0.0D, 0.0D, new int[0]);
 					}
 				}
 			}
@@ -417,7 +417,7 @@ public class EntityIMGuardian extends EntityIMMob implements ICanDig {
 			if ((this.ticksExisted + this.getEntityId()) % 1200 == 0){
 				Potion potion = MobEffects.MINING_FATIGUE;
 
-				for (EntityPlayerMP entityplayermp : this.worldObj.getPlayers(EntityPlayerMP.class, new Predicate<EntityPlayerMP>(){
+				for (EntityPlayerMP entityplayermp : this.world.getPlayers(EntityPlayerMP.class, new Predicate<EntityPlayerMP>(){
 					public boolean apply(@Nullable EntityPlayerMP p_apply_1_){
 						return EntityIMGuardian.this.getDistanceSqToEntity(p_apply_1_) < 2500.0D && p_apply_1_.interactionManager.survivalOrAdventure();
 					}
@@ -451,14 +451,14 @@ public class EntityIMGuardian extends EntityIMMob implements ICanDig {
 	 * Checks that the entity is not colliding with any blocks / liquids
 	 */
 	public boolean isNotColliding(){
-		return this.worldObj.checkNoEntityCollision(this.getEntityBoundingBox(), this) && this.worldObj.getCollisionBoxes(this, this.getEntityBoundingBox()).isEmpty();
+		return this.world.checkNoEntityCollision(this.getEntityBoundingBox(), this) && this.world.getCollisionBoxes(this, this.getEntityBoundingBox()).isEmpty();
 	}
 
 	/**
 	 * Checks if the entity's current position is a valid location to spawn this entity.
 	 */
 	public boolean getCanSpawnHere(){
-		return (this.rand.nextInt(20) == 0 || !this.worldObj.canBlockSeeSky(new BlockPos(this))) && super.getCanSpawnHere();
+		return (this.rand.nextInt(20) == 0 || !this.world.canBlockSeeSky(new BlockPos(this))) && super.getCanSpawnHere();
 	}
 
 	/**
@@ -488,7 +488,7 @@ public class EntityIMGuardian extends EntityIMMob implements ICanDig {
 		if (this.isServerWorld()){
 			if (this.isInWater()){
 				this.moveRelative(strafe, forward, 0.1F);
-				this.moveEntity(this.motionX, this.motionY, this.motionZ);
+				this.setVelocity(this.motionX, this.motionY, this.motionZ);
 				this.motionX *= 0.8999999761581421D;
 				this.motionY *= 0.8999999761581421D;
 				this.motionZ *= 0.8999999761581421D;
@@ -560,11 +560,11 @@ public class EntityIMGuardian extends EntityIMMob implements ICanDig {
 
 					if (this.tickCounter == 0){
 						this.theEntity.setTargetedEntity(this.theEntity.getAttackTarget().getEntityId());
-						this.theEntity.worldObj.setEntityState(this.theEntity, (byte)21);
+						this.theEntity.world.setEntityState(this.theEntity, (byte)21);
 					} else if (this.tickCounter >= this.theEntity.getAttackDuration()){
 						float f = 1.0F;
 
-						if (this.theEntity.worldObj.getDifficulty() == EnumDifficulty.HARD) f += 2.0F;
+						if (this.theEntity.world.getDifficulty() == EnumDifficulty.HARD) f += 2.0F;
 
 						if (this.theEntity.isElder()) f += 2.0F;
 
@@ -592,7 +592,7 @@ public class EntityIMGuardian extends EntityIMMob implements ICanDig {
 					double d1 = this.posY - this.EntityIMGuardian.posY;
 					double d2 = this.posZ - this.EntityIMGuardian.posZ;
 					double d3 = d0 * d0 + d1 * d1 + d2 * d2;
-					d3 = (double)MathHelper.sqrt_double(d3);
+					d3 = (double)MathHelper.sqrt(d3);
 					d1 = d1 / d3;
 					float f = (float)(MathHelper.atan2(d2, d0) * (180D / Math.PI)) - 90.0F;
 					this.EntityIMGuardian.rotationYaw = this.limitAngle(this.EntityIMGuardian.rotationYaw, f, 90.0F);

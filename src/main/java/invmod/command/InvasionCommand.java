@@ -178,14 +178,14 @@ public class InvasionCommand extends CommandBase {
 				Class<?> clazz = Class.forName(entityName);
 				if(EntityIMLiving.class.isAssignableFrom(clazz)){
 					Constructor<? extends EntityIMLiving> c = ((Class<? extends EntityIMLiving>)clazz).getConstructor(World.class, TileEntityNexus.class);
-					EntityIMLiving entity = c.newInstance(sender.worldObj, focusNexus);
+					EntityIMLiving entity = c.newInstance(sender.world, focusNexus);
 					entity.setPosition(sender.posX, sender.posY, sender.posZ);
-					sender.worldObj.spawnEntityInWorld(entity);
+					sender.world.spawnEntity(entity);
 				} else if(EntityIMWolf.class.isAssignableFrom(clazz)){
 					Constructor<? extends EntityIMWolf> c = ((Class<? extends EntityIMWolf>)clazz).getConstructor(World.class, TileEntityNexus.class);
-					EntityIMWolf entity = c.newInstance(sender.worldObj, focusNexus);
+					EntityIMWolf entity = c.newInstance(sender.world, focusNexus);
 					entity.setPosition(sender.posX, sender.posY, sender.posZ);
-					sender.worldObj.spawnEntityInWorld(entity);
+					sender.world.spawnEntity(entity);
 				} else {
 					this.sendMessage(sender, "Entity is not an IM mob", TextFormatting.RED);
 				}
@@ -205,16 +205,16 @@ public class InvasionCommand extends CommandBase {
 	private void sendMessage(ICommandSender sender, String msg, TextFormatting format){
 		TextComponentTranslation s = new TextComponentTranslation(msg);
 		if(format != null) s.getStyle().setColor(format);
-		sender.addChatMessage(s);
+		sender.sendMessage(s);
 	}
 
 	@Override
-	public String getCommandName() {
+	public String getName() {
 		return "invasion";
 	}
 
 	@Override
-	public String getCommandUsage(ICommandSender icommandsender) {
+	public String getUsage(ICommandSender icommandsender) {
 		return "";
 	}
 }

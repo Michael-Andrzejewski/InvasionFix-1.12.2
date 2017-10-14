@@ -102,7 +102,7 @@ public abstract class EntityIMLiving extends EntityCreature implements IHasNexus
 			break;
 		case NONE: break;
 		case RUNNING:
-			//this.moveEntityToPosition(this.getMoveHelper().getX(), this.getMoveHelper().getY(), this.getMoveHelper().getZ(), this.getMoveHelper().getSpeed());
+			//this.setVelocityToPosition(this.getMoveHelper().getX(), this.getMoveHelper().getY(), this.getMoveHelper().getZ(), this.getMoveHelper().getSpeed());
 			//this.moveEntityWithHeading(this.getMoveHelper().getMoveStrafe(), this.getMoveHelper().getMoveForward());
 			this.moveEntityWithHeading(this.moveStrafing, (float)this.getMoveHelper().getSpeed());
 			//this.moveEntityWithHeading(this.moveStrafing, this.moveForward);
@@ -159,7 +159,7 @@ public abstract class EntityIMLiving extends EntityCreature implements IHasNexus
 	
 	@Override
 	public void readEntityFromNBT(NBTTagCompound tag){
-		if(!this.worldObj.isRemote){
+		if(!this.world.isRemote){
 			this.setTexture(tag.getInteger("textureId"));
 			this.setTier(tag.getInteger("tier"));
 		}
@@ -201,7 +201,7 @@ public abstract class EntityIMLiving extends EntityCreature implements IHasNexus
 	}
 
 	public void setIsHoldingIntoLadder(boolean flag) {
-		if (!this.worldObj.isRemote) this.getDataManager().set(IS_HOLDING_ONTO_LADDER, flag);
+		if (!this.world.isRemote) this.getDataManager().set(IS_HOLDING_ONTO_LADDER, flag);
 	}
 
 	public boolean canStandAtAndIsValid(IBlockAccess terrainMap, BlockPos pos) {
@@ -276,7 +276,7 @@ public abstract class EntityIMLiving extends EntityCreature implements IHasNexus
 
 	public boolean isBlockDestructible(IBlockAccess terrainMap, BlockPos pos, IBlockState state) {
 		// check if mobgriefing is enabled
-		boolean mobgriefing = this.worldObj.getGameRules().getBoolean("mobGriefing");
+		boolean mobgriefing = this.world.getGameRules().getBoolean("mobGriefing");
 		if(!mobgriefing) return false;
 		if(unDestructableBlocks.contains(state.getBlock()) || this.blockHasLadder(terrainMap, pos)) return false;
 		return state.getBlock() instanceof BlockDoor || state.getBlock() == Blocks.TRAPDOOR || state.getMaterial().isSolid();
@@ -308,7 +308,7 @@ public abstract class EntityIMLiving extends EntityCreature implements IHasNexus
 	
 	public void setMoveState(MoveState moveState) {
 		this.moveState = moveState;
-		if (!this.worldObj.isRemote) this.getDataManager().set(MOVE_STATE, Integer.valueOf(moveState.ordinal()));
+		if (!this.world.isRemote) this.getDataManager().set(MOVE_STATE, Integer.valueOf(moveState.ordinal()));
 	}
 
 	public void setTurnRate(float rate) {
@@ -332,7 +332,7 @@ public abstract class EntityIMLiving extends EntityCreature implements IHasNexus
 	}
 	
 	public BlockPos[] getBlockRemovalOrder(BlockPos pos) {
-		if (MathHelper.floor_double(this.posY) >= pos.getY()) {
+		if (MathHelper.floor(this.posY) >= pos.getY()) {
 			BlockPos[] blocks = new BlockPos[2];
 			blocks[1] = pos.up();
 			blocks[0] = new BlockPos(pos);
@@ -341,9 +341,9 @@ public abstract class EntityIMLiving extends EntityCreature implements IHasNexus
 
 		BlockPos[] blocks = new BlockPos[3];
 		blocks[2] = new BlockPos(pos);
-		blocks[1] = new BlockPos(MathHelper.floor_double(this.posX),
-				MathHelper.floor_double(this.posY) + this.collideSize.getY(),
-				MathHelper.floor_double(this.posZ));
+		blocks[1] = new BlockPos(MathHelper.floor(this.posX),
+				MathHelper.floor(this.posY) + this.collideSize.getY(),
+				MathHelper.floor(this.posZ));
 		blocks[0] = pos.up();
 		return blocks;
 	}

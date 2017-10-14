@@ -53,7 +53,7 @@ public abstract class NavigatorParametric extends NavigatorIM {
 
 	protected void doMovementTo(int param){
 		PosRotate3D movePos = entityPositionAtParam(param);
-		this.theEntity.moveEntity(movePos.getPosX(), movePos.getPosY(), movePos.getPosZ());
+		this.theEntity.setVelocity(movePos.getPosX(), movePos.getPosY(), movePos.getPosZ());
 
 		if (Math.abs(this.theEntity.getDistanceSq(movePos.getPosX(), movePos.getPosY(), movePos.getPosZ())) < this.minMoveToleranceSq){
 			this.timeParam = param;

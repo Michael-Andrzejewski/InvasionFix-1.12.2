@@ -87,7 +87,7 @@ public class EntityIMSkeleton extends EntityIMMob implements IRangedAttackMob {
 	
 	@Override
 	protected void initEntityAI(){
-		this.tasksIM = new EntityAITasks(this.worldObj.theProfiler);
+		this.tasksIM = new EntityAITasks(this.world.theProfiler);
 		this.tasksIM.addTask(0, new EntityAISwimming(this));
 		this.tasksIM.addTask(1, new EntityAIKillWithArrow(this, EntityPlayer.class, 65, 16.0F));
 		this.tasksIM.addTask(1, new EntityAIKillWithArrow(this, EntityPlayerMP.class, 65, 16.0F));
@@ -100,7 +100,7 @@ public class EntityIMSkeleton extends EntityIMMob implements IRangedAttackMob {
 		this.tasksIM.addTask(6, new EntityAILookIdle(this));
 		this.tasksIM.addTask(6, new EntityAIWatchClosest(this, EntityIMCreeper.class, 12.0F));
 		
-		this.targetTasksIM = new EntityAITasks(this.worldObj.theProfiler);
+		this.targetTasksIM = new EntityAITasks(this.world.theProfiler);
 		this.targetTasksIM.addTask(0, new EntityAISimpleTarget(this, EntityPlayer.class, this.getSenseRange(), false));
 		this.targetTasksIM.addTask(1, new EntityAIHurtByTarget(this, false));
 	}
@@ -193,12 +193,12 @@ public class EntityIMSkeleton extends EntityIMMob implements IRangedAttackMob {
 	@Override
 	public void setItemStackToSlot(EntityEquipmentSlot slotIn, @Nullable ItemStack stack){
         super.setItemStackToSlot(slotIn, stack);
-        if (!this.worldObj.isRemote && slotIn == EntityEquipmentSlot.MAINHAND) this.setCombatTask();
+        if (!this.world.isRemote && slotIn == EntityEquipmentSlot.MAINHAND) this.setCombatTask();
     }
 	
 	//Copied from EntitySkeleton
 	public void setCombatTask(){
-		if (this.worldObj != null && !this.worldObj.isRemote)
+		if (this.world != null && !this.world.isRemote)
         {
             this.tasksIM.removeTask(this.aiAttackOnCollide);
             this.tasksIM.removeTask(this.aiArrowAttack);
@@ -208,7 +208,7 @@ public class EntityIMSkeleton extends EntityIMMob implements IRangedAttackMob {
             {
                 int i = 20;
 
-                if (this.worldObj.getDifficulty() != EnumDifficulty.HARD)
+                if (this.world.getDifficulty() != EnumDifficulty.HARD)
                 {
                     i = 40;
                 }
@@ -229,16 +229,16 @@ public class EntityIMSkeleton extends EntityIMMob implements IRangedAttackMob {
      */
     public void attackEntityWithRangedAttack(EntityLivingBase target, float p_82196_2_)
     {
-        EntityTippedArrow entitytippedarrow = new EntityTippedArrow(this.worldObj, this);
+        EntityTippedArrow entitytippedarrow = new EntityTippedArrow(this.world, this);
         double d0 = target.posX - this.posX;
         double d1 = target.getEntityBoundingBox().minY + (double)(target.height / 3.0F) - entitytippedarrow.posY;
         double d2 = target.posZ - this.posZ;
-        double d3 = (double)MathHelper.sqrt_double(d0 * d0 + d2 * d2);
-        entitytippedarrow.setThrowableHeading(d0, d1 + d3 * 0.20000000298023224D, d2, 1.6F, (float)(14 - this.worldObj.getDifficulty().getDifficultyId() * 4));
+        double d3 = (double)MathHelper.sqrt(d0 * d0 + d2 * d2);
+        entitytippedarrow.setThrowableHeading(d0, d1 + d3 * 0.20000000298023224D, d2, 1.6F, (float)(14 - this.world.getDifficulty().getDifficultyId() * 4));
         int i = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.POWER, this);
         int j = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.PUNCH, this);
-        DifficultyInstance difficultyinstance = this.worldObj.getDifficultyForLocation(new BlockPos(this));
-        entitytippedarrow.setDamage((double)(p_82196_2_ * 2.0F) + this.rand.nextGaussian() * 0.25D + (double)((float)this.worldObj.getDifficulty().getDifficultyId() * 0.11F));
+        DifficultyInstance difficultyinstance = this.world.getDifficultyForLocation(new BlockPos(this));
+        entitytippedarrow.setDamage((double)(p_82196_2_ * 2.0F) + this.rand.nextGaussian() * 0.25D + (double)((float)this.world.getDifficulty().getDifficultyId() * 0.11F));
 
         if (i > 0)
         {
@@ -250,7 +250,7 @@ public class EntityIMSkeleton extends EntityIMMob implements IRangedAttackMob {
             entitytippedarrow.setKnockbackStrength(j);
         }
 
-        boolean flag = this.isBurning() && difficultyinstance.func_190083_c() && this.rand.nextBoolean();
+        boolean flag = this.isBurning() && difficultyinstance.isHard() && this.rand.nextBoolean();
         flag = flag || EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.FLAME, this) > 0;
 
         if (flag)
@@ -266,7 +266,7 @@ public class EntityIMSkeleton extends EntityIMMob implements IRangedAttackMob {
         }
 
         this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
-        this.worldObj.spawnEntityInWorld(entitytippedarrow);
+        this.world.spawnEntity(entitytippedarrow);
     }
 	
 }

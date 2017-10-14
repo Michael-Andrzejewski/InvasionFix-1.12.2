@@ -89,7 +89,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 	}
 
 	public TileEntityNexus(World world) {
-		this.worldObj = world;
+		this.world = world;
 		this.spawnRadius = 52;
 		this.waveSpawner = new IMWaveSpawner(this, this.spawnRadius);
 		this.waveBuilder = new IMWaveBuilder();
@@ -131,7 +131,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 
 	@Override
 	public void update() {
-		if (this.worldObj.isRemote) return;
+		if (this.world.isRemote) return;
 		
 		this.updateStatus();
 		this.updateAI();
@@ -176,7 +176,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 
 		if (this.cleanupTimer++ > 40) {
 			this.cleanupTimer = 0;
-			if (this.worldObj.getBlockState(new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ())).getBlock() != BlocksAndItems.blockNexus) {
+			if (this.world.getBlockState(new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ())).getBlock() != BlocksAndItems.blockNexus) {
 				this.stop();
 				this.invalidate();
 				ModLogger.logWarn("Stranded nexus entity trying to delete itself...");
@@ -191,7 +191,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 	}
 
 	public void debugStatus() {
-		mod_Invasion.sendMessageToPlayers(this.getBoundPlayers(), "Current Time: " + this.worldObj.getWorldTime());
+		mod_Invasion.sendMessageToPlayers(this.getBoundPlayers(), "Current Time: " + this.world.getWorldTime());
 		mod_Invasion.sendMessageToPlayers(this.getBoundPlayers(), "Time to next: " + this.nextAttackTime);
 		mod_Invasion.sendMessageToPlayers(this.getBoundPlayers(), "Days to attack: " + this.daysToAttack);
 		mod_Invasion.sendMessageToPlayers(this.getBoundPlayers(), "Mobs left: " + this.mobsLeftInWave);
@@ -211,10 +211,10 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 	}
 	
 	public void createBolt(int x, int y, int z, int t) {
-		EntityIMBolt bolt = new EntityIMBolt(this.worldObj,
+		EntityIMBolt bolt = new EntityIMBolt(this.world,
 				this.pos.getX() + 0.5D, this.pos.getY() + 0.5D, this.pos.getZ() + 0.5D,
 				x + 0.5D, y + 0.5D, z + 0.5D, t, 1);
-		this.worldObj.spawnEntityInWorld(bolt);
+		this.world.spawnEntity(bolt);
 	}
 
 	public boolean setSpawnRadius(int radius) {
@@ -231,7 +231,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 
 	public void attackNexus(int damage) {
 		if(this.immuneTicks != 0) return;
-		this.immuneTicks = 10 + this.worldObj.rand.nextInt(30);
+		this.immuneTicks = 10 + this.world.rand.nextInt(30);
 		this.hp -= damage;
 		if (this.hp <= 0) {
 			this.hp = 0;
@@ -395,7 +395,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
+	public boolean isUsableByPlayer(EntityPlayer entityplayer) {
 		return true;
 	}
 
@@ -618,7 +618,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 			this.hp = this.maxHp;
 			this.lastHp = this.maxHp;
 			this.lastPowerLevel = this.powerLevel;
-			this.lastWorldTime = this.worldObj.getWorldTime();
+			this.lastWorldTime = this.world.getWorldTime();
 			this.nextAttackTime = ((int) (this.lastWorldTime / 24000L * 24000L) + 14000);
 			if ((this.lastWorldTime % 24000L > 12000L)
 					&& (this.lastWorldTime % 24000L < 16000L)) {
@@ -700,7 +700,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 		}
 
 		if (!this.continuousAttack) {
-			long currentTime = this.worldObj.getWorldTime();
+			long currentTime = this.world.getWorldTime();
 			int timeOfDay = (int) (this.lastWorldTime % 24000L);
 			if ((timeOfDay < 12000) && (currentTime % 24000L >= 12000L) && (currentTime + 12000L > this.nextAttackTime)) {
 				mod_Invasion.sendMessageToPlayers(this.getBoundPlayers(), "The night looms around the nexus...");
@@ -721,7 +721,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 							.getTotalMobAmount() * 0.8F));
 					this.waveSpawner.beginNextWave(wave);
 					this.continuousAttack = true;
-					int days = this.worldObj.rand.nextInt(1
+					int days = this.world.rand.nextInt(1
 							+ Config.MAX_DAYS_BETWEEN_ATTACKS_CONTINIOUS_MODE
 							- Config.MIN_DAYS_BETWEEN_ATTACKS_CONTINIOUS_MODE);
 					this.nextAttackTime = ((int) (currentTime / 24000L * 24000L) + 14000 + days * 24000);
@@ -889,10 +889,10 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 	private void stop() {
 		if (this.mode == 3) {
 			this.setMode(2);
-			int days = this.worldObj.rand.nextInt(1
+			int days = this.world.rand.nextInt(1
 					+ Config.MAX_DAYS_BETWEEN_ATTACKS_CONTINIOUS_MODE
 					- Config.MIN_DAYS_BETWEEN_ATTACKS_CONTINIOUS_MODE);
-			this.nextAttackTime = ((int) (this.worldObj.getWorldTime() / 24000L * 24000L) + 14000 + days * 24000);
+			this.nextAttackTime = ((int) (this.world.getWorldTime() / 24000L * 24000L) + 14000 + days * 24000);
 		} else {
 			this.setMode(0);
 		}
@@ -910,7 +910,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 	}
 
 	private void bindPlayers() {
-		List<EntityPlayer> players = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, this.boundingBoxToRadius);
+		List<EntityPlayer> players = this.world.getEntitiesWithinAABB(EntityPlayer.class, this.boundingBoxToRadius);
 		for (EntityPlayer entityPlayer : players) {
 			long time = System.currentTimeMillis();
 			String playerName = entityPlayer.getDisplayName().getUnformattedText();
@@ -925,7 +925,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 	}
 
 	private void updateMobList() {
-		this.mobList = this.worldObj.getEntitiesWithinAABB(EntityIMLiving.class, this.boundingBoxToRadius);
+		this.mobList = this.world.getEntitiesWithinAABB(EntityIMLiving.class, this.boundingBoxToRadius);
 		this.mobsSorted = false;
 	}
 
@@ -936,15 +936,15 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 
 	private void setActive(boolean flag) {
 // TODO: Fix this
-//		if (this.worldObj != null) {
-//			int meta = this.worldObj.getBlockMetadata(this.pos.getX(), this.pos.getY(),
+//		if (this.world != null) {
+//			int meta = this.world.getBlockMetadata(this.pos.getX(), this.pos.getY(),
 //					this.pos.getZ());
 //			if (flag) {
-//				this.worldObj.setBlockMetadataWithNotify(this.pos.getX(),
+//				this.world.setBlockMetadataWithNotify(this.pos.getX(),
 //						this.pos.getY(), this.pos.getZ(), (meta & 0x4) == 0 ? meta + 4
 //								: meta, 3);
 //			} else {
-//				this.worldObj.setBlockMetadataWithNotify(this.pos.getX(),
+//				this.world.setBlockMetadataWithNotify(this.pos.getX(),
 //						this.pos.getY(), this.pos.getZ(), (meta & 0x4) == 4 ? meta - 4
 //								: meta, 3);
 //			}
@@ -955,7 +955,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 		AxisAlignedBB bb = this.boundingBoxToRadius
 				.expand(10.0D, 128.0D, 10.0D);
 
-		List<EntityIMMob> entities = this.worldObj.getEntitiesWithinAABB(
+		List<EntityIMMob> entities = this.world.getEntitiesWithinAABB(
 				EntityIMMob.class, bb);
 		for (EntityIMMob entity : entities) {
 			entity.acquiredByNexus(this);
@@ -965,12 +965,12 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 	}
 
 	private void theEnd() {
-		if (!this.worldObj.isRemote) {
+		if (!this.world.isRemote) {
 			mod_Invasion.sendMessageToPlayers(this.getBoundPlayers(), "The nexus is destroyed!");
 			//this.stop();
 			long time = System.currentTimeMillis();
 			for (int i=0; i<this.getBoundPlayers().size(); i++) {
-				EntityPlayer player = this.worldObj.getPlayerEntityByName(this.getBoundPlayers().get(i));
+				EntityPlayer player = this.world.getPlayerEntityByName(this.getBoundPlayers().get(i));
 				if (player != null) {
 					player.attackEntityFrom(DamageSource.magic, Float.MAX_VALUE);
 					//playSoundForBoundPlayers("random.explode");
@@ -999,11 +999,11 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 
 	private void killAllMobs() {
 		// monsters
-		List<EntityIMLiving> mobs = this.worldObj.getEntitiesWithinAABB(EntityIMLiving.class, this.boundingBoxToRadius);
+		List<EntityIMLiving> mobs = this.world.getEntitiesWithinAABB(EntityIMLiving.class, this.boundingBoxToRadius);
 		for (EntityIMLiving mob : mobs) mob.attackEntityFrom(DamageSource.magic, Float.MAX_VALUE);
 
 		// wolves
-		List<EntityIMWolf> wolves = this.worldObj.getEntitiesWithinAABB(EntityIMWolf.class, this.boundingBoxToRadius);
+		List<EntityIMWolf> wolves = this.world.getEntitiesWithinAABB(EntityIMWolf.class, this.boundingBoxToRadius);
 		for (EntityIMWolf wolf : wolves) wolf.attackEntityFrom(DamageSource.magic, Float.MAX_VALUE);
 	}
 
@@ -1014,10 +1014,10 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 			}
 			EntityIMLiving mob = this.mobList.remove(this.mobList.size() - 1);
 			mob.attackEntityFrom(DamageSource.magic, 500.0F);
-			EntityIMBolt bolt = new EntityIMBolt(this.worldObj,
+			EntityIMBolt bolt = new EntityIMBolt(this.world,
 					this.pos.getX() + 0.5D, this.pos.getY() + 0.5D, this.pos.getZ() + 0.5D,
 					mob.posX, mob.posY, mob.posZ, 15, sfx);
-			this.worldObj.spawnEntityInWorld(bolt);
+			this.world.spawnEntity(bolt);
 			return true;
 		}
 
@@ -1090,7 +1090,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 	/*@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
 		this.readFromNBT(pkt.getNbtCompound());
-		this.worldObj.markBlockForUpdate(this.pos);
+		this.world.markBlockForUpdate(this.pos);
 	}*/
 	
 	//TODO: Unused.
@@ -1108,8 +1108,8 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 				for (int z = (int) player.posZ-counter; z <= (int) player.posZ + counter; z++) {
 					for (int y = (int) player.posY-counter; y <= (int) player.posY + counter; y++) {
 						if (y < 0) y = 0;
-						if (y > player.worldObj.getActualHeight()) y = player.worldObj.getActualHeight();
-						TileEntity result = player.worldObj.getTileEntity(new BlockPos(x, y, z));
+						if (y > player.world.getActualHeight()) y = player.world.getActualHeight();
+						TileEntity result = player.world.getTileEntity(new BlockPos(x, y, z));
 
 						if (result instanceof TileEntityNexus) return (TileEntityNexus) result;
 					}

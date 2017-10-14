@@ -75,7 +75,7 @@ public class EntityIMBolt extends Entity implements IEntityAdditionalSpawnData {
 		super.onUpdate();
 		this.age += 1;
 		if ((this.age == 1) && (this.soundMade == 1)) {
-			//this.worldObj.playSoundAtEntity(this, "invmod:zap", 1.0F, 1.0F);
+			//this.world.playSoundAtEntity(this, "invmod:zap", 1.0F, 1.0F);
 			this.playSound(SoundHandler.zap1, 1f, 1f);
 		}
 		if (this.age > this.ticksToRender)
@@ -107,7 +107,7 @@ public class EntityIMBolt extends Entity implements IEntityAdditionalSpawnData {
 	//TODO: Removed Override annotation
 	public void handleHealthUpdate(byte byte0) {
 		if (byte0 == 0) {
-			//this.worldObj.playSoundAtEntity(this, "invmod:zap", 1.0F, 1.0F);
+			//this.world.playSoundAtEntity(this, "invmod:zap", 1.0F, 1.0F);
 			this.playSound(SoundHandler.zap1, 1f, 1f);
 		} else if (byte0 != 1) {
 			if (byte0 != 2)
@@ -130,12 +130,12 @@ public class EntityIMBolt extends Entity implements IEntityAdditionalSpawnData {
 	private void setHeading(float x, float y, float z) {
 		float xzSq = x * x + z * z;
 		this.yaw = ((float) (Math.atan2(x, z) * 180.0D / 3.141592653589793D) + 90.0F);
-		this.pitch = ((float) (Math.atan2(MathHelper.sqrt_double(xzSq), y) * 180.0D / 3.141592653589793D));
+		this.pitch = ((float) (Math.atan2(MathHelper.sqrt(xzSq), y) * 180.0D / 3.141592653589793D));
 		this.distance = Math.sqrt(xzSq + y * y);
 	}
 
 	private void doVertexUpdate() {
-		this.worldObj.theProfiler.startSection("IMBolt");
+		this.world.theProfiler.startSection("IMBolt");
 		this.widthVariance = (10.0F / (float) Math.log10(this.distance + 1.0D));
 		int numberOfVertexes = 60;
 		if (numberOfVertexes != this.vertices[0].length) {
@@ -149,7 +149,7 @@ public class EntityIMBolt extends Entity implements IEntityAdditionalSpawnData {
 		}
 
 		createSegment(0, numberOfVertexes - 1);
-		this.worldObj.theProfiler.endSection();
+		this.world.theProfiler.endSection();
 	}
 
 	private void createSegment(int begin, int end) {
@@ -174,10 +174,10 @@ public class EntityIMBolt extends Entity implements IEntityAdditionalSpawnData {
 		double yDiffToMid = this.vertices[1][mid] - this.vertices[1][begin];
 		double yRatio = yDiffToMid
 				/ (this.vertices[1][end] - this.vertices[1][begin]);
-		this.vertices[0][mid] = (this.vertices[0][begin] + difference * yRatio + (this.worldObj.rand
+		this.vertices[0][mid] = (this.vertices[0][begin] + difference * yRatio + (this.world.rand
 				.nextFloat() - 0.5D) * yDiffToMid * this.widthVariance);
 		difference = this.vertices[2][end] - this.vertices[2][begin];
-		this.vertices[2][mid] = (this.vertices[2][begin] + difference * yRatio + (this.worldObj.rand
+		this.vertices[2][mid] = (this.vertices[2][begin] + difference * yRatio + (this.world.rand
 				.nextFloat() - 0.5D) * yDiffToMid * this.widthVariance);
 	}
 

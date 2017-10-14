@@ -28,7 +28,7 @@ public class ItemFlameTrap extends ModItem {
 			EntityIMTrap trap = new EntityIMTrap(world, blockPos.getX() + 0.5D, blockPos.getY() + 1.0D, blockPos.getZ() + 0.5D, 2);
 
 			if ((trap.isValidPlacement()) && (world.getEntitiesWithinAABB(EntityIMTrap.class, trap.getEntityBoundingBox()).size() == 0)) {
-				world.spawnEntityInWorld(trap);
+				world.spawnEntity(trap);
 
 				// players in creative mode won't lose the item
 				if (!entityplayer.capabilities.isCreativeMode) itemstack.stackSize -= 1;

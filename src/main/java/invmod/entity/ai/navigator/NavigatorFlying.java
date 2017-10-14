@@ -341,8 +341,8 @@ public class NavigatorFlying extends NavigatorIM implements INavigationFlying {
 				Vec3d origin = this.theEntity.getLook(1.0F);
 				origin.addVector(0.0D, 1.0D, 0.0D);
 
-				//MovingObjectPosition object = this.theEntity.worldObj.rayTraceBlocks(origin, target);
-				RayTraceResult rtr = this.theEntity.worldObj.rayTraceBlocks(origin, target);
+				//MovingObjectPosition object = this.theEntity.world.rayTraceBlocks(origin, target);
+				RayTraceResult rtr = this.theEntity.world.rayTraceBlocks(origin, target);
 //				if ((object != null) && (object.typeOfHit == EnumMovingObjectType.TILE)) {
 //					double dX = this.theEntity.posX - object.blockX;
 //					double dZ = this.theEntity.posY - object.blockY;
@@ -534,13 +534,13 @@ public class NavigatorFlying extends NavigatorIM implements INavigationFlying {
 			double distanceXZ = Math.cos(nextAngleV / 180.0D * 3.141592653589793D) * 64.0D;
 			double x = this.theEntity.posX + -Math.sin(nextAngleH / 180.0D * 3.141592653589793D) * distanceXZ;
 			double z = this.theEntity.posZ + Math.cos(nextAngleH / 180.0D * 3.141592653589793D) * distanceXZ;
-			//Vec3 target = this.theEntity.worldObj.getWorldVec3Pool().getVecFromPool(x, y, z);
+			//Vec3 target = this.theEntity.world.getWorldVec3Pool().getVecFromPool(x, y, z);
 			Vec3d target = new Vec3d(x, y, z);
 			Vec3d origin = this.theEntity.getLook(1.0F);
-			//MovingObjectPosition object = this.theEntity.worldObj.rayTraceBlocks(origin, target);
-			RayTraceResult rtr = this.theEntity.worldObj.rayTraceBlocks(origin, target);
+			//MovingObjectPosition object = this.theEntity.world.rayTraceBlocks(origin, target);
+			RayTraceResult rtr = this.theEntity.world.rayTraceBlocks(origin, target);
 			if (rtr != null) {
-				Block Block = this.theEntity.worldObj.getBlockState(new BlockPos(rtr.hitVec.xCoord, rtr.hitVec.yCoord, rtr.hitVec.zCoord)).getBlock();
+				Block Block = this.theEntity.world.getBlockState(new BlockPos(rtr.hitVec.xCoord, rtr.hitVec.yCoord, rtr.hitVec.zCoord)).getBlock();
 				if (!this.theEntity.avoidsBlock(Block)) {
 					safety += 0.7F;
 				}

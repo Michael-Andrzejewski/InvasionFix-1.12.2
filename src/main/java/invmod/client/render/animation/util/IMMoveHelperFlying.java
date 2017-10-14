@@ -315,12 +315,12 @@ public class IMMoveHelperFlying extends IMMoveHelper {
 
 	protected FlyState doLanding() {
 		this.a.setGroundFriction(0.3F);
-		int x = MathHelper.floor_double(this.a.posX);
-		int y = MathHelper.floor_double(this.a.posY);
-		int z = MathHelper.floor_double(this.a.posZ);
+		int x = MathHelper.floor(this.a.posX);
+		int y = MathHelper.floor(this.a.posY);
+		int z = MathHelper.floor(this.a.posZ);
 
 		for (int i = 1; i < 5; i++) {
-			if (this.a.worldObj.getBlockState(new BlockPos(x, y - i, z)).getBlock() != Blocks.AIR) break;
+			if (this.a.world.getBlockState(new BlockPos(x, y - i, z)).getBlock() != Blocks.AIR) break;
 			this.targetFlySpeed = (this.speed * (0.66F - (0.4F - (i - 1) * 0.133F)));
 		}
 
@@ -360,7 +360,7 @@ public class IMMoveHelperFlying extends IMMoveHelper {
 		double yAccel = vThrust;
 		double zAccel = hThrust
 				* Math.cos(this.a.rotationYaw / 180.0F * 3.141592653589793D);
-		// Vec3 vec = this.a.worldObj.getWorldVec3Pool().getVecFromPool(xAccel,
+		// Vec3 vec = this.a.world.getWorldVec3Pool().getVecFromPool(xAccel,
 		// yAccel, zAccel);
 		Vec3d vec = new Vec3d(xAccel, yAccel, zAccel);
 		return vec;

@@ -59,7 +59,7 @@ public class EntityAIGoToNexus extends EntityAIBase {
 
 			if ((!pathSet) || ((this.theEntity.getNavigatorNew().getLastPathDistanceToTarget() > 3.0F) && (Distance.distanceBetween(this.lastPathRequestPos, this.theEntity.getPosition()) < 3.5D))){
 				this.pathFailedCount += 1;
-				this.pathRequestTimer = (40 * this.pathFailedCount + this.theEntity.worldObj.rand.nextInt(10));
+				this.pathRequestTimer = (40 * this.pathFailedCount + this.theEntity.world.rand.nextInt(10));
 			} else {
 				this.pathFailedCount = 0;
 				this.pathRequestTimer = 20;

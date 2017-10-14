@@ -75,7 +75,7 @@ public class IMMoveHelper extends EntityMoveHelper {
 		double dX = this.posX - this.entity.posX;
 		double dZ = this.posZ - this.entity.posZ;
 		//This value is positive is the target pos is greater than the entity's current pos.
-		double dY = this.posY - (!isInLiquid ? MathHelper.floor_double(this.entity.getEntityBoundingBox().minY + 0.5D) : this.entity.posY);
+		double dY = this.posY - (!isInLiquid ? MathHelper.floor(this.entity.getEntityBoundingBox().minY + 0.5D) : this.entity.posY);
 
 		float newYaw = (float) (Math.atan2(dZ, dX) * 180.0D / Math.PI) - 90.0F;
 		EnumFacing ladderPos = null;
@@ -149,14 +149,14 @@ public class IMMoveHelper extends EntityMoveHelper {
 
 	protected EnumFacing getClimbFace(BlockPos blockPos) {
 
-		Block block = this.entity.worldObj.getBlockState(blockPos).getBlock();
+		Block block = this.entity.world.getBlockState(blockPos).getBlock();
 		if (block instanceof BlockLadder) {
-			IBlockState blockState = this.entity.worldObj.getBlockState(blockPos);
+			IBlockState blockState = this.entity.world.getBlockState(blockPos);
 			return blockState.getValue(BlockLadder.FACING);/*.getProperties().get(BlockLadder.field_176382_a);*/
 		}
 		// } else if (block instanceof BlockVine) {
 		// IBlockState blockState =
-		// this.entity.worldObj.getBlockState(blockPos);
+		// this.entity.world.getBlockState(blockPos);
 		// return
 		// (EnumFacing)blockState.getProperties().get(BlockVine.field_176382_a);
 		//

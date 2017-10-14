@@ -80,6 +80,6 @@ public class EntityAILayEgg extends EntityAIBase
 		{
 			contents = null;
 		}
-		this.theEntity.worldObj.spawnEntityInWorld(new EntityIMEgg(this.theEntity, contents, 125));
+		this.theEntity.world.spawnEntity(new EntityIMEgg(this.theEntity, contents, 125));
 	}
 }

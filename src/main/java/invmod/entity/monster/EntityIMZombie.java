@@ -90,7 +90,7 @@ public class EntityIMZombie extends EntityIMMob implements ICanDig {
 	@Override
 	protected void entityInit(){
 		super.entityInit();
-		this.getDataManager().register(META_CHANGED, this.metaChanged = this.worldObj == null ? true : this.worldObj.isRemote);
+		this.getDataManager().register(META_CHANGED, this.metaChanged = this.world == null ? true : this.world.isRemote);
 		//this.getDataManager().register(TIER, this.tier = 1);
 		//this.getDataManager().register(TEXTURE, 0);
 		this.getDataManager().register(FLAVOUR, this.flavour = 0);
@@ -106,7 +106,7 @@ public class EntityIMZombie extends EntityIMMob implements ICanDig {
 			//if(this.tier != this.getDataManager().get(TIER)) this.setTier(this.getDataManager().get(TIER));
 			if(this.flavour != this.getDataManager().get(FLAVOUR)) this.setFlavour(this.getDataManager().get(FLAVOUR));
 		}
-		if ((!this.worldObj.isRemote) && (this.flammability >= 20) && (this.isBurning())) this.doFireball();
+		if ((!this.world.isRemote) && (this.flammability >= 20) && (this.isBurning())) this.doFireball();
 	}
 
 	@Override
@@ -124,7 +124,7 @@ public class EntityIMZombie extends EntityIMMob implements ICanDig {
 	@Override
 	protected void initEntityAI() {
 		//added entityaiswimming and increased all other tasksordernumers with 1
-		this.tasksIM = new EntityAITasks(this.worldObj.theProfiler);
+		this.tasksIM = new EntityAITasks(this.world.theProfiler);
 		this.tasksIM.addTask(0, new EntityAISwimming(this));
 		this.tasksIM.addTask(1, new EntityAIKillEntity(this, EntityPlayer.class, 40));
 		this.tasksIM.addTask(1, new EntityAIKillEntity(this, EntityPlayerMP.class, 40));
@@ -140,7 +140,7 @@ public class EntityIMZombie extends EntityIMMob implements ICanDig {
 		this.tasksIM.addTask(8, new EntityAILookIdle(this));
 		
 
-		this.targetTasksIM = new EntityAITasks(this.worldObj.theProfiler);
+		this.targetTasksIM = new EntityAITasks(this.world.theProfiler);
 		this.targetTasksIM.addTask(0, new EntityAITargetRetaliate(this, EntityLiving.class, Config.NIGHTSPAWNS_MOB_SENSERANGE));
 		this.targetTasksIM.addTask(2, new EntityAISimpleTarget(this, EntityPlayer.class, Config.NIGHTSPAWNS_MOB_SIGHTRANGE, true));
 		this.targetTasksIM.addTask(5, new EntityAIHurtByTarget(this, false));
@@ -162,7 +162,7 @@ public class EntityIMZombie extends EntityIMMob implements ICanDig {
 
 	@Override
 	public IBlockAccess getTerrain() {
-		return this.worldObj;
+		return this.world;
 	}
 	
 	//TODO: Removed Override annotation
@@ -186,8 +186,8 @@ public class EntityIMZombie extends EntityIMMob implements ICanDig {
 	
 	@Override
 	public boolean canClearBlock(BlockPos pos) {
-		IBlockState state = this.worldObj.getBlockState(pos);
-		return (state.getBlock() == Blocks.AIR) || (this.isBlockDestructible(this.worldObj, pos, state));
+		IBlockState state = this.world.getBlockState(pos);
+		return (state.getBlock() == Blocks.AIR) || (this.isBlockDestructible(this.world, pos, state));
 	}
 	
 	@Override
@@ -224,7 +224,7 @@ public class EntityIMZombie extends EntityIMMob implements ICanDig {
 	public void knockBack(Entity par1Entity, float par2, double par3, double par5) {
 		if (this.getTier() == 3) return;
 		this.isAirBorne = true;
-		float f = MathHelper.sqrt_double(par3 * par3 + par5 * par5);
+		float f = MathHelper.sqrt(par3 * par3 + par5 * par5);
 		float f1 = 0.4F;
 		this.motionX /= 2.0D;
 		this.motionY /= 2.0D;
@@ -364,7 +364,7 @@ public class EntityIMZombie extends EntityIMMob implements ICanDig {
 	}
 	
 	public void updateAnimation(boolean override){
-		if ((!this.worldObj.isRemote) && ((this.terrainModifier.isBusy()) || override)) this.setSwinging(true);
+		if ((!this.world.isRemote) && ((this.terrainModifier.isBusy()) || override)) this.setSwinging(true);
 		
 		int swingSpeed = getSwingSpeed();
 		if (this.isSwinging()){
@@ -395,7 +395,7 @@ public class EntityIMZombie extends EntityIMMob implements ICanDig {
 		{
 			if (--this.throttled2 <= 0) 
 			{
-				//this.worldObj.playSoundAtEntity(this, "invmod:scrape", 0.85F, 1.0F / (this.rand.nextFloat() * 0.5F + 1.0F));
+				//this.world.playSoundAtEntity(this, "invmod:scrape", 0.85F, 1.0F / (this.rand.nextFloat() * 0.5F + 1.0F));
 				this.playSound(SoundHandler.scrape1, 0.85F, 1.0F / (this.rand.nextFloat() * 0.5F + 1.0F));
 				this.throttled2 = (45 + this.rand.nextInt(20));
 			}
@@ -411,7 +411,7 @@ public class EntityIMZombie extends EntityIMMob implements ICanDig {
 		entity.attackEntityFrom(DamageSource.causeMobDamage(this), this.attackStrength + 3);
 		entity.addVelocity(-MathHelper.sin(this.rotationYaw * 3.141593F / 180.0F) * knockback * 0.5F, 0.4D, MathHelper.cos(this.rotationYaw * 3.141593F / 180.0F) * knockback * 0.5F);
 		this.setSprinting(false);
-		//this.worldObj.playSoundAtEntity(entity, "damage.fallbig", 1.0F, 1.0F);
+		//this.world.playSoundAtEntity(entity, "damage.fallbig", 1.0F, 1.0F);
 		this.playSound(SoundEvents.ENTITY_GENERIC_BIG_FALL, 1f, 1f);
 		return true;
 	}
@@ -558,12 +558,12 @@ public class EntityIMZombie extends EntityIMMob implements ICanDig {
 		for(int xOffset = -1; xOffset < 2; xOffset++)
 		for(int yOffset = -1; yOffset < 2; yOffset++)
 		for(int zOffset = -1; zOffset < 2; zOffset++){
-			if ((this.worldObj.isAirBlock(pos.add(xOffset, yOffset, zOffset)) || (this.worldObj.getBlockState(pos.add(xOffset, yOffset, zOffset)).getMaterial().getCanBurn()))) {
-				this.worldObj.setBlockState(pos.add(xOffset, yOffset, zOffset), Blocks.FIRE.getDefaultState());
+			if ((this.world.isAirBlock(pos.add(xOffset, yOffset, zOffset)) || (this.world.getBlockState(pos.add(xOffset, yOffset, zOffset)).getMaterial().getCanBurn()))) {
+				this.world.setBlockState(pos.add(xOffset, yOffset, zOffset), Blocks.FIRE.getDefaultState());
 			}
 		}
 
-		List<Entity> entities = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(1.5D, 1.5D, 1.5D));
+		List<Entity> entities = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(1.5D, 1.5D, 1.5D));
 		for(int el=entities.size()-1; el>=0; el--){
 			entities.get(el).setFire(8);
 		}

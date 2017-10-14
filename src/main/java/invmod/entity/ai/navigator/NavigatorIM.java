@@ -105,14 +105,14 @@ public class NavigatorIM implements INotifyTask, INavigation {
 	@Override
 	public Path getPathToXYZ(double x, double y, double z, float targetRadius) {
 		if (!this.canNavigate()) return null;
-		//return this.createPath(this.theEntity, MathHelper.floor_double(x), (int) y, MathHelper.floor_double(z), targetRadius);
+		//return this.createPath(this.theEntity, MathHelper.floor(x), (int) y, MathHelper.floor(z), targetRadius);
 		return this.createPath(this.theEntity, new Vec3d(x, y, z), targetRadius);
 	}
 
 	@Override
 	public boolean tryMoveToXYZ(double x, double y, double z, float targetRadius, float speed) {
 		this.ticksStuck = 0;
-		Path newPath = this.getPathToXYZ(MathHelper.floor_double(x), (int) y, MathHelper.floor_double(z), targetRadius);
+		Path newPath = this.getPathToXYZ(MathHelper.floor(x), (int) y, MathHelper.floor(z), targetRadius);
 		if (newPath != null) {
 			return this.setPath(newPath, speed);
 		}
@@ -135,7 +135,7 @@ public class NavigatorIM implements INotifyTask, INavigation {
 	@Override
 	public boolean tryMoveTowardsXZ(double x, double z, int min, int max, int verticalRange, float speed) {
 		this.ticksStuck = 0;
-		Path newPath = getPathTowardsXZ(MathHelper.floor_double(x), MathHelper.floor_double(z), min, max, verticalRange);
+		Path newPath = getPathTowardsXZ(MathHelper.floor(x), MathHelper.floor(z), min, max, verticalRange);
 		if (newPath != null) {
 			return setPath(newPath, speed);
 		}
@@ -145,7 +145,7 @@ public class NavigatorIM implements INotifyTask, INavigation {
 	@Override
 	public Path getPathToEntity(Entity targetEntity, float targetRadius) {
 		if (!canNavigate()) return null;
-		//return createPath(this.theEntity, MathHelper.floor_double(targetEntity.posX), MathHelper.floor_double(targetEntity.getEntityBoundingBox().minY), MathHelper.floor_double(targetEntity.posZ), targetRadius);
+		//return createPath(this.theEntity, MathHelper.floor(targetEntity.posX), MathHelper.floor(targetEntity.getEntityBoundingBox().minY), MathHelper.floor(targetEntity.posZ), targetRadius);
 		return this.createPath(this.theEntity, targetEntity, targetRadius);
 	}
 
@@ -197,7 +197,7 @@ public class NavigatorIM implements INotifyTask, INavigation {
 			if (!this.path.isFinished()) {
 				this.activeNode = this.path.getPathPointFromIndex(this.path.getCurrentPathIndex());
 				//ModLogger.logInfo("(Set) Moving " + this.theEntity.getName() + " from " + this.theEntity.getPosition() + " to " + this.activeNode.toString());
-				//this.theEntity.moveEntity(this.activeNode.xCoord, this.activeNode.yCoord, this.activeNode.zCoord);
+				//this.theEntity.setVelocity(this.activeNode.xCoord, this.activeNode.yCoord, this.activeNode.zCoord);
 				if (this.activeNode.action != PathAction.NONE) {
 					this.nodeActionFinished = false;
 				}
@@ -210,7 +210,7 @@ public class NavigatorIM implements INotifyTask, INavigation {
 				if (!this.path.isFinished()) {
 					this.activeNode = this.path.getPathPointFromIndex(this.path.getCurrentPathIndex());
 					//ModLogger.logInfo("(UnstoppableN) Moving " + this.theEntity.getName() + " to " + this.activeNode.toString());
-					//this.theEntity.moveEntity(this.activeNode.xCoord, this.activeNode.yCoord, this.activeNode.zCoord);
+					//this.theEntity.setVelocity(this.activeNode.xCoord, this.activeNode.yCoord, this.activeNode.zCoord);
 					if (this.activeNode.action != PathAction.NONE) {
 						this.nodeActionFinished = false;
 					}
@@ -318,8 +318,8 @@ public class NavigatorIM implements INotifyTask, INavigation {
 				Vec3d vec0 = this.getEntityPosition();
 				Vec3d vec1 = this.path.getPositionAtIndex(this.theEntity, this.path.getCurrentPathIndex());
 				if(vec0.yCoord > vec1.yCoord && this.theEntity.onGround &&
-						MathHelper.floor_double(vec0.xCoord) == MathHelper.floor_double(vec1.xCoord) &&
-						MathHelper.floor_double(vec0.zCoord) == MathHelper.floor_double(vec1.zCoord)){
+						MathHelper.floor(vec0.xCoord) == MathHelper.floor(vec1.xCoord) &&
+						MathHelper.floor(vec0.zCoord) == MathHelper.floor(vec1.zCoord)){
 					this.path.incrementPathIndex();
 					//this.activeNode = this.path.points[this.path.getCurrentPathIndex()];
 				}
@@ -329,7 +329,7 @@ public class NavigatorIM implements INotifyTask, INavigation {
 					Vec3d vec2 = this.path.getPositionAtIndex(this.theEntity, this.path.getCurrentPathIndex());
 					if(vec2 != null){
 						BlockPos pos = (new BlockPos(vec2)).down();
-	                    AxisAlignedBB axisalignedbb = this.theEntity.worldObj.getBlockState(pos).getBoundingBox(this.theEntity.worldObj, pos);
+	                    AxisAlignedBB axisalignedbb = this.theEntity.world.getBlockState(pos).getBoundingBox(this.theEntity.world, pos);
 	                    vec2 = vec2.subtract(0.0D, 1.0D - axisalignedbb.maxY, 0.0D);
 	                    this.theEntity.getMoveHelper().setMoveTo(vec2.xCoord, vec2.yCoord, vec2.zCoord, this.moveSpeed);
 					}
@@ -337,7 +337,7 @@ public class NavigatorIM implements INotifyTask, INavigation {
 				
 				//Old code
 				/*ModLogger.logInfo("Moving " + this.theEntity.getName() + " from " + this.theEntity.getPosition() + " to " + this.activeNode.getPos());
-				this.theEntity.moveEntity(this.activeNode.xCoord - this.theEntity.posX, 0/*this.activeNode.yCoord - this.theEntity.posY*///, this.activeNode.zCoord - this.theEntity.posZ);
+				this.theEntity.setVelocity(this.activeNode.xCoord - this.theEntity.posX, 0/*this.activeNode.yCoord - this.theEntity.posY*///, this.activeNode.zCoord - this.theEntity.posZ);
 				/*this.path.setCurrentPathIndex(this.path.getCurrentPathIndex()+1);
 				if(!this.path.isFinished()){
 					this.activeNode = this.path.points[this.path.getCurrentPathIndex()];
@@ -411,7 +411,7 @@ public class NavigatorIM implements INotifyTask, INavigation {
 	}
 
 	protected Path createPath(EntityIMLiving entity, Entity target, float targetRadius) {
-		//return createPath(entity, MathHelper.floor_double(target.posX), (int) target.posY, MathHelper.floor_double(target.posZ), targetRadius);
+		//return createPath(entity, MathHelper.floor(target.posX), (int) target.posY, MathHelper.floor(target.posZ), targetRadius);
 		return this.createPath(entity, new Vec3d(target.posX, target.posY, target.posZ), targetRadius);
 	}
 
@@ -422,7 +422,7 @@ public class NavigatorIM implements INotifyTask, INavigation {
 	protected Path createPath(EntityIMLiving entity, Vec3d vec, float targetRadius){
 		this.theEntity.setCurrentTargetPos(new BlockPos(vec));
 		//IBlockAccess terrainCache = this.getChunkCache(entity.getPosition(), pos, 16.0F);
-		IBlockAccess terrainCache = entity.worldObj != null ? entity.worldObj : this.getChunkCache(entity.getPosition(), new BlockPos(vec), 16.0F);
+		IBlockAccess terrainCache = entity.world != null ? entity.world : this.getChunkCache(entity.getPosition(), new BlockPos(vec), 16.0F);
 		TileEntityNexus nexus = entity.getNexus();
 		if (nexus != null) terrainCache = nexus.getAttackerAI().wrapEntityData(terrainCache);
 		float maxSearchRange = 12.0F + (float) Distance.distanceBetween(entity.getPosition(), vec);
@@ -445,7 +445,7 @@ public class NavigatorIM implements INotifyTask, INavigation {
 			if ((prevIndex >= 0) && (this.path.getPathPointFromIndex(prevIndex).action != PathAction.NONE)) {
 				canConsolidate = false;
 			}
-			if ((canConsolidate) && (this.theEntity.canStandAt(this.theEntity.worldObj, this.theEntity.getPosition()))){//MathHelper.floor_double(this.theEntity.posX), MathHelper.floor_double(this.theEntity.posY), MathHelper.floor_double(this.theEntity.posZ)))) {
+			if ((canConsolidate) && (this.theEntity.canStandAt(this.theEntity.world, this.theEntity.getPosition()))){//MathHelper.floor(this.theEntity.posX), MathHelper.floor(this.theEntity.posY), MathHelper.floor(this.theEntity.posZ)))) {
 				while ((maxNextLegIndex < this.path.getCurrentPathLength() - 1) && (this.path.getPathPointFromIndex(maxNextLegIndex).pos.yCoord == vec3d.yCoord) && (this.path.getPathPointFromIndex(maxNextLegIndex).action == PathAction.NONE)) {
 					maxNextLegIndex++;
 				}
@@ -576,12 +576,12 @@ public class NavigatorIM implements INotifyTask, INavigation {
 		}
 
 		int i = (int) this.theEntity.getEntityBoundingBox().minY;
-		Block block = this.theEntity.worldObj.getBlockState(new BlockPos(MathHelper.floor_double(this.theEntity.posX), i, MathHelper.floor_double(this.theEntity.posZ))).getBlock();
+		Block block = this.theEntity.world.getBlockState(new BlockPos(MathHelper.floor(this.theEntity.posX), i, MathHelper.floor(this.theEntity.posZ))).getBlock();
 		int k = 0;
 
 		while ((block == Blocks.WATER) || (block == Blocks.FLOWING_WATER)) {
 			i++;
-			block = this.theEntity.worldObj.getBlockState(new BlockPos(MathHelper.floor_double(this.theEntity.posX), i, MathHelper.floor_double(this.theEntity.posZ))).getBlock();
+			block = this.theEntity.world.getBlockState(new BlockPos(MathHelper.floor(this.theEntity.posX), i, MathHelper.floor(this.theEntity.posZ))).getBlock();
 
 			k++;
 			if (k > 16) {
@@ -610,15 +610,15 @@ public class NavigatorIM implements INotifyTask, INavigation {
 		}
 
 		double distance = min + this.theEntity.getRNG().nextInt(max - min);
-		int xi = MathHelper.floor_double(xOffset * (distance / h) + this.theEntity.posX);
-		int zi = MathHelper.floor_double(zOffset * (distance / h) + this.theEntity.posZ);
-		int y = MathHelper.floor_double(this.theEntity.posY);
+		int xi = MathHelper.floor(xOffset * (distance / h) + this.theEntity.posX);
+		int zi = MathHelper.floor(zOffset * (distance / h) + this.theEntity.posZ);
+		int y = MathHelper.floor(this.theEntity.posY);
 
 		Path entityPath = null;
 		for (int vertical = 0; vertical < verticalRange; vertical = vertical > 0 ? vertical * -1 : vertical * -1 + 1) {
 			for (int i = -1; i <= 1; i++) {
 				for (int j = -1; j <= 1; j++) {
-					if (this.theEntity.canStandAtAndIsValid(this.theEntity.worldObj, new BlockPos(xi + i, y + vertical, zi + j))) {
+					if (this.theEntity.canStandAtAndIsValid(this.theEntity.world, new BlockPos(xi + i, y + vertical, zi + j))) {
 						return new Vec3d(xi + i, y + vertical, zi + j);
 					}
 				}
@@ -629,14 +629,14 @@ public class NavigatorIM implements INotifyTask, INavigation {
 	}
 
 	protected void removeSunnyPath() {
-		if (this.theEntity.worldObj.canBlockSeeSky(new BlockPos(MathHelper.floor_double(this.theEntity.posX), (int) (this.theEntity.getEntityBoundingBox().minY + 0.5D), MathHelper.floor_double(this.theEntity.posZ)))) {
+		if (this.theEntity.world.canBlockSeeSky(new BlockPos(MathHelper.floor(this.theEntity.posX), (int) (this.theEntity.getEntityBoundingBox().minY + 0.5D), MathHelper.floor(this.theEntity.posZ)))) {
 			return;
 		}
 
 		for (int i = 0; i < this.path.getCurrentPathLength(); i++) {
 			PathNode pathpoint = this.path.getPathPointFromIndex(i);
 
-			if (this.theEntity.worldObj.canBlockSeeSky(new BlockPos(pathpoint.pos))) {
+			if (this.theEntity.world.canBlockSeeSky(new BlockPos(pathpoint.pos))) {
 				this.path.setCurrentPathLength(i - 1);
 				return;
 			}
@@ -644,8 +644,8 @@ public class NavigatorIM implements INotifyTask, INavigation {
 	}
 
 	protected boolean isDirectPathBetweenPoints(Vec3d pos1, Vec3d pos2, int xSize, int ySize, int zSize) {
-		int x = MathHelper.floor_double(pos1.xCoord);
-		int z = MathHelper.floor_double(pos1.zCoord);
+		int x = MathHelper.floor(pos1.xCoord);
+		int z = MathHelper.floor(pos1.zCoord);
 		double dX = pos2.xCoord - pos1.xCoord;
 		double dZ = pos2.zCoord - pos1.zCoord;
 		double dXZsq = dX * dX + dZ * dZ;
@@ -683,8 +683,8 @@ public class NavigatorIM implements INotifyTask, INavigation {
 		zOffset /= dZ;
 		byte xDirection = (byte) (dX >= 0.0D ? 1 : -1);
 		byte zDirection = (byte) (dZ >= 0.0D ? 1 : -1);
-		int x2 = MathHelper.floor_double(pos2.xCoord);
-		int z2 = MathHelper.floor_double(pos2.zCoord);
+		int x2 = MathHelper.floor(pos2.xCoord);
+		int z2 = MathHelper.floor(pos2.zCoord);
 		int xDiff = x2 - x;
 
 		for (int i = z2 - z; (xDiff * xDirection > 0) || (i * zDirection > 0);) {
@@ -720,7 +720,7 @@ public class NavigatorIM implements INotifyTask, INavigation {
 				double d1 = l + 0.5D - entityPostion.zCoord;
 
 				if (d * par8 + d1 * par10 >= 0.0D) {
-					IBlockState blockState = this.theEntity.worldObj.getBlockState(new BlockPos(k, yOffset - 1, l));
+					IBlockState blockState = this.theEntity.world.getBlockState(new BlockPos(k, yOffset - 1, l));
 
 					if (blockState.getBlock() == Blocks.AIR) {
 						return false;
@@ -746,9 +746,9 @@ public class NavigatorIM implements INotifyTask, INavigation {
 					double d1 = k + 0.5D - entityPostion.zCoord;
 
 					if (d * vecX + d1 * vecZ >= 0.0D) {
-						Block block = this.theEntity.worldObj.getBlockState(new BlockPos(i, j, k)).getBlock();
+						Block block = this.theEntity.world.getBlockState(new BlockPos(i, j, k)).getBlock();
 
-						if ((block != Blocks.AIR) && (!block.isPassable(this.theEntity.worldObj, new BlockPos(i, j, k)))) {
+						if ((block != Blocks.AIR) && (!block.isPassable(this.theEntity.world, new BlockPos(i, j, k)))) {
 							return false;
 						}
 					}
@@ -764,8 +764,8 @@ public class NavigatorIM implements INotifyTask, INavigation {
 
 	protected boolean isPositionClearFrom(int x1, int y1, int z1, int x2, int y2, int z2, EntityIMLiving entity) {
 		if (y2 > y1) {
-			Block block = this.theEntity.worldObj.getBlockState(new BlockPos(x1, y1 + entity.getCollideSize().getY(), z1)).getBlock();
-			if ((block !=Blocks.AIR) && (!block.isPassable(this.theEntity.worldObj, new BlockPos(x1, y1 + entity.getCollideSize().getY(), z1)))) {
+			Block block = this.theEntity.world.getBlockState(new BlockPos(x1, y1 + entity.getCollideSize().getY(), z1)).getBlock();
+			if ((block !=Blocks.AIR) && (!block.isPassable(this.theEntity.world, new BlockPos(x1, y1 + entity.getCollideSize().getY(), z1)))) {
 				return false;
 			}
 		}
@@ -786,9 +786,9 @@ public class NavigatorIM implements INotifyTask, INavigation {
 		for (int i = x; i < x + xSize; i++) {
 			for (int j = y; j < y + ySize; j++) {
 				for (int k = z; k < z + zSize; k++) {
-					Block block = this.theEntity.worldObj.getBlockState(new BlockPos(i, j, k)).getBlock();
+					Block block = this.theEntity.world.getBlockState(new BlockPos(i, j, k)).getBlock();
 
-					if ((block != Blocks.AIR) && (!block.isPassable(this.theEntity.worldObj, new BlockPos(i, j, k)))) {
+					if ((block != Blocks.AIR) && (!block.isPassable(this.theEntity.world, new BlockPos(i, j, k)))) {
 						return false;
 					}
 				}
@@ -834,6 +834,6 @@ public class NavigatorIM implements INotifyTask, INavigation {
 		
 		BlockPos blockPos1 = new BlockPos(cX1,cY1,cZ1);
 		BlockPos blockPos2 = new BlockPos(cX1,cY2,cZ2);
-		return new ChunkCache(this.theEntity.worldObj, blockPos1, blockPos2, 0);
+		return new ChunkCache(this.theEntity.world, blockPos1, blockPos2, 0);
 	}
 }

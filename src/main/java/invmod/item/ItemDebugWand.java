@@ -58,7 +58,7 @@ public class ItemDebugWand extends Item {
 
 		EntityWolf wolf = new EntityWolf(world);
 		wolf.setPosition(onePosAbove.getX(), onePosAbove.getY(), onePosAbove.getZ());
-		world.spawnEntityInWorld(wolf);
+		world.spawnEntity(wolf);
 
 		Entity pigEngy = new EntityIMPigEngy(world);
 		pigEngy.setPosition(onePosAbove.getX(), onePosAbove.getY(), onePosAbove.getZ());

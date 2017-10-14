@@ -25,7 +25,7 @@ public class EntityIMEgg extends EntityIMMob {
 	}
 
 	public EntityIMEgg(Entity parent, Entity[] contents, int hatchTime) {
-		super(parent.worldObj);
+		super(parent.world);
 		this.parent = parent;
 		this.contents = contents;
 		this.hatchTime = hatchTime;
@@ -79,7 +79,7 @@ public class EntityIMEgg extends EntityIMMob {
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
-		if (!this.worldObj.isRemote) {
+		if (!this.world.isRemote) {
 			this.ticks += 1;
 			if (this.hatched) {
 				if (this.ticks > this.hatchTime + 40)
@@ -89,22 +89,22 @@ public class EntityIMEgg extends EntityIMMob {
 			}
 		} else if ((!this.hatched)
 				&& (this.getDataManager().get(META_HATCHED) == 1)) {
-			//this.worldObj.playSoundAtEntity(this, "invmod:egghatch", 1.0F, 1.0F);
+			//this.world.playSoundAtEntity(this, "invmod:egghatch", 1.0F, 1.0F);
 			this.playSound(SoundHandler.egghatch1, 1f, 1f);
 			this.hatched = true;
 		}
 	}
 
 	private void hatch() {
-		//this.worldObj.playSoundAtEntity(this, "invmod:egghatch", 1.0F, 1.0F);
+		//this.world.playSoundAtEntity(this, "invmod:egghatch", 1.0F, 1.0F);
 		this.playSound(SoundHandler.egghatch1, 1f, 1f);
 		this.hatched = true;
-		if (!this.worldObj.isRemote) {
+		if (!this.world.isRemote) {
 			this.getDataManager().set(META_HATCHED, Byte.valueOf((byte) 1));
 			if (this.contents != null) {
 				for (Entity entity : this.contents) {
 					entity.setPosition(this.posX, this.posY, this.posZ);
-					this.worldObj.spawnEntityInWorld(entity);
+					this.world.spawnEntity(entity);
 				}
 			}
 		}

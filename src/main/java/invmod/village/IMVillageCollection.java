@@ -7,7 +7,7 @@ import net.minecraft.world.WorldSavedData;
 
 public class IMVillageCollection extends WorldSavedData {
 	
-	private World worldObj;
+	private World world;
 	private int tickCount = 0;
 
 	public IMVillageCollection(String name){
@@ -16,7 +16,7 @@ public class IMVillageCollection extends WorldSavedData {
 	
 	public IMVillageCollection(World worldIn){
 		this(fileNameForProvider(worldIn.provider));
-		this.worldObj = worldIn;
+		this.world = worldIn;
 		this.markDirty();
 	}
 	

@@ -354,7 +354,7 @@ public class mod_Invasion {
 
 	public static void broadcastToAll(String message){
 		//FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().sendChatMsg(new ChatComponentText(message));
-		List<EntityPlayerMP> playerList = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerList();
+		List<EntityPlayerMP> playerList = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayers();
 		for(int i=0; i<playerList.size(); i++){
 			sendMessageToPlayer(playerList.get(i), message);
 		}
@@ -401,7 +401,7 @@ public class mod_Invasion {
 	public static void sendMessageToPlayer(EntityPlayer player, String message, TextFormatting color){
 		TextComponentTranslation s = new TextComponentTranslation(message);
 		if(color != null) s.getStyle().setColor(color);
-		if (player != null) player.addChatComponentMessage(s);
+		if (player != null) player.sendMessage(s);
 	}
 	
 	public static int getMobHealth(EntityIMMob mob){

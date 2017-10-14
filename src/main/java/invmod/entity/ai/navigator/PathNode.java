@@ -68,14 +68,14 @@ public class PathNode {
 		double d0 = pathpoint.pos.xCoord - this.pos.xCoord;
 		double d1 = pathpoint.pos.yCoord - this.pos.yCoord;
 		double d2 = pathpoint.pos.zCoord - this.pos.zCoord;
-		return MathHelper.sqrt_double(d0 * d0 + d1 * d1 + d2 * d2);
+		return MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
 	}
 
 	public float distanceTo(double x, double y, double z) {
 		double d0 = x - this.pos.xCoord;
 		double d1 = y - this.pos.yCoord;
 		double d2 = z - this.pos.zCoord;
-		return MathHelper.sqrt_double(d0 * d0 + d1 * d1 + d2 * d2);
+		return MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
 	}
 
 	@Override

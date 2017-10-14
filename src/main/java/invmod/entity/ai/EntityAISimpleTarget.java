@@ -42,7 +42,7 @@ public class EntityAISimpleTarget extends EntityAIBase {
 	@Override
 	public boolean shouldExecute() {
 		if (this.targetClass == EntityPlayer.class) {
-			EntityPlayer entityplayer = this.theEntity.worldObj
+			EntityPlayer entityplayer = this.theEntity.world
 					.getClosestPlayerToEntity(this.theEntity, this.distance);
 			if (isValidTarget(entityplayer)) {
 				this.targetEntity = entityplayer;
@@ -50,7 +50,7 @@ public class EntityAISimpleTarget extends EntityAIBase {
 			}
 		}
 
-		List list = this.theEntity.worldObj.getEntitiesWithinAABB(
+		List list = this.theEntity.world.getEntitiesWithinAABB(
 				this.targetClass,
 				this.theEntity.getEntityBoundingBox().expand(this.distance,
 						this.distance / 2.0F, this.distance));

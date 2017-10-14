@@ -89,7 +89,7 @@ public class ItemSearingBow extends ItemBow {
 						player.inventory.decrStackSize(player.inventory.getSlotFor(new ItemStack(Items.ARROW)), 1);
 					}
 	
-					if (!worldIn.isRemote) worldIn.spawnEntityInWorld(var8);
+					if (!worldIn.isRemote) worldIn.spawnEntity(var8);
 				} else {
 					//EntityIMArrow var8 = new EntityIMArrow(worldIn, wielder, f * 2.0F);
 					EntityIMArrow var8 = new EntityIMArrow(worldIn, wielder);
@@ -97,7 +97,7 @@ public class ItemSearingBow extends ItemBow {
 	
 					var8.setFire(100);
 					var8.setDamage((var8.getDamage() + 1 * 0.5D + 0.5D) * 3 / 2 + 1);
-					if (!worldIn.isRemote) worldIn.spawnEntityInWorld(var8);
+					if (!worldIn.isRemote) worldIn.spawnEntity(var8);
 				}
 	
 				stackIn.damageItem(1, wielder);

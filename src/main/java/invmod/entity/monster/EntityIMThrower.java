@@ -64,7 +64,7 @@ public class EntityIMThrower extends EntityIMMob {
 
 	@Override
 	protected void initEntityAI() {
-		this.tasksIM = new EntityAITasks(this.worldObj.theProfiler);
+		this.tasksIM = new EntityAITasks(this.world.theProfiler);
 		this.tasksIM.addTask(0, new EntityAISwimming(this));
 		if(this.getTier() == 1){
 			this.tasksIM.addTask(1, new EntityAIThrowerKillEntity(this, EntityPlayer.class, 55, 60.0F, 1.0F));
@@ -82,7 +82,7 @@ public class EntityIMThrower extends EntityIMMob {
 		this.tasksIM.addTask(10, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
 		this.tasksIM.addTask(10, new EntityAILookIdle(this));
 
-		this.targetTasksIM = new EntityAITasks(this.worldObj.theProfiler);
+		this.targetTasksIM = new EntityAITasks(this.world.theProfiler);
 		this.targetTasksIM.addTask(1, new EntityAISimpleTarget(this, EntityPlayer.class, this.getSenseRange(), false));
 		this.targetTasksIM.addTask(2, new EntityAISimpleTarget(this, EntityPlayer.class, this.getAggroRange(), true));
 		this.targetTasksIM.addTask(3, new EntityAIHurtByTarget(this, false));
@@ -104,7 +104,7 @@ public class EntityIMThrower extends EntityIMMob {
 	public void knockBack(Entity par1Entity, float par2, double par3, double par5) {
 		if (this.getTier() == 2) return;
 		this.isAirBorne = true;
-		float f = MathHelper.sqrt_double(par3 * par3 + par5 * par5);
+		float f = MathHelper.sqrt(par3 * par3 + par5 * par5);
 		float f1 = 0.2F;
 		this.motionX /= 2.0D;
 		this.motionY /= 2.0D;
@@ -209,8 +209,8 @@ public class EntityIMThrower extends EntityIMMob {
 			int x = this.pointToClear.getX()+1;
 			int y = this.pointToClear.getY();
 			int z = this.pointToClear.getZ();
-			int mobX = MathHelper.floor_double(this.posX);
-			int mobZ = MathHelper.floor_double(this.posZ);
+			int mobX = MathHelper.floor(this.posX);
+			int mobZ = MathHelper.floor(this.posZ);
 			int xOffsetR = 0;
 			int zOffsetR = 0;
 			int axisX = 0;
@@ -233,16 +233,16 @@ public class EntityIMThrower extends EntityIMMob {
 				xOffsetR = -1;
 				axisZ = 1;
 			}
-			IBlockState blockState = this.worldObj.getBlockState(new BlockPos(x, y, z));
-			IBlockState blockState0 = this.worldObj.getBlockState(new BlockPos(x, y + 1, z));
-			IBlockState blockState1 = this.worldObj.getBlockState(new BlockPos(x + xOffsetR, y, z + zOffsetR));
-			IBlockState blockState2 = this.worldObj.getBlockState(new BlockPos(x + xOffsetR, y + 1, z + zOffsetR));
+			IBlockState blockState = this.world.getBlockState(new BlockPos(x, y, z));
+			IBlockState blockState0 = this.world.getBlockState(new BlockPos(x, y + 1, z));
+			IBlockState blockState1 = this.world.getBlockState(new BlockPos(x + xOffsetR, y, z + zOffsetR));
+			IBlockState blockState2 = this.world.getBlockState(new BlockPos(x + xOffsetR, y + 1, z + zOffsetR));
 			
-			IBlockState blockState3 = this.worldObj.getBlockState(new BlockPos(x - axisX, y + 1, z - axisZ));
-			IBlockState blockState4 = this.worldObj.getBlockState(new BlockPos(x - axisX + xOffsetR, y + 1, z - axisZ + zOffsetR));
+			IBlockState blockState3 = this.world.getBlockState(new BlockPos(x - axisX, y + 1, z - axisZ));
+			IBlockState blockState4 = this.world.getBlockState(new BlockPos(x - axisX + xOffsetR, y + 1, z - axisZ + zOffsetR));
 			
-			IBlockState blockState5 = this.worldObj.getBlockState(new BlockPos(x - 2 * axisX, y + 1, z - 2 * axisZ));
-			IBlockState blockState6 = this.worldObj.getBlockState(new BlockPos(x - 2 * axisX + xOffsetR, y + 1, z - 2 * axisZ + zOffsetR));
+			IBlockState blockState5 = this.world.getBlockState(new BlockPos(x - 2 * axisX, y + 1, z - 2 * axisZ));
+			IBlockState blockState6 = this.world.getBlockState(new BlockPos(x - 2 * axisX + xOffsetR, y + 1, z - 2 * axisZ + zOffsetR));
 			
 			if (((blockState.getBlock() != null) && (blockState.getMaterial().isSolid()))
 					|| ((blockState0.getBlock() != null) && (blockState0.getMaterial().isSolid()))
@@ -275,18 +275,18 @@ public class EntityIMThrower extends EntityIMMob {
 	}
 	
 	protected void tryDestroyBlock(BlockPos pos){
-		Block block = this.worldObj.getBlockState(pos).getBlock();
+		Block block = this.world.getBlockState(pos).getBlock();
 		//if ((block != null) && ((isNexusBound()) || (this.j != null))) {
 		if ((block != null) || (this.entity != null)) {
 			if ((block == BlocksAndItems.blockNexus) && (pos.equals(this.targetNexus.getPos()))) {
 				this.targetNexus.attackNexus(5);
 			} else if (block != BlocksAndItems.blockNexus) {
-				IBlockState blockState = this.worldObj.getBlockState(pos);
-				this.worldObj.setBlockToAir(pos);
-				block.onBlockDestroyedByPlayer(this.worldObj, pos, blockState);
+				IBlockState blockState = this.world.getBlockState(pos);
+				this.world.setBlockToAir(pos);
+				block.onBlockDestroyedByPlayer(this.world, pos, blockState);
 				
 				if(Config.DROP_DESTRUCTED_BLOCKS){
-					block.dropBlockAsItem(this.worldObj, pos, blockState, 0);
+					block.dropBlockAsItem(this.world, pos, blockState, 0);
 				}
 				if (this.throttled == 0) {
 					this.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE, 1f, 4f);
@@ -316,21 +316,21 @@ public class EntityIMThrower extends EntityIMMob {
 		float launchSpeed = 1.0F;
 		double dX = entityX - this.posX;
 		double dZ = entityZ - this.posZ;
-		double dXY = MathHelper.sqrt_double(dX * dX + dZ * dZ);
+		double dXY = MathHelper.sqrt(dX * dX + dZ * dZ);
 
 		if ((0.025D * dXY / (launchSpeed * launchSpeed) <= 1.0D)) {
-			EntityIMBoulder entityBoulder = new EntityIMBoulder(this.worldObj, this, launchSpeed);
+			EntityIMBoulder entityBoulder = new EntityIMBoulder(this.world, this, launchSpeed);
 			double dY = entityY - entityBoulder.posY;
 			double angle = 0.5D * Math.asin(0.025D * dXY / (launchSpeed * launchSpeed));
 			dY += dXY * Math.tan(angle);
 			entityBoulder.setBoulderHeading(dX, dY, dZ, launchSpeed, 0.05F);
-			this.worldObj.spawnEntityInWorld(entityBoulder);
+			this.world.spawnEntity(entityBoulder);
 		} else if (forced) {
-			EntityIMBoulder entityBoulder = new EntityIMBoulder(this.worldObj, this, launchSpeed);
+			EntityIMBoulder entityBoulder = new EntityIMBoulder(this.world, this, launchSpeed);
 			double dY = entityY - entityBoulder.posY;
 			dY += dXY * Math.tan(0.7853981633974483D);
 			entityBoulder.setBoulderHeading(dX, dY, dZ, launchSpeed, 0.05F);
-			this.worldObj.spawnEntityInWorld(entityBoulder);
+			this.world.spawnEntity(entityBoulder);
 		}
 		
 	}
@@ -340,14 +340,14 @@ public class EntityIMThrower extends EntityIMMob {
 		float launchSpeed = 1.0F;
 		double dX = entityX - this.posX;
 		double dZ = entityZ - this.posZ;
-		double dXY = MathHelper.sqrt_double(dX * dX + dZ * dZ);
+		double dXY = MathHelper.sqrt(dX * dX + dZ * dZ);
 		double p = 0.025D * dXY / (launchSpeed * launchSpeed);
 		double angle = p <= 1.0D ? 0.5D * p : 0.7853981633974483D;
-		EntityIMBoulder entityBoulder = new EntityIMBoulder(this.worldObj, this, launchSpeed);
+		EntityIMBoulder entityBoulder = new EntityIMBoulder(this.world, this, launchSpeed);
 		double dY = entityY - entityBoulder.posY;
 		dY += dXY * Math.tan(angle);
 		entityBoulder.setBoulderHeading(dX, dY, dZ, launchSpeed, 0.05F);
-		this.worldObj.spawnEntityInWorld(entityBoulder);
+		this.world.spawnEntity(entityBoulder);
 	}
 	
 	public void throwTNT(double entityX, double entityY, double entityZ) {
@@ -355,14 +355,14 @@ public class EntityIMThrower extends EntityIMMob {
 		float launchSpeed = 1.0F;
 		double dX = entityX - this.posX;
 		double dZ = entityZ - this.posZ;
-		double dXY = MathHelper.sqrt_double(dX * dX + dZ * dZ);
+		double dXY = MathHelper.sqrt(dX * dX + dZ * dZ);
 		double p = 0.025D * dXY / (launchSpeed * launchSpeed);
 		double angle = p <= 1.0D ? 0.5D * p : 0.7853981633974483D;
-		EntityIMPrimedTNT entityTNT = new EntityIMPrimedTNT(this.worldObj, this, launchSpeed);
+		EntityIMPrimedTNT entityTNT = new EntityIMPrimedTNT(this.world, this, launchSpeed);
 		double dY = entityY - entityTNT.posY;
 		dY += dXY * Math.tan(angle);
 		entityTNT.setBoulderHeading(dX, dY, dZ, launchSpeed, 0.05F);
-		this.worldObj.spawnEntityInWorld(entityTNT);
+		this.world.spawnEntity(entityTNT);
 	}
 
 	@Override

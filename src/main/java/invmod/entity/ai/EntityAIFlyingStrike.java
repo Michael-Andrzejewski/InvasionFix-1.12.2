@@ -55,7 +55,7 @@ public void updateTask()
     }
 
     float pE = flyByChance + tackleChance + pickUpChance;
-    float r = this.theEntity.worldObj.rand.nextFloat();
+    float r = this.theEntity.world.rand.nextFloat();
     if (r <= flyByChance / pE)
     {
       doFlyByAttack(target);

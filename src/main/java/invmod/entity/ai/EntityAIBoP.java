@@ -99,7 +99,7 @@ public class EntityAIBoP extends EntityAIBase
   {
     if (this.theEntity.getMoveState() != MoveState.FLYING)
     {
-      if ((this.theEntity.getDistanceToEntity(target) < 10.0F) && (this.theEntity.worldObj.rand.nextFloat() > 0.3F))
+      if ((this.theEntity.getDistanceToEntity(target) < 10.0F) && (this.theEntity.world.rand.nextFloat() > 0.3F))
       {
         this.theEntity.transitionAIGoal(Goal.MELEE_TARGET);
         return;

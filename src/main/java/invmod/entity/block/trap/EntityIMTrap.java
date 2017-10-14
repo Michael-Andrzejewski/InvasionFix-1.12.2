@@ -76,7 +76,7 @@ public class EntityIMTrap extends Entity {
 	public void onUpdate() {
 		super.onUpdate();
 		this.ticks += 1;
-		if (this.worldObj.isRemote) {
+		if (this.world.isRemote) {
 			/*if ((this.metaChanged != this.dataWatcher.getWatchableObjectByte(29)) || (this.ticks % 20 == 0)) {
 				this.metaChanged = this.dataWatcher.getWatchableObjectByte(29);
 				this.trapType = this.dataWatcher.getWatchableObjectInt(30);
@@ -94,18 +94,18 @@ public class EntityIMTrap extends Entity {
 		}
 
 		if (!isValidPlacement()) {
-			EntityItem entityitem = new EntityItem(this.worldObj, this.posX,
+			EntityItem entityitem = new EntityItem(this.world, this.posX,
 					this.posY, this.posZ, new ItemStack(BlocksAndItems.itemEmptyTrap, 1));
 			entityitem.setDefaultPickupDelay();
-			this.worldObj.spawnEntityInWorld(entityitem);
+			this.world.spawnEntity(entityitem);
 			setDead();
 		}
 
-		if ((this.worldObj.isRemote) || ((!this.isEmpty) && (this.ticks < 60))) {
+		if ((this.world.isRemote) || ((!this.isEmpty) && (this.ticks < 60))) {
 			return;
 		}
 
-		List<EntityLivingBase> entities = this.worldObj.getEntitiesWithinAABB(
+		List<EntityLivingBase> entities = this.world.getEntitiesWithinAABB(
 				EntityLivingBase.class, this.getEntityBoundingBox());
 		if ((entities.size() > 0) && (!this.isEmpty)) {
 			for (EntityLivingBase entity : entities) {
@@ -127,7 +127,7 @@ public class EntityIMTrap extends Entity {
 			triggerEntity.attackEntityFrom(DamageSource.magic,
 					(triggerEntity instanceof EntityPlayer) ? 12.0F : 38.0F);
 
-			List<Entity> entities = this.worldObj.getEntitiesWithinAABBExcludingEntity(this,
+			List<Entity> entities = this.world.getEntitiesWithinAABBExcludingEntity(this,
 					this.getEntityBoundingBox().expand(1.899999976158142D, 1.0D, 1.899999976158142D));
 			for (Entity entity : entities) {
 				entity.attackEntityFrom(DamageSource.magic, 8.0F);
@@ -135,11 +135,11 @@ public class EntityIMTrap extends Entity {
 					((EntityIMMob) entity).stunEntity(60);
 				}
 			}
-			//this.worldObj.playSoundAtEntity(this, "random.break", 1.5F,1.0F * (this.rand.nextFloat() * 0.25F + 0.55F));
+			//this.world.playSoundAtEntity(this, "random.break", 1.5F,1.0F * (this.rand.nextFloat() * 0.25F + 0.55F));
 			this.playSound(SoundEvents.ENTITY_ITEM_BREAK, 1.5f, this.rand.nextFloat() * 0.25f + 0.55f);
 			break;
 		case 2:
-			//this.worldObj.playSoundAtEntity(this, "mod_invasion:fireball" + 1, 1.5F,1.15F / (this.rand.nextFloat() * 0.3F + 1.0F));
+			//this.world.playSoundAtEntity(this, "mod_invasion:fireball" + 1, 1.5F,1.15F / (this.rand.nextFloat() * 0.3F + 1.0F));
 			this.playSound(SoundHandler.fireball1, 1.5f, 1.15f / (this.rand.nextFloat() * 0.3f + 1f));
 			this.doFireball(1.1F, 8);
 			break;
@@ -154,9 +154,9 @@ public class EntityIMTrap extends Entity {
 
 	@Override
 	public void onCollideWithPlayer(EntityPlayer entityPlayer) {
-		if ((!this.worldObj.isRemote) && (this.ticks > 30) && (this.isEmpty)) {
+		if ((!this.world.isRemote) && (this.ticks > 30) && (this.isEmpty)) {
 			if (entityPlayer.inventory.addItemStackToInventory(new ItemStack(BlocksAndItems.itemEmptyTrap, 1))) {
-				//this.worldObj.playSoundAtEntity(this, "random.pop", 0.2F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+				//this.world.playSoundAtEntity(this, "random.pop", 0.2F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
 				this.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 0.2f, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7f + 1f) * 2f);
 				entityPlayer.onItemPickup(this, 1);
 				this.setDead();
@@ -167,7 +167,7 @@ public class EntityIMTrap extends Entity {
 	@Override
 	//public boolean interactFirst(EntityPlayer entityPlayer) {
 	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, @Nullable ItemStack stack, EnumHand hand){
-		if ((this.worldObj.isRemote) || (this.isEmpty)) return EnumActionResult.FAIL;
+		if ((this.world.isRemote) || (this.isEmpty)) return EnumActionResult.FAIL;
 		ItemStack curItem = player.inventory.getCurrentItem();
 		if ((curItem != null) && (curItem.getItem() == BlocksAndItems.itemProbe) && (curItem.getItemDamage() >= 1)) {
 			Item item = BlocksAndItems.itemEmptyTrap;
@@ -179,9 +179,9 @@ public class EntityIMTrap extends Entity {
 			default: break;
 			}
 			
-			EntityItem entityitem = new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, new ItemStack(item, 1));
+			EntityItem entityitem = new EntityItem(this.world, this.posX, this.posY, this.posZ, new ItemStack(item, 1));
 			entityitem.setPickupDelay(5);
-			this.worldObj.spawnEntityInWorld(entityitem);
+			this.world.spawnEntity(entityitem);
 			this.setDead();
 			return EnumActionResult.SUCCESS;
 		}
@@ -197,9 +197,9 @@ public class EntityIMTrap extends Entity {
 	}
 
 	public boolean isValidPlacement() {
-		return (this.worldObj.getBlockState(new BlockPos(MathHelper.floor_double(this.posX),
-					MathHelper.floor_double(this.posY) - 1,
-					MathHelper.floor_double(this.posZ))).isNormalCube() && (this.worldObj.getEntitiesWithinAABB(
+		return (this.world.getBlockState(new BlockPos(MathHelper.floor(this.posX),
+					MathHelper.floor(this.posY) - 1,
+					MathHelper.floor(this.posZ))).isNormalCube() && (this.world.getEntitiesWithinAABB(
 				EntityIMTrap.class, this.getEntityBoundingBox()).size() < 2));
 	}
 
@@ -248,24 +248,24 @@ public class EntityIMTrap extends Entity {
 	}
 
 	private void doFireball(float size, int initialDamage) {
-		int x = MathHelper.floor_double(this.posX);
-		int y = MathHelper.floor_double(this.posY);
-		int z = MathHelper.floor_double(this.posZ);
+		int x = MathHelper.floor(this.posX);
+		int y = MathHelper.floor(this.posY);
+		int z = MathHelper.floor(this.posZ);
 		int min = 0 - (int) size;
 		int max = 0 + (int) size;
 		for (int i = min; i <= max; i++) {
 			for (int j = min; j <= max; j++) {
 				for (int k = min; k <= max; k++) {
-					if ((this.worldObj.isAirBlock(new BlockPos(x + i, y + j, z + k)))
-							|| (this.worldObj.getBlockState(new BlockPos(x + i, y + j, z + k)).getMaterial().getCanBurn())) {
-						this.worldObj.setBlockState(new BlockPos(x + i, y + j,
+					if ((this.world.isAirBlock(new BlockPos(x + i, y + j, z + k)))
+							|| (this.world.getBlockState(new BlockPos(x + i, y + j, z + k)).getMaterial().getCanBurn())) {
+						this.world.setBlockState(new BlockPos(x + i, y + j,
 								z + k), Blocks.FIRE.getDefaultState());
 					}
 				}
 			}
 		}
 
-		List<Entity> entities = this.worldObj .getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(size, size, size));
+		List<Entity> entities = this.world .getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(size, size, size));
 		for (Entity entity : entities) {
 			entity.setFire(8);
 			entity.attackEntityFrom(DamageSource.onFire, initialDamage);
@@ -276,7 +276,7 @@ public class EntityIMTrap extends Entity {
 		for (int i = 0; i < 300; i++) {
 			float x = this.rand.nextFloat() * 6.0F - 3.0F;
 			float z = this.rand.nextFloat() * 6.0F - 3.0F;
-			this.worldObj.spawnParticle(EnumParticleTypes.PORTAL,
+			this.world.spawnParticle(EnumParticleTypes.PORTAL,
 					this.posX + x, this.posY + 2.0D, this.posZ + z, -x / 3.0F,
 					-2.0D, -z / 3.0F);
 		}

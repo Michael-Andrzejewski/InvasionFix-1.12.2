@@ -54,7 +54,7 @@ public class EntityIMWolf extends EntityWolf {
 	}
 
 	public EntityIMWolf(EntityWolf wolf, TileEntityNexus nexus){
-		this(wolf.worldObj, nexus);
+		this(wolf.world, nexus);
 		this.loadedFromNBT = false;
 		this.setPositionAndRotation(wolf.posX, wolf.posY, wolf.posZ, wolf.rotationYaw, wolf.rotationPitch);
 		//this.dataWatcher.updateObject(16, Byte.valueOf(wolf.getDataWatcher().getWatchableObjectByte(16)));
@@ -99,7 +99,7 @@ public class EntityIMWolf extends EntityWolf {
 			this.checkNexus();
 		}
 
-		if ((!this.worldObj.isRemote) && (this.updateTimer++ > 40)) this.checkNexus();
+		if ((!this.world.isRemote) && (this.updateTimer++ > 40)) this.checkNexus();
 	}
 
 	@Override
@@ -147,11 +147,11 @@ public class EntityIMWolf extends EntityWolf {
 		this.deathTime += 1;
 		if (this.deathTime == 120){
 			int i;
-			if ((!this.worldObj.isRemote) && ((this.recentlyHit > 0) || (isPlayer())) && (!isChild())){
+			if ((!this.world.isRemote) && ((this.recentlyHit > 0) || (isPlayer())) && (!isChild())){
 				for (i = getExperiencePoints(this.attackingPlayer); i > 0; ){
 					int k = EntityXPOrb.getXPSplit(i);
 					i -= k;
-					this.worldObj.spawnEntityInWorld(new EntityXPOrb(this.worldObj, this.posX, this.posY, this.posZ, k));
+					this.world.spawnEntity(new EntityXPOrb(this.world, this.posX, this.posY, this.posZ, k));
 				}
 			}
 
@@ -160,7 +160,7 @@ public class EntityIMWolf extends EntityWolf {
 				double d = this.rand.nextGaussian() * 0.02D;
 				double d1 = this.rand.nextGaussian() * 0.02D;
 				double d2 = this.rand.nextGaussian() * 0.02D;
-				this.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX + this.rand.nextFloat() * this.width * 2.0F - this.width, this.posY + this.rand.nextFloat() * this.height, this.posZ + this.rand.nextFloat() * this.width * 2.0F - this.width, d, d1, d2);
+				this.world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX + this.rand.nextFloat() * this.width * 2.0F - this.width, this.posY + this.rand.nextFloat() * this.height, this.posZ + this.rand.nextFloat() * this.width * 2.0F - this.width, d, d1, d2);
 			}
 		}
 	}
@@ -180,12 +180,12 @@ public class EntityIMWolf extends EntityWolf {
 	}
 
 	public void setEntityHealth(float par1){
-		//this.dataWatcher.updateObject(6, Float.valueOf(MathHelper.clamp_float(par1, 0.0F, getMaxHealth())));
-		this.getDataManager().set(HEALTH, MathHelper.clamp_float(par1, 0f, this.getMaxHealth()));
+		//this.dataWatcher.updateObject(6, Float.valueOf(MathHelper.clamp(par1, 0.0F, getMaxHealth())));
+		this.getDataManager().set(HEALTH, MathHelper.clamp(par1, 0f, this.getMaxHealth()));
 	}
 
 	public boolean respawnAtNexus(){
-		if ((!this.worldObj.isRemote) && ( this.getDataManager().get(NEXUS_BOUND) /*this.dataWatcher.getWatchableObjectByte(30) == 1*/) && (this.nexus != null)){
+		if ((!this.world.isRemote) && ( this.getDataManager().get(NEXUS_BOUND) /*this.dataWatcher.getWatchableObjectByte(30) == 1*/) && (this.nexus != null)){
 			EntityIMWolf wolfRecreation = new EntityIMWolf(this, this.nexus);
 
 			int x = this.nexus.getPos().getX();
@@ -207,7 +207,7 @@ public class EntityIMWolf extends EntityWolf {
 				SpawnPoint point = (SpawnPoint)spawnPoints.get(spawnPoints.size() / 2);
 				wolfRecreation.setPosition(point.getPos().getX() + 0.5D, point.getPos().getY(), point.getPos().getZ() + 0.5D);
 				wolfRecreation.heal(60.0F);
-				this.worldObj.spawnEntityInWorld(wolfRecreation);
+				this.world.spawnEntity(wolfRecreation);
 				return true;
 			}
 		}
@@ -217,7 +217,7 @@ public class EntityIMWolf extends EntityWolf {
 
 	@Override
 	public boolean getCanSpawnHere(){
-		return (this.worldObj.checkNoEntityCollision(this.getEntityBoundingBox())) && (this.worldObj.getCollisionBoxes(this, this.getEntityBoundingBox()).size() == 0) && (!this.worldObj.containsAnyLiquid(this.getEntityBoundingBox()));
+		return (this.world.checkNoEntityCollision(this.getEntityBoundingBox())) && (this.world.getCollisionBoxes(this, this.getEntityBoundingBox()).size() == 0) && (!this.world.containsAnyLiquid(this.getEntityBoundingBox()));
 	}
 
 //	@Override
@@ -287,9 +287,9 @@ public class EntityIMWolf extends EntityWolf {
 	}
 
 	private void checkNexus(){
-		if ((this.worldObj != null) && (this.getDataManager().get(NEXUS_BOUND))){
-			if (this.worldObj.getBlockState(this.nexusPos).getBlock() == BlocksAndItems.blockNexus) {
-				this.nexus = ((TileEntityNexus)this.worldObj.getTileEntity(this.nexusPos));
+		if ((this.world != null) && (this.getDataManager().get(NEXUS_BOUND))){
+			if (this.world.getBlockState(this.nexusPos).getBlock() == BlocksAndItems.blockNexus) {
+				this.nexus = ((TileEntityNexus)this.world.getTileEntity(this.nexusPos));
 			}
 			if (this.nexus == null) this.getDataManager().set(NEXUS_BOUND, false);
 		}
@@ -297,14 +297,14 @@ public class EntityIMWolf extends EntityWolf {
 
 	private TileEntityNexus findNexus(){
 		TileEntityNexus nexus = null;
-		int x = MathHelper.floor_double(this.posX);
-		int y = MathHelper.floor_double(this.posY);
-		int z = MathHelper.floor_double(this.posZ);
+		int x = MathHelper.floor(this.posX);
+		int y = MathHelper.floor(this.posY);
+		int z = MathHelper.floor(this.posZ);
 		for (int i = -7; i < 8; i++){
 			for (int j = -4; j < 5; j++){
 				for (int k = -7; k < 8; k++){
-					if (this.worldObj.getBlockState(new BlockPos(x + i, y + j, z + k)).getBlock() == BlocksAndItems.blockNexus){
-						nexus = (TileEntityNexus)this.worldObj.getTileEntity(new BlockPos(x + i, y + j, z + k));
+					if (this.world.getBlockState(new BlockPos(x + i, y + j, z + k)).getBlock() == BlocksAndItems.blockNexus){
+						nexus = (TileEntityNexus)this.world.getTileEntity(new BlockPos(x + i, y + j, z + k));
 						break;
 					}
 				}

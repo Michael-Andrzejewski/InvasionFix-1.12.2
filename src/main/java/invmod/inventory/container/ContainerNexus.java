@@ -125,7 +125,7 @@ public class ContainerNexus extends Container {
 
 	@Override
 	public boolean canInteractWith(EntityPlayer entityplayer) {
-		return this.nexus.isUseableByPlayer(entityplayer);
+		return this.nexus.isUsableByPlayer(entityplayer);
 	}
 
 	@Override

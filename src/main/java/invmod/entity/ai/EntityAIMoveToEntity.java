@@ -87,18 +87,18 @@ public class EntityAIMoveToEntity<T extends EntityLivingBase> extends EntityAIBa
 	protected void setPath() {
 		if (this.theEntity.getNavigatorNew().tryMoveToEntity(this.targetEntity, 0.0F, this.theEntity.getMoveSpeedStat())) {
 			if (this.theEntity.getNavigatorNew().getLastPathDistanceToTarget() > 3.0F) {
-				this.pathRequestTimer = (30 + this.theEntity.worldObj.rand.nextInt(10));
+				this.pathRequestTimer = (30 + this.theEntity.world.rand.nextInt(10));
 				if (this.theEntity.getNavigatorNew().getPath().getCurrentPathLength() > 2)
 					this.pathFailedCount = 0;
 				else
 					this.pathFailedCount += 1;
 			} else {
-				this.pathRequestTimer = (10 + this.theEntity.worldObj.rand.nextInt(10));
+				this.pathRequestTimer = (10 + this.theEntity.world.rand.nextInt(10));
 				this.pathFailedCount = 0;
 			}
 		} else {
 			this.pathFailedCount += 1;
-			this.pathRequestTimer = (40 * this.pathFailedCount + this.theEntity.worldObj.rand.nextInt(10));
+			this.pathRequestTimer = (40 * this.pathFailedCount + this.theEntity.world.rand.nextInt(10));
 		}
 
 		this.lastX = this.targetEntity.posX;

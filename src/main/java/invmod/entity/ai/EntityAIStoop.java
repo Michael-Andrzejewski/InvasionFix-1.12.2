@@ -19,7 +19,7 @@ public class EntityAIStoop extends EntityAIBase {
 	public boolean shouldExecute(){
 		if (--this.updateTimer <= 0){
 			this.updateTimer = 10;
-			if (this.theEntity.worldObj.getBlockState(this.theEntity.getPosition().up(2)).getMaterial().blocksMovement()) {
+			if (this.theEntity.world.getBlockState(this.theEntity.getPosition().up(2)).getMaterial().blocksMovement()) {
 				return true;
 			}
 		}
@@ -41,7 +41,7 @@ public class EntityAIStoop extends EntityAIBase {
 	public void updateTask(){
 		if (--this.updateTimer <= 0){
 			this.updateTimer = 10;
-			if (!this.theEntity.worldObj.getBlockState(this.theEntity.getPosition().up()).getMaterial().blocksMovement()){
+			if (!this.theEntity.world.getBlockState(this.theEntity.getPosition().up()).getMaterial().blocksMovement()){
 				this.theEntity.setSneaking(false);
 				this.stopStoop = true;
 			}

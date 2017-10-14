@@ -35,28 +35,28 @@ public class EntityAIKillWithArrow<T extends EntityLivingBase> extends EntityAIK
 	@Override
 	protected void attackEntity(Entity target) {
 		this.setAttackTime(getAttackDelay());
-		//EntityArrow entityarrow = new EntityArrow(entity.worldObj, entity, getTarget(), 1.1F, 12.0F);
-		//this.getEntity().worldObj.playSoundAtEntity(this.getEntity(), "random.bow", 1.0F, 1.0F / (this.getEntity().getRNG().nextFloat() * 0.4F + 0.8F));
+		//EntityArrow entityarrow = new EntityArrow(entity.world, entity, getTarget(), 1.1F, 12.0F);
+		//this.getEntity().world.playSoundAtEntity(this.getEntity(), "random.bow", 1.0F, 1.0F / (this.getEntity().getRNG().nextFloat() * 0.4F + 0.8F));
 		
 		float bowCharge = ItemBow.getArrowVelocity(20);
 		
 		//Copied from EntitySkeleton.attackEntityWithRangedAttack()
-		EntityTippedArrow arrow = new EntityTippedArrow(this.getEntity().worldObj, this.getEntity());
+		EntityTippedArrow arrow = new EntityTippedArrow(this.getEntity().world, this.getEntity());
 		double d0 = this.getTarget().posX - this.getEntity().posX;
 		double d1 = this.getTarget().getEntityBoundingBox().minY + (double)(this.getTarget().height / 3f) - arrow.posY;
 		double d2 = this.getTarget().posZ - this.getEntity().posZ;
-		double d3 = (double)MathHelper.sqrt_double(d0 * d0 + d2 * d2);
-		arrow.setThrowableHeading(d0, d1 + d3 * 0.20000000298023224D, d2, 1.6F, (float)(14 - this.getEntity().worldObj.getDifficulty().getDifficultyId() * 4));
+		double d3 = (double)MathHelper.sqrt(d0 * d0 + d2 * d2);
+		arrow.setThrowableHeading(d0, d1 + d3 * 0.20000000298023224D, d2, 1.6F, (float)(14 - this.getEntity().world.getDifficulty().getDifficultyId() * 4));
 		
 		int i = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.POWER, this.getEntity());
 		int j = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.PUNCH, this.getEntity());
-		DifficultyInstance difficultyinstance = this.getEntity().worldObj.getDifficultyForLocation(new BlockPos(this.getEntity()));
-		arrow.setDamage((double)(bowCharge * 2.0F) + this.getEntity().getRNG().nextGaussian() * 0.25D + (double)((float)this.getEntity().worldObj.getDifficulty().getDifficultyId() * 0.11F));
+		DifficultyInstance difficultyinstance = this.getEntity().world.getDifficultyForLocation(new BlockPos(this.getEntity()));
+		arrow.setDamage((double)(bowCharge * 2.0F) + this.getEntity().getRNG().nextGaussian() * 0.25D + (double)((float)this.getEntity().world.getDifficulty().getDifficultyId() * 0.11F));
 
 		if (i > 0) arrow.setDamage(arrow.getDamage() + (double)i * 0.5D + 0.5D);
 		if (j > 0) arrow.setKnockbackStrength(j);
 
-		boolean flag = this.getEntity().isBurning() && difficultyinstance.func_190083_c() && this.getEntity().getRNG().nextBoolean();
+		boolean flag = this.getEntity().isBurning() && difficultyinstance.isHard() && this.getEntity().getRNG().nextBoolean();
 		flag = flag || EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.FLAME, this.getEntity()) > 0;
 
 		if (flag) arrow.setFire(100);
@@ -66,7 +66,7 @@ public class EntityAIKillWithArrow<T extends EntityLivingBase> extends EntityAIK
 		if (itemstack != null && itemstack.getItem() == Items.TIPPED_ARROW) arrow.setPotionEffect(itemstack);
 
 		this.getEntity().playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.0F / (this.getEntity().getRNG().nextFloat() * 0.4F + 0.8F));
-		this.getEntity().worldObj.spawnEntityInWorld(arrow);
+		this.getEntity().world.spawnEntity(arrow);
 	}
 
 	@Override

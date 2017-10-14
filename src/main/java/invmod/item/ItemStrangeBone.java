@@ -27,21 +27,21 @@ public class ItemStrangeBone extends ModItem {
 	
 	@Override
 	public boolean itemInteractionForEntity(ItemStack itemStack, EntityPlayer player, EntityLivingBase targetEntity, EnumHand hand){
-		if ((!targetEntity.worldObj.isRemote) && ((targetEntity instanceof EntityWolf)) && (!(targetEntity instanceof EntityIMWolf))){
+		if ((!targetEntity.world.isRemote) && ((targetEntity instanceof EntityWolf)) && (!(targetEntity instanceof EntityIMWolf))){
 			EntityWolf wolf = (EntityWolf)targetEntity;
 
 			if (wolf.isTamed()){
 				TileEntityNexus nexus = null;
-				int x = MathHelper.floor_double(wolf.posX);
-				int y = MathHelper.floor_double(wolf.posY);
-				int z = MathHelper.floor_double(wolf.posZ);
+				int x = MathHelper.floor(wolf.posX);
+				int y = MathHelper.floor(wolf.posY);
+				int z = MathHelper.floor(wolf.posZ);
 
 				for (int i = -7; i < 8; i++){
 					for (int j = -4; j < 5; j++){
 						for (int k = -7; k < 8; k++){
 							BlockPos newBlockPos = new BlockPos(x,y,z).add(i,j,k);
-							if (wolf.worldObj.getBlockState(newBlockPos).getBlock() == BlocksAndItems.blockNexus){
-								nexus = (TileEntityNexus)wolf.worldObj.getTileEntity(newBlockPos);
+							if (wolf.world.getBlockState(newBlockPos).getBlock() == BlocksAndItems.blockNexus){
+								nexus = (TileEntityNexus)wolf.world.getTileEntity(newBlockPos);
 								break;
 							}
 						}
@@ -50,11 +50,11 @@ public class ItemStrangeBone extends ModItem {
 
 				if (nexus != null){
 					EntityIMWolf newWolf = new EntityIMWolf(wolf, nexus);
-					wolf.worldObj.spawnEntityInWorld(newWolf);
+					wolf.world.spawnEntity(newWolf);
 					wolf.setDead();
 					itemStack.stackSize -= 1;
 				} else {
-					player.addChatMessage(new TextComponentTranslation("The wolf doesn't like this strange bone."));
+					player.sendMessage(new TextComponentTranslation("The wolf doesn't like this strange bone."));
 				}
 			}
 

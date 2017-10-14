@@ -80,7 +80,7 @@ public class EntityIMBurrower extends EntityIMMob implements ICanDig {
 
 	@Override
 	public IBlockAccess getTerrain() {
-		return this.worldObj;
+		return this.world;
 	}
 
 	public float getBlockPathCost(PathPoint prevNode, PathPoint node, IBlockAccess worldMap) {
@@ -88,12 +88,12 @@ public class EntityIMBurrower extends EntityIMMob implements ICanDig {
 
 		float penalty = 0.0F;
 		int enclosedLevelSide = 0;
-		if (!this.worldObj.getBlockState(new BlockPos(node.xCoord, node.yCoord - 1, node.zCoord)).isNormalCube()) penalty += 0.3F;
-		if (!this.worldObj.getBlockState(new BlockPos(node.xCoord, node.yCoord + 1, node.zCoord)).isNormalCube()) penalty += 2.0F;
-		if (!this.worldObj.getBlockState(new BlockPos(node.xCoord + 1, node.yCoord, node.zCoord)).isNormalCube()) enclosedLevelSide++;
-		if (!this.worldObj.getBlockState(new BlockPos(node.xCoord - 1, node.yCoord, node.zCoord)).isNormalCube()) enclosedLevelSide++;
-		if (!this.worldObj.getBlockState(new BlockPos(node.xCoord, node.yCoord, node.zCoord + 1)).isNormalCube()) enclosedLevelSide++;
-		if (!this.worldObj.getBlockState(new BlockPos(node.xCoord, node.yCoord, node.zCoord - 1)).isNormalCube()) enclosedLevelSide++;
+		if (!this.world.getBlockState(new BlockPos(node.xCoord, node.yCoord - 1, node.zCoord)).isNormalCube()) penalty += 0.3F;
+		if (!this.world.getBlockState(new BlockPos(node.xCoord, node.yCoord + 1, node.zCoord)).isNormalCube()) penalty += 2.0F;
+		if (!this.world.getBlockState(new BlockPos(node.xCoord + 1, node.yCoord, node.zCoord)).isNormalCube()) enclosedLevelSide++;
+		if (!this.world.getBlockState(new BlockPos(node.xCoord - 1, node.yCoord, node.zCoord)).isNormalCube()) enclosedLevelSide++;
+		if (!this.world.getBlockState(new BlockPos(node.xCoord, node.yCoord, node.zCoord + 1)).isNormalCube()) enclosedLevelSide++;
+		if (!this.world.getBlockState(new BlockPos(node.xCoord, node.yCoord, node.zCoord - 1)).isNormalCube()) enclosedLevelSide++;
 
 		if (enclosedLevelSide > 2) enclosedLevelSide = 2;
 		penalty += enclosedLevelSide * 0.5F;
@@ -109,8 +109,8 @@ public class EntityIMBurrower extends EntityIMMob implements ICanDig {
 
 	@Override
 	public boolean canClearBlock(BlockPos pos) {
-		IBlockState blockState = this.worldObj.getBlockState(pos);
-		return (blockState.getBlock() == Blocks.AIR) || (this.isBlockDestructible(this.worldObj, pos, blockState));
+		IBlockState blockState = this.world.getBlockState(pos);
+		return (blockState.getBlock() == Blocks.AIR) || (this.isBlockDestructible(this.world, pos, blockState));
 	}
 
 	@Override
@@ -191,7 +191,7 @@ public class EntityIMBurrower extends EntityIMMob implements ICanDig {
 		if (this.isInWater()) {
 			double y = this.posY;
 			moveFlying(x, z, 0.02F);
-			moveEntity(this.motionX, this.motionY, this.motionZ);
+			setVelocity(this.motionX, this.motionY, this.motionZ);
 			this.motionX *= 0.8D;
 			this.motionY *= 0.8D;
 			this.motionZ *= 0.8D;
@@ -200,7 +200,7 @@ public class EntityIMBurrower extends EntityIMMob implements ICanDig {
 		} else if (this.isInLava()) {
 			double y = this.posY;
 			moveFlying(x, z, 0.02F);
-			moveEntity(this.motionX, this.motionY, this.motionZ);
+			setVelocity(this.motionX, this.motionY, this.motionZ);
 			this.motionX *= 0.5D;
 			this.motionY *= 0.5D;
 			this.motionZ *= 0.5D;
@@ -210,13 +210,13 @@ public class EntityIMBurrower extends EntityIMMob implements ICanDig {
 			float groundFriction = 1.0F;
 			if (this.onGround) {
 				groundFriction = 0.546F;
-				Block block = this.worldObj
+				Block block = this.world
 						.getBlockState(
 								new BlockPos(
-										MathHelper.floor_double(this.posX),
-										MathHelper.floor_double(this
+										MathHelper.floor(this.posX),
+										MathHelper.floor(this
 												.getEntityBoundingBox().minY) - 1,
-										MathHelper.floor_double(this.posZ)))
+										MathHelper.floor(this.posZ)))
 						.getBlock();
 				if (block != Blocks.AIR) {
 					groundFriction = block.slipperiness * 0.91F;
@@ -241,7 +241,7 @@ public class EntityIMBurrower extends EntityIMMob implements ICanDig {
 					this.motionY = 0.0D;
 				}
 			}
-			moveEntity(this.motionX, this.motionY, this.motionZ);
+			setVelocity(this.motionX, this.motionY, this.motionZ);
 			if ((this.isCollidedHorizontally) && (isOnLadder())) {
 				this.motionY = 0.2D;
 			}
@@ -256,7 +256,7 @@ public class EntityIMBurrower extends EntityIMMob implements ICanDig {
 		this.prevLimbSwingAmount = this.limbSwingAmount;
 		double dX = this.posX - this.prevPosX;
 		double dZ = this.posZ - this.prevPosZ;
-		float f4 = MathHelper.sqrt_double(dX * dX + dZ * dZ) * 4.0F;
+		float f4 = MathHelper.sqrt(dX * dX + dZ * dZ) * 4.0F;
 
 		if (f4 > 1.0F) {
 			f4 = 1.0F;

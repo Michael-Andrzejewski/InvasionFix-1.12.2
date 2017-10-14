@@ -56,7 +56,7 @@ public class EntityIMGiantBird extends EntityIMBird {
 	@Override
 	public void onUpdate(){
 		super.onUpdate();
-		if ((getDebugMode() == 1) && (!this.worldObj.isRemote)){
+		if ((getDebugMode() == 1) && (!this.world.isRemote)){
 			setRenderLabel(getAIGoal() + "\n" + getNavString());
 		}
 	}
@@ -109,10 +109,10 @@ public class EntityIMGiantBird extends EntityIMBird {
 
 	@Override
 	public void doScreech(){
-		if (!this.worldObj.isRemote){
-			//this.worldObj.playSoundAtEntity(this, "invmod:v_screech"+(rand.nextInt(2)+1), 6.0F, 1.0F + (this.rand.nextFloat() * 0.2F - 0.1F));
+		if (!this.world.isRemote){
+			//this.world.playSoundAtEntity(this, "invmod:v_screech"+(rand.nextInt(2)+1), 6.0F, 1.0F + (this.rand.nextFloat() * 0.2F - 0.1F));
 			this.playSound(this.rand.nextBoolean() ? SoundHandler.v_screech1 : SoundHandler.v_screech2, 6.0F, 1.0F + (this.rand.nextFloat() * 0.2F - 0.1F));
-			this.worldObj.setEntityState(this, (byte)10);
+			this.world.setEntityState(this, (byte)10);
 		} else {
 			this.setBeakState(35);
 		}
@@ -130,10 +130,10 @@ public class EntityIMGiantBird extends EntityIMBird {
 
 	@Override
 	protected void doDeathSound(){
-		if (!this.worldObj.isRemote){
-			//this.worldObj.playSoundAtEntity(this, "invmod:v_death1", 1.9F, 1.0F + (this.rand.nextFloat() * 0.2F - 0.1F));
+		if (!this.world.isRemote){
+			//this.world.playSoundAtEntity(this, "invmod:v_death1", 1.9F, 1.0F + (this.rand.nextFloat() * 0.2F - 0.1F));
 			this.playSound(SoundHandler.v_death1, 1.9F, 1.0F + (this.rand.nextFloat() * 0.2F - 0.1F));
-			this.worldObj.setEntityState(this, (byte)10);
+			this.world.setEntityState(this, (byte)10);
 		} else {
 			setBeakState(25);
 		}
@@ -158,10 +158,10 @@ public class EntityIMGiantBird extends EntityIMBird {
 	}*/
 
 	private void doSquawk(){
-		if (!this.worldObj.isRemote){
-			//this.worldObj.playSoundAtEntity(this, "invmod:v_squawk", 1.9F, 1.0F + (this.rand.nextFloat() * 0.2F - 0.1F));
+		if (!this.world.isRemote){
+			//this.world.playSoundAtEntity(this, "invmod:v_squawk", 1.9F, 1.0F + (this.rand.nextFloat() * 0.2F - 0.1F));
 			this.playSound(SoundHandler.v_squawk1, 1.9F, 1.0F + (this.rand.nextFloat() * 0.2F - 0.1F));
-			this.worldObj.setEntityState(this, (byte)10);
+			this.world.setEntityState(this, (byte)10);
 		} else {
 			setBeakState(10);
 		}
@@ -172,7 +172,7 @@ public class EntityIMGiantBird extends EntityIMBird {
 	}
 
 	private void setAI(){
-		this.tasksIM = new EntityAITasks(this.worldObj.theProfiler);
+		this.tasksIM = new EntityAITasks(this.world.theProfiler);
 
 		this.tasksIM.addTask(0, new EntityAISwoop(this));
 
@@ -185,7 +185,7 @@ public class EntityIMGiantBird extends EntityIMBird {
 		this.tasksIM.addTask(4, new EntityAIBirdFight(this, EntityZombie.class, 25, 0.4F));
 		this.tasksIM.addTask(4, new EntityAIWatchTarget(this));
 
-		this.targetTasksIM = new EntityAITasks(this.worldObj.theProfiler);
+		this.targetTasksIM = new EntityAITasks(this.world.theProfiler);
 
 		this.targetTasksIM.addTask(2, new EntityAISimpleTarget(this, EntityZombie.class, 58.0F, true));
 	}

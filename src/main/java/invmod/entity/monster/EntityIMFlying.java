@@ -101,7 +101,7 @@ public abstract class EntityIMFlying extends EntityIMMob {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		if (!this.worldObj.isRemote) {
+		if (!this.world.isRemote) {
 			if (this.debugFlying) {
 				Vec3d target = this.navigatorFlying.getTarget();
 				//float oldTargetX = MathUtil.unpackFloat(this.dataWatcher.getWatchableObjectInt(29));
@@ -191,7 +191,7 @@ public abstract class EntityIMFlying extends EntityIMMob {
 		if (isInWater()) {
 			double y = this.posY;
 			moveFlying(x, z, 0.04F);
-			moveEntity(this.motionX, this.motionY, this.motionZ);
+			setVelocity(this.motionX, this.motionY, this.motionZ);
 			this.motionX *= 0.8D;
 			this.motionY *= 0.8D;
 			this.motionZ *= 0.8D;
@@ -203,7 +203,7 @@ public abstract class EntityIMFlying extends EntityIMMob {
 		} else if (this.isInLava()) {
 			double y = this.posY;
 			moveFlying(x, z, 0.04F);
-			moveEntity(this.motionX, this.motionY, this.motionZ);
+			setVelocity(this.motionX, this.motionY, this.motionZ);
 			this.motionX *= 0.5D;
 			this.motionY *= 0.5D;
 			this.motionZ *= 0.5D;
@@ -234,7 +234,7 @@ public abstract class EntityIMFlying extends EntityIMMob {
 			this.motionY += this.flightAccelY;
 			this.motionZ += this.flightAccelZ;
 
-			moveEntity(this.motionX, this.motionY, this.motionZ);
+			setVelocity(this.motionX, this.motionY, this.motionZ);
 			this.motionY -= getGravity();
 			this.motionY *= getAirResistance();
 			this.motionX *= groundFriction * getAirResistance();
@@ -244,7 +244,7 @@ public abstract class EntityIMFlying extends EntityIMMob {
 		this.prevLimbSwingAmount = this.limbSwingAmount;
 		double dX = this.posX - this.prevPosX;
 		double dZ = this.posZ - this.prevPosZ;
-		float limbEnergy = MathHelper.sqrt_double(dX * dX + dZ * dZ) * 4.0F;
+		float limbEnergy = MathHelper.sqrt(dX * dX + dZ * dZ) * 4.0F;
 
 		if (limbEnergy > 1.0F) {
 			limbEnergy = 1.0F;
@@ -269,7 +269,7 @@ public abstract class EntityIMFlying extends EntityIMMob {
 
 	public void setFlyState(FlyState flyState) {
 		this.flyState = flyState;
-		if (!this.worldObj.isRemote) this.getDataManager().set(FLY_STATE, flyState.ordinal());
+		if (!this.world.isRemote) this.getDataManager().set(FLY_STATE, flyState.ordinal());
 			//this.dataWatcher.updateObject(27, Integer.valueOf(flyState.ordinal()));
 	}
 

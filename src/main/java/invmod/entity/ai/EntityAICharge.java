@@ -123,7 +123,7 @@ public class EntityAICharge<T extends EntityLivingBase> extends EntityAIMoveToEn
 		double vecz = target.posZ - attacker.posZ;
 		float rangle = (float) Math.atan2(vecz, vecx);
 
-		double distance = MathHelper.sqrt_double(vecx * vecx + vecz * vecz);
+		double distance = MathHelper.sqrt(vecx * vecx + vecz * vecz);
 
 		double dx = MathHelper.cos(rangle) * (distance + overshoot);
 		double dz = MathHelper.sin(rangle) * (distance + overshoot);

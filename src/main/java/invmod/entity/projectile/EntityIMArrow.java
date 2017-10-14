@@ -66,21 +66,21 @@ public class EntityIMArrow extends EntityTippedArrow {
 		this.onEntityUpdate();
 
 		if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
-			float f = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
+			float f = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
 			this.prevRotationYaw = this.rotationYaw = (float) (Math.atan2(this.motionX, this.motionZ) * 180.0D / Math.PI);
 			this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(this.motionY, f) * 180.0D / Math.PI);
 		}
 
-		IBlockState blockState = this.worldObj.getBlockState(new BlockPos(this.posX, this.posY, this.posZ));
+		IBlockState blockState = this.world.getBlockState(new BlockPos(this.posX, this.posY, this.posZ));
 
 		if (blockState.getMaterial() != Material.AIR) {
 
 			if (blockState.getBlock() == Blocks.GLASS) {
-				this.worldObj.setBlockToAir(this.getPosition());
+				this.world.setBlockToAir(this.getPosition());
 			} else {
-				//blockState.getBlock().setBlockBoundsBasedOnState(this.worldObj, this.getPosition());
-				//AxisAlignedBB axisalignedbb = blockState.getSelectedBoundingBox(this.worldObj, this.getPosition());
-				AxisAlignedBB axisalignedbb = blockState.getBlock().getBoundingBox(blockState, this.worldObj, this.getPosition());
+				//blockState.getBlock().setBlockBoundsBasedOnState(this.world, this.getPosition());
+				//AxisAlignedBB axisalignedbb = blockState.getSelectedBoundingBox(this.world, this.getPosition());
+				AxisAlignedBB axisalignedbb = blockState.getBlock().getBoundingBox(blockState, this.world, this.getPosition());
 				if (axisalignedbb != null && axisalignedbb.isVecInside(new Vec3d(this.posX, this.posY, this.posZ))) {
 					this.inGround = true;
 				}
@@ -107,14 +107,14 @@ public class EntityIMArrow extends EntityTippedArrow {
 			Vec3d vec31 = new Vec3d(this.posX, this.posY, this.posZ);
 			Vec3d vec3 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 			
-			RayTraceResult rtr = this.worldObj.rayTraceBlocks(vec31, vec3, false, true, false);
+			RayTraceResult rtr = this.world.rayTraceBlocks(vec31, vec3, false, true, false);
 			vec31 = new Vec3d(this.posX, this.posY, this.posZ);
 			vec3 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 
 			if (rtr != null) vec3 = new Vec3d(rtr.hitVec.xCoord, rtr.hitVec.yCoord, rtr.hitVec.zCoord);
 
 			Entity entity = null;
-			List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(
+			List list = this.world.getEntitiesWithinAABBExcludingEntity(
 					this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
 
 			double d0 = 0.0D;
@@ -155,8 +155,8 @@ public class EntityIMArrow extends EntityTippedArrow {
 
 			if (rtr != null) {
 				if (rtr.entityHit != null) {
-					f2 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
-					int k = MathHelper.ceiling_double_int(f2 * this.damage);
+					f2 = MathHelper.sqrt(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
+					int k = MathHelper.ceil(f2 * this.damage);
 					if (this.getIsCritical()) k += this.rand.nextInt(k / 2 + 2);
 
 					DamageSource damagesource = DamageSource.causeArrowDamage(this, this.shootingEntity != null ? this.shootingEntity : this);
@@ -167,10 +167,10 @@ public class EntityIMArrow extends EntityTippedArrow {
 						if (rtr.entityHit instanceof EntityLivingBase) {
 							EntityLivingBase entitylivingbase = (EntityLivingBase) rtr.entityHit;
 
-							if (!this.worldObj.isRemote) entitylivingbase.setArrowCountInEntity(entitylivingbase.getArrowCountInEntity() + 1);
+							if (!this.world.isRemote) entitylivingbase.setArrowCountInEntity(entitylivingbase.getArrowCountInEntity() + 1);
 
 							if (this.knockbackStrength > 0) {
-								f4 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
+								f4 = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
 
 								if (f4 > 0.0F) {
 									rtr.entityHit.addVelocity(
@@ -212,11 +212,11 @@ public class EntityIMArrow extends EntityTippedArrow {
 					this.posX = rtr.getBlockPos().getX();
 					this.posY = rtr.getBlockPos().getY();
 					this.posZ = rtr.getBlockPos().getZ();
-					this.inBlock = this.worldObj.getBlockState(new BlockPos(this.posX, this.posY, this.posZ)).getBlock();
+					this.inBlock = this.world.getBlockState(new BlockPos(this.posX, this.posY, this.posZ)).getBlock();
 					this.motionX = ((float) (rtr.hitVec.xCoord - this.posX));
 					this.motionY = ((float) (rtr.hitVec.yCoord - this.posY));
 					this.motionZ = ((float) (rtr.hitVec.zCoord - this.posZ));
-					f2 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
+					f2 = MathHelper.sqrt(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
 					this.posX -= this.motionX / f2 * 0.05000000074505806D;
 					this.posY -= this.motionY / f2 * 0.05000000074505806D;
 					this.posZ -= this.motionZ / f2 * 0.05000000074505806D;
@@ -226,17 +226,17 @@ public class EntityIMArrow extends EntityTippedArrow {
 					this.arrowShake = 7;
 					this.setIsCritical(false);
 
-					if (this.worldObj.getBlockState(new BlockPos(this.posX, this.posY, this.posZ)).getMaterial() != Material.AIR && this.worldObj.getBlockState(new BlockPos(this.posX, this.posY, this.posZ)).getMaterial() != Material.GLASS) {
+					if (this.world.getBlockState(new BlockPos(this.posX, this.posY, this.posZ)).getMaterial() != Material.AIR && this.world.getBlockState(new BlockPos(this.posX, this.posY, this.posZ)).getMaterial() != Material.GLASS) {
 						System.out.println("collided with block!");
-						//this.inBlock.onEntityCollidedWithBlock(this.worldObj, this.getPosition(), this);
-						this.inBlock.onEntityCollidedWithBlock(this.worldObj, this.getPosition(), this.worldObj.getBlockState(new BlockPos(this.posX, this.posY, this.posZ)), this);
+						//this.inBlock.onEntityCollidedWithBlock(this.world, this.getPosition(), this);
+						this.inBlock.onEntityCollidedWithBlock(this.world, this.getPosition(), this.world.getBlockState(new BlockPos(this.posX, this.posY, this.posZ)), this);
 					}
 				}
 			}
 
 			if (this.getIsCritical()) {
 				for (i = 0; i < 4; ++i) {
-					this.worldObj.spawnParticle(EnumParticleTypes.CRIT, this.posX + this.motionX * i / 4.0D,
+					this.world.spawnParticle(EnumParticleTypes.CRIT, this.posX + this.motionX * i / 4.0D,
 							this.posY + this.motionY * i / 4.0D, this.posZ + this.motionZ * i / 4.0D,
 							-this.motionX, -this.motionY + 0.2D, -this.motionZ);
 				}
@@ -245,7 +245,7 @@ public class EntityIMArrow extends EntityTippedArrow {
 			this.posX += this.motionX;
 			this.posY += this.motionY;
 			this.posZ += this.motionZ;
-			f2 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
+			f2 = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
 			this.rotationYaw = (float) (Math.atan2(this.motionX, this.motionZ) * 180.0D / Math.PI);
 
 			for (this.rotationPitch = (float) (Math.atan2(this.motionY, f2) * 180.0D / Math.PI); this.rotationPitch
@@ -275,7 +275,7 @@ public class EntityIMArrow extends EntityTippedArrow {
 			if (this.isInWater()) {
 				for (int l = 0; l < 4; ++l) {
 					f4 = 0.25F;
-					this.worldObj.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX
+					this.world.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX
 							- this.motionX * f4, this.posY - this.motionY * f4,
 							this.posZ - this.motionZ * f4, this.motionX,
 							this.motionY, this.motionZ);

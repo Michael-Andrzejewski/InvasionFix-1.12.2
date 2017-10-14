@@ -76,7 +76,7 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring {
 
 	@Override
 	protected void initEntityAI() {
-		this.tasksIM = new EntityAITasks(this.worldObj.theProfiler);
+		this.tasksIM = new EntityAITasks(this.world.theProfiler);
 		this.tasksIM.addTask(0, new EntityAISwimming(this));
 		this.tasksIM.addTask(1, new EntityAIKillEntity(this, EntityPlayer.class, 40));
 		this.tasksIM.addTask(1, new EntityAIKillEntity(this, EntityPlayerMP.class, 40));
@@ -89,7 +89,7 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring {
 
 		this.tasksIM.addTask(9, new EntityAILookIdle(this));
 
-		this.targetTasksIM = new EntityAITasks(this.worldObj.theProfiler);
+		this.targetTasksIM = new EntityAITasks(this.world.theProfiler);
 		this.targetTasksIM.addTask(0, new EntityAITargetRetaliate(this, EntityLiving.class, 12.0F));
 		this.targetTasksIM.addTask(1, new EntityAISimpleTarget(this, EntityPlayer.class, this.getSenseRange(), false));
 		this.targetTasksIM.addTask(2, new EntityAISimpleTarget(this, EntityPlayer.class, this.getAggroRange(), true));
@@ -117,7 +117,7 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		if(this.worldObj.isRemote && this.metaChanged != this.getDataManager().get(META_CHANGED)){
+		if(this.world.isRemote && this.metaChanged != this.getDataManager().get(META_CHANGED)){
 			this.metaChanged = this.getDataManager().get(META_CHANGED);
 			//this.setTexture(this.getDataManager().get(TEXTURE));
 			//if(this.tier != this.getDataManager().get(TIER)) this.setTier(this.getDataManager().get(TIER));
@@ -130,7 +130,7 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring {
 		if (isInWater()) {
 			double y = this.posY;
 			moveFlying(x, z, 0.02F);
-			moveEntity(this.motionX, this.motionY, this.motionZ);
+			setVelocity(this.motionX, this.motionY, this.motionZ);
 			this.motionX *= 0.8D;
 			this.motionY *= 0.8D;
 			this.motionZ *= 0.8D;
@@ -140,7 +140,7 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring {
 		} else if (this.isInLava()) {
 			double y = this.posY;
 			moveFlying(x, z, 0.02F);
-			moveEntity(this.motionX, this.motionY, this.motionZ);
+			setVelocity(this.motionX, this.motionY, this.motionZ);
 			this.motionX *= 0.5D;
 			this.motionY *= 0.5D;
 			this.motionZ *= 0.5D;
@@ -156,10 +156,10 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring {
 				float landMoveSpeed;
 				if (this.onGround) {
 					groundFriction = 0.546F;
-					Block block = this.worldObj.getBlockState(new BlockPos(
-								MathHelper.floor_double(this.posX),
-								MathHelper.floor_double(this.getEntityBoundingBox().minY) - 1,
-								MathHelper.floor_double(this.posZ)))
+					Block block = this.world.getBlockState(new BlockPos(
+								MathHelper.floor(this.posX),
+								MathHelper.floor(this.getEntityBoundingBox().minY) - 1,
+								MathHelper.floor(this.posZ)))
 							.getBlock();
 					if (block != Blocks.AIR) {
 						groundFriction = block.slipperiness * 0.91F;
@@ -195,7 +195,7 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring {
 					this.motionY = 0.0D;
 				}
 			}
-			moveEntity(this.motionX, this.motionY, this.motionZ);
+			setVelocity(this.motionX, this.motionY, this.motionZ);
 			if (((this.isCollidedHorizontally) || (this.isJumping))
 					&& (isOnLadder())) {
 				this.motionY = 0.2D;
@@ -210,7 +210,7 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring {
 		this.prevLimbSwingAmount = this.limbSwingAmount;
 		double dX = this.posX - this.prevPosX;
 		double dZ = this.posZ - this.prevPosZ;
-		float limbEnergy = MathHelper.sqrt_double(dX * dX + dZ * dZ) * 4.0F;
+		float limbEnergy = MathHelper.sqrt(dX * dX + dZ * dZ) * 4.0F;
 
 		if (limbEnergy > 1.0F) {
 			limbEnergy = 1.0F;
@@ -287,7 +287,7 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring {
 			EntityConstruct template = new EntityConstruct(IMEntityType.SPIDER, 1, 0, 1, 1.0F, 0, 0);
 			Entity[] offSpring = new Entity[6];
 			for (int i = 0; i < offSpring.length; i++) {
-				offSpring[i] = mod_Invasion.getMobBuilder().createMobFromConstruct(template, this.worldObj, this.getNexus());
+				offSpring[i] = mod_Invasion.getMobBuilder().createMobFromConstruct(template, this.world, this.getNexus());
 			}
 			return offSpring;
 		}
@@ -349,12 +349,12 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring {
 	public void fall(float distance,float damageMultiplier) {
 		int i = (int) Math.ceil(distance - 3.0F);
 		if (i > 0) {
-			BlockPos pos = new BlockPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY - 0.2D), MathHelper.floor_double(this.posZ));
-			IBlockState blockState = this.worldObj.getBlockState(pos);
+			BlockPos pos = new BlockPos(MathHelper.floor(this.posX), MathHelper.floor(this.posY - 0.2D), MathHelper.floor(this.posZ));
+			IBlockState blockState = this.world.getBlockState(pos);
 			if (blockState.getBlock() != Blocks.AIR) {
 				// some cheating with sounds, not sure it this will work
-				SoundType stepsound = blockState.getBlock().getSoundType(blockState, this.worldObj, pos, this);
-				//this.worldObj.playSoundAtEntity(this, stepsound.toString(), stepsound.getVolume() * 0.5F, stepsound.getFrequency() * 0.75F);
+				SoundType stepsound = blockState.getBlock().getSoundType(blockState, this.world, pos, this);
+				//this.world.playSoundAtEntity(this, stepsound.toString(), stepsound.getVolume() * 0.5F, stepsound.getFrequency() * 0.75F);
 				this.playSound(stepsound.getStepSound(), stepsound.getVolume() * 0.5f, stepsound.getPitch() * 0.75f);
 			}
 		}

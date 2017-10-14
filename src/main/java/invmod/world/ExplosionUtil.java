@@ -53,7 +53,7 @@
 //	                  double d3 = d0 - explosion.explosionX;
 //	                  double d4 = d1 - explosion.explosionY;
 //	                  double d5 = d2 - explosion.explosionZ;
-//	                  double d6 = MathHelper.sqrt_double(d3 * d3 + d4 * d4 + d5 * d5);
+//	                  double d6 = MathHelper.sqrt(d3 * d3 + d4 * d4 + d5 * d5);
 //	                  d3 /= d6;
 //	                  d4 /= d6;
 //	                  d5 /= d6;

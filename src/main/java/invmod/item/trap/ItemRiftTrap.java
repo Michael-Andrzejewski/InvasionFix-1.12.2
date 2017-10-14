@@ -31,7 +31,7 @@ public class ItemRiftTrap extends ModItem {
 			if ((trap.isValidPlacement())
 					&& (world.getEntitiesWithinAABB(EntityIMTrap.class,
 							trap.getEntityBoundingBox()).size() == 0)) {
-				world.spawnEntityInWorld(trap);
+				world.spawnEntity(trap);
 
 				// players in creative mode won't lose the item
 				if (!entityplayer.capabilities.isCreativeMode) {

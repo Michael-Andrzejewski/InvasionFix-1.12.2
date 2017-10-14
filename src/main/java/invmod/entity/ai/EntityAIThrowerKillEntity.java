@@ -62,7 +62,7 @@ public class EntityAIThrowerKillEntity<T extends EntityLivingBase> extends Entit
 
 		double dX = this.theEntity.posX - target.posX;
 		double dZ = this.theEntity.posZ - target.posZ;
-		double dXY = MathHelper.sqrt_double(dX * dX + dZ * dZ);
+		double dXY = MathHelper.sqrt(dX * dX + dZ * dZ);
 		return (getAttackTime() <= 0) && (this.theEntity.getEntitySenses().canSee(target)) && (0.025D * dXY / (this.launchSpeed * this.launchSpeed) <= 1.0D);
 	}
 }

@@ -54,7 +54,7 @@ public class IMLookHelper extends EntityLookHelper {
 			double d0 = this.e - this.theEntity.posX;
 			double d1 = this.f - (this.theEntity.posY + this.theEntity.getEyeHeight());
 			double d2 = this.g - this.theEntity.posZ;
-			double d3 = MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+			double d3 = MathHelper.sqrt(d0 * d0 + d2 * d2);
 			float yaw = (float) MathUtil.boundAngle180Deg(this.theEntity.rotationYaw);
 			float pitch = (float) MathUtil.boundAngle180Deg(this.theEntity.rotationPitch);
 			float yawHeadOffset = (float) (Math.atan2(d2, d0) * 180.0D / 3.141592653589793D) - 90.0F - yaw;

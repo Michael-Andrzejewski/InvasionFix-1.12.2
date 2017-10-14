@@ -116,26 +116,26 @@ public class TerrainModifier implements ITerrainModify {
 		}
 
 		IBlockState newState = entry.getNewBlock();
-		IBlockState oldState = this.theEntity.worldObj.getBlockState(entry.getPos());
+		IBlockState oldState = this.theEntity.world.getBlockState(entry.getPos());
 		entry.setOldBlock(oldState);
 		if (oldState.getBlock() == BlocksAndItems.blockNexus || oldState.getBlock() == newState.getBlock()) {
 			this.terrainFailFlag = true;
 			return false;
 		}
 
-		boolean succeeded = this.theEntity.worldObj.setBlockState(entry.getPos(), newState);
+		boolean succeeded = this.theEntity.world.setBlockState(entry.getPos(), newState);
 		if (succeeded) {
 			if (oldState.getBlock() != Blocks.AIR) {
-				oldState.getBlock().onBlockDestroyedByPlayer(this.theEntity.worldObj, entry.getPos(), oldState);
+				oldState.getBlock().onBlockDestroyedByPlayer(this.theEntity.world, entry.getPos(), oldState);
 
 				if (Config.DROP_DESTRUCTED_BLOCKS) {
-					oldState.getBlock().dropBlockAsItem(this.theEntity.worldObj, entry.getPos(), oldState, 0);
+					oldState.getBlock().dropBlockAsItem(this.theEntity.world, entry.getPos(), oldState, 0);
 				}
 			}
 			/*if (newState.getBlock() == Blocks.LADDER) {
-				this.theEntity.worldObj.setBlockState(entry.getPos(), newState);
+				this.theEntity.world.setBlockState(entry.getPos(), newState);
 //TODO: Figure out what this did
-//				Blocks.ladder.onPostBlockPlaced(this.theEntity.worldObj,
+//				Blocks.ladder.onPostBlockPlaced(this.theEntity.world,
 //						new BlockPos(entry.getXCoord(), entry.getYCoord(),
 //						entry.getZCoord()), meta);
 			}*/
@@ -146,8 +146,8 @@ public class TerrainModifier implements ITerrainModify {
 	}
 
 	private boolean isTerrainIdentical(ModifyBlockEntry entry) {
-		if ((this.theEntity.worldObj.getBlockState(entry.getPos()).getBlock() == entry.getNewBlock().getBlock())
-				&& (this.theEntity.worldObj.getBlockState(entry.getPos()) == entry.getNewBlock())) {
+		if ((this.theEntity.world.getBlockState(entry.getPos()).getBlock() == entry.getNewBlock().getBlock())
+				&& (this.theEntity.world.getBlockState(entry.getPos()) == entry.getNewBlock())) {
 			return true;
 		}
 		return false;

@@ -50,7 +50,7 @@ public void startExecuting()
     if (extraTime < 0) {
       extraTime = 0;
     }
-    this.patienceTime = (extraTime + this.theEntity.worldObj.rand.nextInt(this.patience) + this.patience / 3);
+    this.patienceTime = (extraTime + this.theEntity.world.rand.nextInt(this.patience) + this.patience / 3);
   }
 
   @Override

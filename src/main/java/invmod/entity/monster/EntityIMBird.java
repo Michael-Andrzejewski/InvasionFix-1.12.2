@@ -100,7 +100,7 @@ public class EntityIMBird extends EntityIMFlying {
 	@Override
 	public void onUpdate(){
 		super.onUpdate();
-		if (this.worldObj.isRemote){
+		if (this.world.isRemote){
 			this.updateFlapAnimation();
 			this.updateLegAnimation();
 			this.updateBeakAnimation();
@@ -137,7 +137,7 @@ public class EntityIMBird extends EntityIMFlying {
 	public boolean attackEntityFrom(DamageSource par1DamageSource, float par2){
 		if(ForgeHooks.onLivingAttack(this, par1DamageSource, par2)) return false;
 		if(this.isUnkillable()) return false;
-		if(this.worldObj.isRemote) return false;
+		if(this.world.isRemote) return false;
 		this.entityAge = 0;
 		if (getHealth() <= 0.0F) return false;
 		if ((par1DamageSource.isFireDamage()) && (this.isPotionActive(MobEffects.FIRE_RESISTANCE))) return false;
@@ -186,7 +186,7 @@ public class EntityIMBird extends EntityIMFlying {
 		}
 
 		if(flag){
-			this.worldObj.setEntityState(this, (byte)2);
+			this.world.setEntityState(this, (byte)2);
 			if (par1DamageSource != DamageSource.drown) this.setBeenAttacked();
 			if (entity != null){
 				double d0 = entity.posX - this.posX;

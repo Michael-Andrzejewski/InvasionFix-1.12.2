@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 
 public class IMVillage {
 	
-	private World worldObj;
+	private World world;
 	private final List<IMVillageDoorInfo> doors = new ArrayList<>();
 	/** 
 	 * This is the sum of all door coordinates and used to calculate the actual village center by dividing by the number of doors.
@@ -41,7 +41,7 @@ public class IMVillage {
 	public IMVillage(){}
 	
 	public IMVillage(World worldIn){
-		this.worldObj = worldIn;
+		this.world = worldIn;
 	}
 	
 	public IMVillage(World worldIn, BlockPos nexusPos){
@@ -50,11 +50,11 @@ public class IMVillage {
 	}
 	
 	public void setWorld(World worldIn){
-		this.worldObj = worldIn;
+		this.world = worldIn;
 	}
 	
 	public void setNexus(World worldIn, BlockPos nexusPos){
-		this.worldObj = worldIn;
+		this.world = worldIn;
 		this.nexusPos = nexusPos;
 	}
 	
@@ -72,7 +72,7 @@ public class IMVillage {
 	
 	private Vec3d findRandomSpawnPos(BlockPos pos, int x, int y, int z){
 		for (int i=0; i<10; i++){
-            BlockPos blockpos = pos.add(this.worldObj.rand.nextInt(16) - 8, this.worldObj.rand.nextInt(6) - 3, this.worldObj.rand.nextInt(16) - 8);
+            BlockPos blockpos = pos.add(this.world.rand.nextInt(16) - 8, this.world.rand.nextInt(6) - 3, this.world.rand.nextInt(16) - 8);
 
             if (this.isBlockPosWithinSqVillageRadius(blockpos) && this.isAreaClearAround(new BlockPos(x, y, z), blockpos)){
                 return new Vec3d((double)blockpos.getX(), (double)blockpos.getY(), (double)blockpos.getZ());
@@ -87,7 +87,7 @@ public class IMVillage {
 	}
 	
 	public boolean isAreaClearAround(BlockPos blockSize, BlockPos blockLocation){
-		if (!this.worldObj.getBlockState(blockLocation.down()).isSideSolid(this.worldObj, blockLocation.down(), EnumFacing.UP)){
+		if (!this.world.getBlockState(blockLocation.down()).isSideSolid(this.world, blockLocation.down(), EnumFacing.UP)){
             return false;
         } else {
             int i = blockLocation.getX() - blockSize.getX() / 2;
@@ -96,7 +96,7 @@ public class IMVillage {
             for (int k = i; k < i + blockSize.getX(); ++k){
                 for (int l = blockLocation.getY(); l < blockLocation.getY() + blockSize.getY(); ++l){
                     for (int i1 = j; i1 < j + blockSize.getZ(); ++i1){
-                        if (this.worldObj.getBlockState(new BlockPos(k, l, i1)).isNormalCube()){
+                        if (this.world.getBlockState(new BlockPos(k, l, i1)).isNormalCube()){
                             return false;
                         }
                     }
@@ -134,7 +134,7 @@ public class IMVillage {
 	
 	public void removeDeadAndOutOfRangeDoors(){
 		boolean flag0 = false;
-		boolean flag1 = this.worldObj.rand.nextInt(50) == 0;
+		boolean flag1 = this.world.rand.nextInt(50) == 0;
 		Iterator<IMVillageDoorInfo> i = this.doors.iterator();
 		
 		while(i.hasNext()){
@@ -152,7 +152,7 @@ public class IMVillage {
 	}
 	
 	private boolean isWoodDoor(BlockPos pos){
-        IBlockState iblockstate = this.worldObj.getBlockState(pos);
+        IBlockState iblockstate = this.world.getBlockState(pos);
         Block block = iblockstate.getBlock();
         return block instanceof BlockDoor ? iblockstate.getMaterial() == Material.WOOD : false;
     }

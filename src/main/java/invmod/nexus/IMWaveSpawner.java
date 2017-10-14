@@ -236,7 +236,7 @@ public class IMWaveSpawner implements ISpawnerAccess {
 			mob.setLocationAndAngles(spawnPoint.getPos().getX(), spawnPoint.getPos().getY(), spawnPoint.getPos().getZ(), 0.0F, 0.0F);
 			if (mob.getCanSpawnHere()) {
 				this.successfulSpawns += 1;
-				this.nexus.getWorld().spawnEntityInWorld(mob);
+				this.nexus.getWorld().spawnEntity(mob);
 				if (this.debugMode) {
 					ModLogger.logDebug("[Spawn] Time: " + this.currentWave.getTimeInWave() / 1000 + "  Type: " + mob.toString() + "  Coords: " + mob.posX + ", " + mob.posY + ", " + mob.posZ + "  θ" + spawnPoint.getAngle() + "  Specified: " + minAngle + "," + maxAngle);
 				}

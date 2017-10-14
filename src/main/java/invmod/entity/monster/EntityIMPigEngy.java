@@ -124,7 +124,7 @@ public class EntityIMPigEngy extends EntityIMMob implements ICanDig, ICanBuild {
 	
 	@Override
 	protected void initEntityAI() {
-		this.tasksIM = new EntityAITasks(this.worldObj.theProfiler);
+		this.tasksIM = new EntityAITasks(this.world.theProfiler);
 		this.tasksIM.addTask(0, new EntityAISwimming(this));
 		this.tasksIM.addTask(1, new EntityAIKillEntity(this, EntityPlayer.class, 60));
 		this.tasksIM.addTask(2, new EntityAIAttackNexus(this));
@@ -134,7 +134,7 @@ public class EntityIMPigEngy extends EntityIMMob implements ICanDig, ICanBuild {
 		this.tasksIM.addTask(9, new EntityAIWatchClosest(this, EntityIMCreeper.class, 12.0F));
 		this.tasksIM.addTask(9, new EntityAILookIdle(this));
 
-		this.targetTasksIM = new EntityAITasks(this.worldObj.theProfiler);
+		this.targetTasksIM = new EntityAITasks(this.world.theProfiler);
 		if (this.isNexusBound()) {
 			this.targetTasksIM.addTask(1, new EntityAISimpleTarget(this, EntityPlayer.class, 3.0F, true));
 		} else {
@@ -201,7 +201,7 @@ public class EntityIMPigEngy extends EntityIMMob implements ICanDig, ICanBuild {
 
 	@Override
 	public IBlockAccess getTerrain() {
-		return this.worldObj;
+		return this.world;
 	}
 
 	@Override
@@ -264,8 +264,8 @@ public class EntityIMPigEngy extends EntityIMMob implements ICanDig, ICanBuild {
 
 	@Override
 	public boolean canClearBlock(BlockPos pos) {
-		IBlockState blockState = this.worldObj.getBlockState(pos);
-		return (blockState.getBlock() == Blocks.AIR) || (this.isBlockDestructible(this.worldObj, pos, blockState));
+		IBlockState blockState = this.world.getBlockState(pos);
+		return (blockState.getBlock() == Blocks.AIR) || (this.isBlockDestructible(this.world, pos, blockState));
 	}
 
 	public boolean avoidsBlock(int id) {
@@ -442,7 +442,7 @@ public class EntityIMPigEngy extends EntityIMMob implements ICanDig, ICanBuild {
 	}
 
 	protected void updateAnimation() {
-		if ((!this.worldObj.isRemote) && (this.terrainModifier.isBusy())) {
+		if ((!this.world.isRemote) && (this.terrainModifier.isBusy())) {
 			this.setSwinging(true);
 			PathAction currentAction = getNavigatorNew().getCurrentWorkingAction();
 			this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(currentAction == PathAction.NONE ? Items.IRON_PICKAXE : BlocksAndItems.itemEngyHammer));
@@ -474,11 +474,11 @@ public class EntityIMPigEngy extends EntityIMMob implements ICanDig, ICanBuild {
 	}
 
 	public boolean canPlaceLadderAt(BlockPos pos) {
-		if (EntityIMLiving.unDestructableBlocks.contains(this.worldObj.getBlockState(pos).getBlock())) {
-			return ((this.worldObj.getBlockState(pos.west()).isNormalCube())
-					|| (this.worldObj.getBlockState(pos.east()).isNormalCube())
-					|| (this.worldObj.getBlockState(pos.north()).isNormalCube())
-					|| (this.worldObj.getBlockState(pos.south()).isNormalCube()));
+		if (EntityIMLiving.unDestructableBlocks.contains(this.world.getBlockState(pos).getBlock())) {
+			return ((this.world.getBlockState(pos.west()).isNormalCube())
+					|| (this.world.getBlockState(pos.east()).isNormalCube())
+					|| (this.world.getBlockState(pos.north()).isNormalCube())
+					|| (this.world.getBlockState(pos.south()).isNormalCube()));
 		}
 		return false;
 	}

@@ -170,7 +170,7 @@ public class ItemSpawnEgg extends Item {
 				//entityliving.func_180482_a(world.getDifficultyForLocation(blockpos), null);
 				if (!spawnData.hasNoTags())
 					addNBTData(entity, spawnData);
-				world.spawnEntityInWorld(entity);
+				world.spawnEntity(entity);
 				entityliving.playLivingSound();
 				spawnRiddenCreatures(entity, world, spawnData);
 			}
@@ -186,7 +186,7 @@ public class ItemSpawnEgg extends Item {
 		    if (newEntity != null) {
 		    	addNBTData(newEntity, cur);
 		    	newEntity.setLocationAndAngles(entity.posX, entity.posY, entity.posZ, entity.rotationYaw, entity.rotationPitch);
-		    	world.spawnEntityInWorld(newEntity);
+		    	world.spawnEntity(newEntity);
 		    	//entity.mountEntity(newEntity);
 		    	entity.startRiding(newEntity);
 		    }

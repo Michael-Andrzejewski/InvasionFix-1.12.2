@@ -55,8 +55,8 @@ public class TerrainDataLayer implements IBlockAccessExtended {
 	}
 
 	@Override
-	public Biome getBiomeGenForCoords(BlockPos blockPos) {
-		return this.world.getBiomeGenForCoords(blockPos);
+	public Biome getBiome(BlockPos blockPos) {
+		return this.world.getBiome(blockPos);
 	}
 
 	/*@Override

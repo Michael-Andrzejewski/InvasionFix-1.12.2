@@ -110,7 +110,7 @@ public class EntityIMBoulder extends Entity {
 
 	public void setBoulderHeading(double x, double y, double z, float speed,
 			float variance) {
-		float distance = MathHelper.sqrt_double(x * x + y * y + z * z);
+		float distance = MathHelper.sqrt(x * x + y * y + z * z);
 		x /= distance;
 		y /= distance;
 		z /= distance;
@@ -124,7 +124,7 @@ public class EntityIMBoulder extends Entity {
 		this.motionX = x;
 		this.motionY = y;
 		this.motionZ = z;
-		float xzDistance = MathHelper.sqrt_double(x * x + z * z);
+		float xzDistance = MathHelper.sqrt(x * x + z * z);
 		this.prevRotationYaw = (this.rotationYaw = (float) (Math.atan2(x, z) * 180.0D / 3.141592653589793D));
 		this.prevRotationPitch = (this.rotationPitch = (float) (Math.atan2(y,
 				xzDistance) * 180.0D / 3.141592653589793D));
@@ -137,7 +137,7 @@ public class EntityIMBoulder extends Entity {
 		this.motionY = d1;
 		this.motionZ = d2;
 		if ((this.prevRotationPitch == 0.0F) && (this.prevRotationYaw == 0.0F)) {
-			float f = MathHelper.sqrt_double(d * d + d2 * d2);
+			float f = MathHelper.sqrt(d * d + d2 * d2);
 			this.prevRotationYaw = (this.rotationYaw = (float) (Math.atan2(d,
 					d2) * 180.0D / 3.141592741012573D));
 			this.prevRotationPitch = (this.rotationPitch = (float) (Math.atan2(
@@ -154,16 +154,16 @@ public class EntityIMBoulder extends Entity {
 	public void onUpdate() {
 		super.onUpdate();
 		if ((this.prevRotationPitch == 0.0F) && (this.prevRotationYaw == 0.0F)) {
-			float f = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
+			float f = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
 			this.prevRotationYaw = (this.rotationYaw = (float) (Math.atan2(this.motionX, this.motionZ) * 180.0D / Math.PI));
 			this.prevRotationPitch = (this.rotationPitch = (float) (Math.atan2(this.motionY, f) * 180.0D / Math.PI));
 		}
 
-		IBlockState blockState = this.worldObj.getBlockState(new BlockPos(this.xTile, this.yTile, this.zTile));
+		IBlockState blockState = this.world.getBlockState(new BlockPos(this.xTile, this.yTile, this.zTile));
 		if (blockState.getBlock() != Blocks.AIR) {
-			//block.setBlockBoundsBasedOnState(this.worldObj, new BlockPos(this.xTile, this.yTile, this.zTile));
-			//AxisAlignedBB axisalignedbb = block.getSelectedBoundingBox(this.worldObj.getBlockState(new BlockPos(this.xTile, this.yTile, this.zTile)),this.worldObj, new BlockPos(this.xTile, this.yTile, this.zTile));
-			AxisAlignedBB axisalignedbb = blockState.getBlock().getBoundingBox(blockState, this.worldObj, new BlockPos(this.xTile, this.yTile, this.zTile));
+			//block.setBlockBoundsBasedOnState(this.world, new BlockPos(this.xTile, this.yTile, this.zTile));
+			//AxisAlignedBB axisalignedbb = block.getSelectedBoundingBox(this.world.getBlockState(new BlockPos(this.xTile, this.yTile, this.zTile)),this.world, new BlockPos(this.xTile, this.yTile, this.zTile));
+			AxisAlignedBB axisalignedbb = blockState.getBlock().getBoundingBox(blockState, this.world, new BlockPos(this.xTile, this.yTile, this.zTile));
 			if ((axisalignedbb != null) && (axisalignedbb.isVecInside(new Vec3d(this.posX, this.posY, this.posZ)))) {
 				this.inGround = true;
 			}
@@ -180,13 +180,13 @@ public class EntityIMBoulder extends Entity {
 		Vec3d vec3d = new Vec3d(this.posX, this.posY, this.posZ);
 		Vec3d vec3d1 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 		// after update required one less vec, chose false, could also be true
-		RayTraceResult rtr0 = this.worldObj.rayTraceBlocks(vec3d, vec3d1, false);
+		RayTraceResult rtr0 = this.world.rayTraceBlocks(vec3d, vec3d1, false);
 		vec3d = new Vec3d(this.posX, this.posY, this.posZ);
 		vec3d1 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 		if (rtr0 != null) vec3d1 = new Vec3d(rtr0.hitVec.xCoord, rtr0.hitVec.yCoord, rtr0.hitVec.zCoord);
 
 		Entity entity = null;
-		List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(
+		List list = this.world.getEntitiesWithinAABBExcludingEntity(
 				this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
 		double d = 0.0D;
 		for (int l = 0; l < list.size(); l++) {
@@ -212,12 +212,12 @@ public class EntityIMBoulder extends Entity {
 				if (rtr0.entityHit.attackEntityFrom(
 						DamageSource.causeMobDamage(this.shootingEntity), damage)) {
 					if ((rtr0.entityHit instanceof EntityLiving)) {
-						if (!this.worldObj.isRemote) {
+						if (!this.world.isRemote) {
 							EntityLiving entityLiving = (EntityLiving) rtr0.entityHit;
 							entityLiving.setArrowCountInEntity(entityLiving.getArrowCountInEntity() + 1);
 						}
 					}
-					//this.worldObj.playSoundAtEntity(this, "random.explode", 1.0F, 0.9F / (this.rand.nextFloat() * 0.2F + 0.9F));
+					//this.world.playSoundAtEntity(this, "random.explode", 1.0F, 0.9F / (this.rand.nextFloat() * 0.2F + 0.9F));
 					this.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE, 1f, 0.9f / (this.rand.nextFloat() * 0.2f + 0.9f));
 					this.setDead();
 				}
@@ -225,43 +225,43 @@ public class EntityIMBoulder extends Entity {
 				this.xTile = rtr0.getBlockPos().getX();
 				this.yTile = rtr0.getBlockPos().getY();
 				this.zTile = rtr0.getBlockPos().getZ();
-				this.inTile = this.worldObj.getBlockState(new BlockPos(this.xTile, this.yTile, this.zTile)).getBlock();
-//				this.inData = this.worldObj.getBlockMetadata(this.xTile, this.yTile, this.zTile);
+				this.inTile = this.world.getBlockState(new BlockPos(this.xTile, this.yTile, this.zTile)).getBlock();
+//				this.inData = this.world.getBlockMetadata(this.xTile, this.yTile, this.zTile);
 				this.motionX = ((float) (rtr0.hitVec.xCoord - this.posX));
 				this.motionY = ((float) (rtr0.hitVec.yCoord - this.posY));
 				this.motionZ = ((float) (rtr0.hitVec.zCoord - this.posZ));
-				float f2 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
+				float f2 = MathHelper.sqrt(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
 				this.posX -= this.motionX / f2 * 0.05D;
 				this.posY -= this.motionY / f2 * 0.05D;
 				this.posZ -= this.motionZ / f2 * 0.05D;
-				//this.worldObj.playSoundAtEntity(this, "random.explode", 1.0F, 0.9F / (this.rand.nextFloat() * 0.2F + 0.9F));
+				//this.world.playSoundAtEntity(this, "random.explode", 1.0F, 0.9F / (this.rand.nextFloat() * 0.2F + 0.9F));
 				this.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE, 1f, 0.9f / (this.rand.nextFloat() * 0.2f + 0.9f));
 				this.inGround = true;
 				this.arrowCritical = false;
 
-				Block block2 = this.worldObj.getBlockState(new BlockPos(this.xTile, this.yTile, this.zTile)).getBlock();
+				Block block2 = this.world.getBlockState(new BlockPos(this.xTile, this.yTile, this.zTile)).getBlock();
 				if (block2 == BlocksAndItems.blockNexus) {
-					TileEntityNexus tileEntityNexus = (TileEntityNexus) this.worldObj.getTileEntity(new BlockPos(this.xTile, this.yTile, this.zTile));
+					TileEntityNexus tileEntityNexus = (TileEntityNexus) this.world.getTileEntity(new BlockPos(this.xTile, this.yTile, this.zTile));
 					if (tileEntityNexus != null) {
 						tileEntityNexus.attackNexus(2);
 					}
 				} else if (block2 != Blocks.BEDROCK) {
 					if ((block2 != null) && (block2 != BlocksAndItems.blockNexus) && (block2 != Blocks.CHEST)) {
 						// check if mobgriefing is enabled
-						boolean mobgriefing = this.worldObj.getGameRules().getBoolean("mobGriefing");
+						boolean mobgriefing = this.world.getGameRules().getBoolean("mobGriefing");
 
-						// int meta = this.worldObj.getBlockMetadata(this.xTile,
+						// int meta = this.world.getBlockMetadata(this.xTile,
 						// this.yTile, this.zTile);
 						// block=Blocks.air;
-						// block.onBlockDestroyedByPlayer(this.worldObj,
+						// block.onBlockDestroyedByPlayer(this.world,
 						// this.xTile, this.yTile, this.zTile, meta);
-						// block.dropBlockAsItem(this.worldObj, this.xTile,
+						// block.dropBlockAsItem(this.world, this.xTile,
 						// this.yTile, this.zTile, meta, 0);
-						if (!this.worldObj.isRemote) {
-							// this.worldObj.createExplosion(null, this.xTile,
+						if (!this.world.isRemote) {
+							// this.world.createExplosion(null, this.xTile,
 							// this.yTile, this.zTile, 0.5F, true);
 
-							Explosion explosion = new Explosion(this.worldObj, this, this.xTile, this.yTile, this.zTile, 2.0F, false, mobgriefing);
+							Explosion explosion = new Explosion(this.world, this, this.xTile, this.yTile, this.zTile, 2.0F, false, mobgriefing);
 
 							explosion.doExplosionA();
 							explosion.doExplosionB(false);
@@ -276,7 +276,7 @@ public class EntityIMBoulder extends Entity {
 
 		if (this.arrowCritical) {
 			for (int i1 = 0; i1 < 4; i1++) {
-				this.worldObj.spawnParticle(EnumParticleTypes.CRIT, this.posX
+				this.world.spawnParticle(EnumParticleTypes.CRIT, this.posX
 						+ this.motionX * i1 / 4.0D, this.posY + this.motionY
 						* i1 / 4.0D, this.posZ + this.motionZ * i1 / 4.0D,
 						-this.motionX, -this.motionY + 0.2D, -this.motionZ);
@@ -288,7 +288,7 @@ public class EntityIMBoulder extends Entity {
 		this.posY += this.motionY;
 		this.posZ += this.motionZ;
 
-		float xyVelocity = MathHelper.sqrt_double(this.motionX * this.motionX
+		float xyVelocity = MathHelper.sqrt(this.motionX * this.motionX
 				+ this.motionZ * this.motionZ);
 		this.rotationYaw = ((float) (Math.atan2(this.motionX, this.motionZ) * 180.0D / 3.141592653589793D));
 		for (this.rotationPitch = ((float) (Math
@@ -308,7 +308,7 @@ public class EntityIMBoulder extends Entity {
 		if (isInWater()) {
 			for (int k1 = 0; k1 < 4; k1++) {
 				float f7 = 0.25F;
-				this.worldObj.spawnParticle(EnumParticleTypes.WATER_BUBBLE,
+				this.world.spawnParticle(EnumParticleTypes.WATER_BUBBLE,
 						this.posX - this.motionX * f7, this.posY - this.motionY
 								* f7, this.posZ - this.motionZ * f7,
 						this.motionX, this.motionY, this.motionZ);
@@ -351,7 +351,7 @@ public class EntityIMBoulder extends Entity {
 
 	@Override
 	public void onCollideWithPlayer(EntityPlayer entityplayer) {
-		if (this.worldObj.isRemote)
+		if (this.world.isRemote)
 			;
 	}
 
