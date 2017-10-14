@@ -1,3 +1,5 @@
-#Invasion
+# Invasion
 
-So you think your base is tough, do you?
+### A mod for Minecraft 1.7.10
+
+Forked from [UnstoppableN](https://github.com/UnstoppableN) / [Invasion-mod](https://github.com/UnstoppableN/Invasion-mod)
