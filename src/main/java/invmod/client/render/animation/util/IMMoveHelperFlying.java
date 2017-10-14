@@ -7,102 +7,128 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
-public class IMMoveHelperFlying extends IMMoveHelper {
+
+public class IMMoveHelperFlying extends IMMoveHelper
+{
 	private EntityIMFlying a;
 	private double targetFlySpeed;
 	private boolean wantsToBeFlying;
 
-	public IMMoveHelperFlying(EntityIMFlying entity) {
+	public IMMoveHelperFlying(EntityIMFlying entity)
+	{
 		super(entity);
 		this.a = entity;
 		this.wantsToBeFlying = false;
 	}
 
-	public void setHeading(float yaw, float pitch, float idealSpeed, int time) {
+	public void setHeading(float yaw, float pitch, float idealSpeed, int time)
+	{
 		double x = this.a.posX + Math.sin(yaw / 180.0F * 3.141592653589793D)
-				* idealSpeed * time;
+			* idealSpeed * time;
 		double y = this.a.posY + Math.sin(pitch / 180.0F * 3.141592653589793D)
-				* idealSpeed * time;
+			* idealSpeed * time;
 		double z = this.a.posZ + Math.cos(yaw / 180.0F * 3.141592653589793D)
-				* idealSpeed * time;
-		setMoveTo(x, y, z, idealSpeed);
+			* idealSpeed * time;
+		this.setMoveTo(x, y, z, idealSpeed);
 	}
 
-	public void setWantsToBeFlying(boolean flag) {
+	public void setWantsToBeFlying(boolean flag)
+	{
 		this.wantsToBeFlying = flag;
 	}
 
 	@Override
-	public void onUpdateMoveHelper() {
+	public void onUpdateMoveHelper()
+	{
 		this.a.setMoveForward(0.0F);
 		this.a.setFlightAccelerationVector(0.0F, 0.0F, 0.0F);
-		if ((!this.needsUpdate) && (this.a.getMoveState() != MoveState.FLYING)) {
+		if ((!this.needsUpdate) && (this.a.getMoveState() != MoveState.FLYING))
+		{
 			this.a.setMoveState(MoveState.STANDING);
 			this.a.setFlyState(FlyState.GROUNDED);
-			this.a.rotationPitch = correctRotation(this.a.rotationPitch, 50.0F,
-					4.0F);
+			this.a.rotationPitch = this.correctRotation(this.a.rotationPitch, 50.0F,
+				4.0F);
 			return;
 		}
 		this.needsUpdate = false;
 
-		if (this.wantsToBeFlying) {
-			if (this.a.getFlyState() == FlyState.GROUNDED) {
+		if (this.wantsToBeFlying)
+		{
+			if (this.a.getFlyState() == FlyState.GROUNDED)
+			{
 				this.a.setMoveState(MoveState.RUNNING);
 				this.a.setFlyState(FlyState.TAKEOFF);
-			} else if (this.a.getFlyState() == FlyState.FLYING) {
+			}
+			else if (this.a.getFlyState() == FlyState.FLYING)
+			{
 				this.a.setMoveState(MoveState.FLYING);
 			}
 
-		} else if (this.a.getFlyState() == FlyState.FLYING) {
+		}
+		else if (this.a.getFlyState() == FlyState.FLYING)
+		{
 			this.a.setFlyState(FlyState.LANDING);
 		}
 
-		if (this.a.getFlyState() == FlyState.FLYING) {
-			FlyState result = doFlying();
+		if (this.a.getFlyState() == FlyState.FLYING)
+		{
+			FlyState result = this.doFlying();
 			if (result == FlyState.GROUNDED)
 				this.a.setMoveState(MoveState.STANDING);
-			else if (result == FlyState.FLYING) {
+			else if (result == FlyState.FLYING)
+			{
 				this.a.setMoveState(MoveState.FLYING);
 			}
 			this.a.setFlyState(result);
-		} else if (this.a.getFlyState() == FlyState.TAKEOFF) {
-			FlyState result = doTakeOff();
+		}
+		else if (this.a.getFlyState() == FlyState.TAKEOFF)
+		{
+			FlyState result = this.doTakeOff();
 			if (result == FlyState.GROUNDED)
 				this.a.setMoveState(MoveState.STANDING);
 			else if (result == FlyState.TAKEOFF)
 				this.a.setMoveState(MoveState.RUNNING);
-			else if (result == FlyState.FLYING) {
+			else if (result == FlyState.FLYING)
+			{
 				this.a.setMoveState(MoveState.FLYING);
 			}
 			this.a.setFlyState(result);
-		} else if ((this.a.getFlyState() == FlyState.LANDING)
-				|| (this.a.getFlyState() == FlyState.TOUCHDOWN)) {
-			FlyState result = doLanding();
-			if ((result == FlyState.GROUNDED) || (result == FlyState.TOUCHDOWN)) {
+		}
+		else if ((this.a.getFlyState() == FlyState.LANDING)
+			|| (this.a.getFlyState() == FlyState.TOUCHDOWN))
+		{
+			FlyState result = this.doLanding();
+			if ((result == FlyState.GROUNDED) || (result == FlyState.TOUCHDOWN))
+			{
 				this.a.setMoveState(MoveState.RUNNING);
 			}
 			this.a.setFlyState(result);
-		} else {
-			MoveState result = doGroundMovement();
+		}
+		else
+		{
+			MoveState result = this.doGroundMovement();
 			this.a.setMoveState(result);
 		}
 	}
 
 	@Override
-	protected MoveState doGroundMovement() {
+	protected MoveState doGroundMovement()
+	{
 		this.a.setGroundFriction(0.6F);
-		this.a.setRotationRoll(correctRotation(this.a.getRotationRoll(), 0.0F, 6.0F));
+		this.a.setRotationRoll(this.correctRotation(this.a.getRotationRoll(), 0.0F, 6.0F));
 		this.targetSpeed = this.a.getMoveSpeedStat();
-		this.a.rotationPitch = correctRotation(this.a.rotationPitch, 50.0F, 4.0F);
+		this.a.rotationPitch = this.correctRotation(this.a.rotationPitch, 50.0F, 4.0F);
 		return super.doGroundMovement();
 	}
 
-	protected FlyState doFlying() {
+	protected FlyState doFlying()
+	{
 		this.targetFlySpeed = this.speed;
-		return fly();
+		return this.fly();
 	}
 
-	protected FlyState fly() {
+	protected FlyState fly()
+	{
 		this.a.setGroundFriction(1.0F);
 		boolean isInLiquid = (this.a.isInWater()) || (this.a.isInLava());//(this.a.handleLavaMovement());
 		double dX = this.posX - this.a.posX;
@@ -113,7 +139,8 @@ public class IMMoveHelperFlying extends IMMoveHelper {
 		double dXZ = Math.sqrt(dXZSq);
 		double distanceSquared = dXZSq + dY * dY;
 
-		if (distanceSquared > 0.04D) {
+		if (distanceSquared > 0.04D)
+		{
 			int timeToTurn = 10;
 			float gravity = this.a.getGravity();
 			float liftConstant = gravity;
@@ -133,36 +160,45 @@ public class IMMoveHelperFlying extends IMMoveHelper {
 			double dVelY = desiredYVelocity - (velY - gravity);
 
 			float minFlightSpeed = 0.05F;
-			if (flySpeed < minFlightSpeed) {
-				float newYaw = (float) (Math.atan2(dZ, dX) * 180.0D / 3.141592653589793D - 90.0D);
-				newYaw = correctRotation(this.a.rotationYaw, newYaw,
-						this.a.getTurnRate());
+			if (flySpeed < minFlightSpeed)
+			{
+				float newYaw = (float)(Math.atan2(dZ, dX) * 180.0D / 3.141592653589793D - 90.0D);
+				newYaw = this.correctRotation(this.a.rotationYaw, newYaw,
+					this.a.getTurnRate());
 				this.a.rotationYaw = newYaw;
-				if (this.a.onGround) {
+				if (this.a.onGround)
+				{
 					return FlyState.GROUNDED;
 				}
-			} else {
+			}
+			else
+			{
 				double liftForce = flySpeed
-						/ (this.a.getMaxPoweredFlightSpeed() * this.a
-								.getLiftFactor()) * liftConstant;
+					/ (this.a.getMaxPoweredFlightSpeed() * this.a
+						.getLiftFactor())
+					* liftConstant;
 				double climbForce = liftForce * horizontalSpeed
-						/ (Math.abs(velY) + horizontalSpeed);
+					/ (Math.abs(velY) + horizontalSpeed);
 				double forwardForce = liftForce * Math.abs(velY)
-						/ (Math.abs(velY) + horizontalSpeed);
+					/ (Math.abs(velY) + horizontalSpeed);
 				double turnForce = liftForce;
 				double climbAccel;
-				if (dVelY < 0.0D) {
+				if (dVelY < 0.0D)
+				{
 					double maxDiveForce = this.a.getMaxTurnForce() - gravity;
 					climbAccel = -Math.min(Math.min(climbForce, maxDiveForce),
-							-dVelY);
-				} else {
+						-dVelY);
+				}
+				else
+				{
 					double maxClimbForce = this.a.getMaxTurnForce() + gravity;
 					climbAccel = Math.min(Math.min(climbForce, maxClimbForce),
-							dVelY);
+						dVelY);
 				}
 
 				float minBankForce = 0.01F;
-				if (turnForce < minBankForce) {
+				if (turnForce < minBankForce)
+				{
 					turnForce = minBankForce;
 				}
 
@@ -175,10 +211,11 @@ public class IMMoveHelperFlying extends IMMoveHelper {
 					dXZHeading += 6.283185307179586D;
 				double bankForce = horizontalSpeed * dXZHeading / timeToTurn;
 				double maxBankForce = Math.min(turnForce,
-						this.a.getMaxTurnForce());
+					this.a.getMaxTurnForce());
 				if (bankForce > maxBankForce)
 					bankForce = maxBankForce;
-				else if (bankForce < -maxBankForce) {
+				else if (bankForce < -maxBankForce)
+				{
 					bankForce = -maxBankForce;
 				}
 
@@ -198,41 +235,50 @@ public class IMMoveHelperFlying extends IMMoveHelper {
 				double dYAccelGravity = yAccel - gravity;
 				double middlePitch = 15.0D;
 				double newPitch;
-				if (velY - gravity < 0.0D) {
+				if (velY - gravity < 0.0D)
+				{
 					double climbForceRatio = yAccel / climbForce;
 					if (climbForceRatio > 1.0D)
 						climbForceRatio = 1.0D;
-					else if (climbForceRatio < -1.0D) {
+					else if (climbForceRatio < -1.0D)
+					{
 						climbForceRatio = -1.0D;
 					}
 					double xzSpeed = Math.sqrt(velX * velX + velZ * velZ);
 					double velPitch;
 					if (xzSpeed > 0.0D)
 						velPitch = Math.atan(velY / xzSpeed) / 3.141592653589793D * 180.0D;
-					else {
+					else
+					{
 						velPitch = -180.0D;
 					}
 					double pitchInfluence = (this.a.getMaxPoweredFlightSpeed() - Math.abs(velY)) / this.a.getMaxPoweredFlightSpeed();
-					if (pitchInfluence < 0.0D) {
+					if (pitchInfluence < 0.0D)
+					{
 						pitchInfluence = 0.0D;
 					}
 					newPitch = velPitch + 15.0D * climbForceRatio * pitchInfluence;
-				} else {
+				}
+				else
+				{
 					double pitchLimit = this.a.getMaxPitch();
 					double climbForceRatio = Math.min(yAccel / climbForce, 1.0D);
 					newPitch = middlePitch + (pitchLimit - middlePitch) * climbForceRatio;
 				}
-				newPitch = correctRotation(this.a.rotationPitch,
-						(float) newPitch, 1.5F);
+				newPitch = this.correctRotation(this.a.rotationPitch,
+					(float)newPitch, 1.5F);
 				double newYaw = Math.atan2(velZ, velX) * 180.0D / 3.141592653589793D - 90.0D;
-				newYaw = correctRotation(this.a.rotationYaw, (float) newYaw, this.a.getTurnRate());
-				this.a.setPositionAndRotation(this.a.posX, this.a.posY, this.a.posZ, (float) newYaw, (float) newPitch);
+				newYaw = this.correctRotation(this.a.rotationYaw, (float)newYaw, this.a.getTurnRate());
+				this.a.setPositionAndRotation(this.a.posX, this.a.posY, this.a.posZ, (float)newYaw, (float)newPitch);
 				double newRoll = 60.0D * bankForce / turnForce;
-				this.a.setRotationRoll(correctRotation(this.a.getRotationRoll(), (float) newRoll, 6.0F));
+				this.a.setRotationRoll(this.correctRotation(this.a.getRotationRoll(), (float)newRoll, 6.0F));
 				double horizontalForce;
-				if (velY > 0.0D) {
+				if (velY > 0.0D)
+				{
 					horizontalForce = -climbAccel;
-				} else {
+				}
+				else
+				{
 					horizontalForce = forwardForce;
 				}
 				int xDirection = velX > 0.0D ? 1 : -1;
@@ -250,92 +296,108 @@ public class IMMoveHelperFlying extends IMMoveHelper {
 				zAccel += zLiftAccel;
 			}
 
-			if (flySpeed < this.targetFlySpeed) {
+			if (flySpeed < this.targetFlySpeed)
+			{
 				this.a.setThrustEffort(0.6F);
-				if (!this.a.isThrustOn()) {
+				if (!this.a.isThrustOn())
+				{
 					this.a.setThrustOn(true);
 				}
 				double desiredVThrustRatio = (dVelY - yAccel) / this.a.getThrust();
-				Vec3d thrust = calcThrust(desiredVThrustRatio);
+				Vec3d thrust = this.calcThrust(desiredVThrustRatio);
 				xAccel += thrust.xCoord;
 				yAccel += thrust.yCoord;
 				zAccel += thrust.zCoord;
-			} else if (flySpeed > this.targetFlySpeed * 1.8D) {
+			}
+			else if (flySpeed > this.targetFlySpeed * 1.8D)
+			{
 				this.a.setThrustEffort(1.0F);
-				if (!this.a.isThrustOn()) {
+				if (!this.a.isThrustOn())
+				{
 					this.a.setThrustOn(true);
 				}
 				double desiredVThrustRatio = (dVelY - yAccel)
-						/ (this.a.getThrust() * 10.0F);
-				Vec3d thrust = calcThrust(desiredVThrustRatio);
+					/ (this.a.getThrust() * 10.0F);
+				Vec3d thrust = this.calcThrust(desiredVThrustRatio);
 				xAccel += -thrust.xCoord;
 				yAccel += thrust.yCoord;
 				zAccel += -thrust.zCoord;
-			} else if (this.a.isThrustOn()) {
+			}
+			else if (this.a.isThrustOn())
+			{
 				this.a.setThrustOn(false);
 			}
 
-			this.a.setFlightAccelerationVector((float) xAccel, (float) yAccel,
-					(float) zAccel);
+			this.a.setFlightAccelerationVector((float)xAccel, (float)yAccel,
+				(float)zAccel);
 		}
 		return FlyState.FLYING;
 	}
 
-	protected FlyState doTakeOff() {
+	protected FlyState doTakeOff()
+	{
 		this.a.setGroundFriction(0.98F);
 		this.a.setThrustOn(true);
 		this.a.setThrustEffort(1.0F);
 		this.targetSpeed = this.a.getMoveSpeedStat();
 
-		MoveState result = doGroundMovement();
-		if (result == MoveState.STANDING) {
+		MoveState result = this.doGroundMovement();
+		if (result == MoveState.STANDING)
+		{
 			return FlyState.GROUNDED;
 		}
-		if (this.a.isCollidedHorizontally) {
+		if (this.a.isCollidedHorizontally)
+		{
 			this.a.getJumpHelper().setJumping();
 		}
-		Vec3d thrust = calcThrust(0.0D);
-		this.a.setFlightAccelerationVector((float) thrust.xCoord,(float) thrust.yCoord, (float) thrust.zCoord);
+		Vec3d thrust = this.calcThrust(0.0D);
+		this.a.setFlightAccelerationVector((float)thrust.xCoord, (float)thrust.yCoord, (float)thrust.zCoord);
 		double speed = Math.sqrt(this.a.motionX * this.a.motionX + this.a.motionY * this.a.motionY + this.a.motionZ * this.a.motionZ);
 
-		this.a.rotationPitch = correctRotation(this.a.rotationPitch, 40.0F,
-				4.0F);
+		this.a.rotationPitch = this.correctRotation(this.a.rotationPitch, 40.0F,
+			4.0F);
 
 		float gravity = this.a.getGravity();
 		float liftConstant = gravity;
 		double liftForce = speed
-				/ (this.a.getMaxPoweredFlightSpeed() * this.a.getLiftFactor())
-				* liftConstant;
+			/ (this.a.getMaxPoweredFlightSpeed() * this.a.getLiftFactor())
+			* liftConstant;
 
-		if (liftForce > gravity) {
+		if (liftForce > gravity)
+		{
 			return FlyState.FLYING;
 		}
 		return FlyState.TAKEOFF;
 	}
 
-	protected FlyState doLanding() {
+	protected FlyState doLanding()
+	{
 		this.a.setGroundFriction(0.3F);
 		int x = MathHelper.floor(this.a.posX);
 		int y = MathHelper.floor(this.a.posY);
 		int z = MathHelper.floor(this.a.posZ);
 
-		for (int i = 1; i < 5; i++) {
+		for (int i = 1; i < 5; i++)
+		{
 			if (this.a.world.getBlockState(new BlockPos(x, y - i, z)).getBlock() != Blocks.AIR) break;
 			this.targetFlySpeed = (this.speed * (0.66F - (0.4F - (i - 1) * 0.133F)));
 		}
 
-		FlyState result = fly();
+		FlyState result = this.fly();
 		this.a.setThrustOn(true);
-		if (result == FlyState.FLYING) {
+		if (result == FlyState.FLYING)
+		{
 			double speed = Math.sqrt(this.a.motionX * this.a.motionX
-					+ this.a.motionY * this.a.motionY + this.a.motionZ
+				+ this.a.motionY * this.a.motionY + this.a.motionZ
 					* this.a.motionZ);
-			if (this.a.onGround) {
-				if (speed < this.a.getLandingSpeedThreshold()) {
+			if (this.a.onGround)
+			{
+				if (speed < this.a.getLandingSpeedThreshold())
+				{
 					return FlyState.GROUNDED;
 				}
 
-				this.a.setRotationRoll(correctRotation(this.a.getRotationRoll(), 40.0F, 6.0F));
+				this.a.setRotationRoll(this.correctRotation(this.a.getRotationRoll(), 40.0F, 6.0F));
 				return FlyState.TOUCHDOWN;
 			}
 		}
@@ -343,23 +405,25 @@ public class IMMoveHelperFlying extends IMMoveHelper {
 		return FlyState.LANDING;
 	}
 
-	protected Vec3d calcThrust(double desiredVThrustRatio) {
+	protected Vec3d calcThrust(double desiredVThrustRatio)
+	{
 		float thrust = this.a.getThrust();
 		float rMin = this.a.getThrustComponentRatioMin();
 		float rMax = this.a.getThrustComponentRatioMax();
 		double vThrustRatio = desiredVThrustRatio;
 		if (vThrustRatio > rMax)
 			vThrustRatio = rMax;
-		else if (vThrustRatio < rMin) {
+		else if (vThrustRatio < rMin)
+		{
 			vThrustRatio = rMin;
 		}
 		double hThrust = (1.0D - vThrustRatio) * thrust;
 		double vThrust = vThrustRatio * thrust;
 		double xAccel = hThrust
-				* -Math.sin(this.a.rotationYaw / 180.0F * 3.141592653589793D);
+			* -Math.sin(this.a.rotationYaw / 180.0F * 3.141592653589793D);
 		double yAccel = vThrust;
 		double zAccel = hThrust
-				* Math.cos(this.a.rotationYaw / 180.0F * 3.141592653589793D);
+			* Math.cos(this.a.rotationYaw / 180.0F * 3.141592653589793D);
 		// Vec3 vec = this.a.world.getWorldVec3Pool().getVecFromPool(xAccel,
 		// yAccel, zAccel);
 		Vec3d vec = new Vec3d(xAccel, yAccel, zAccel);

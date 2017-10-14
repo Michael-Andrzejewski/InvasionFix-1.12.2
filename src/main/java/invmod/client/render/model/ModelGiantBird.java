@@ -1,5 +1,6 @@
 package invmod.client.render.model;
 
+import java.util.EnumMap;
 import invmod.client.render.AnimationRegistry;
 import invmod.client.render.animation.AnimationAction;
 import invmod.client.render.animation.AnimationState;
@@ -7,15 +8,14 @@ import invmod.client.render.animation.BonesBirdLegs;
 import invmod.client.render.animation.BonesWings;
 import invmod.client.render.animation.ModelAnimator;
 import invmod.util.MathUtil;
-
-import java.util.EnumMap;
-
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
-public class ModelGiantBird extends ModelBase{
+
+public class ModelGiantBird extends ModelBase
+{
 	private ModelAnimator animationFlap;
 	private ModelAnimator animationRun;
 	ModelRenderer body;
@@ -61,11 +61,13 @@ public class ModelGiantBird extends ModelBase{
 	ModelRenderer rightWing2;
 	ModelRenderer rightWing3;
 
-	public ModelGiantBird(){
+	public ModelGiantBird()
+	{
 		this(0.0F);
 	}
 
-	public ModelGiantBird(float par1){
+	public ModelGiantBird(float par1)
+	{
 		this.body = new ModelRenderer(this, 0, 0);
 		this.body.setTextureSize(128, 128);
 		this.body.addBox(-10.0F, -10.0F, -10.0F, 20, 30, 20);
@@ -300,49 +302,53 @@ public class ModelGiantBird extends ModelBase{
 		wingMap.put(BonesWings.RIGHT_ELBOW, this.rightWing2);
 		this.animationFlap = new ModelAnimator(wingMap, AnimationRegistry.instance().getAnimation("wing_flap_2_piece"));
 
-		setRotation(this.body, 0.7F, 0.0F, 0.0F);
-		setRotation(this.rightThigh, -0.39F, 0.0F, 0.09F);
-		setRotation(this.leftThigh, -0.39F, 0.0F, -0.09F);
-		setRotation(this.rightLeg, -0.72F, 0.0F, 0.0F);
-		setRotation(this.leftLeg, -0.72F, 0.0F, 0.0F);
-		setRotation(this.rightAnkle, 0.1F, 0.2F, 0.0F);
-		setRotation(this.leftAnkle, 0.1F, -0.2F, 0.0F);
-		setRotation(this.rightToeB, 1.34F, 0.0F, 0.0F);
-		setRotation(this.rightToeR, -0.8F, -0.28F, -0.28F);
-		setRotation(this.rightToeM, -0.8F, 0.0F, 0.0F);
-		setRotation(this.rightToeL, -0.8F, 0.28F, 0.28F);
-		setRotation(this.leftToeB, 1.34F, 0.0F, 0.0F);
-		setRotation(this.leftToeR, -0.8F, 0.28F, 0.28F);
-		setRotation(this.leftToeM, -0.8F, 0.0F, 0.0F);
-		setRotation(this.leftToeL, -0.8F, -0.28F, -0.28F);
-		setRotation(this.rightClawB, -36.0F, 0.0F, 0.0F);
+		this.setRotation(this.body, 0.7F, 0.0F, 0.0F);
+		this.setRotation(this.rightThigh, -0.39F, 0.0F, 0.09F);
+		this.setRotation(this.leftThigh, -0.39F, 0.0F, -0.09F);
+		this.setRotation(this.rightLeg, -0.72F, 0.0F, 0.0F);
+		this.setRotation(this.leftLeg, -0.72F, 0.0F, 0.0F);
+		this.setRotation(this.rightAnkle, 0.1F, 0.2F, 0.0F);
+		this.setRotation(this.leftAnkle, 0.1F, -0.2F, 0.0F);
+		this.setRotation(this.rightToeB, 1.34F, 0.0F, 0.0F);
+		this.setRotation(this.rightToeR, -0.8F, -0.28F, -0.28F);
+		this.setRotation(this.rightToeM, -0.8F, 0.0F, 0.0F);
+		this.setRotation(this.rightToeL, -0.8F, 0.28F, 0.28F);
+		this.setRotation(this.leftToeB, 1.34F, 0.0F, 0.0F);
+		this.setRotation(this.leftToeR, -0.8F, 0.28F, 0.28F);
+		this.setRotation(this.leftToeM, -0.8F, 0.0F, 0.0F);
+		this.setRotation(this.leftToeL, -0.8F, -0.28F, -0.28F);
+		this.setRotation(this.rightClawB, -36.0F, 0.0F, 0.0F);
 
-		setRotation(this.neck1, -0.18F, 0.0F, 0.0F);
-		setRotation(this.neck2, 0.52F, 0.0F, 0.0F);
-		setRotation(this.neck3, 0.26F, 0.0F, 0.0F);
-		setRotation(this.head, -0.97F, 0.0F, 0.0F);
-		setRotation(this.headFeathers, 0.38F, 0.0F, 0.0F);
-		setRotation(this.backNeckFeathers, -1.11F, 0.0F, 0.0F);
-		setRotation(this.leftNeckFeathers, -0.85F, -1.87F, 0.39F);
-		setRotation(this.rightNeckFeathers, -0.85F, 1.87F, -0.39F);
+		this.setRotation(this.neck1, -0.18F, 0.0F, 0.0F);
+		this.setRotation(this.neck2, 0.52F, 0.0F, 0.0F);
+		this.setRotation(this.neck3, 0.26F, 0.0F, 0.0F);
+		this.setRotation(this.head, -0.97F, 0.0F, 0.0F);
+		this.setRotation(this.headFeathers, 0.38F, 0.0F, 0.0F);
+		this.setRotation(this.backNeckFeathers, -1.11F, 0.0F, 0.0F);
+		this.setRotation(this.leftNeckFeathers, -0.85F, -1.87F, 0.39F);
+		this.setRotation(this.rightNeckFeathers, -0.85F, 1.87F, -0.39F);
 
-		setRotation(this.tail, 0.3F, 0.0F, 0.0F);
+		this.setRotation(this.tail, 0.3F, 0.0F, 0.0F);
 	}
 
 	@Override
-	public void render(Entity par1Entity, float par2, float par3, float par4, float par5, float par6, float par7){
+	public void render(Entity par1Entity, float par2, float par3, float par4, float par5, float par6, float par7)
+	{
 		this.body.render(par7);
 	}
 
-	public void setFlyingAnimations(AnimationState wingState, AnimationState legState, float roll, float headYaw, float headPitch, float parTick){
+	public void setFlyingAnimations(AnimationState wingState, AnimationState legState, float roll, float headYaw, float headPitch, float parTick)
+	{
 		AnimationAction legAction = legState.getCurrentAction();
 		AnimationAction wingAction = wingState.getCurrentAction();
 		float flapProgress = wingState.getCurrentAnimationTimeInterp(parTick);
 		float legProgress = legState.getCurrentAnimationTimeInterp(parTick);
 		this.animationFlap.updateAnimation(flapProgress);
 		this.animationRun.updateAnimation(legProgress);
-		if (legAction == AnimationAction.RUN){
-			if ((legProgress >= 0.109195F) && (legProgress < 0.5373563F)){
+		if (legAction == AnimationAction.RUN)
+		{
+			if ((legProgress >= 0.109195F) && (legProgress < 0.5373563F))
+			{
 				legProgress = (float)(legProgress + 0.0D);
 
 				float t = 25.132742F * legProgress / 0.7967914F;
@@ -352,13 +358,17 @@ public class ModelGiantBird extends ModelBase{
 			}
 		}
 
-		if (wingAction == AnimationAction.WINGFLAP){
+		if (wingAction == AnimationAction.WINGFLAP)
+		{
 			float flapCycle = flapProgress / 0.2714932F;
 
 			this.body.rotationPointY += MathHelper.cos(flapCycle * 3.141593F * 2.0F) * 1.4F;
-			ModelRenderer tmp208_205 = this.rightThigh; tmp208_205.rotateAngleX = ((float)(tmp208_205.rotateAngleX + MathHelper.cos(flapCycle * 3.141593F * 2.0F) * 0.08726646324990228D));
-			ModelRenderer tmp238_235 = this.leftThigh; tmp238_235.rotateAngleX = ((float)(tmp238_235.rotateAngleX + MathHelper.cos(flapCycle * 3.141593F * 2.0F) * 0.08726646324990228D));
-			ModelRenderer tmp268_265 = this.tail; tmp268_265.rotateAngleX = ((float)(tmp268_265.rotateAngleX + MathHelper.cos(flapCycle * 3.141593F * 2.0F) * 0.03490658588512815D));
+			ModelRenderer tmp208_205 = this.rightThigh;
+			tmp208_205.rotateAngleX = ((float)(tmp208_205.rotateAngleX + MathHelper.cos(flapCycle * 3.141593F * 2.0F) * 0.08726646324990228D));
+			ModelRenderer tmp238_235 = this.leftThigh;
+			tmp238_235.rotateAngleX = ((float)(tmp238_235.rotateAngleX + MathHelper.cos(flapCycle * 3.141593F * 2.0F) * 0.08726646324990228D));
+			ModelRenderer tmp268_265 = this.tail;
+			tmp268_265.rotateAngleX = ((float)(tmp268_265.rotateAngleX + MathHelper.cos(flapCycle * 3.141593F * 2.0F) * 0.03490658588512815D));
 		}
 
 		this.body.rotateAngleZ = (-roll / 180.0F * 3.141593F);
@@ -366,7 +376,8 @@ public class ModelGiantBird extends ModelBase{
 		headPitch = (float)MathUtil.boundAngle180Deg(headPitch);
 		if (headPitch > 37.16F)
 			headPitch = 37.16F;
-		else if (headPitch < -56.650002F) {
+		else if (headPitch < -56.650002F)
+		{
 			headPitch = -56.650002F;
 		}
 		float pitchFactor = (headPitch + 56.650002F) / 93.800003F;
@@ -376,9 +387,12 @@ public class ModelGiantBird extends ModelBase{
 		this.neck1.rotateAngleX += 0.513F + pitchFactor * -0.613F;
 
 		headYaw = (float)MathUtil.boundAngle180Deg(headYaw);
-		if (headYaw > 30.5F){
+		if (headYaw > 30.5F)
+		{
 			headYaw = 30.5F;
-		} else if (headYaw < -30.5F) {
+		}
+		else if (headYaw < -30.5F)
+		{
 			headYaw = -30.5F;
 		}
 		float yawFactor = (headYaw + 30.5F) / 61.0F;
@@ -390,42 +404,46 @@ public class ModelGiantBird extends ModelBase{
 	}
 
 	@Override
-	public void setRotationAngles(float limbPeriod, float limbMaxMovement, float ticksExisted, float headYaw, float entityPitch, float unitScale, Entity entity){
+	public void setRotationAngles(float limbPeriod, float limbMaxMovement, float ticksExisted, float headYaw, float entityPitch, float unitScale, Entity entity)
+	{
 		super.setRotationAngles(limbPeriod, limbMaxMovement, ticksExisted, headYaw, entityPitch, unitScale, entity);
-		ModelRenderer tmp19_16 = this.body; tmp19_16.rotateAngleX = ((float)(tmp19_16.rotateAngleX + (0.8707963705062867D - entityPitch / 180.0F * 3.141593F)));
+		ModelRenderer tmp19_16 = this.body;
+		tmp19_16.rotateAngleX = ((float)(tmp19_16.rotateAngleX + (0.8707963705062867D - entityPitch / 180.0F * 3.141593F)));
 	}
 
-	public void resetSkeleton(){
-		setRotation(this.body, 0.7F, 0.0F, 0.0F);
-		setRotation(this.rightThigh, -0.39F, 0.0F, 0.09F);
-		setRotation(this.leftThigh, -0.39F, 0.0F, -0.09F);
-		setRotation(this.rightLeg, -0.72F, 0.0F, 0.0F);
-		setRotation(this.leftLeg, -0.72F, 0.0F, 0.0F);
-		setRotation(this.rightAnkle, 0.1F, 0.2F, 0.0F);
-		setRotation(this.leftAnkle, 0.1F, -0.2F, 0.0F);
-		setRotation(this.rightToeB, 1.34F, 0.0F, 0.0F);
-		setRotation(this.rightToeR, -0.8F, -0.28F, -0.28F);
-		setRotation(this.rightToeM, -0.8F, 0.0F, 0.0F);
-		setRotation(this.rightToeL, -0.8F, 0.28F, 0.28F);
-		setRotation(this.leftToeB, 1.34F, 0.0F, 0.0F);
-		setRotation(this.leftToeR, -0.8F, 0.28F, 0.28F);
-		setRotation(this.leftToeM, -0.8F, 0.0F, 0.0F);
-		setRotation(this.leftToeL, -0.8F, -0.28F, -0.28F);
+	public void resetSkeleton()
+	{
+		this.setRotation(this.body, 0.7F, 0.0F, 0.0F);
+		this.setRotation(this.rightThigh, -0.39F, 0.0F, 0.09F);
+		this.setRotation(this.leftThigh, -0.39F, 0.0F, -0.09F);
+		this.setRotation(this.rightLeg, -0.72F, 0.0F, 0.0F);
+		this.setRotation(this.leftLeg, -0.72F, 0.0F, 0.0F);
+		this.setRotation(this.rightAnkle, 0.1F, 0.2F, 0.0F);
+		this.setRotation(this.leftAnkle, 0.1F, -0.2F, 0.0F);
+		this.setRotation(this.rightToeB, 1.34F, 0.0F, 0.0F);
+		this.setRotation(this.rightToeR, -0.8F, -0.28F, -0.28F);
+		this.setRotation(this.rightToeM, -0.8F, 0.0F, 0.0F);
+		this.setRotation(this.rightToeL, -0.8F, 0.28F, 0.28F);
+		this.setRotation(this.leftToeB, 1.34F, 0.0F, 0.0F);
+		this.setRotation(this.leftToeR, -0.8F, 0.28F, 0.28F);
+		this.setRotation(this.leftToeM, -0.8F, 0.0F, 0.0F);
+		this.setRotation(this.leftToeL, -0.8F, -0.28F, -0.28F);
 
-		setRotation(this.neck1, 0.0F, 0.0F, 0.0F);
-		setRotation(this.neck2, 0.0F, 0.0F, 0.0F);
-		setRotation(this.neck3, 0.0F, 0.0F, 0.0F);
-		setRotation(this.head, 0.0F, 0.0F, 0.0F);
-		setRotation(this.headFeathers, 0.38F, 0.0F, 0.0F);
-		setRotation(this.backNeckFeathers, -1.11F, 0.0F, 0.0F);
-		setRotation(this.leftNeckFeathers, -0.85F, -1.87F, 0.39F);
-		setRotation(this.rightNeckFeathers, -0.85F, 1.87F, -0.39F);
-		setRotation(this.tail, 0.3F, 0.0F, 0.0F);
+		this.setRotation(this.neck1, 0.0F, 0.0F, 0.0F);
+		this.setRotation(this.neck2, 0.0F, 0.0F, 0.0F);
+		this.setRotation(this.neck3, 0.0F, 0.0F, 0.0F);
+		this.setRotation(this.head, 0.0F, 0.0F, 0.0F);
+		this.setRotation(this.headFeathers, 0.38F, 0.0F, 0.0F);
+		this.setRotation(this.backNeckFeathers, -1.11F, 0.0F, 0.0F);
+		this.setRotation(this.leftNeckFeathers, -0.85F, -1.87F, 0.39F);
+		this.setRotation(this.rightNeckFeathers, -0.85F, 1.87F, -0.39F);
+		this.setRotation(this.tail, 0.3F, 0.0F, 0.0F);
 
 		this.body.setRotationPoint(0.0F, -27.0F, 0.0F);
 	}
 
-	private void setRotation(ModelRenderer model, float x, float y, float z){
+	private void setRotation(ModelRenderer model, float x, float y, float z)
+	{
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;

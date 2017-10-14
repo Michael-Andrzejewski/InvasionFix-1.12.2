@@ -1,5 +1,6 @@
 package invmod.entity.monster;
 
+import com.google.common.base.Predicate;
 import invmod.BlocksAndItems;
 import invmod.INotifyTask;
 import invmod.mod_Invasion;
@@ -42,23 +43,25 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import com.google.common.base.Predicate;
 
-public class EntityIMCreeper extends EntityIMMob {
-	
+public class EntityIMCreeper extends EntityIMMob
+{
+
 	private static final DataParameter<Integer> CREEPER_STATE = EntityDataManager.createKey(EntityIMCreeper.class, DataSerializers.VARINT);
-	
+
 	private int timeSinceIgnited;
 	private int lastActiveTime;
 	private boolean explosionDeath;
 	private boolean commitToExplode;
 	private int explodeDirection;
-	
-	public EntityIMCreeper(World world){
+
+	public EntityIMCreeper(World world)
+	{
 		this(world, null);
 	}
 
-	public EntityIMCreeper(World world, TileEntityNexus nexus){
+	public EntityIMCreeper(World world, TileEntityNexus nexus)
+	{
 		super(world, nexus);
 		this.setName("Creeper");
 		this.setGender(0);
@@ -66,18 +69,21 @@ public class EntityIMCreeper extends EntityIMMob {
 		this.setMaxHealthAndHealth(mod_Invasion.getMobHealth(this));
 		this.initEntityAI();
 	}
-	
+
 	@Override
-	protected void initEntityAI(){
+	protected void initEntityAI()
+	{
 		this.tasksIM = new EntityAITasks(this.world.theProfiler);
 		this.tasksIM.addTask(0, new EntityAISwimming(this));
 		this.tasksIM.addTask(1, new EntityAICreeperIMSwell(this));
-		this.tasksIM.addTask(2, new EntityAIAvoidEntity(this, EntityOcelot.class, new Predicate(){
-				@Override
-				public boolean apply(Object entity){
-					return entity instanceof EntityOcelot;
-				}
-			}, 6.0F, 0.25D, 0.300000011920929D));
+		this.tasksIM.addTask(2, new EntityAIAvoidEntity(this, EntityOcelot.class, new Predicate()
+		{
+			@Override
+			public boolean apply(Object entity)
+			{
+				return entity instanceof EntityOcelot;
+			}
+		}, 6.0F, 0.25D, 0.300000011920929D));
 		this.tasksIM.addTask(3, new EntityAIKillEntity(this, EntityPlayer.class, 40));
 		this.tasksIM.addTask(3, new EntityAIKillEntity(this, EntityPlayerMP.class, 40));
 		this.tasksIM.addTask(4, new EntityAIAttackNexus(this));
@@ -87,20 +93,24 @@ public class EntityIMCreeper extends EntityIMMob {
 		this.tasksIM.addTask(8, new EntityAIWanderIM(this));
 		this.tasksIM.addTask(9, new EntityAIWatchClosest(this, EntityPlayer.class, 4.8F));
 		this.tasksIM.addTask(9, new EntityAILookIdle(this));
-		
+
 		this.targetTasksIM = new EntityAITasks(this.world.theProfiler);
 		this.targetTasksIM.addTask(0, new EntityAITargetRetaliate(this, EntityLiving.class, 12.0F));
-		if(this.isNexusBound()){
+		if (this.isNexusBound())
+		{
 			this.targetTasksIM.addTask(1, new EntityAISimpleTarget(this, EntityPlayer.class, 20.0F, true));
-		} else {
-		this.targetTasksIM.addTask(1, new EntityAISimpleTarget(this, EntityPlayer.class, this.getSenseRange(), false));
-		this.targetTasksIM.addTask(2, new EntityAISimpleTarget(this, EntityPlayer.class, this.getAggroRange(), true));
 		}
-			this.targetTasksIM.addTask(3, new EntityAIHurtByTarget(this, false));
+		else
+		{
+			this.targetTasksIM.addTask(1, new EntityAISimpleTarget(this, EntityPlayer.class, this.getSenseRange(), false));
+			this.targetTasksIM.addTask(2, new EntityAISimpleTarget(this, EntityPlayer.class, this.getAggroRange(), true));
+		}
+		this.targetTasksIM.addTask(3, new EntityAIHurtByTarget(this, false));
 	}
-	
+
 	@Override
-	public void updateAITick(){
+	public void updateAITick()
+	{
 		super.updateAITick();
 	}
 
@@ -111,8 +121,10 @@ public class EntityIMCreeper extends EntityIMMob {
 //	}
 
 	@Override
-	public boolean onPathBlocked(Path path, INotifyTask notifee){
-		if (!path.isFinished()){
+	public boolean onPathBlocked(Path path, INotifyTask notifee)
+	{
+		if (!path.isFinished())
+		{
 			PathNode node = path.getPathPointFromIndex(path.getCurrentPathIndex());
 			double dX = node.pos.xCoord + 0.5D - this.posX;
 			double dZ = node.pos.zCoord + 0.5D - this.posZ;
@@ -126,43 +138,52 @@ public class EntityIMCreeper extends EntityIMMob {
 				this.explodeDirection = 3;
 			else if ((facing >= 225.0F) && (facing < 315.0F))
 				this.explodeDirection = 0;
-			else {
+			else
+			{
 				this.explodeDirection = 2;
 			}
-			setCreeperState(1);
+			this.setCreeperState(1);
 			this.commitToExplode = true;
 		}
 		return false;
 	}
 
 	@Override
-	protected void entityInit(){
+	protected void entityInit()
+	{
 		super.entityInit();
 		this.getDataManager().register(CREEPER_STATE, Integer.valueOf(-1));
 		//this.getDataManager().register(17, Byte.valueOf((byte)0)); //unused.
 	}
 
 	@Override
-	public void onUpdate(){
-		if (this.explosionDeath){
+	public void onUpdate()
+	{
+		if (this.explosionDeath)
+		{
 			this.doExplosion();
 			this.setDead();
-		} else if (isEntityAlive()){
+		}
+		else if (this.isEntityAlive())
+		{
 			this.lastActiveTime = this.timeSinceIgnited;
-			int state = getCreeperState();
+			int state = this.getCreeperState();
 
 			if (state > 0)
 			{
-				if (this.commitToExplode) {
-					getMoveHelper().setMoveTo(this.posX + invmod.util.Coords.offsetAdjX[this.explodeDirection], this.posY, this.posZ + invmod.util.Coords.offsetAdjZ[this.explodeDirection], 0.0D);
+				if (this.commitToExplode)
+				{
+					this.getMoveHelper().setMoveTo(this.posX + invmod.util.Coords.offsetAdjX[this.explodeDirection], this.posY, this.posZ + invmod.util.Coords.offsetAdjZ[this.explodeDirection], 0.0D);
 				}
-				if (this.timeSinceIgnited == 0) {
+				if (this.timeSinceIgnited == 0)
+				{
 					//this.world.playSoundAtEntity(this, "random.fuse", 1.0F, 0.5F);
 					this.playSound(SoundEvents.ENTITY_CREEPER_PRIMED, 1f, 0.5f);
 				}
 			}
 			this.timeSinceIgnited += state;
-			if (this.timeSinceIgnited < 0) {
+			if (this.timeSinceIgnited < 0)
+			{
 				this.timeSinceIgnited = 0;
 			}
 			if (this.timeSinceIgnited >= 30)
@@ -182,44 +203,53 @@ public class EntityIMCreeper extends EntityIMMob {
 //	}
 
 	@Override
-	protected SoundEvent getHurtSound(){
+	protected SoundEvent getHurtSound()
+	{
 		//return "mob.creeper.say";
 		return SoundEvents.ENTITY_CREEPER_HURT;
 	}
 
 	@Override
-	protected SoundEvent getDeathSound(){
+	protected SoundEvent getDeathSound()
+	{
 		//return "mob.creeper.death";
 		return SoundEvents.ENTITY_CREEPER_DEATH;
 	}
 
 	@Override
-	public String getSpecies(){
+	public String getSpecies()
+	{
 		return "Creeper";
 	}
 
 	@Override
-	public void onDeath(DamageSource par1DamageSource){
+	public void onDeath(DamageSource par1DamageSource)
+	{
 		super.onDeath(par1DamageSource);
 
-		if ((par1DamageSource.getEntity() instanceof EntitySkeleton)){
-			dropItem(Item.getItemById(Item.getIdFromItem(Items.RECORD_13) + this.rand.nextInt(10)), 1);
+		if ((par1DamageSource.getEntity() instanceof EntitySkeleton))
+		{
+			this.dropItem(Item.getItemById(Item.getIdFromItem(Items.RECORD_13) + this.rand.nextInt(10)), 1);
 		}
 	}
 
 	@Override
-	public boolean attackEntityAsMob(Entity par1Entity){
+	public boolean attackEntityAsMob(Entity par1Entity)
+	{
 		return true;
 	}
 
-	public float setCreeperFlashTime(float par1){
+	public float setCreeperFlashTime(float par1)
+	{
 		return (this.lastActiveTime + (this.timeSinceIgnited - this.lastActiveTime) * par1) / 28.0F;
 	}
 
 	@Override
-	public float getBlockPathCost(PathNode prevNode, PathNode node, IBlockAccess terrainMap){
+	public float getBlockPathCost(PathNode prevNode, PathNode node, IBlockAccess terrainMap)
+	{
 		Block block = terrainMap.getBlockState(new BlockPos(node.pos)).getBlock();
-		if ((block != Blocks.AIR) && (!block.isPassable(terrainMap, new BlockPos(node.pos))) && (block != BlocksAndItems.blockNexus)){
+		if ((block != Blocks.AIR) && (!block.isPassable(terrainMap, new BlockPos(node.pos))) && (block != BlocksAndItems.blockNexus))
+		{
 			return prevNode.distanceTo(node) * 12.0F;
 		}
 
@@ -227,29 +257,34 @@ public class EntityIMCreeper extends EntityIMMob {
 	}
 
 	@Override
-	public String toString(){
+	public String toString()
+	{
 		return "IMCreeper-T" + this.getTier();
 	}
-	
+
 	@Override
-	protected void dropFewItems(boolean flag, int amount) {
+	protected void dropFewItems(boolean flag, int amount)
+	{
 		this.entityDropItem(new ItemStack(Items.GUNPOWDER), 0.5F);
 	}
 
-	protected void doExplosion(){
-		Explosion explosion = new Explosion(this.world,this, posX, posY, posZ, 2.1F, false, true);
-		if(!world.isRemote) explosion.doExplosionA();
+	protected void doExplosion()
+	{
+		Explosion explosion = new Explosion(this.world, this, this.posX, this.posY, this.posZ, 2.1F, false, true);
+		if (!this.world.isRemote) explosion.doExplosionA();
 		explosion.doExplosionB(true);
 		//ExplosionUtil.doExplosionB(world,explosion,true);
 	}
-	
-	public int getCreeperState(){
+
+	public int getCreeperState()
+	{
 		return this.getDataManager().get(CREEPER_STATE);
 	}
 
-	public void setCreeperState(int state){
+	public void setCreeperState(int state)
+	{
 		if ((this.commitToExplode) && (state != 1)) return;
 		this.getDataManager().set(CREEPER_STATE, Integer.valueOf(state));
 	}
-	
+
 }

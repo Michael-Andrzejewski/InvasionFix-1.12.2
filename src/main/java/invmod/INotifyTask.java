@@ -2,5 +2,5 @@ package invmod;
 
 public abstract interface INotifyTask
 {
-  public abstract void notifyTask(int paramInt);
+	public abstract void notifyTask(int paramInt);
 }

@@ -4,7 +4,9 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelTrap extends ModelBase {
+
+public class ModelTrap extends ModelBase
+{
 	ModelRenderer coreRift;
 	ModelRenderer CoreFire;
 	ModelRenderer CorePoison;
@@ -20,7 +22,8 @@ public class ModelTrap extends ModelBase {
 	ModelRenderer BaseS1;
 	ModelRenderer BaseS2;
 
-	public ModelTrap() {
+	public ModelTrap()
+	{
 		this.textureWidth = 32;
 		this.textureHeight = 32;
 
@@ -112,22 +115,25 @@ public class ModelTrap extends ModelBase {
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3,
-			float f4, float f5, boolean isEmpty, int type) {
+		float f4, float f5, boolean isEmpty, int type)
+	{
 		super.render(entity, f, f1, f2, f3, f4, f5);
-		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-		if (!isEmpty) {
-			switch (type) {
-			case 1:
-				this.coreRift.render(f5);
-				break;
-			case 2:
-				this.CoreFire.render(f5);
-				break;
-			case 3:
-				this.CorePoison.render(f5);
-				break;
-			default:
-				break;
+		this.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+		if (!isEmpty)
+		{
+			switch (type)
+			{
+				case 1:
+					this.coreRift.render(f5);
+					break;
+				case 2:
+					this.CoreFire.render(f5);
+					break;
+				case 3:
+					this.CorePoison.render(f5);
+					break;
+				default:
+					break;
 
 			}
 		}
@@ -146,11 +152,13 @@ public class ModelTrap extends ModelBase {
 
 	@Override
 	public void render(Entity entity, float f, float f1, float f2, float f3,
-			float f4, float f5) {
-		render(entity, f, f1, f2, f3, f4, f5, false, 0);
+		float f4, float f5)
+	{
+		this.render(entity, f, f1, f2, f3, f4, f5, false, 0);
 	}
 
-	private void setRotation(ModelRenderer model, float x, float y, float z) {
+	private void setRotation(ModelRenderer model, float x, float y, float z)
+	{
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
@@ -158,7 +166,8 @@ public class ModelTrap extends ModelBase {
 
 	@Override
 	public void setRotationAngles(float f, float f1, float f2, float f3,
-			float f4, float f5, Entity entity) {
+		float f4, float f5, Entity entity)
+	{
 		super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 	}
 }

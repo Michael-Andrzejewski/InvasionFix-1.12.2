@@ -1,18 +1,18 @@
 package invmod.client.render.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import invmod.client.render.animation.InterpType;
 import invmod.client.render.animation.KeyFrame;
 import invmod.client.render.animation.ModelAnimator;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
-public class ModelBird extends ModelBase{
+
+public class ModelBird extends ModelBase
+{
 	private ModelAnimator animationWingFlap;
 	private ModelRenderer body;
 	private ModelRenderer rightwing1;
@@ -43,119 +43,119 @@ public class ModelBird extends ModelBase{
 		this.body.setRotationPoint(3.5F, 7.0F, 3.5F);
 		this.body.setTextureSize(64, 32);
 		this.body.mirror = true;
-		setRotation(this.body, 0.0F, 0.0F, 0.0F);
+		this.setRotation(this.body, 0.0F, 0.0F, 0.0F);
 		this.rightwing1 = new ModelRenderer(this, 0, 22);
 		this.rightwing1.addBox(-7.0F, -1.0F, -1.0F, 7, 9, 1);
 		this.rightwing1.setRotationPoint(-3.5F, 2.0F, 3.5F);
 		this.rightwing1.setTextureSize(64, 32);
 		this.rightwing1.mirror = false;
-		setRotation(this.rightwing1, 0.0F, 0.0F, 0.0F);
+		this.setRotation(this.rightwing1, 0.0F, 0.0F, 0.0F);
 		this.rightwing2 = new ModelRenderer(this, 16, 24);
 		this.rightwing2.addBox(-14.0F, -1.0F, -0.5F, 14, 7, 1);
 		this.rightwing2.setRotationPoint(-7.0F, 0.0F, -0.5F);
 		this.rightwing2.setTextureSize(64, 32);
 		this.rightwing2.mirror = false;
-		setRotation(this.rightwing2, 0.0F, 0.0F, 0.0F);
+		this.setRotation(this.rightwing2, 0.0F, 0.0F, 0.0F);
 		this.rightwing1.addChild(this.rightwing2);
 		this.leftwing1 = new ModelRenderer(this, 0, 22);
 		this.leftwing1.addBox(0.0F, -1.0F, -1.0F, 7, 9, 1);
 		this.leftwing1.setRotationPoint(3.5F, 2.0F, 3.5F);
 		this.leftwing1.setTextureSize(64, 32);
 		this.leftwing1.mirror = true;
-		setRotation(this.leftwing1, 0.0F, 0.0F, 0.0F);
+		this.setRotation(this.leftwing1, 0.0F, 0.0F, 0.0F);
 		this.leftwing2 = new ModelRenderer(this, 16, 24);
 		this.leftwing2.addBox(0.0F, -1.0F, -0.5F, 14, 7, 1);
 		this.leftwing2.setRotationPoint(7.0F, 0.0F, -0.5F);
 		this.leftwing2.setTextureSize(64, 32);
 		this.leftwing2.mirror = true;
-		setRotation(this.leftwing2, 0.0F, 0.0F, 0.0F);
+		this.setRotation(this.leftwing2, 0.0F, 0.0F, 0.0F);
 		this.leftwing1.addChild(this.leftwing2);
 		this.head = new ModelRenderer(this, 2, 0);
 		this.head.addBox(-2.5F, -5.0F, -4.0F, 5, 6, 6);
 		this.head.setRotationPoint(0.0F, 0.5F, 1.5F);
 		this.head.setTextureSize(64, 32);
 		this.head.mirror = true;
-		setRotation(this.head, 0.0F, 0.0F, 0.0F);
+		this.setRotation(this.head, 0.0F, 0.0F, 0.0F);
 		this.beak = new ModelRenderer(this, 19, 0);
 		this.beak.addBox(-0.5F, 0.0F, -2.0F, 1, 2, 2);
 		this.beak.setRotationPoint(0.0F, -3.0F, -4.0F);
 		this.beak.setTextureSize(64, 32);
 		this.beak.mirror = true;
-		setRotation(this.beak, 0.0F, 0.0F, 0.0F);
+		this.setRotation(this.beak, 0.0F, 0.0F, 0.0F);
 		this.head.addChild(this.beak);
 		this.tail = new ModelRenderer(this, 0, 12);
 		this.tail.addBox(-3.0F, 0.0F, 0.0F, 5, 9, 1);
 		this.tail.setRotationPoint(0.5F, 12.0F, 2.5F);
 		this.tail.setTextureSize(64, 32);
 		this.tail.mirror = true;
-		setRotation(this.tail, 0.446143F, 0.0F, 0.0F);
+		this.setRotation(this.tail, 0.446143F, 0.0F, 0.0F);
 		this.legR = new ModelRenderer(this, 13, 12);
 		this.legR.addBox(-0.5F, 0.0F, -0.5F, 1, 5, 1);
 		this.legR.setRotationPoint(0.0F, 0.0F, 0.0F);
 		this.legR.setTextureSize(64, 32);
 		this.legR.mirror = false;
-		setRotation(this.legR, 0.0F, 0.0F, 0.0F);
+		this.setRotation(this.legR, 0.0F, 0.0F, 0.0F);
 		this.ltoeR = new ModelRenderer(this, 0, 0);
 		this.ltoeR.addBox(0.0F, 0.0F, -2.0F, 1, 1, 2);
 		this.ltoeR.setRotationPoint(0.2F, 4.0F, 0.0F);
 		this.ltoeR.setTextureSize(64, 32);
 		this.ltoeR.mirror = false;
-		setRotation(this.ltoeR, 0.0F, -0.1396263F, 0.0F);
+		this.setRotation(this.ltoeR, 0.0F, -0.1396263F, 0.0F);
 		this.legR.addChild(this.ltoeR);
 		this.btoeR = new ModelRenderer(this, 0, 0);
 		this.btoeR.addBox(-0.5F, 0.0F, 0.0F, 1, 1, 2);
 		this.btoeR.setRotationPoint(0.0F, 4.0F, 0.0F);
 		this.btoeR.setTextureSize(64, 32);
 		this.btoeR.mirror = false;
-		setRotation(this.btoeR, -0.349066F, 0.0F, 0.0F);
+		this.setRotation(this.btoeR, -0.349066F, 0.0F, 0.0F);
 		this.legR.addChild(this.btoeR);
 		this.rtoeR = new ModelRenderer(this, 0, 0);
 		this.rtoeR.addBox(-1.0F, 0.0F, -2.0F, 1, 1, 2);
 		this.rtoeR.setRotationPoint(-0.2F, 4.0F, 0.0F);
 		this.rtoeR.setTextureSize(64, 32);
 		this.rtoeR.mirror = false;
-		setRotation(this.rtoeR, 0.0F, 0.1396263F, 0.0F);
+		this.setRotation(this.rtoeR, 0.0F, 0.1396263F, 0.0F);
 		this.legR.addChild(this.rtoeR);
 		this.thighR = new ModelRenderer(this, 13, 18);
 		this.thighR.addBox(-1.0F, 0.0F, -1.0F, 2, 2, 2);
 		this.thighR.setRotationPoint(-1.5F, 12.0F, -1.0F);
 		this.thighR.setTextureSize(64, 32);
 		this.thighR.mirror = false;
-		setRotation(this.thighR, 0.0F, 0.0F, 0.0F);
+		this.setRotation(this.thighR, 0.0F, 0.0F, 0.0F);
 		this.thighR.addChild(this.legR);
 		this.legL = new ModelRenderer(this, 13, 12);
 		this.legL.addBox(-0.5F, 0.0F, -0.5F, 1, 5, 1);
 		this.legL.setRotationPoint(0.0F, 0.0F, 0.0F);
 		this.legL.setTextureSize(64, 32);
 		this.legL.mirror = true;
-		setRotation(this.legL, 0.0F, 0.0F, 0.0F);
+		this.setRotation(this.legL, 0.0F, 0.0F, 0.0F);
 		this.ltoeL = new ModelRenderer(this, 0, 0);
 		this.ltoeL.addBox(0.0F, 0.0F, -2.0F, 1, 1, 2);
 		this.ltoeL.setRotationPoint(0.2F, 4.0F, 0.0F);
 		this.ltoeL.setTextureSize(64, 32);
 		this.ltoeL.mirror = true;
-		setRotation(this.ltoeL, 0.0F, -0.1396263F, 0.0F);
+		this.setRotation(this.ltoeL, 0.0F, -0.1396263F, 0.0F);
 		this.legL.addChild(this.ltoeL);
 		this.btoeL = new ModelRenderer(this, 0, 0);
 		this.btoeL.addBox(-0.5F, 0.0F, 0.0F, 1, 1, 2);
 		this.btoeL.setRotationPoint(0.0F, 4.0F, 0.0F);
 		this.btoeL.setTextureSize(64, 32);
 		this.btoeL.mirror = true;
-		setRotation(this.btoeL, -0.349066F, 0.0F, 0.0F);
+		this.setRotation(this.btoeL, -0.349066F, 0.0F, 0.0F);
 		this.legL.addChild(this.btoeL);
 		this.rtoeL = new ModelRenderer(this, 0, 0);
 		this.rtoeL.addBox(-1.0F, 0.0F, -2.0F, 1, 1, 2);
 		this.rtoeL.setRotationPoint(-0.2F, 4.0F, 0.0F);
 		this.rtoeL.setTextureSize(64, 32);
 		this.rtoeL.mirror = true;
-		setRotation(this.rtoeL, 0.0F, 0.1396263F, 0.0F);
+		this.setRotation(this.rtoeL, 0.0F, 0.1396263F, 0.0F);
 		this.legL.addChild(this.rtoeL);
 		this.thighL = new ModelRenderer(this, 13, 18);
 		this.thighL.addBox(-1.0F, 0.0F, -1.0F, 2, 2, 2);
 		this.thighL.setRotationPoint(1.5F, 12.0F, -1.0F);
 		this.thighL.setTextureSize(64, 32);
 		this.thighL.mirror = true;
-		setRotation(this.thighL, 0.0F, 0.0F, 0.0F);
+		this.setRotation(this.thighL, 0.0F, 0.0F, 0.0F);
 		this.thighL.addChild(this.legL);
 		this.body.addChild(this.thighL);
 		this.body.addChild(this.thighR);
@@ -208,10 +208,10 @@ public class ModelBird extends ModelBase{
 	}
 
 	@Override
-public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
+	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
 	{
 		super.render(entity, f, f1, f2, f3, f4, f5);
-		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+		this.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 		this.body.render(f5);
 	}
 
@@ -234,8 +234,10 @@ public void render(Entity entity, float f, float f1, float f2, float f3, float f
 		this.btoeL.rotateAngleX = (-0.3490659F + 0.0F * legSweepProgress);
 
 		this.body.rotationPointY = (7.0F + MathHelper.cos(flapProgress * 3.141593F * 2.0F) * 1.4F);
-		ModelRenderer tmp190_187 = this.thighR; tmp190_187.rotateAngleX = ((float)(tmp190_187.rotateAngleX + MathHelper.cos(flapProgress * 3.141593F * 2.0F) * 0.08726646324990228D));
-		ModelRenderer tmp218_215 = this.thighL; tmp218_215.rotateAngleX = ((float)(tmp218_215.rotateAngleX + MathHelper.cos(flapProgress * 3.141593F * 2.0F) * 0.08726646324990228D));
+		ModelRenderer tmp190_187 = this.thighR;
+		tmp190_187.rotateAngleX = ((float)(tmp190_187.rotateAngleX + MathHelper.cos(flapProgress * 3.141593F * 2.0F) * 0.08726646324990228D));
+		ModelRenderer tmp218_215 = this.thighL;
+		tmp218_215.rotateAngleX = ((float)(tmp218_215.rotateAngleX + MathHelper.cos(flapProgress * 3.141593F * 2.0F) * 0.08726646324990228D));
 		this.tail.rotateAngleX = ((float)(0.2617993956013792D + MathHelper.cos(flapProgress * 3.141593F * 2.0F) * 0.03490658588512815D));
 		this.head.rotateAngleX = ((float)(-0.3141592700403172D - MathHelper.cos(flapProgress * 3.141593F * 2.0F) * 0.03490658588512815D));
 	}
@@ -248,7 +250,7 @@ public void render(Entity entity, float f, float f1, float f2, float f3, float f
 	}
 
 	@Override
-public void setRotationAngles(float limbPeriod, float limbMaxMovement, float ticksExisted, float headYaw, float entityPitch, float unitScale, Entity entity)
+	public void setRotationAngles(float limbPeriod, float limbMaxMovement, float ticksExisted, float headYaw, float entityPitch, float unitScale, Entity entity)
 	{
 		super.setRotationAngles(limbPeriod, limbMaxMovement, ticksExisted, headYaw, entityPitch, unitScale, entity);
 		this.body.rotateAngleX = (1.570796F - entityPitch / 180.0F * 3.141593F);

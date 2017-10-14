@@ -3,8 +3,10 @@ package invmod;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 
-public class SoundHandler {
-	
+
+public class SoundHandler
+{
+
 	public static SoundEvent bigzombie1;
 	public static SoundEvent chime1;
 	public static SoundEvent egghatch1;
@@ -27,10 +29,11 @@ public class SoundHandler {
 	public static SoundEvent zap1;
 	public static SoundEvent zap2;
 	public static SoundEvent zap3;
-	
+
 	private static int size = 0;
-	
-	public static void init(){
+
+	public static void init()
+	{
 		bigzombie1 = register("bigzombie1");
 		chime1 = register("chime1");
 		egghatch1 = register("egghatch1");
@@ -54,13 +57,14 @@ public class SoundHandler {
 		zap2 = register("zap2");
 		zap3 = register("zap3");
 	}
-	
-	public static SoundEvent register(String soundLocation){
+
+	public static SoundEvent register(String soundLocation)
+	{
 		ResourceLocation resource = new ResourceLocation(Reference.MODID + ":" + soundLocation);
 		SoundEvent snd = new SoundEvent(resource);
 		SoundEvent.REGISTRY.register(size, resource, snd);
 		size++;
 		return snd;
 	}
-	
+
 }

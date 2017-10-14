@@ -5,7 +5,9 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
-public class ModelImp extends ModelBase {
+
+public class ModelImp extends ModelBase
+{
 	ModelRenderer head;
 	ModelRenderer body;
 	ModelRenderer rightarm;
@@ -24,15 +26,18 @@ public class ModelImp extends ModelBase {
 	ModelRenderer tail;
 	ModelRenderer tail2;
 
-	public ModelImp(){
+	public ModelImp()
+	{
 		this(0.0F);
 	}
 
-	public ModelImp(float f){
+	public ModelImp(float f)
+	{
 		this(f, 0.0F);
 	}
 
-	public ModelImp(float f, float f1){
+	public ModelImp(float f, float f1)
+	{
 		this.head = new ModelRenderer(this, 44, 0);
 		this.head.addBox(-2.733333F, -3.0F, -2.0F, 5, 3, 4);
 		this.head.setRotationPoint(-0.4F, 9.8F, -3.3F);
@@ -103,17 +108,17 @@ public class ModelImp extends ModelBase {
 		this.lfoot.rotateAngleY = 0.0F;
 		this.lfoot.rotateAngleZ = 0.0F;
 		this.lfoot.mirror = false;
-		
+
 		this.rhorn = new ModelRenderer(this, 0, 0);
 		this.rhorn.addBox(1.0F, -4.0F, 1.5F, 1, 1, 1);
 		this.rhorn.setRotationPoint(-0.4F, 0F, -3.3F);
 		this.rhorn.mirror = false;
-		
+
 		this.lhorn = new ModelRenderer(this, 0, 2);
 		this.lhorn.addBox(-1.0F, -4.0F, 1.5F, 1, 1, 1);
 		this.lhorn.setRotationPoint(-0.4F, 0F, -3.3F);
 		this.lhorn.mirror = false;
-		
+
 		this.bodymid = new ModelRenderer(this, 1, 1);
 		this.bodymid.addBox(0.0F, 0.0F, 0.0F, 7, 5, 3);
 		this.bodymid.setRotationPoint(-4.0F, 12.46667F, -2.266667F);
@@ -149,15 +154,16 @@ public class ModelImp extends ModelBase {
 		this.tail2.rotateAngleY = 0.0F;
 		this.tail2.rotateAngleZ = 0.0F;
 		this.tail2.mirror = false;
-		
-		this.head.addChild(lhorn);
-		this.head.addChild(rhorn);
+
+		this.head.addChild(this.lhorn);
+		this.head.addChild(this.rhorn);
 	}
 
 	@Override
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5){
+	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
+	{
 		super.render(entity, f, f1, f2, f3, f4, f5);
-		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+		this.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 		this.head.render(f5);
 		this.body.render(f5);
 		this.rightarm.render(f5);
@@ -178,11 +184,12 @@ public class ModelImp extends ModelBase {
 	}
 
 	@Override
-	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity){
+	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
+	{
 		this.head.rotateAngleY = (f3 / 57.29578F);
 		this.head.rotateAngleX = (f4 / 57.29578F);
-		
-		
+
+
 		this.rightarm.rotateAngleX = (MathHelper.cos(f * 0.6662F + 3.141593F) * 2.0F * f1 * 0.5F);
 		this.leftarm.rotateAngleX = (MathHelper.cos(f * 0.6662F) * 2.0F * f1 * 0.5F);
 		this.rightarm.rotateAngleZ = 0.0F;

@@ -7,8 +7,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 
-public class EntityAIPickUpEntity extends EntityAIBase {
-	
+
+public class EntityAIPickUpEntity extends EntityAIBase
+{
+
 	private EntityIMBird theEntity;
 	private int time;
 	private int holdTime;
@@ -22,7 +24,8 @@ public class EntityAIPickUpEntity extends EntityAIBase {
 	private float abortAnglePitch;
 	private boolean isHoldingEntity;
 
-	public EntityAIPickUpEntity(EntityIMBird entity, float pickupPointX, float pickupPointY, float pickupPointZ, float pickupRangeY, float pickupRangeXZ, int abortTime, float abortAngleYaw, float abortAnglePitch){
+	public EntityAIPickUpEntity(EntityIMBird entity, float pickupPointX, float pickupPointY, float pickupPointZ, float pickupRangeY, float pickupRangeXZ, int abortTime, float abortAngleYaw, float abortAnglePitch)
+	{
 		this.theEntity = entity;
 		this.time = 0;
 		this.holdTime = 70;
@@ -38,24 +41,31 @@ public class EntityAIPickUpEntity extends EntityAIBase {
 	}
 
 	@Override
-	public boolean shouldExecute(){
+	public boolean shouldExecute()
+	{
 		return (this.theEntity.getAIGoal() == Goal.PICK_UP_TARGET) || (!this.theEntity.getPassengers().isEmpty())/*(this.theEntity.riddenByEntity != null)*/;
 	}
 
 	@Override
-	public void startExecuting(){
+	public void startExecuting()
+	{
 		this.isHoldingEntity = (!this.theEntity.getPassengers().isEmpty())/*(this.theEntity.riddenByEntity != null)*/;
 		this.time = 0;
 	}
 
 	@Override
-	public boolean continueExecuting(){
+	public boolean continueExecuting()
+	{
 		EntityLivingBase target = this.theEntity.getAttackTarget();
-		if ((target != null) && (!target.isDead)){
-			if (!this.isHoldingEntity){
-				if ((this.time > this.abortTime) && (isLinedUp(target)))
+		if ((target != null) && (!target.isDead))
+		{
+			if (!this.isHoldingEntity)
+			{
+				if ((this.time > this.abortTime) && (this.isLinedUp(target)))
 					return true;
-			} else if (this.theEntity.getPassengers().contains(target)/*this.theEntity.riddenByEntity == target*/){
+			}
+			else if (this.theEntity.getPassengers().contains(target)/*this.theEntity.riddenByEntity == target*/)
+			{
 				return true;
 			}
 		}
@@ -115,11 +125,13 @@ public class EntityAIPickUpEntity extends EntityAIBase {
 		double dXZ = Math.sqrt(dX * dX + dZ * dZ);
 		double yawToTarget = Math.atan2(dZ, dX) * 180.0D / 3.141592653589793D - 90.0D;
 		double dYaw = MathUtil.boundAngle180Deg(yawToTarget - this.theEntity.rotationYaw);
-		if ((dYaw < -this.abortAngleYaw) || (dYaw > this.abortAngleYaw)) {
+		if ((dYaw < -this.abortAngleYaw) || (dYaw > this.abortAngleYaw))
+		{
 			return false;
 		}
 		double dPitch = Math.atan(dY / dXZ) * 180.0D / 3.141592653589793D - this.theEntity.rotationPitch;
-		if ((dPitch < -this.abortAnglePitch) || (dPitch > this.abortAnglePitch)) {
+		if ((dPitch < -this.abortAnglePitch) || (dPitch > this.abortAnglePitch))
+		{
 			return false;
 		}
 		return true;

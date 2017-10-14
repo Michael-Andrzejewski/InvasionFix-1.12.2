@@ -12,26 +12,35 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.math.MathHelper;
 
-public class ModelIMSkeleton extends ModelSkeleton {
-	
-	public ModelIMSkeleton(){
+
+public class ModelIMSkeleton extends ModelSkeleton
+{
+
+	public ModelIMSkeleton()
+	{
 		super();
 	}
-	
-	public ModelIMSkeleton(float scale, boolean par2){
+
+	public ModelIMSkeleton(float scale, boolean par2)
+	{
 		super(scale, par2);
 	}
-	
+
 	@Override
-	public void setLivingAnimations(EntityLivingBase entityIn, float par2, float par3, float par4) {
+	public void setLivingAnimations(EntityLivingBase entityIn, float par2, float par3, float par4)
+	{
 		this.rightArmPose = ModelBiped.ArmPose.EMPTY;
 		this.leftArmPose = ModelBiped.ArmPose.EMPTY;
 		ItemStack itemstack = entityIn.getHeldItem(EnumHand.MAIN_HAND);
 
-		if (itemstack != null && itemstack.getItem() == Items.BOW && ((EntityIMSkeleton)entityIn).isSwingingArms()){
-			if (entityIn.getPrimaryHand() == EnumHandSide.RIGHT){
+		if (itemstack != null && itemstack.getItem() == Items.BOW && ((EntityIMSkeleton)entityIn).isSwingingArms())
+		{
+			if (entityIn.getPrimaryHand() == EnumHandSide.RIGHT)
+			{
 				this.rightArmPose = ModelBiped.ArmPose.BOW_AND_ARROW;
-			} else {
+			}
+			else
+			{
 				this.leftArmPose = ModelBiped.ArmPose.BOW_AND_ARROW;
 			}
 		}
@@ -43,15 +52,17 @@ public class ModelIMSkeleton extends ModelSkeleton {
 	 * "far" arms and legs can swing at most.
 	 */
 	@Override
-	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn){
+	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn)
+	{
 		this.setRotationAnglesModelBiped(limbSwing / 3f, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
-		if(entityIn instanceof EntityIMSkeleton)
+		if (entityIn instanceof EntityIMSkeleton)
 			this.setRotationAnglesModelSkeleton(limbSwing / 3f, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, (EntityIMSkeleton)entityIn);
 	}
-	
+
 	//Copied from ModelBiped
 	@SuppressWarnings("incomplete-switch")
-	protected void setRotationAnglesModelBiped(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn){
+	protected void setRotationAnglesModelBiped(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn)
+	{
 		boolean flag = entityIn instanceof EntityLivingBase && ((EntityLivingBase)entityIn).getTicksElytraFlying() > 4;
 		this.bipedHead.rotateAngleY = netHeadYaw * 0.017453292F;
 
@@ -210,11 +221,13 @@ public class ModelIMSkeleton extends ModelSkeleton {
 
 		copyModelAngles(this.bipedHead, this.bipedHeadwear);
 	}
-	
-	protected void setRotationAnglesModelSkeleton(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, EntityIMSkeleton entityIn){
+
+	protected void setRotationAnglesModelSkeleton(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, EntityIMSkeleton entityIn)
+	{
 		ItemStack itemstack = entityIn.getHeldItemMainhand();
 
-		if (entityIn.isSwingingArms() && (itemstack == null || itemstack.getItem() != Items.BOW)){
+		if (entityIn.isSwingingArms() && (itemstack == null || itemstack.getItem() != Items.BOW))
+		{
 			float f0 = MathHelper.sin(this.swingProgress * (float)Math.PI);
 			float f1 = MathHelper.sin((1.0F - (1.0F - this.swingProgress) * (1.0F - this.swingProgress)) * (float)Math.PI);
 			this.bipedRightArm.rotateAngleZ = 0.0F;
@@ -231,5 +244,5 @@ public class ModelIMSkeleton extends ModelSkeleton {
 			this.bipedLeftArm.rotateAngleX -= MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
 		}
 	}
-	
+
 }

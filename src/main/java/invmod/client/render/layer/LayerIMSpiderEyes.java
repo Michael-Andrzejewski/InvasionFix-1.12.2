@@ -7,18 +7,22 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 
-public class LayerIMSpiderEyes<T extends EntityIMSpider> implements LayerRenderer<T> {
-	
+
+public class LayerIMSpiderEyes<T extends EntityIMSpider> implements LayerRenderer<T>
+{
+
 	private static final ResourceLocation t_eyes = new ResourceLocation("textures/entity/spider_eyes.png");
 	private final RenderSpiderIM spiderRenderer;
 
-	public LayerIMSpiderEyes(RenderSpiderIM renderer) {
+	public LayerIMSpiderEyes(RenderSpiderIM renderer)
+	{
 		this.spiderRenderer = renderer;
 	}
-	
+
 	//Copied from LayerSpiderEyes
 	@Override
-	public void doRenderLayer(T entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale){
+	public void doRenderLayer(T entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
+	{
 		this.spiderRenderer.bindTexture(t_eyes);
 		GlStateManager.enableBlend();
 		GlStateManager.disableAlpha();
@@ -42,7 +46,8 @@ public class LayerIMSpiderEyes<T extends EntityIMSpider> implements LayerRendere
 	}
 
 	@Override
-	public boolean shouldCombineTextures(){
+	public boolean shouldCombineTextures()
+	{
 		return false;
 	}
 

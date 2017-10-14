@@ -10,7 +10,9 @@ import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 
-public class EntityAISwoop extends EntityAIBase {
+
+public class EntityAISwoop extends EntityAIBase
+{
 	private static final int INITIAL_LINEUP_TIME = 25;
 	private EntityIMBird theEntity;
 	private float minDiveClearanceY;
@@ -45,11 +47,11 @@ public class EntityAISwoop extends EntityAIBase {
 		this.isCommittedToFinalRun = false;
 		this.endSwoop = false;
 		this.usingClaws = false;
-		setMutexBits(1);
+		this.setMutexBits(1);
 	}
 
 	@Override
-public boolean shouldExecute()
+	public boolean shouldExecute()
 	{
 		if ((this.theEntity.getAIGoal() == Goal.FIND_ATTACK_OPPORTUNITY) && (this.theEntity.getAttackTarget() != null))
 		{
@@ -58,21 +60,24 @@ public boolean shouldExecute()
 			double dY = this.swoopTarget.posY - this.theEntity.posY;
 			double dZ = this.swoopTarget.posZ - this.theEntity.posZ;
 			double dXZ = Math.sqrt(dX * dX + dZ * dZ);
-			if ((-dY < this.minHeight) || (dXZ < this.minXZDistance)) {
+			if ((-dY < this.minHeight) || (dXZ < this.minXZDistance))
+			{
 				return false;
 			}
 			double pitchToTarget = Math.atan(dY / dXZ) * 180.0D / 3.141592653589793D;
-			if (pitchToTarget > this.maxSteepness) {
+			if (pitchToTarget > this.maxSteepness)
+			{
 				return false;
 			}
 			this.finalRunLength = ((float)(dXZ * 0.42D));
 			if (this.finalRunLength > 18.0F)
 				this.finalRunLength = 18.0F;
-			else if (this.finalRunLength < 4.0F) {
+			else if (this.finalRunLength < 4.0F)
+			{
 				this.finalRunLength = 4.0F;
 			}
 			this.diveAngle = ((float)(Math.atan((dXZ - this.finalRunLength) / dY) * 180.0D / 3.141592653589793D));
-			if ((this.swoopTarget != null) && (isSwoopPathClear(this.swoopTarget, this.diveAngle)))
+			if ((this.swoopTarget != null) && (this.isSwoopPathClear(this.swoopTarget, this.diveAngle)))
 			{
 				this.diveHeight = ((float)-dY);
 				return true;
@@ -82,13 +87,13 @@ public boolean shouldExecute()
 	}
 
 	@Override
-public boolean continueExecuting()
+	public boolean continueExecuting()
 	{
 		return (this.theEntity.getAttackTarget() == this.swoopTarget) && (!this.endSwoop) && (this.theEntity.getMoveState() == MoveState.FLYING);
 	}
 
 	@Override
-public void startExecuting()
+	public void startExecuting()
 	{
 		this.time = 0;
 		this.theEntity.transitionAIGoal(Goal.SWOOP);
@@ -99,7 +104,7 @@ public void startExecuting()
 	}
 
 	@Override
-public void resetTask()
+	public void resetTask()
 	{
 		this.endSwoop = false;
 		this.isCommittedToFinalRun = false;
@@ -112,7 +117,7 @@ public void resetTask()
 	}
 
 	@Override
-public void updateTask()
+	public void updateTask()
 	{
 		this.time += 1;
 		if (!this.isCommittedToFinalRun)
@@ -120,7 +125,7 @@ public void updateTask()
 			if (this.theEntity.getDistanceToEntity(this.swoopTarget) < this.finalRunLength)
 			{
 				this.theEntity.getNavigatorNew().setPitchBias(0.0F, 1.0F);
-				if (isFinalRunLinedUp())
+				if (this.isFinalRunLinedUp())
 				{
 					this.usingClaws = (this.theEntity.world.rand.nextFloat() > 0.6F);
 
@@ -185,41 +190,49 @@ public void updateTask()
 			Vec3d source = new Vec3d(x, y, z);
 			//MovingObjectPosition collide = this.theEntity.world.rayTraceBlocks(source, target.getLook(1.0F));
 			RayTraceResult collide = this.theEntity.world.rayTraceBlocks(source, target.getLook(1f), true, true, false);
-			if (collide != null){
-				if (hitCount == 0) {
+			if (collide != null)
+			{
+				if (hitCount == 0)
+				{
 					lowestCollide = y;
 				}
 				hitCount++;
 			}
 		}
 
-		if (isAcceptableDiveSpace(this.theEntity.posY, lowestCollide, hitCount)){
+		if (this.isAcceptableDiveSpace(this.theEntity.posY, lowestCollide, hitCount))
+		{
 			return true;
 		}
 
 		return false;
 	}
 
-	private boolean isFinalRunLinedUp(){
+	private boolean isFinalRunLinedUp()
+	{
 		double dX = this.swoopTarget.posX - this.theEntity.posX;
 		double dY = this.swoopTarget.posY - this.theEntity.posY;
 		double dZ = this.swoopTarget.posZ - this.theEntity.posZ;
 		double dXZ = Math.sqrt(dX * dX + dZ * dZ);
 		double yawToTarget = Math.atan2(dZ, dX) * 180.0D / 3.141592653589793D - 90.0D;
 		double dYaw = MathUtil.boundAngle180Deg(yawToTarget - this.theEntity.rotationYaw);
-		if ((dYaw < -this.finalRunArcLimit) || (dYaw > this.finalRunArcLimit)) {
+		if ((dYaw < -this.finalRunArcLimit) || (dYaw > this.finalRunArcLimit))
+		{
 			return false;
 		}
 		double dPitch = Math.atan(dY / dXZ) * 180.0D / 3.141592653589793D - this.theEntity.rotationPitch;
-		if ((dPitch < -this.finalRunArcLimit) || (dPitch > this.finalRunArcLimit)) {
+		if ((dPitch < -this.finalRunArcLimit) || (dPitch > this.finalRunArcLimit))
+		{
 			return false;
 		}
 		return true;
 	}
 
-	protected boolean isAcceptableDiveSpace(double entityPosY, double lowestCollideY, int hitCount){
+	protected boolean isAcceptableDiveSpace(double entityPosY, double lowestCollideY, int hitCount)
+	{
 		double clearanceY = entityPosY - lowestCollideY;
-		if (clearanceY < this.minDiveClearanceY) {
+		if (clearanceY < this.minDiveClearanceY)
+		{
 			return false;
 		}
 		return true;

@@ -6,8 +6,10 @@ import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.DamageSource;
 
-public class EntityAISprint extends EntityAIBase {
-	
+
+public class EntityAISprint extends EntityAIBase
+{
+
 	private EntityIMMob theEntity;
 	private int updateTimer;
 	private int timer;
@@ -19,7 +21,8 @@ public class EntityAISprint extends EntityAIBase {
 	private double lastY;
 	private double lastZ;
 
-	public EntityAISprint(EntityIMMob entity){
+	public EntityAISprint(EntityIMMob entity)
+	{
 		this.theEntity = entity;
 		this.updateTimer = 0;
 		this.timer = 0;
@@ -30,10 +33,13 @@ public class EntityAISprint extends EntityAIBase {
 	}
 
 	@Override
-	public boolean shouldExecute(){
-		if (--this.updateTimer <= 0){
+	public boolean shouldExecute()
+	{
+		if (--this.updateTimer <= 0)
+		{
 			this.updateTimer = 20;
-			if (((this.theEntity.getAttackTarget() != null) && (this.theEntity.canEntityBeSeen(this.theEntity.getAttackTarget()))) || (this.isSprinting)){
+			if (((this.theEntity.getAttackTarget() != null) && (this.theEntity.canEntityBeSeen(this.theEntity.getAttackTarget()))) || (this.isSprinting))
+			{
 				return true;
 			}
 
@@ -45,30 +51,36 @@ public class EntityAISprint extends EntityAIBase {
 	}
 
 	@Override
-	public void startExecuting(){
+	public void startExecuting()
+	{
 		this.isExecuting = true;
 		this.timer = 60;
 	}
 
 	@Override
-	public void updateTask(){
-		if (this.isSprinting){
+	public void updateTask()
+	{
+		if (this.isSprinting)
+		{
 			Entity target = this.theEntity.getAttackTarget();
-			if ((!this.theEntity.isSprinting()) || (target == null) || ((this.missingTarget > 0) && (++this.missingTarget > 20))){
-				endSprint();
+			if ((!this.theEntity.isSprinting()) || (target == null) || ((this.missingTarget > 0) && (++this.missingTarget > 20)))
+			{
+				this.endSprint();
 				return;
 			}
 
 			double dX = target.posX - this.theEntity.posX;
 			double dZ = target.posZ - this.theEntity.posZ;
 			double dAngle = (Math.atan2(dZ, dX) * 180.0D / 3.141592653589793D - 90.0D - this.theEntity.rotationYaw) % 360.0D;
-			if (dAngle > 60.0D){
+			if (dAngle > 60.0D)
+			{
 				this.theEntity.setTurnRate(2.0F);
 				this.missingTarget = 1;
 			}
 
-			if (this.theEntity.getDistanceSq(this.lastX, this.lastY, this.lastZ) < 0.0009D){
-				crash();
+			if (this.theEntity.getDistanceSq(this.lastX, this.lastY, this.lastZ) < 0.0009D)
+			{
+				this.crash();
 				return;
 			}
 
@@ -77,38 +89,51 @@ public class EntityAISprint extends EntityAIBase {
 			this.lastZ = this.theEntity.posZ;
 		}
 
-		if (--this.timer <= 0){
-			if (!this.isInWindup){
-				if (!this.isSprinting){
-					startSprint();
-				} else {
-					endSprint();
+		if (--this.timer <= 0)
+		{
+			if (!this.isInWindup)
+			{
+				if (!this.isSprinting)
+				{
+					this.startSprint();
 				}
-			} else {
-				sprint();
+				else
+				{
+					this.endSprint();
+				}
+			}
+			else
+			{
+				this.sprint();
 			}
 		}
 	}
 
-	protected void startSprint(){
+	protected void startSprint()
+	{
 		Entity target = this.theEntity.getAttackTarget();
-		if ((target == null) || (target.getEntityBoundingBox().minY - this.theEntity.posY >= 1.0D)) {
+		if ((target == null) || (target.getEntityBoundingBox().minY - this.theEntity.posY >= 1.0D))
+		{
 			return;
 		}
 		double dX = target.posX - this.theEntity.posX;
 		double dZ = target.posZ - this.theEntity.posZ;
 		double dAngle = (Math.atan2(dZ, dX) * 180.0D / 3.141592653589793D - 90.0D - this.theEntity.rotationYaw) % 360.0D;
-		if (dAngle < 10.0D){
+		if (dAngle < 10.0D)
+		{
 			this.isInWindup = true;
 			this.timer = 20;
 
 			this.theEntity.setMoveSpeedStat(0.0F);
-		} else {
+		}
+		else
+		{
 			this.timer = 10;
 		}
 	}
 
-	protected void sprint(){
+	protected void sprint()
+	{
 		this.isInWindup = false;
 		this.isSprinting = true;
 		this.missingTarget = 0;
@@ -121,7 +146,8 @@ public class EntityAISprint extends EntityAIBase {
 		//this.theEntity.attackTime = 0;
 	}
 
-	protected void endSprint(){
+	protected void endSprint()
+	{
 		this.isSprinting = false;
 		this.timer = 180;
 		this.theEntity.resetMoveSpeed();
@@ -129,11 +155,12 @@ public class EntityAISprint extends EntityAIBase {
 		this.theEntity.setSprinting(false);
 	}
 
-	protected void crash(){
+	protected void crash()
+	{
 		this.theEntity.stunEntity(40);
 		this.theEntity.attackEntityFrom(DamageSource.generic, 5.0F);
 		//this.theEntity.world.playSoundAtEntity(this.theEntity, "random.explode", 1.0F, 0.6F);
 		this.theEntity.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE, 1f, 0.6f);
-		endSprint();
+		this.endSprint();
 	}
 }

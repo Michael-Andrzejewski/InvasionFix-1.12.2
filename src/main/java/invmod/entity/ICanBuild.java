@@ -3,7 +3,6 @@ package invmod.entity;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 
-import invmod.entity.TerrainBuilder;
 
 /**
  * In order for an entity to use {@link TerrainBuilder}, implement this interface.
@@ -11,15 +10,17 @@ import invmod.entity.TerrainBuilder;
  * @param <T> Must extend {@link EntityIMLiving}.
  * @since IM 1.2.6
  */
-public interface ICanBuild<T extends EntityIMLiving> {
-	
+public interface ICanBuild<T extends EntityIMLiving>
+{
+
 	/**
 	 * Returns the entity, which must extend {@link Entity}.
 	 */
-	public default T getEntity(){
+	public default T getEntity()
+	{
 		return (this instanceof EntityIMLiving) ? (T)this : null;
 	}
-	
+
 	public boolean canPlaceLadderAt(BlockPos pos);
-	
+
 }

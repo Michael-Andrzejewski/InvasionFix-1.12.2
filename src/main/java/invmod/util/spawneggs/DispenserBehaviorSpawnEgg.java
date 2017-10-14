@@ -9,10 +9,13 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 
-public class DispenserBehaviorSpawnEgg extends BehaviorDefaultDispenseItem{
-	
+
+public class DispenserBehaviorSpawnEgg extends BehaviorDefaultDispenseItem
+{
+
 	@Override
-	public ItemStack dispenseStack(IBlockSource blockSource, ItemStack stack) {
+	public ItemStack dispenseStack(IBlockSource blockSource, ItemStack stack)
+	{
 		//EnumFacing enumfacing = BlockDispenser.getFacing(blockSource.getBlockMetadata());
 		IPosition direction = BlockDispenser.getDispensePosition(blockSource);
 		double x = blockSource.getX() + direction.getX(); //enumfacing.getFrontOffsetX();
@@ -23,7 +26,7 @@ public class DispenserBehaviorSpawnEgg extends BehaviorDefaultDispenseItem{
 			((EntityLiving)entity).setCustomNameTag(stack.getDisplayName());
 
 		stack.splitStack(1);
-		
+
 		return stack;
 	}
 }

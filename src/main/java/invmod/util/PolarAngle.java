@@ -1,23 +1,23 @@
 package invmod.util;
 
 public class PolarAngle
-  implements IPolarAngle
+	implements IPolarAngle
 {
-  private int angle;
+	private int angle;
 
-  public PolarAngle(int angle)
-  {
-    this.angle = angle;
-  }
+	public PolarAngle(int angle)
+	{
+		this.angle = angle;
+	}
 
-  @Override
-public int getAngle()
-  {
-    return this.angle;
-  }
+	@Override
+	public int getAngle()
+	{
+		return this.angle;
+	}
 
-  public void setAngle(int angle)
-  {
-    this.angle = angle;
-  }
+	public void setAngle(int angle)
+	{
+		this.angle = angle;
+	}
 }

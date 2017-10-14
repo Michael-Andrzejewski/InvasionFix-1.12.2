@@ -39,26 +39,28 @@ import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public abstract class EntityIMMob extends EntityIMLiving implements IMob, SparrowAPI {
-	
+
+public abstract class EntityIMMob extends EntityIMLiving implements IMob, SparrowAPI
+{
+
 	private static final DataParameter<Boolean> IS_ADJECENT_CLIMB_BLOCK = EntityDataManager.createKey(EntityIMMob.class, DataSerializers.BOOLEAN); //21
 	private static final DataParameter<Boolean> IS_JUMPING = EntityDataManager.createKey(EntityIMMob.class, DataSerializers.BOOLEAN); //22
 	private static final DataParameter<Integer> ROTATION = EntityDataManager.createKey(EntityIMMob.class, DataSerializers.VARINT); //24
 	private static final DataParameter<String> RENDERLABEL = EntityDataManager.createKey(EntityIMMob.class, DataSerializers.STRING); //25
-	
+
 	protected Goal currentGoal = Goal.NONE;
 	protected Goal prevGoal = Goal.NONE;
 	protected EntityAITasks tasksIM;
 	protected EntityAITasks targetTasksIM;
 	private float rotationRoll = 0f;
-	
+
 	//DarthXenon: Not sure what these should be initialized as
 	private float rotationYawHeadIM = 0f;
 	private float rotationPitchHead = 0f;
 	private float prevRotationRoll = 0f;
 	private float prevRotationYawHeadIM = 0f;
 	private float prevRotationPitchHead = 0f;
-	
+
 	private int debugMode;
 	private float airResistance = 0.9995F;
 	private float groundFriction = 0.546F;
@@ -103,11 +105,13 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 	protected static final byte META_ROTATION = 24;
 	protected static final byte META_RENDERLABEL = 25;*/
 
-	public EntityIMMob(World world) {
+	public EntityIMMob(World world)
+	{
 		super(world);
 	}
 
-	public EntityIMMob(World world, TileEntityNexus nexus) {
+	public EntityIMMob(World world, TileEntityNexus nexus)
+	{
 		super(world, nexus);
 		this.debugMode = Config.DEBUG ? 1 : 0;
 		this.shouldRenderLabel = Config.DEBUG;
@@ -119,32 +123,37 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 		this.aggroRange = nexus != null ? 12 : Config.NIGHTSPAWNS_MOB_SIGHTRANGE;
 		this.senseRange = nexus != null ? 6 : Config.NIGHTSPAWNS_MOB_SENSERANGE;
 		// debugTest
-		this.setShouldRenderLabel(debugMode == 1);
+		this.setShouldRenderLabel(this.debugMode == 1);
 	}
-	
+
 	@Override
-	protected void entityInit(){
+	protected void entityInit()
+	{
 		super.entityInit();
 		this.getDataManager().register(IS_ADJECENT_CLIMB_BLOCK, false);
 		this.getDataManager().register(IS_JUMPING, false);
 		this.getDataManager().register(ROTATION, MathUtil.packAnglesDeg(this.rotationRoll, this.rotationYawHeadIM, this.rotationPitchHead, 0.0F));
 		this.getDataManager().register(RENDERLABEL, "");
 	}
-	
+
 	@Override
-	public void onUpdate() {
+	public void onUpdate()
+	{
 		super.onUpdate();
 		this.prevRotationRoll = this.rotationRoll;
 		this.prevRotationYawHeadIM = this.rotationYawHeadIM;
 		this.prevRotationPitchHead = this.rotationPitchHead;
-		if (this.world.isRemote) {
+		if (this.world.isRemote)
+		{
 			//this.moveState = MoveState.values()[this.dataWatcher.getWatchableObjectInt(23)];
 			int packedAngles = this.getDataManager().get(ROTATION);
 			this.rotationRoll = MathUtil.unpackAnglesDeg_1(packedAngles);
 			this.rotationYawHeadIM = MathUtil.unpackAnglesDeg_2(packedAngles);
 			this.rotationPitchHead = MathUtil.unpackAnglesDeg_3(packedAngles);
 			this.renderLabel = this.getDataManager().get(RENDERLABEL);
-		} else {
+		}
+		else
+		{
 			int packedAngles = MathUtil.packAnglesDeg(this.rotationRoll, this.rotationYawHeadIM, this.rotationPitchHead, 0.0F);
 			if (packedAngles != this.getDataManager().get(ROTATION)) this.getDataManager().set(ROTATION, Integer.valueOf(packedAngles));
 			if (!this.renderLabel.equals(this.getDataManager().get(RENDERLABEL))) this.getDataManager().set(RENDERLABEL, this.renderLabel);
@@ -152,38 +161,51 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 	}
 
 	@Override
-	public void onEntityUpdate() {
+	public void onEntityUpdate()
+	{
 		super.onEntityUpdate();
 
-		if (this.world.isRemote) {
+		if (this.world.isRemote)
+		{
 			this.isJumping = this.getDataManager().get(IS_JUMPING);
-		} else {
-			this.setAdjacentClimbBlock(checkForAdjacentClimbBlock());
+		}
+		else
+		{
+			this.setAdjacentClimbBlock(this.checkForAdjacentClimbBlock());
 		}
 
-		if (this.getAir() == 190) {
+		if (this.getAir() == 190)
+		{
 			this.lastBreathExtendPos = this.getPosition();
-		} else if (this.getAir() == 0) {
-			if (Distance.distanceBetween(this.lastBreathExtendPos, this.getPosition()) > 4.0D) {
+		}
+		else if (this.getAir() == 0)
+		{
+			if (Distance.distanceBetween(this.lastBreathExtendPos, this.getPosition()) > 4.0D)
+			{
 				this.lastBreathExtendPos = this.getPosition();
 				this.setAir(180);
 			}
 		}
-		
+
 		//DarthXenon: What is this for?
 		//if (this.simplyID == "needID");
 	}
 
 	@Override
-	public void onLivingUpdate() {
-		if (!this.nexusBound) {
+	public void onLivingUpdate()
+	{
+		if (!this.nexusBound)
+		{
 			float brightness = this.getBrightness(1.0F);
-			if ((brightness > 0.5F) || (this.posY < 55.0D)) {
+			if ((brightness > 0.5F) || (this.posY < 55.0D))
+			{
 				this.entityAge += 2;
 			}
-			if ((this.getBurnsInDay()) && (this.world.isDaytime()) && (!this.world.isRemote)) {
+			if ((this.getBurnsInDay()) && (this.world.isDaytime()) && (!this.world.isRemote))
+			{
 				if ((brightness > 0.5F) && (this.world.canBlockSeeSky(this.getPosition()))
-						&& (this.rand.nextFloat() * 30.0F < (brightness - 0.4F) * 2.0F)) {
+					&& (this.rand.nextFloat() * 30.0F < (brightness - 0.4F) * 2.0F))
+				{
 					this.sunlightDamageTick();
 				}
 			}
@@ -192,11 +214,14 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 	}
 
 	@Override
-	public boolean attackEntityFrom(DamageSource damagesource, float damage) {
-		if (super.attackEntityFrom(damagesource, damage)) {
+	public boolean attackEntityFrom(DamageSource damagesource, float damage)
+	{
+		if (super.attackEntityFrom(damagesource, damage))
+		{
 			Entity entity = damagesource.getEntity();
 			//if ((this.riddenByEntity == entity) || (this.ridingEntity == entity)) {
-			if(this.getPassengers().contains(entity) || this.getRidingEntity() == entity){
+			if (this.getPassengers().contains(entity) || this.getRidingEntity() == entity)
+			{
 				return true;
 			}
 			if (entity != this) this.entity = entity;
@@ -205,7 +230,8 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 		return false;
 	}
 
-	public boolean stunEntity(int ticks) {
+	public boolean stunEntity(int ticks)
+	{
 		if (this.stunTimer < ticks) this.stunTimer = ticks;
 		this.motionX = 0.0D;
 		this.motionZ = 0.0D;
@@ -213,18 +239,22 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 	}
 
 	@Override
-	public boolean attackEntityAsMob(Entity entity) {
+	public boolean attackEntityAsMob(Entity entity)
+	{
 		return entity.attackEntityFrom(DamageSource.causeMobDamage(this), this.attackStrength);
 	}
 
-	public boolean attackEntityAsMob(Entity entity, int damageOverride) {
+	public boolean attackEntityAsMob(Entity entity, int damageOverride)
+	{
 		return entity.attackEntityFrom(DamageSource.causeMobDamage(this), damageOverride);
 	}
 
 	@Override
-	public void moveEntityWithHeading(float strafe, float forward) {
+	public void moveEntityWithHeading(float strafe, float forward)
+	{
 		super.moveEntityWithHeading(strafe, forward);
-		if (this.isInWater()) {
+		if (this.isInWater())
+		{
 			double y = this.posY;
 			this.moveFlying(strafe, forward, 0.04F);
 			this.setVelocity(this.motionX, this.motionY, this.motionZ);
@@ -233,9 +263,11 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 			this.motionZ *= 0.8D;
 			this.motionY -= 0.02D;
 			if ((this.isCollidedHorizontally)
-					&& (this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6D - this.posY + y, this.motionZ)))
+				&& (this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6D - this.posY + y, this.motionZ)))
 				this.motionY = 0.3D;
-		} else if (this.isInLava()) {
+		}
+		else if (this.isInLava())
+		{
 			double y = this.posY;
 			this.moveFlying(strafe, forward, 0.04F);
 			this.setVelocity(this.motionX, this.motionY, this.motionZ);
@@ -244,37 +276,46 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 			this.motionZ *= 0.5D;
 			this.motionY -= 0.02D;
 			if ((this.isCollidedHorizontally)
-					&& (this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6D - this.posY + y, this.motionZ)))
+				&& (this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6D - this.posY + y, this.motionZ)))
 				this.motionY = 0.3D;
-		} else {
+		}
+		else
+		{
 			float groundFriction = 0.91F;
 			float landMoveSpeed;
-			if (this.onGround) {
+			if (this.onGround)
+			{
 				groundFriction = this.getGroundFriction();
 				Block block = this.world.getBlockState(new BlockPos(this.posX, this.getEntityBoundingBox().minY - 1d, this.posZ)).getBlock();
 				if (block != Blocks.AIR) groundFriction = block.slipperiness * 0.91F;
 				landMoveSpeed = this.getAIMoveSpeed();
 
 				landMoveSpeed *= 0.162771F / (groundFriction * groundFriction * groundFriction);
-			} else {
+			}
+			else
+			{
 				landMoveSpeed = this.jumpMovementFactor;
 			}
 
 			this.moveFlying(strafe, forward, landMoveSpeed);
 
-			if (this.isOnLadder()) {
+			if (this.isOnLadder())
+			{
 				float maxLadderXZSpeed = 0.15F;
 				if (this.motionX < -maxLadderXZSpeed) this.motionX = (-maxLadderXZSpeed);
 				if (this.motionX > maxLadderXZSpeed) this.motionX = maxLadderXZSpeed;
 				if (this.motionZ < -maxLadderXZSpeed) this.motionZ = (-maxLadderXZSpeed);
 				if (this.motionZ > maxLadderXZSpeed) this.motionZ = maxLadderXZSpeed;
-				
+
 				this.fallDistance = 0.0F;
 				if (this.motionY < -0.15D) this.motionY = -0.15D;
-				
-				if ((this.isHoldingOntoLadder()) || ((this.isSneaking()) && (this.motionY < 0.0D))){
+
+				if ((this.isHoldingOntoLadder()) || ((this.isSneaking()) && (this.motionY < 0.0D)))
+				{
 					this.motionY = 0.0D;
-				} else if ((this.world.isRemote) && (this.isJumping)) {
+				}
+				else if ((this.world.isRemote) && (this.isJumping))
+				{
 					this.motionY += 0.04D;
 				}
 			}
@@ -292,7 +333,8 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 		double dZ = this.posZ - this.prevPosZ;
 		float limbEnergy = MathHelper.sqrt(dX * dX + dZ * dZ) * 4.0F;
 
-		if (limbEnergy > 1.0F) {
+		if (limbEnergy > 1.0F)
+		{
 			limbEnergy = 1.0F;
 		}
 
@@ -301,7 +343,8 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 	}
 
 	//TODO: Removed Override annotation
-	public void moveFlying(float strafeAmount, float forwardAmount, float movementFactor) {
+	public void moveFlying(float strafeAmount, float forwardAmount, float movementFactor)
+	{
 		float unit = MathHelper.sqrt(strafeAmount * strafeAmount + forwardAmount * forwardAmount);
 
 		if (unit < 0.01F) return;
@@ -339,27 +382,34 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 	// }
 	*/
 
-	public void onBlockRemoved(int x, int y, int z, int id) {
-		if (getHealth() > this.maxHealth - this.maxSelfDamage) {
+	public void onBlockRemoved(int x, int y, int z, int id)
+	{
+		if (this.getHealth() > this.maxHealth - this.maxSelfDamage)
+		{
 			this.attackEntityFrom(DamageSource.generic, this.selfDamage);
 		}
 
-		if ((this.throttled == 0) && ((id == 3) || (id == 2) || (id == 12) || (id == 13))) {
+		if ((this.throttled == 0) && ((id == 3) || (id == 2) || (id == 12) || (id == 13)))
+		{
 			this.playSound(SoundEvents.BLOCK_GRAVEL_STEP, 1.4f, 1f / (this.rand.nextFloat() * 0.6f + 1f));
 			this.throttled = 5;
-		} else {
+		}
+		else
+		{
 			this.playSound(SoundEvents.BLOCK_STONE_STEP, 1.4f, 1f / (this.rand.nextFloat() * 0.6f + 1f));
 			this.throttled = 5;
 		}
 	}
 
-	public boolean canEntityBeDetected(Entity entity) {
-		float distance = getDistanceToEntity(entity);
-		return (distance <= getSenseRange())
-				|| ((canEntityBeSeen(entity)) && (distance <= getAggroRange()));
+	public boolean canEntityBeDetected(Entity entity)
+	{
+		float distance = this.getDistanceToEntity(entity);
+		return (distance <= this.getSenseRange())
+			|| ((this.canEntityBeSeen(entity)) && (distance <= this.getAggroRange()));
 	}
 
-	public double findDistanceToNexus() {
+	public double findDistanceToNexus()
+	{
 		if (this.targetNexus == null) return Double.MAX_VALUE;
 		double x = this.targetNexus.getPos().getX() + 0.5D - this.posX;
 		double y = this.targetNexus.getPos().getY() - this.posY + this.height * 0.5D;
@@ -386,15 +436,18 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 	*/
 
 	@Override
-	public void writeEntityToNBT(NBTTagCompound nbttagcompound) {
+	public void writeEntityToNBT(NBTTagCompound nbttagcompound)
+	{
 		nbttagcompound.setBoolean("alwaysIndependent", this.alwaysIndependent);
 		super.writeEntityToNBT(nbttagcompound);
 	}
 
 	@Override
-	public void readEntityFromNBT(NBTTagCompound nbttagcompound) {
+	public void readEntityFromNBT(NBTTagCompound nbttagcompound)
+	{
 		this.alwaysIndependent = nbttagcompound.getBoolean("alwaysIndependent");
-		if (this.alwaysIndependent) {
+		if (this.alwaysIndependent)
+		{
 			this.setBurnsInDay(Config.NIGHTSPAWNS_MOB_BURN_DURING_DAY);
 			this.setAggroRange(Config.NIGHTSPAWNS_MOB_SIGHTRANGE);
 			this.setSenseRange(Config.NIGHTSPAWNS_MOB_SENSERANGE);
@@ -402,47 +455,57 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 		super.readEntityFromNBT(nbttagcompound);
 	}
 
-	public float getPrevRotationRoll() {
+	public float getPrevRotationRoll()
+	{
 		return this.prevRotationRoll;
 	}
 
-	public float getRotationRoll() {
+	public float getRotationRoll()
+	{
 		return this.rotationRoll;
 	}
 
-	public float getPrevRotationYawHeadIM() {
+	public float getPrevRotationYawHeadIM()
+	{
 		return this.prevRotationYawHeadIM;
 	}
 
-	public float getRotationYawHeadIM() {
+	public float getRotationYawHeadIM()
+	{
 		return this.rotationYawHeadIM;
 	}
 
-	public float getPrevRotationPitchHead() {
+	public float getPrevRotationPitchHead()
+	{
 		return this.prevRotationPitchHead;
 	}
 
-	public float getRotationPitchHead() {
+	public float getRotationPitchHead()
+	{
 		return this.rotationPitchHead;
 	}
 
-	public float getAttackRange() {
+	public float getAttackRange()
+	{
 		return this.attackRange;
 	}
 
-	public void setMaxHealth(float health) {
+	public void setMaxHealth(float health)
+	{
 		this.maxHealth = health;
 	}
 
-	public void setMaxHealthAndHealth(float health) {
+	public void setMaxHealthAndHealth(float health)
+	{
 		this.maxHealth = health;
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(health);
 		this.setHealth(health);
 	}
-	
+
 	//DarthXenon: Boolean flags are kept separate for debug breakpoint purposes
 	@Override
-	public boolean getCanSpawnHere() {
+	public boolean getCanSpawnHere()
+	{
 		boolean lightFlag = ((this.nexusBound) || (this.getLightLevelBelow8()));
 		BlockPos pos = new BlockPos(this.posX, this.getEntityBoundingBox().minY + 0.5D, this.posZ);
 		//boolean onGround = WorldEntitySpawner.canCreatureTypeSpawnAtLocation(EntityLiving.SpawnPlacementType.ON_GROUND, this.world, pos);
@@ -451,87 +514,107 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 		boolean flag = (super.getCanSpawnHere()) && (lightFlag) && (onGround && !inWall);
 		return flag;
 	}
-	
-	public boolean isEntityInOpaqueBlockBeforeSpawn(){
+
+	public boolean isEntityInOpaqueBlockBeforeSpawn()
+	{
 		AxisAlignedBB box = this.getEntityBoundingBox();
 		BlockPos min = new BlockPos(box.minX, box.minY, box.minZ);
 		BlockPos max = new BlockPos(MathHelper.ceil(box.maxX), MathHelper.ceil(box.maxY), MathHelper.ceil(box.maxZ));
-		for(int x=min.getX(); x<max.getX(); x++){
-			for(int y=min.getY(); y<max.getY(); y++){
-				for(int z=min.getZ(); z<max.getZ(); z++){
-					if(this.world.isBlockNormalCube(new BlockPos(x, y, z), false)) return true;
+		for (int x = min.getX(); x < max.getX(); x++)
+		{
+			for (int y = min.getY(); y < max.getY(); y++)
+			{
+				for (int z = min.getZ(); z < max.getZ(); z++)
+				{
+					if (this.world.isBlockNormalCube(new BlockPos(x, y, z), false)) return true;
 				}
 			}
 		}
 		return false;
 	}
 
-	public int getJumpHeight() {
+	public int getJumpHeight()
+	{
 		return this.jumpHeight;
 	}
 
-	public float getBlockStrength(BlockPos pos) {
+	public float getBlockStrength(BlockPos pos)
+	{
 		return this.getBlockStrength(pos, this.world.getBlockState(pos).getBlock());
 	}
 
-	public float getBlockStrength(BlockPos pos, Block block) {
+	public float getBlockStrength(BlockPos pos, Block block)
+	{
 		return getBlockStrength(pos, block, this.world);
 	}
 
-	public boolean getCanClimb() {
+	public boolean getCanClimb()
+	{
 		return this.canClimb;
 	}
 
-	public boolean getCanDigDown() {
+	public boolean getCanDigDown()
+	{
 		return this.canDig;
 	}
 
-	public int getAggroRange() {
+	public int getAggroRange()
+	{
 		return this.aggroRange;
 	}
 
-	public int getSenseRange() {
+	public int getSenseRange()
+	{
 		return this.senseRange;
 	}
 
 	// TODO: Used to have override annotation
-	public float getBlockPathWeight(int i, int j, int k) {
+	public float getBlockPathWeight(int i, int j, int k)
+	{
 		if (this.nexusBound) return 0.0F;
 		return 0.5F - this.world.getLightBrightness(new BlockPos(i, j, k));
 	}
 
-	public boolean getBurnsInDay() {
+	public boolean getBurnsInDay()
+	{
 		return this.burnsInDay;
 	}
 
-	public int getDestructiveness() {
+	public int getDestructiveness()
+	{
 		return this.destructiveness;
 	}
 
-	public float getPitchRate() {
+	public float getPitchRate()
+	{
 		return this.pitchRate;
 	}
 
-	public float getGravity() {
+	public float getGravity()
+	{
 		return this.gravityAcel;
 	}
 
-	public float getAirResistance() {
+	public float getAirResistance()
+	{
 		return this.airResistance;
 	}
 
-	public float getGroundFriction() {
+	public float getGroundFriction()
+	{
 		return this.groundFriction;
 	}
 
-	public Goal getAIGoal() {
+	public Goal getAIGoal()
+	{
 		return this.currentGoal;
 	}
 
-	public Goal getPrevAIGoal() {
+	public Goal getPrevAIGoal()
+	{
 		return this.prevGoal;
 	}
-	
+
 	//TODO Prevents the entity from spawning with egg; conflict with EntityAISwimming
 	/*@Override
 	public PathNavigate getNavigator() {
@@ -539,207 +622,250 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 	}*/
 
 	@Override
-	public float getBlockPathCost(PathNode prevNode, PathNode node, IBlockAccess terrainMap) {
+	public float getBlockPathCost(PathNode prevNode, PathNode node, IBlockAccess terrainMap)
+	{
 		return this.calcBlockPathCost(prevNode, node, terrainMap);
 	}
 
 	@Override
-	public void getPathOptionsFromNode(IBlockAccess terrainMap, PathNode currentNode, PathfinderIM pathFinder) {
+	public void getPathOptionsFromNode(IBlockAccess terrainMap, PathNode currentNode, PathfinderIM pathFinder)
+	{
 		this.calcPathOptions(this.world != null ? this.world : terrainMap, currentNode, pathFinder);
 	}
 
-	public String getRenderLabel() {
+	public String getRenderLabel()
+	{
 		return this.renderLabel;
 	}
 
-	public int getDebugMode() {
+	public int getDebugMode()
+	{
 		return this.debugMode;
 	}
 
 	@Override
-	public boolean isHostile() {
+	public boolean isHostile()
+	{
 		return this.isHostile;
 	}
 
 	@Override
-	public boolean isNeutral() {
+	public boolean isNeutral()
+	{
 		return this.creatureRetaliates;
 	}
 
 	@Override
-	public boolean isThreatTo(Entity entity) {
+	public boolean isThreatTo(Entity entity)
+	{
 		return this.isHostile && entity instanceof EntityPlayer;
 	}
 
 	@Override
-	public Entity getAttackingTarget() {
+	public Entity getAttackingTarget()
+	{
 		return this.getAttackTarget();
 	}
 
 	@Override
-	public boolean isStupidToAttack() {
+	public boolean isStupidToAttack()
+	{
 		return false;
 	}
 
 	@Override
-	public boolean doNotVaporize() {
+	public boolean doNotVaporize()
+	{
 		return false;
 	}
 
 	@Override
-	public boolean isPredator() {
+	public boolean isPredator()
+	{
 		return false;
 	}
 
 	@Override
-	public boolean isPeaceful() {
+	public boolean isPeaceful()
+	{
 		return false;
 	}
 
 	@Override
-	public boolean isPrey() {
+	public boolean isPrey()
+	{
 		return false;
 	}
 
 	@Override
-	public boolean isUnkillable() {
+	public boolean isUnkillable()
+	{
 		return false;
 	}
 
 	@Override
-	public boolean isFriendOf(Entity par1entity) {
+	public boolean isFriendOf(Entity par1entity)
+	{
 		return false;
 	}
 
 	@Override
-	public boolean isNPC() {
+	public boolean isNPC()
+	{
 		return false;
 	}
 
 	@Override
-	public int isPet() {
+	public int isPet()
+	{
 		return 0;
 	}
 
 	@Override
-	public String getName() {
+	public String getName()
+	{
 		return this.name;
 	}
 
 	@Override
-	public int getGender() {
+	public int getGender()
+	{
 		return this.gender;
 	}
 
 	@Override
-	public Entity getPetOwner() {
+	public Entity getPetOwner()
+	{
 		return null;
 	}
 
 	@Override
-	public float getSize() {
+	public float getSize()
+	{
 		return this.height * this.width;
 	}
 
 	@Override
-	public String customStringAndResponse(String s) {
+	public String customStringAndResponse(String s)
+	{
 		return null;
 	}
 
 	@Override
-	public String getSimplyID() {
+	public String getSimplyID()
+	{
 		return this.simplyID;
 	}
 
-	public boolean isNexusBound() {
+	public boolean isNexusBound()
+	{
 		return this.nexusBound;
 	}
 
 	@Override
-	public boolean isOnLadder() {
+	public boolean isOnLadder()
+	{
 		return this.isAdjacentClimbBlock();
 	}
 
-	public boolean isAdjacentClimbBlock() {
+	public boolean isAdjacentClimbBlock()
+	{
 		return this.getDataManager().get(IS_ADJECENT_CLIMB_BLOCK);
 	}
 
-	public boolean checkForAdjacentClimbBlock() {
+	public boolean checkForAdjacentClimbBlock()
+	{
 		BlockPos pos = new BlockPos(this.posX, this.getEntityBoundingBox().minY, this.posZ);
 		IBlockState blockState = this.world.getBlockState(pos);
-		if(blockState == null) return false;
+		if (blockState == null) return false;
 		return (blockState.getBlock().isLadder(blockState, this.world, pos, this));
 	}
 
-	public boolean canSwimHorizontal() {
+	public boolean canSwimHorizontal()
+	{
 		return true;
 	}
 
-	public boolean canSwimVertical() {
+	public boolean canSwimVertical()
+	{
 		return true;
 	}
 
-	public boolean shouldRenderLabel() {
+	public boolean shouldRenderLabel()
+	{
 		return this.shouldRenderLabel;
 	}
 
 	@Override
-	public void acquiredByNexus(TileEntityNexus nexus) {
-		if ((this.targetNexus == null) && (!this.alwaysIndependent)) {
+	public void acquiredByNexus(TileEntityNexus nexus)
+	{
+		if ((this.targetNexus == null) && (!this.alwaysIndependent))
+		{
 			this.targetNexus = nexus;
 			this.nexusBound = true;
 		}
 	}
 
 	@Override
-	public void setDead() {
+	public void setDead()
+	{
 		super.setDead();
 		if ((this.getHealth() <= 0.0F) && (this.targetNexus != null)) this.targetNexus.registerMobDied();
 	}
 
-	public void setEntityIndependent() {
+	public void setEntityIndependent()
+	{
 		this.targetNexus = null;
 		this.nexusBound = false;
 		this.alwaysIndependent = true;
 	}
 
-	public void setBurnsInDay(boolean flag) {
+	public void setBurnsInDay(boolean flag)
+	{
 		this.burnsInDay = flag;
 	}
 
-	public void setAggroRange(int range) {
+	public void setAggroRange(int range)
+	{
 		this.aggroRange = range;
 	}
 
-	public void setSenseRange(int range) {
+	public void setSenseRange(int range)
+	{
 		this.senseRange = range;
 	}
 
 	@Override
-	public void setJumping(boolean flag) {
+	public void setJumping(boolean flag)
+	{
 		super.setJumping(flag);
 		if (!this.world.isRemote) this.getDataManager().set(IS_JUMPING, flag);
 	}
 
-	public void setAdjacentClimbBlock(boolean flag) {
+	public void setAdjacentClimbBlock(boolean flag)
+	{
 		if (!this.world.isRemote) this.getDataManager().set(IS_ADJECENT_CLIMB_BLOCK, flag);
 	}
 
-	public void setRenderLabel(String label) {
+	public void setRenderLabel(String label)
+	{
 		this.renderLabel = label;
 	}
 
-	public void setShouldRenderLabel(boolean flag) {
+	public void setShouldRenderLabel(boolean flag)
+	{
 		this.shouldRenderLabel = flag;
 	}
 
-	public void setDebugMode(int mode) {
+	public void setDebugMode(int mode)
+	{
 		this.debugMode = mode;
-		onDebugChange();
+		this.onDebugChange();
 	}
 
 	@Override
-	protected void updateAITasks() {
+	protected void updateAITasks()
+	{
 		this.world.theProfiler.startSection("Entity IM");
 		this.entityAge++;
 		this.despawnEntity();
@@ -755,35 +881,46 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 	}
 
 	@Override
-	protected void updateAITick() {
+	protected void updateAITick()
+	{
 		super.updateAITick();
-		if (this.getAttackTarget() != null){
+		if (this.getAttackTarget() != null)
+		{
 			this.currentGoal = Goal.TARGET_ENTITY;
-		} else if (this.targetNexus != null){
+		}
+		else if (this.targetNexus != null)
+		{
 			this.currentGoal = Goal.BREAK_NEXUS;
-		} else {
+		}
+		else
+		{
 			this.currentGoal = Goal.CHILL;
 		}
 	}
 
 	@Override
-	public boolean canDespawn() {
+	public boolean canDespawn()
+	{
 		return !this.nexusBound;
 	}
 
-	public void setRotationRoll(float roll) {
+	public void setRotationRoll(float roll)
+	{
 		this.rotationRoll = roll;
 	}
 
-	public void setRotationYawHeadIM(float yaw) {
+	public void setRotationYawHeadIM(float yaw)
+	{
 		this.rotationYawHeadIM = yaw;
 	}
 
-	public void setRotationPitchHead(float pitch) {
+	public void setRotationPitchHead(float pitch)
+	{
 		this.rotationPitchHead = pitch;
 	}
 
-	public void setAttackRange(float range) {
+	public void setAttackRange(float range)
+	{
 		this.attackRange = range;
 	}
 
@@ -798,44 +935,56 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 	// }
 	// }
 
-	protected void sunlightDamageTick() {
-		if(this.isImmuneToFire){
+	protected void sunlightDamageTick()
+	{
+		if (this.isImmuneToFire)
+		{
 			this.damageEntity(DamageSource.generic, 3.0F);
-		} else {
+		}
+		else
+		{
 			this.setFire(8);
 		}
 	}
 
 	@Override
-	protected void dealFireDamage(int i) {
+	protected void dealFireDamage(int i)
+	{
 		super.dealFireDamage(i * this.flammability);
 	}
 
 	@Override
-	protected void dropFewItems(boolean flag, int amount) {
-		if (this.rand.nextInt(4) == 0) {
+	protected void dropFewItems(boolean flag, int amount)
+	{
+		if (this.rand.nextInt(4) == 0)
+		{
 			this.entityDropItem(new ItemStack(BlocksAndItems.itemSmallRemnants), 0f);
 		}
 	}
 
-	protected float calcBlockPathCost(PathNode prevNode, PathNode node, IBlockAccess terrainMap) {
+	protected float calcBlockPathCost(PathNode prevNode, PathNode node, IBlockAccess terrainMap)
+	{
 		float multiplier = 1.0F;
-		if ((terrainMap instanceof IBlockAccessExtended)) {
-			int mobDensity = ((IBlockAccessExtended) terrainMap).getLayeredData(node.pos) & 0x7;
+		if ((terrainMap instanceof IBlockAccessExtended))
+		{
+			int mobDensity = ((IBlockAccessExtended)terrainMap).getLayeredData(node.pos) & 0x7;
 			multiplier += mobDensity * 3;
 		}
 
-		if ((node.pos.yCoord > prevNode.pos.yCoord) && (this.getCollide(terrainMap, node.pos) == 2)) {
+		if ((node.pos.yCoord > prevNode.pos.yCoord) && (this.getCollide(terrainMap, node.pos) == 2))
+		{
 			multiplier += 2.0F;
 		}
 
-		if (this.blockHasLadder(terrainMap, new BlockPos(node.pos))) {
+		if (this.blockHasLadder(terrainMap, new BlockPos(node.pos)))
+		{
 			multiplier += 5.0F;
 		}
 
-		if (node.action == PathAction.SWIM) {
+		if (node.action == PathAction.SWIM)
+		{
 			multiplier *= ((node.pos.yCoord <= prevNode.pos.yCoord)
-					&& (!terrainMap.isAirBlock(new BlockPos(node.pos.addVector(0d, 1d, 0d)))) ? 3.0F : 1.0F);
+				&& (!terrainMap.isAirBlock(new BlockPos(node.pos.addVector(0d, 1d, 0d)))) ? 3.0F : 1.0F);
 			return prevNode.distanceTo(node) * 1.3F * multiplier;
 		}
 
@@ -843,25 +992,31 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 		return prevNode.distanceTo(node) * (block.getExplosionResistance(null)) * multiplier;
 	}
 
-	protected void calcPathOptions(IBlockAccess terrainMap, PathNode currentNode, PathfinderIM pathFinder) {
+	protected void calcPathOptions(IBlockAccess terrainMap, PathNode currentNode, PathfinderIM pathFinder)
+	{
 		if ((currentNode.pos.yCoord <= 0) || (currentNode.pos.yCoord > 255)) return;
 
 		this.calcPathOptionsVertical(terrainMap, currentNode, pathFinder);
 
-		if ((currentNode.action == PathAction.DIG) && (!this.canStandAt(terrainMap, new BlockPos(currentNode.pos)))) {
+		if ((currentNode.action == PathAction.DIG) && (!this.canStandAt(terrainMap, new BlockPos(currentNode.pos))))
+		{
 			return;
 		}
 
 		int height = this.getJumpHeight();
-		for (int i = 1; i <= height; i++) {
-			if (this.getCollide(terrainMap, currentNode.pos.addVector(0d, i, 0d)) == 0) {
+		for (int i = 1; i <= height; i++)
+		{
+			if (this.getCollide(terrainMap, currentNode.pos.addVector(0d, i, 0d)) == 0)
+			{
 				height = i - 1;
 			}
 		}
 
 		int maxFall = 8;
-		for (int i = 0; i < 4; i++) {
-			if (currentNode.action != PathAction.NONE) {
+		for (int i = 0; i < 4; i++)
+		{
+			if (currentNode.action != PathAction.NONE)
+			{
 				if ((i == 0) && (currentNode.action == PathAction.LADDER_UP_NX)) height = 0;
 				if ((i == 1) && (currentNode.action == PathAction.LADDER_UP_PX)) height = 0;
 				if ((i == 2) && (currentNode.action == PathAction.LADDER_UP_NZ)) height = 0;
@@ -870,26 +1025,30 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 			int yOffset = 0;
 			int currentY = MathHelper.floor(currentNode.pos.yCoord) + height;
 			boolean passedLevel = false;
-			do {
-				yOffset = getNextLowestSafeYOffset(terrainMap,
-						new BlockPos(currentNode.pos.xCoord + Coords.offsetAdjX[i], currentY, currentNode.pos.zCoord + Coords.offsetAdjZ[i]),
-						maxFall + currentY - MathHelper.floor(currentNode.pos.yCoord));
+			do
+			{
+				yOffset = this.getNextLowestSafeYOffset(terrainMap,
+					new BlockPos(currentNode.pos.xCoord + Coords.offsetAdjX[i], currentY, currentNode.pos.zCoord + Coords.offsetAdjZ[i]),
+					maxFall + currentY - MathHelper.floor(currentNode.pos.yCoord));
 				if (yOffset > 0)
 					break;
-				if (yOffset > -maxFall) {
+				if (yOffset > -maxFall)
+				{
 					pathFinder.addNode(new Vec3d(
-							currentNode.pos.xCoord + Coords.offsetAdjX[i], currentY + yOffset + 1, currentNode.pos.zCoord + Coords.offsetAdjZ[i]),
-							PathAction.NONE);
+						currentNode.pos.xCoord + Coords.offsetAdjX[i], currentY + yOffset + 1, currentNode.pos.zCoord + Coords.offsetAdjZ[i]),
+						PathAction.NONE);
 				}
 
 				currentY += yOffset - 1;
 
-				if ((!passedLevel) && (currentY <= currentNode.pos.yCoord)) {
+				if ((!passedLevel) && (currentY <= currentNode.pos.yCoord))
+				{
 					passedLevel = true;
-					if (currentY != currentNode.pos.yCoord) {
-						this.addAdjacent(terrainMap, 
-								new BlockPos(currentNode.pos.addVector(Coords.offsetAdjX[i], 0, Coords.offsetAdjZ[i])),
-								currentNode, pathFinder);
+					if (currentY != currentNode.pos.yCoord)
+					{
+						this.addAdjacent(terrainMap,
+							new BlockPos(currentNode.pos.addVector(Coords.offsetAdjX[i], 0, Coords.offsetAdjZ[i])),
+							currentNode, pathFinder);
 					}
 
 				}
@@ -899,82 +1058,118 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 			while (currentY >= currentNode.pos.yCoord);
 		}
 
-		if (canSwimHorizontal()) {
-			for (int i = 0; i < 4; i++) {
+		if (this.canSwimHorizontal())
+		{
+			for (int i = 0; i < 4; i++)
+			{
 				Vec3d vec = currentNode.pos.addVector(Coords.offsetAdjX[i], 0, Coords.offsetAdjZ[i]);
 				if (this.getCollide(terrainMap, vec) == -1) pathFinder.addNode(vec, PathAction.SWIM);
 			}
 		}
 	}
 
-	protected void calcPathOptionsVertical(IBlockAccess terrainMap, PathNode currentNode, PathfinderIM pathFinder) {
+	protected void calcPathOptionsVertical(IBlockAccess terrainMap, PathNode currentNode, PathfinderIM pathFinder)
+	{
 		Vec3d vecAbove = currentNode.pos.addVector(0d, 1d, 0d);
 		Vec3d vecBelow = currentNode.pos.addVector(0d, -1d, 0d);
 		BlockPos posAbove = new BlockPos(vecAbove);
 		BlockPos posBelow = new BlockPos(vecBelow);
 		int collideAbove = this.getCollide(terrainMap, posAbove);
 		int collideBelow = this.getCollide(terrainMap, posBelow);
-		
-		if (collideAbove > 0) {
-			if (terrainMap.getBlockState(posAbove).getBlock() instanceof BlockLadder) {
+
+		if (collideAbove > 0)
+		{
+			if (terrainMap.getBlockState(posAbove).getBlock() instanceof BlockLadder)
+			{
 				IBlockState blockState = terrainMap.getBlockState(posAbove);
 				EnumFacing meta = (EnumFacing)blockState.getProperties().get(BlockLadder.FACING);
-				
+
 				PathAction action;
-				switch(meta){
-				case EAST: action = PathAction.LADDER_UP_PX; break;
-				case WEST: action = PathAction.LADDER_UP_NX; break;
-				case NORTH: action = PathAction.LADDER_UP_PZ; break;
-				case SOUTH: action = PathAction.LADDER_UP_NZ; break;
-				default: action = PathAction.NONE;
+				switch (meta)
+				{
+					case EAST:
+						action = PathAction.LADDER_UP_PX;
+						break;
+					case WEST:
+						action = PathAction.LADDER_UP_NX;
+						break;
+					case NORTH:
+						action = PathAction.LADDER_UP_PZ;
+						break;
+					case SOUTH:
+						action = PathAction.LADDER_UP_NZ;
+						break;
+					default:
+						action = PathAction.NONE;
 				}
-				
-				switch(currentNode.action){
-				case NONE: pathFinder.addNode(currentNode.pos.addVector(0d, 1d, 0d), action); break;
-				case LADDER_UP_PX:
-				case LADDER_UP_NX:
-				case LADDER_UP_PZ:
-				case LADDER_UP_NZ:
-					if(action == currentNode.action){pathFinder.addNode(vecAbove, action);}
-					break;
-				default: pathFinder.addNode(vecAbove, action);
+
+				switch (currentNode.action)
+				{
+					case NONE:
+						pathFinder.addNode(currentNode.pos.addVector(0d, 1d, 0d), action);
+						break;
+					case LADDER_UP_PX:
+					case LADDER_UP_NX:
+					case LADDER_UP_PZ:
+					case LADDER_UP_NZ:
+						if (action == currentNode.action)
+						{
+							pathFinder.addNode(vecAbove, action);
+						}
+						break;
+					default:
+						pathFinder.addNode(vecAbove, action);
 				}
-			} else if(this.getCanClimb()) {
+			}
+			else if (this.getCanClimb())
+			{
 				if (this.isAdjacentSolidBlock(terrainMap, posAbove)) pathFinder.addNode(vecAbove, PathAction.NONE);
 			}
 		}
-		
-		if (this.getCanDigDown()) {
-			if (collideBelow == 2) {
+
+		if (this.getCanDigDown())
+		{
+			if (collideBelow == 2)
+			{
 				pathFinder.addNode(vecBelow, PathAction.DIG);
-			} else if (collideBelow == 1) {
+			}
+			else if (collideBelow == 1)
+			{
 				int maxFall = 5;
 				int yOffset = this.getNextLowestSafeYOffset(terrainMap, posBelow, maxFall);
 				if (yOffset <= 0) pathFinder.addNode(vecBelow, PathAction.NONE);
 			}
 		}
 
-		if (this.canSwimVertical()) {
+		if (this.canSwimVertical())
+		{
 			if (collideBelow == -1) pathFinder.addNode(currentNode.pos, PathAction.SWIM);
 			if (collideAbove == -1) pathFinder.addNode(currentNode.pos, PathAction.SWIM);
 		}
 	}
-	
-	protected void addAdjacent(IBlockAccess terrainMap, BlockPos pos, PathNode currentNode, PathfinderIM pathFinder){
+
+	protected void addAdjacent(IBlockAccess terrainMap, BlockPos pos, PathNode currentNode, PathfinderIM pathFinder)
+	{
 		this.addAdjacent(terrainMap, new Vec3d(pos.getX(), pos.getY(), pos.getZ()), currentNode, pathFinder);
 	}
 
-	protected void addAdjacent(IBlockAccess terrainMap, Vec3d pos, PathNode currentNode, PathfinderIM pathFinder) {
+	protected void addAdjacent(IBlockAccess terrainMap, Vec3d pos, PathNode currentNode, PathfinderIM pathFinder)
+	{
 		if (this.getCollide(terrainMap, pos) <= 0) return;
-		if (this.getCanClimb()) {
+		if (this.getCanClimb())
+		{
 			if (this.isAdjacentSolidBlock(terrainMap, new BlockPos(pos))) pathFinder.addNode(pos, PathAction.NONE);
-		} else if (terrainMap.getBlockState(new BlockPos(pos)).getBlock() == Blocks.LADDER) {
+		}
+		else if (terrainMap.getBlockState(new BlockPos(pos)).getBlock() == Blocks.LADDER)
+		{
 			pathFinder.addNode(pos, PathAction.NONE);
 		}
 	}
 
-	protected int getNextLowestSafeYOffset(IBlockAccess terrainMap, BlockPos pos, int maxOffsetMagnitude) {
-		for (int i = 0; (i + pos.getY() > 0) && (i < maxOffsetMagnitude); i--) {
+	protected int getNextLowestSafeYOffset(IBlockAccess terrainMap, BlockPos pos, int maxOffsetMagnitude)
+	{
+		for (int i = 0; (i + pos.getY() > 0) && (i < maxOffsetMagnitude); i--)
+		{
 			boolean flag0 = this.canStandAtAndIsValid(this.world != null ? this.world : terrainMap, pos.up(i)); //if the entity can stand on the block
 			boolean flag1 = this.canSwimHorizontal(); //If the entity can swim
 			boolean flag2 = this.getCollide(this.world != null ? this.world : terrainMap, pos.up(i)) == -1; //If the block is liquid
@@ -983,21 +1178,25 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 		return 1;
 	}
 
-	protected boolean canStandOnBlock(IBlockAccess terrainMap, int x, int y, int z) {
+	protected boolean canStandOnBlock(IBlockAccess terrainMap, int x, int y, int z)
+	{
 		Block block = terrainMap.getBlockState(new BlockPos(x, y, z)).getBlock();
-		if ((block != Blocks.AIR) && (!block.isPassable(terrainMap, new BlockPos(x, y, z))) && (!this.avoidsBlock(block))) {
+		if ((block != Blocks.AIR) && (!block.isPassable(terrainMap, new BlockPos(x, y, z))) && (!this.avoidsBlock(block)))
+		{
 			return true;
 		}
 		return false;
 	}
 
-	protected boolean getLightLevelBelow8() {
+	protected boolean getLightLevelBelow8()
+	{
 		BlockPos blockPos = new BlockPos(this.posX, this.getEntityBoundingBox().minY, this.posZ);
-		
+
 		if (this.world.getLightFor(EnumSkyBlock.SKY, blockPos) > this.rand.nextInt(32)) return false;
 		int l = this.world.getBlockLightOpacity(blockPos);
-		
-		if (this.world.isThundering()) {
+
+		if (this.world.isThundering())
+		{
 			int i1 = this.world.getSkylightSubtracted();
 			this.world.setSkylightSubtracted(10);
 			l = this.world.getBlockLightOpacity(blockPos);
@@ -1006,51 +1205,63 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 		return l <= this.rand.nextInt(8);
 	}
 
-	protected void setAIGoal(Goal goal) {
+	protected void setAIGoal(Goal goal)
+	{
 		this.currentGoal = goal;
 	}
 
-	protected void setPrevAIGoal(Goal goal) {
+	protected void setPrevAIGoal(Goal goal)
+	{
 		this.prevGoal = goal;
 	}
 
-	public void transitionAIGoal(Goal newGoal) {
+	public void transitionAIGoal(Goal newGoal)
+	{
 		this.prevGoal = this.currentGoal;
 		this.currentGoal = newGoal;
 	}
 
-	protected void setDestructiveness(int x) {
+	protected void setDestructiveness(int x)
+	{
 		this.destructiveness = x;
 	}
 
-	protected void setGravity(float acceleration) {
+	protected void setGravity(float acceleration)
+	{
 		this.gravityAcel = acceleration;
 	}
 
-	public void setGroundFriction(float frictionCoefficient) {
+	public void setGroundFriction(float frictionCoefficient)
+	{
 		this.groundFriction = frictionCoefficient;
 	}
 
-	protected void setCanClimb(boolean flag) {
+	protected void setCanClimb(boolean flag)
+	{
 		this.canClimb = flag;
 	}
 
-	protected void setJumpHeight(int height) {
+	protected void setJumpHeight(int height)
+	{
 		this.jumpHeight = height;
 	}
 
-	protected void setName(String name) {
+	protected void setName(String name)
+	{
 		this.name = name;
 	}
 
-	protected void setGender(int gender) {
+	protected void setGender(int gender)
+	{
 		this.gender = gender;
 	}
 
-	protected void onDebugChange() {
+	protected void onDebugChange()
+	{
 	}
 
-	public static float getBlockStrength(BlockPos pos, Block block, World world) {
+	public static float getBlockStrength(BlockPos pos, Block block, World world)
+	{
 
 		int bonus = 0;
 		if (world.getBlockState(pos.down()).getBlock() == block) bonus++;

@@ -3,39 +3,48 @@ package invmod.entity.ai;
 import invmod.entity.EntityIMLiving;
 import net.minecraft.entity.EntityLivingBase;
 
-public class EntityAIRallyBehindEntity<T extends EntityLivingBase, ILeader> extends EntityAIFollowEntity<T> {
-	
+
+public class EntityAIRallyBehindEntity<T extends EntityLivingBase, ILeader> extends EntityAIFollowEntity<T>
+{
+
 	private static final float DEFAULT_FOLLOW_DISTANCE = 5.0F;
 
-	public EntityAIRallyBehindEntity(EntityIMLiving entity, Class<T> leader) {
+	public EntityAIRallyBehindEntity(EntityIMLiving entity, Class<T> leader)
+	{
 		this(entity, leader, 5.0F);
 	}
 
-	public EntityAIRallyBehindEntity(EntityIMLiving entity, Class<T> leader, float followDistance) {
+	public EntityAIRallyBehindEntity(EntityIMLiving entity, Class<T> leader, float followDistance)
+	{
 		super(entity, leader, followDistance);
 	}
-	
+
 	@Override
-	public boolean shouldExecute() {
+	public boolean shouldExecute()
+	{
 		return (this.getEntity().readyToRally()) && (super.shouldExecute());
 	}
-	
+
 	@Override
-	public boolean continueExecuting() {
+	public boolean continueExecuting()
+	{
 		return (this.getEntity().readyToRally()) && (super.continueExecuting());
 	}
-	
+
 	@Override
-	public void updateTask() {
+	public void updateTask()
+	{
 		super.updateTask();
-		if (this.getEntity().readyToRally()) {
-			EntityLivingBase leader = getTarget();
+		if (this.getEntity().readyToRally())
+		{
+			EntityLivingBase leader = this.getTarget();
 			//if (((ILeader) leader).isMartyr())
-				//rally(leader);
+			//rally(leader);
 		}
 	}
 
-	protected void rally(T leader) {
+	protected void rally(T leader)
+	{
 		this.getEntity().rally(leader);
 	}
 }

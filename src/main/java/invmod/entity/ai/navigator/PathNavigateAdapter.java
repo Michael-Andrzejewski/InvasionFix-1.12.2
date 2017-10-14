@@ -6,53 +6,64 @@ import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.pathfinding.WalkNodeProcessor;
 import net.minecraft.util.math.Vec3d;
 
-public class PathNavigateAdapter extends PathNavigateGround {
-	
+
+public class PathNavigateAdapter extends PathNavigateGround
+{
+
 	private NavigatorIM navigator;
-    protected WalkNodeProcessor walkNodeProcessor;
-    
-	public PathNavigateAdapter(NavigatorIM navigator) {
+	protected WalkNodeProcessor walkNodeProcessor;
+
+	public PathNavigateAdapter(NavigatorIM navigator)
+	{
 		super(navigator.getEntity(), navigator.getEntity().world);
 		this.navigator = navigator;
-		if(this.nodeProcessor == null) this.nodeProcessor = this.walkNodeProcessor;
+		if (this.nodeProcessor == null) this.nodeProcessor = this.walkNodeProcessor;
 	}
 
 	@Override
-	public void onUpdateNavigation() {
+	public void onUpdateNavigation()
+	{
 		this.navigator.onUpdateNavigation();
 	}
 
 	@Override
-	public boolean noPath() {
+	public boolean noPath()
+	{
 		return this.navigator.noPath();
 	}
 
 	@Override
-	public void clearPathEntity() {
+	public void clearPathEntity()
+	{
 		this.navigator.clearPath();
 	}
 
 	@Override
-	public void setSpeed(double speed) {
-		this.navigator.setSpeed((float) speed);
+	public void setSpeed(double speed)
+	{
+		this.navigator.setSpeed((float)speed);
 	}
 
 	@Override
-	public boolean tryMoveToXYZ(double x, double y, double z, double movespeed) {
-		return this.navigator.tryMoveToXYZ(x, y, z, 0.0F, (float) movespeed);
+	public boolean tryMoveToXYZ(double x, double y, double z, double movespeed)
+	{
+		return this.navigator.tryMoveToXYZ(x, y, z, 0.0F, (float)movespeed);
 	}
 
 	@Override
-	public boolean tryMoveToEntityLiving(Entity entity, double movespeed) {
-		return this.navigator.tryMoveToEntity(entity, 0.0F, (float) movespeed);
+	public boolean tryMoveToEntityLiving(Entity entity, double movespeed)
+	{
+		return this.navigator.tryMoveToEntity(entity, 0.0F, (float)movespeed);
 	}
 
-	public boolean setPath(invmod.entity.ai.navigator.Path entity, float movespeed) {
+	public boolean setPath(invmod.entity.ai.navigator.Path entity, float movespeed)
+	{
 		return this.navigator.setPath(entity, movespeed);
 	}
 
 	@Override
-	public boolean setPath(net.minecraft.pathfinding.Path entity, double movespeed) {
+	public boolean setPath(net.minecraft.pathfinding.Path entity, double movespeed)
+	{
 		return false;
 	}
 
@@ -92,45 +103,52 @@ public class PathNavigateAdapter extends PathNavigateGround {
 	// }
 
 	@Override
-	public net.minecraft.pathfinding.Path getPathToEntityLiving(Entity entity) {
+	public net.minecraft.pathfinding.Path getPathToEntityLiving(Entity entity)
+	{
 		return null;
 	}
 
 	@Override
-	public net.minecraft.pathfinding.Path getPath() {
+	public net.minecraft.pathfinding.Path getPath()
+	{
 		return null;
 	}
 
 	@Override
-	protected PathFinder getPathFinder() {
+	protected PathFinder getPathFinder()
+	{
 		this.walkNodeProcessor = new WalkNodeProcessor();
-        this.walkNodeProcessor.setCanBreakDoors(true); //.func_176175_a(true); //TODO: Unsure.
-        return new PathFinder(this.walkNodeProcessor);
+		this.walkNodeProcessor.setCanBreakDoors(true); //.func_176175_a(true); //TODO: Unsure.
+		return new PathFinder(this.walkNodeProcessor);
 	}
 
 	@Override
-	protected Vec3d getEntityPosition() {
+	protected Vec3d getEntityPosition()
+	{
 		return null;
 	}
 
 	@Override
-	protected boolean canNavigate() {
+	protected boolean canNavigate()
+	{
 		return false;
 	}
 
 	@Override
-	protected boolean isDirectPathBetweenPoints(Vec3d p_75493_1_, Vec3d p_75493_2_, int p_75493_3_, int p_75493_4_, int p_75493_5_) {
+	protected boolean isDirectPathBetweenPoints(Vec3d p_75493_1_, Vec3d p_75493_2_, int p_75493_3_, int p_75493_4_, int p_75493_5_)
+	{
 		return false;
 	}
-	
+
 	/*@Override
 	public void func_179693_d(boolean thing) {
 		this.walkNodeProcessor.func_176178_d(thing);
 	}*/
-	
+
 	//TODO: Unsure.
 	@Override
-	public void setBreakDoors(boolean thing){
+	public void setBreakDoors(boolean thing)
+	{
 		this.walkNodeProcessor.setCanBreakDoors(thing);
 	}
 }

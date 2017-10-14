@@ -17,8 +17,10 @@ import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.world.World;
 
-public class EntityIMGiantBird extends EntityIMBird {
-	
+
+public class EntityIMGiantBird extends EntityIMBird
+{
+
 	private static final float PICKUP_OFFSET_X = 0.0F;
 	private static final float PICKUP_OFFSET_Y = 0.2F;
 	private static final float PICKUP_OFFSET_Z = -0.92F;
@@ -27,18 +29,20 @@ public class EntityIMGiantBird extends EntityIMBird {
 	private static final byte TRIGGER_SCREECH = 10;
 	private static final byte TRIGGER_DEATHSOUND = 10;
 	private int tier;
-	
-	public EntityIMGiantBird(World world){
+
+	public EntityIMGiantBird(World world)
+	{
 		this(world, null);
 	}
 
-	public EntityIMGiantBird(World world, TileEntityNexus nexus){
+	public EntityIMGiantBird(World world, TileEntityNexus nexus)
+	{
 		super(world, nexus);
-		setName("Bird");
-		setGender(2);
+		this.setName("Bird");
+		this.setGender(2);
 		this.attackStrength = 5;
 
-		this.tier=1;
+		this.tier = 1;
 		this.setSize(1.9F, 2.8F);
 		this.setGravity(0.03F);
 		this.setThrust(0.028F);
@@ -46,7 +50,7 @@ public class EntityIMGiantBird extends EntityIMBird {
 		this.setLiftFactor(0.35F);
 		this.setThrustComponentRatioMin(0.0F);
 		this.setThrustComponentRatioMax(0.5F);
-		this.setMaxTurnForce(getGravity() * 8.0F);
+		this.setMaxTurnForce(this.getGravity() * 8.0F);
 		this.setMaxHealthAndHealth(mod_Invasion.getMobHealth(this));
 		this.setBaseMoveSpeedStat(0.4F);
 		this.setAI();
@@ -54,23 +58,28 @@ public class EntityIMGiantBird extends EntityIMBird {
 	}
 
 	@Override
-	public void onUpdate(){
+	public void onUpdate()
+	{
 		super.onUpdate();
-		if ((getDebugMode() == 1) && (!this.world.isRemote)){
-			setRenderLabel(getAIGoal() + "\n" + getNavString());
+		if ((this.getDebugMode() == 1) && (!this.world.isRemote))
+		{
+			this.setRenderLabel(this.getAIGoal() + "\n" + this.getNavString());
 		}
 	}
 
 	@Override
-	public boolean canDespawn(){
+	public boolean canDespawn()
+	{
 		return false;
 	}
 
 	//TODO Removed Override annotation
-	public void updateRiderPosition(){
-		if (!this.getPassengers().isEmpty()){
+	public void updateRiderPosition()
+	{
+		if (!this.getPassengers().isEmpty())
+		{
 			double x = 0.0D;
-			double y = getMountedYOffset() - 1.899999976158142D;
+			double y = this.getMountedYOffset() - 1.899999976158142D;
 			double z = -0.9200000166893005D;
 
 			double dAngle = this.rotationPitch / 180.0F * 3.141592653589793D;
@@ -93,55 +102,68 @@ public class EntityIMGiantBird extends EntityIMBird {
 			this.getPassengers().get(0).lastTickPosY = (this.lastTickPosY + y);
 			this.getPassengers().get(0).lastTickPosZ = (this.lastTickPosZ + z);
 			this.getPassengers().get(0).setPosition(this.posX + x, this.posY + y, this.posZ + z);
-			this.getPassengers().get(0).rotationYaw = (getCarriedEntityYawOffset() + this.rotationYaw);
+			this.getPassengers().get(0).rotationYaw = (this.getCarriedEntityYawOffset() + this.rotationYaw);
 		}
 	}
 
 	@Override
-	public boolean shouldRiderSit(){
+	public boolean shouldRiderSit()
+	{
 		return false;
 	}
 
 	@Override
-	public double getMountedYOffset(){
+	public double getMountedYOffset()
+	{
 		return -0.2000000029802322D;
 	}
 
 	@Override
-	public void doScreech(){
-		if (!this.world.isRemote){
+	public void doScreech()
+	{
+		if (!this.world.isRemote)
+		{
 			//this.world.playSoundAtEntity(this, "invmod:v_screech"+(rand.nextInt(2)+1), 6.0F, 1.0F + (this.rand.nextFloat() * 0.2F - 0.1F));
 			this.playSound(this.rand.nextBoolean() ? SoundHandler.v_screech1 : SoundHandler.v_screech2, 6.0F, 1.0F + (this.rand.nextFloat() * 0.2F - 0.1F));
 			this.world.setEntityState(this, (byte)10);
-		} else {
+		}
+		else
+		{
 			this.setBeakState(35);
 		}
 	}
 
 	@Override
-	public void doMeleeSound(){
+	public void doMeleeSound()
+	{
 		this.doSquawk();
 	}
 
 	@Override
-	protected void doHurtSound(){
+	protected void doHurtSound()
+	{
 		this.doSquawk();
 	}
 
 	@Override
-	protected void doDeathSound(){
-		if (!this.world.isRemote){
+	protected void doDeathSound()
+	{
+		if (!this.world.isRemote)
+		{
 			//this.world.playSoundAtEntity(this, "invmod:v_death1", 1.9F, 1.0F + (this.rand.nextFloat() * 0.2F - 0.1F));
 			this.playSound(SoundHandler.v_death1, 1.9F, 1.0F + (this.rand.nextFloat() * 0.2F - 0.1F));
 			this.world.setEntityState(this, (byte)10);
-		} else {
-			setBeakState(25);
+		}
+		else
+		{
+			this.setBeakState(25);
 		}
 	}
 
 	@Override
-	protected void onDebugChange(){
-		this.setShouldRenderLabel(getDebugMode() == 1);
+	protected void onDebugChange()
+	{
+		this.setShouldRenderLabel(this.getDebugMode() == 1);
 	}
 
 	/*@Override
@@ -157,21 +179,27 @@ public class EntityIMGiantBird extends EntityIMBird {
 		}
 	}*/
 
-	private void doSquawk(){
-		if (!this.world.isRemote){
+	private void doSquawk()
+	{
+		if (!this.world.isRemote)
+		{
 			//this.world.playSoundAtEntity(this, "invmod:v_squawk", 1.9F, 1.0F + (this.rand.nextFloat() * 0.2F - 0.1F));
 			this.playSound(SoundHandler.v_squawk1, 1.9F, 1.0F + (this.rand.nextFloat() * 0.2F - 0.1F));
 			this.world.setEntityState(this, (byte)10);
-		} else {
-			setBeakState(10);
+		}
+		else
+		{
+			this.setBeakState(10);
 		}
 	}
 
-	private String getNavString(){
-		return getNavigatorNew().getStatus();
+	private String getNavString()
+	{
+		return this.getNavigatorNew().getStatus();
 	}
 
-	private void setAI(){
+	private void setAI()
+	{
 		this.tasksIM = new EntityAITasks(this.world.theProfiler);
 
 		this.tasksIM.addTask(0, new EntityAISwoop(this));
@@ -189,14 +217,16 @@ public class EntityIMGiantBird extends EntityIMBird {
 
 		this.targetTasksIM.addTask(2, new EntityAISimpleTarget(this, EntityZombie.class, 58.0F, true));
 	}
-	
+
 	@Override
-	public int getTier(){
+	public int getTier()
+	{
 		return this.tier;
 	}
-	
+
 	@Override
-	public String toString(){
+	public String toString()
+	{
 		return "IMVulture-T" + this.getTier();
 	}
 }

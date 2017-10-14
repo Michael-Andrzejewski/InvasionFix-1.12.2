@@ -1,5 +1,6 @@
 package invmod.entity;
 
-public enum MoveState {
+public enum MoveState
+{
 	STANDING, RUNNING, NONE, CLIMBING, FLYING, JUMPING;
 }

@@ -1,11 +1,8 @@
 package invmod.util.spawneggs;
 
-import invmod.Reference;
-import invmod.mod_Invasion;
-
 import java.util.List;
 import java.util.Set;
-
+import invmod.mod_Invasion;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.resources.I18n;
@@ -27,23 +24,27 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemSpawnEgg extends Item {
-	
+
+public class ItemSpawnEgg extends Item
+{
+
 	private final String name = "monsterplacer";
-	
-	public ItemSpawnEgg() {
+
+	public ItemSpawnEgg()
+	{
 		super();
 		this.setHasSubtypes(true);
-	    this.setCreativeTab(mod_Invasion.tabInvmod);
+		this.setCreativeTab(mod_Invasion.tabInvmod);
 		this.setUnlocalizedName(this.name);
 		this.setRegistryName(this.name);
 		GameRegistry.register(this);
 	}
 
 	@Override
-	public String getItemStackDisplayName(ItemStack stack) {
-		String name = ("" + I18n.format(getUnlocalizedName() + ".name")).trim();
-		SpawnEggInfo info = SpawnEggRegistry.getEggInfo((short) stack.getItemDamage());
+	public String getItemStackDisplayName(ItemStack stack)
+	{
+		String name = ("" + I18n.format(this.getUnlocalizedName() + ".name")).trim();
+		SpawnEggInfo info = SpawnEggRegistry.getEggInfo((short)stack.getItemDamage());
 
 		if (info == null)
 			return name;
@@ -51,7 +52,8 @@ public class ItemSpawnEgg extends Item {
 		String mobID = info.mobID;
 		String displayName = info.displayName;
 
-		if (stack.hasTagCompound()) {
+		if (stack.hasTagCompound())
+		{
 			NBTTagCompound compound = stack.getTagCompound();
 			if (compound.hasKey("mobID"))
 				mobID = compound.getString("mobID");
@@ -61,22 +63,24 @@ public class ItemSpawnEgg extends Item {
 
 		if (displayName == null)
 			name += ' ' + attemptToTranslate("entity." + mobID + ".name", mobID);
-		else 
+		else
 			name += ' ' + attemptToTranslate("eggdisplay." + displayName, displayName);
 
 		return name;
 	}
 
 	//TODO: Removed Override annotation
-	public int getColorFromItemStack(ItemStack stack, int par2) {
-		SpawnEggInfo info = SpawnEggRegistry.getEggInfo((short) stack.getItemDamage());
+	public int getColorFromItemStack(ItemStack stack, int par2)
+	{
+		SpawnEggInfo info = SpawnEggRegistry.getEggInfo((short)stack.getItemDamage());
 
 		if (info == null)
 			return 16777215;
 
 		int color = (par2 == 0) ? info.primaryColor : info.secondaryColor;
 
-		if (stack.hasTagCompound()) {
+		if (stack.hasTagCompound())
+		{
 			NBTTagCompound compound = stack.getTagCompound();
 			if (par2 == 0 && compound.hasKey("primaryColor"))
 				color = compound.getInteger("primaryColor");
@@ -88,7 +92,8 @@ public class ItemSpawnEgg extends Item {
 	}
 
 	@Override
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
+	{
 		if (world.isRemote) return EnumActionResult.PASS;
 
 		Block block = world.getBlockState(pos).getBlock();
@@ -99,10 +104,11 @@ public class ItemSpawnEgg extends Item {
 			d0 = 0.5D;
 
 		Entity entity = spawnCreature(world, stack,
-				new BlockPos((double) pos.getX() + 0.5D, (double) pos.getY() + d0,
-				(double) pos.getZ() + 0.5D));
+			new BlockPos((double)pos.getX() + 0.5D, (double)pos.getY() + d0,
+				(double)pos.getZ() + 0.5D));
 
-		if (entity != null) {
+		if (entity != null)
+		{
 			if (entity instanceof EntityLiving && stack.hasDisplayName())
 				((EntityLiving)entity).setCustomNameTag(stack.getDisplayName());
 			if (!player.capabilities.isCreativeMode)
@@ -113,23 +119,28 @@ public class ItemSpawnEgg extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+	{
 		if (world.isRemote) return new ActionResult(EnumActionResult.PASS, stack);
 
 		RayTraceResult trace = this.rayTrace(world, player, true); //getMovingObjectPositionFromPlayer(world, player, true);
 
 		if (trace == null) return new ActionResult(EnumActionResult.FAIL, stack);
 
-		if (trace.typeOfHit == RayTraceResult.Type.BLOCK) {
+		if (trace.typeOfHit == RayTraceResult.Type.BLOCK)
+		{
 			// GetblockPos()
 			BlockPos blockpos = trace.getBlockPos();
 
-			if (!world.isBlockModifiable(player,blockpos)) return new ActionResult(EnumActionResult.FAIL, stack);;
+			if (!world.isBlockModifiable(player, blockpos)) return new ActionResult(EnumActionResult.FAIL, stack);
+			;
 
-			if (world.getBlockState(blockpos).getBlock() instanceof BlockLiquid) {
+			if (world.getBlockState(blockpos).getBlock() instanceof BlockLiquid)
+			{
 				Entity entity = spawnCreature(world, stack, blockpos);
-				
-				if (entity != null) {
+
+				if (entity != null)
+				{
 					if (entity instanceof EntityLiving && stack.hasDisplayName()) ((EntityLiving)entity).setCustomNameTag(stack.getDisplayName());
 					if (!player.capabilities.isCreativeMode) --stack.stackSize;
 				}
@@ -139,8 +150,9 @@ public class ItemSpawnEgg extends Item {
 		return new ActionResult(EnumActionResult.SUCCESS, stack);
 	}
 
-	public static Entity spawnCreature(World world, ItemStack stack, BlockPos blockpos) {
-		SpawnEggInfo info = SpawnEggRegistry.getEggInfo((short) stack.getItemDamage());
+	public static Entity spawnCreature(World world, ItemStack stack, BlockPos blockpos)
+	{
+		SpawnEggInfo info = SpawnEggRegistry.getEggInfo((short)stack.getItemDamage());
 
 		if (info == null)
 			return null;
@@ -148,7 +160,8 @@ public class ItemSpawnEgg extends Item {
 		String mobID = info.mobID;
 		NBTTagCompound spawnData = info.spawnData;
 
-		if (stack.hasTagCompound()) {
+		if (stack.hasTagCompound())
+		{
 			NBTTagCompound compound = stack.getTagCompound();
 			if (compound.hasKey("mobID"))
 				mobID = compound.getString("mobID");
@@ -160,10 +173,12 @@ public class ItemSpawnEgg extends Item {
 
 		entity = EntityList.createEntityByName(mobID, world);
 
-		if (entity != null) {
-			if (entity instanceof EntityLiving) {
+		if (entity != null)
+		{
+			if (entity instanceof EntityLiving)
+			{
 				EntityLiving entityliving = (EntityLiving)entity;
-				entity.setLocationAndAngles(blockpos.getX(),blockpos.getY(),blockpos.getZ(), MathHelper.wrapDegrees(world.rand.nextFloat() * 360.0F), 0.0F);
+				entity.setLocationAndAngles(blockpos.getX(), blockpos.getY(), blockpos.getZ(), MathHelper.wrapDegrees(world.rand.nextFloat() * 360.0F), 0.0F);
 				entityliving.rotationYawHead = entityliving.rotationYaw;
 				entityliving.renderYawOffset = entityliving.rotationYaw;
 				//onSpawnWithEgg
@@ -178,28 +193,32 @@ public class ItemSpawnEgg extends Item {
 
 		return entity;
 	}
-	
-	private static void spawnRiddenCreatures(Entity entity, World world, NBTTagCompound cur) {
-		while (cur.hasKey("Riding")) {
-		    cur = cur.getCompoundTag("Riding");
-		    Entity newEntity = EntityList.createEntityByName(cur.getString("id"), world);
-		    if (newEntity != null) {
-		    	addNBTData(newEntity, cur);
-		    	newEntity.setLocationAndAngles(entity.posX, entity.posY, entity.posZ, entity.rotationYaw, entity.rotationPitch);
-		    	world.spawnEntity(newEntity);
-		    	//entity.mountEntity(newEntity);
-		    	entity.startRiding(newEntity);
-		    }
-		    entity = newEntity;
+
+	private static void spawnRiddenCreatures(Entity entity, World world, NBTTagCompound cur)
+	{
+		while (cur.hasKey("Riding"))
+		{
+			cur = cur.getCompoundTag("Riding");
+			Entity newEntity = EntityList.createEntityByName(cur.getString("id"), world);
+			if (newEntity != null)
+			{
+				addNBTData(newEntity, cur);
+				newEntity.setLocationAndAngles(entity.posX, entity.posY, entity.posZ, entity.rotationYaw, entity.rotationPitch);
+				world.spawnEntity(newEntity);
+				//entity.mountEntity(newEntity);
+				entity.startRiding(newEntity);
+			}
+			entity = newEntity;
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	private static void addNBTData(Entity entity, NBTTagCompound spawnData) {
+	private static void addNBTData(Entity entity, NBTTagCompound spawnData)
+	{
 		NBTTagCompound newTag = new NBTTagCompound();
 		entity.writeToNBTOptional(newTag);
 
-		for (String name : (Set<String>) spawnData.getKeySet()) 
+		for (String name : (Set<String>)spawnData.getKeySet())
 			newTag.setTag(name, spawnData.getTag(name).copy());
 
 		entity.readFromNBT(newTag);
@@ -207,18 +226,21 @@ public class ItemSpawnEgg extends Item {
 
 	@Override
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void getSubItems(Item item, CreativeTabs par2CreativeTabs, List list) {
-		for (SpawnEggInfo info : SpawnEggRegistry.getEggInfoList()) 
+	public void getSubItems(Item item, CreativeTabs par2CreativeTabs, List list)
+	{
+		for (SpawnEggInfo info : SpawnEggRegistry.getEggInfoList())
 			list.add(new ItemStack(item, 1, info.eggID));
 	}
-	
-	public static String attemptToTranslate(String key, String _default) {
+
+	public static String attemptToTranslate(String key, String _default)
+	{
 		//String result = StatCollector.translateToLocal(key);
 		String result = I18n.format(key);
 		return (result.equals(key)) ? _default : result;
 	}
-	
-	public String getName() {
-		return name;
+
+	public String getName()
+	{
+		return this.name;
 	}
 }

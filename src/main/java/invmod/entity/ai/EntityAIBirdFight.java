@@ -9,13 +9,14 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 
-public class EntityAIBirdFight<T extends EntityLivingBase> extends EntityAIMeleeFight<T> 
+
+public class EntityAIBirdFight<T extends EntityLivingBase> extends EntityAIMeleeFight<T>
 {
 	private EntityIMBird theEntity;
 	private boolean wantsToRetreat;
 	private boolean buffetedTarget;
 
-	public EntityAIBirdFight(EntityIMBird entity, Class<? extends T> targetClass, int attackDelay, float retreatHealthLossPercent) 
+	public EntityAIBirdFight(EntityIMBird entity, Class<? extends T> targetClass, int attackDelay, float retreatHealthLossPercent)
 	{
 		super(entity, targetClass, attackDelay, retreatHealthLossPercent);
 		this.theEntity = entity;
@@ -24,33 +25,33 @@ public class EntityAIBirdFight<T extends EntityLivingBase> extends EntityAIMelee
 	}
 
 	@Override
-	public void updateTask() 
+	public void updateTask()
 	{
-		if (getAttackTime() == 0) 
+		if (this.getAttackTime() == 0)
 		{
-			this.theEntity.setAttackingWithWings(isInStartMeleeRange());
+			this.theEntity.setAttackingWithWings(this.isInStartMeleeRange());
 		}
 		super.updateTask();
 	}
 
 	@Override
-	public void resetTask() 
+	public void resetTask()
 	{
 		this.theEntity.setAttackingWithWings(false);
 		super.resetTask();
 	}
 
 	@Override
-	public void updatePath() 
+	public void updatePath()
 	{
 		INavigationFlying nav = this.theEntity.getNavigatorNew();
 		Entity target = this.theEntity.getAttackTarget();
-		if (target != nav.getTargetEntity()) 
+		if (target != nav.getTargetEntity())
 		{
 			nav.clearPath();
 			nav.setMovementType(INavigationFlying.MoveType.PREFER_WALKING);
 			Path path = nav.getPathToEntity(target, 0.0F);
-			if ((path != null) && (path.getCurrentPathLength() > 1.6D * this.theEntity.getDistanceToEntity(target))) 
+			if ((path != null) && (path.getCurrentPathLength() > 1.6D * this.theEntity.getDistanceToEntity(target)))
 			{
 				nav.setMovementType(INavigationFlying.MoveType.MIXED);
 			}
@@ -59,35 +60,35 @@ public class EntityAIBirdFight<T extends EntityLivingBase> extends EntityAIMelee
 	}
 
 	@Override
-	protected void updateDisengage() 
+	protected void updateDisengage()
 	{
-		if (!this.wantsToRetreat) 
+		if (!this.wantsToRetreat)
 		{
-			if (shouldLeaveMelee())
+			if (this.shouldLeaveMelee())
 				this.wantsToRetreat = true;
-		} 
-		else if ((this.buffetedTarget) && (this.theEntity.getAIGoal() == Goal.MELEE_TARGET)) 
+		}
+		else if ((this.buffetedTarget) && (this.theEntity.getAIGoal() == Goal.MELEE_TARGET))
 		{
 			this.theEntity.transitionAIGoal(Goal.LEAVE_MELEE);
 		}
 	}
 
 	@Override
-	protected void attackEntity(EntityLivingBase target) 
+	protected void attackEntity(EntityLivingBase target)
 	{
 		this.theEntity.doMeleeSound();
 		super.attackEntity(target);
-		if (this.wantsToRetreat) 
+		if (this.wantsToRetreat)
 		{
-			doWingBuffetAttack(target);
+			this.doWingBuffetAttack(target);
 			this.buffetedTarget = true;
 		}
 	}
 
-	protected boolean isInStartMeleeRange() 
+	protected boolean isInStartMeleeRange()
 	{
 		EntityLivingBase target = this.theEntity.getAttackTarget();
-		if (target == null) 
+		if (target == null)
 		{
 			return false;
 		}
@@ -95,7 +96,7 @@ public class EntityAIBirdFight<T extends EntityLivingBase> extends EntityAIMelee
 		return this.theEntity.getDistanceSq(target.posX, target.getEntityBoundingBox().minY, target.posZ) < d * d;
 	}
 
-	protected void doWingBuffetAttack(EntityLivingBase target) 
+	protected void doWingBuffetAttack(EntityLivingBase target)
 	{
 		int knockback = 2;
 		target.addVelocity(-MathHelper.sin(this.theEntity.rotationYaw * 3.141593F / 180.0F) * knockback * 0.5F, 0.4D, MathHelper.cos(this.theEntity.rotationYaw * 3.141593F / 180.0F) * knockback * 0.5F);

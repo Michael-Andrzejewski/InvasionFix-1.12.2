@@ -28,11 +28,13 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 
-public class BlocksAndItems {
+
+public class BlocksAndItems
+{
 
 	// The almighty Nexus Block Declaration
 	public static BlockNexus blockNexus;
-	
+
 	// Item Declarations
 	public static ModItem itemPhaseCrystal;
 	public static ModItem itemRiftFlux;
@@ -55,22 +57,26 @@ public class BlocksAndItems {
 	public static ModItem itemFlameTrap;
 	public static ModItem itemRiftTrap;
 	public static ModItem itemPoisonTrap;
-	
-    public static ItemSpawnEgg itemSpawnEgg;
-	
+
+	public static ItemSpawnEgg itemSpawnEgg;
+
 	//Load Blocks
-	static void loadBlocks(){
+	static void loadBlocks()
+	{
 		blockNexus = new BlockNexus();
 		GameRegistry.registerTileEntity(TileEntityNexus.class, "Nexus");
 	}
 
 	//Load Items
-	static void loadItems(){
+	static void loadItems()
+	{
 
 		itemPhaseCrystal = new ModItem("phaseCrystal").setMaxStackSize(1);
-		itemRiftFlux = new ModItem("riftFlux"){
+		itemRiftFlux = new ModItem("riftFlux")
+		{
 			@Override
-			public EnumActionResult onItemUseFirst(ItemStack itemstack, EntityPlayer entityplayer, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+			public EnumActionResult onItemUseFirst(ItemStack itemstack, EntityPlayer entityplayer, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
+			{
 				return EnumActionResult.FAIL;
 			}
 		}.setMaxDamage(0).setMaxStackSize(64);
@@ -88,22 +94,24 @@ public class BlocksAndItems {
 		itemStrongCatalyst = new ModItem("strongCatalyst").setMaxStackSize(1);
 		itemEngyHammer = new ModItem("engyHammer").setCreativeTab(null).setFull3D().setMaxStackSize(1);
 		itemProbe = new ItemProbe();
-		
+
 		itemEmptyTrap = new ModItem("emptyTrap").setMaxStackSize(64);
 		itemFlameTrap = new ItemFlameTrap();
 		itemRiftTrap = new ItemRiftTrap();
 		itemPoisonTrap = new ItemPoisonTrap();
-		
+
 		itemSpawnEgg = new ItemSpawnEgg();
-		
+
 		itemDebugWand = Config.DEBUG ? new ItemDebugWand() : null;
-		
+
 	}
 
-	static void registerItems(FMLInitializationEvent event) {
-		if(event.getSide() == Side.CLIENT){
+	static void registerItems(FMLInitializationEvent event)
+	{
+		if (event.getSide() == Side.CLIENT)
+		{
 			ItemModelMesher renderItem = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
-			
+
 			registerItem(itemPhaseCrystal);
 			registerItem(itemRiftFlux);
 			registerItem(itemSmallRemnants);
@@ -121,26 +129,29 @@ public class BlocksAndItems {
 			registerItem(itemFlameTrap);
 			registerItem(itemRiftTrap);
 			registerItem(itemPoisonTrap);
-			
+
 			renderItem.register(itemInfusedSword, 0, new ModelResourceLocation(Reference.MODID + ":" + itemInfusedSword.name, "inventory"));
 			renderItem.register(itemSearingBow, 0, new ModelResourceLocation(Reference.MODID + ":" + itemSearingBow.name, "inventory"));
 			renderItem.register(itemProbe, 0, new ModelResourceLocation(Reference.MODID + ":" + itemProbe.name, "inventory"));
 			renderItem.register(itemProbe, 1, new ModelResourceLocation(Reference.MODID + ":" + itemProbe.name, "inventory"));
-			
-			renderItem.register(itemSpawnEgg, new ItemMeshDefinition(){
+
+			renderItem.register(itemSpawnEgg, new ItemMeshDefinition()
+			{
 				@Override
-				public ModelResourceLocation getModelLocation(ItemStack stack) {
-					return new ModelResourceLocation("spawn_egg","inventory");
+				public ModelResourceLocation getModelLocation(ItemStack stack)
+				{
+					return new ModelResourceLocation("spawn_egg", "inventory");
 				}
 			});
-			
-    		renderItem.register(blockNexus.itemBlock, 0, new ModelResourceLocation(Reference.MODID + ":" + blockNexus.name, "inventory"));
-    		
+
+			renderItem.register(blockNexus.itemBlock, 0, new ModelResourceLocation(Reference.MODID + ":" + blockNexus.name, "inventory"));
+
 		}
-		
+
 	}
-	
-	private static void registerItem(ModItem item){
+
+	private static void registerItem(ModItem item)
+	{
 		ItemModelMesher renderItem = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
 		ModelResourceLocation resource = new ModelResourceLocation(Reference.MODID + ":" + item.name, "inventory");
 		renderItem.register(item, 0, resource);

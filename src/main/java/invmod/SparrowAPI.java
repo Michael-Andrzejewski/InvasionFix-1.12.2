@@ -2,48 +2,50 @@ package invmod;
 
 import net.minecraft.entity.Entity;
 
-public interface SparrowAPI {
-	
-  public boolean isStupidToAttack();
 
-  public boolean doNotVaporize();
+public interface SparrowAPI
+{
 
-  public boolean isPredator();
+	public boolean isStupidToAttack();
 
-  public boolean isHostile();
+	public boolean doNotVaporize();
 
-  public boolean isPeaceful();
+	public boolean isPredator();
 
-  public boolean isPrey();
+	public boolean isHostile();
 
-  public boolean isNeutral();
+	public boolean isPeaceful();
 
-  public boolean isUnkillable();
+	public boolean isPrey();
 
-  public boolean isThreatTo(Entity paramEntity);
+	public boolean isNeutral();
 
-  public boolean isFriendOf(Entity paramEntity);
+	public boolean isUnkillable();
 
-  public boolean isNPC();
+	public boolean isThreatTo(Entity paramEntity);
 
-  public int isPet();
+	public boolean isFriendOf(Entity paramEntity);
 
-  public Entity getPetOwner();
+	public boolean isNPC();
 
-  public String getName();
+	public int isPet();
 
-  public Entity getAttackingTarget();
+	public Entity getPetOwner();
 
-  public float getSize();
+	public String getName();
 
-  public String getSpecies();
+	public Entity getAttackingTarget();
 
-  public int getTier();
+	public float getSize();
 
-  public int getGender();
+	public String getSpecies();
 
-  public String customStringAndResponse(String paramString);
+	public int getTier();
 
-  public String getSimplyID();
-  
+	public int getGender();
+
+	public String customStringAndResponse(String paramString);
+
+	public String getSimplyID();
+
 }

@@ -5,14 +5,17 @@ import invmod.entity.monster.EntityIMMob;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 
-public class EntityAIMeleeAttack<T extends EntityLivingBase> extends EntityAIBase {
+
+public class EntityAIMeleeAttack<T extends EntityLivingBase> extends EntityAIBase
+{
 	private EntityIMMob theEntity;
 	private Class<? extends T> targetClass;
 	private float attackRange;
 	private int attackDelay;
 	private int nextAttack;
 
-	public EntityAIMeleeAttack(EntityIMMob entity, Class<? extends T> targetClass, int attackDelay) {
+	public EntityAIMeleeAttack(EntityIMMob entity, Class<? extends T> targetClass, int attackDelay)
+	{
 		this.theEntity = entity;
 		this.targetClass = targetClass;
 		this.attackDelay = attackDelay;
@@ -21,50 +24,61 @@ public class EntityAIMeleeAttack<T extends EntityLivingBase> extends EntityAIBas
 	}
 
 	@Override
-	public boolean shouldExecute() {
+	public boolean shouldExecute()
+	{
 		EntityLivingBase target = this.theEntity.getAttackTarget();
 		return (target != null) && (this.theEntity.getAIGoal() == Goal.MELEE_TARGET) && (this.theEntity.getDistanceToEntity(target) < (this.attackRange + this.theEntity.width + target.width) * 4.0F) && (target.getClass().isAssignableFrom(this.targetClass));
 	}
 
 	@Override
-	public void updateTask() {
+	public void updateTask()
+	{
 		EntityLivingBase target = this.theEntity.getAttackTarget();
-		if (canAttackEntity(target)) {
-			attackEntity(target);
+		if (this.canAttackEntity(target))
+		{
+			this.attackEntity(target);
 		}
-		setAttackTime(getAttackTime() - 1);
+		this.setAttackTime(this.getAttackTime() - 1);
 	}
 
-	public Class<? extends T> getTargetClass() {
+	public Class<? extends T> getTargetClass()
+	{
 		return this.targetClass;
 	}
 
-	protected void attackEntity(EntityLivingBase target) {
+	protected void attackEntity(EntityLivingBase target)
+	{
 		this.theEntity.attackEntityAsMob(target);
-		setAttackTime(getAttackDelay());
+		this.setAttackTime(this.getAttackDelay());
 	}
 
-	protected boolean canAttackEntity(EntityLivingBase target) {
-		if (getAttackTime() <= 0) {
+	protected boolean canAttackEntity(EntityLivingBase target)
+	{
+		if (this.getAttackTime() <= 0)
+		{
 			double d = this.theEntity.width + this.attackRange;
 			return this.theEntity.getDistanceSq(target.posX, target.getEntityBoundingBox().minY, target.posZ) < d * d;
 		}
 		return false;
 	}
 
-	protected int getAttackTime() {
+	protected int getAttackTime()
+	{
 		return this.nextAttack;
 	}
 
-	protected void setAttackTime(int time) {
+	protected void setAttackTime(int time)
+	{
 		this.nextAttack = time;
 	}
 
-	protected int getAttackDelay() {
+	protected int getAttackDelay()
+	{
 		return this.attackDelay;
 	}
 
-	protected void setAttackDelay(int time) {
+	protected void setAttackDelay(int time)
+	{
 		this.attackDelay = time;
 	}
 }

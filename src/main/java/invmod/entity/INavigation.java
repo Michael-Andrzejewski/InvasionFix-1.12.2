@@ -5,10 +5,12 @@ import invmod.entity.ai.navigator.Path;
 import invmod.entity.ai.navigator.PathAction;
 import net.minecraft.entity.Entity;
 
-public interface INavigation extends INotifyTask {
-	
+
+public interface INavigation extends INotifyTask
+{
+
 	public PathAction getCurrentWorkingAction();
-	
+
 	public void setSpeed(float paramFloat);
 
 	public Path getPathToXYZ(double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat);
@@ -48,5 +50,5 @@ public interface INavigation extends INotifyTask {
 	public Entity getTargetEntity();
 
 	public String getStatus();
-	
+
 }

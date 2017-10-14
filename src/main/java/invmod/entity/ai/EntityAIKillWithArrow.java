@@ -15,31 +15,35 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 
-public class EntityAIKillWithArrow<T extends EntityLivingBase> extends EntityAIKillEntity<T> 
+
+public class EntityAIKillWithArrow<T extends EntityLivingBase> extends EntityAIKillEntity<T>
 {
 	private float attackRangeSq;
 
-	public EntityAIKillWithArrow(EntityIMMob entity, Class<? extends T> targetClass, int attackDelay, float attackRange) {
+	public EntityAIKillWithArrow(EntityIMMob entity, Class<? extends T> targetClass, int attackDelay, float attackRange)
+	{
 		super(entity, targetClass, attackDelay);
 		this.attackRangeSq = (attackRange * attackRange);
 	}
 
 	@Override
-	public void updateTask() {
+	public void updateTask()
+	{
 		super.updateTask();
-		EntityLivingBase target = getTarget();
-		if ((getEntity().getDistanceSq(target.posX, target.getEntityBoundingBox().minY, target.posZ) < 36.0D) && (getEntity().getEntitySenses().canSee(target)))
-			getEntity().getNavigatorNew().haltForTick();
+		EntityLivingBase target = this.getTarget();
+		if ((this.getEntity().getDistanceSq(target.posX, target.getEntityBoundingBox().minY, target.posZ) < 36.0D) && (this.getEntity().getEntitySenses().canSee(target)))
+			this.getEntity().getNavigatorNew().haltForTick();
 	}
 
 	@Override
-	protected void attackEntity(Entity target) {
-		this.setAttackTime(getAttackDelay());
+	protected void attackEntity(Entity target)
+	{
+		this.setAttackTime(this.getAttackDelay());
 		//EntityArrow entityarrow = new EntityArrow(entity.world, entity, getTarget(), 1.1F, 12.0F);
 		//this.getEntity().world.playSoundAtEntity(this.getEntity(), "random.bow", 1.0F, 1.0F / (this.getEntity().getRNG().nextFloat() * 0.4F + 0.8F));
-		
+
 		float bowCharge = ItemBow.getArrowVelocity(20);
-		
+
 		//Copied from EntitySkeleton.attackEntityWithRangedAttack()
 		EntityTippedArrow arrow = new EntityTippedArrow(this.getEntity().world, this.getEntity());
 		double d0 = this.getTarget().posX - this.getEntity().posX;
@@ -47,7 +51,7 @@ public class EntityAIKillWithArrow<T extends EntityLivingBase> extends EntityAIK
 		double d2 = this.getTarget().posZ - this.getEntity().posZ;
 		double d3 = (double)MathHelper.sqrt(d0 * d0 + d2 * d2);
 		arrow.setThrowableHeading(d0, d1 + d3 * 0.20000000298023224D, d2, 1.6F, (float)(14 - this.getEntity().world.getDifficulty().getDifficultyId() * 4));
-		
+
 		int i = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.POWER, this.getEntity());
 		int j = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.PUNCH, this.getEntity());
 		DifficultyInstance difficultyinstance = this.getEntity().world.getDifficultyForLocation(new BlockPos(this.getEntity()));
@@ -70,7 +74,8 @@ public class EntityAIKillWithArrow<T extends EntityLivingBase> extends EntityAIK
 	}
 
 	@Override
-	protected boolean canAttackEntity(Entity target) {
-		return (getAttackTime() <= 0) && (getEntity().getDistanceSq(target.posX, target.getEntityBoundingBox().minY, target.posZ) < this.attackRangeSq) && (getEntity().getEntitySenses().canSee(target));
+	protected boolean canAttackEntity(Entity target)
+	{
+		return (this.getAttackTime() <= 0) && (this.getEntity().getDistanceSq(target.posX, target.getEntityBoundingBox().minY, target.posZ) < this.attackRangeSq) && (this.getEntity().getEntitySenses().canSee(target));
 	}
 }

@@ -14,11 +14,15 @@ import invmod.tileentity.TileEntityNexus;
 import invmod.util.ModLogger;
 import net.minecraft.world.World;
 
-public class MobBuilder {
-	
-	public EntityIMMob createMobFromConstruct(EntityConstruct mobConstruct, World world, TileEntityNexus nexus){
+
+public class MobBuilder
+{
+
+	public EntityIMMob createMobFromConstruct(EntityConstruct mobConstruct, World world, TileEntityNexus nexus)
+	{
 		EntityIMMob mob = null;
-		switch (mobConstruct.getMobType()){
+		switch (mobConstruct.getMobType())
+		{
 			case ZOMBIE:
 				EntityIMZombie zombie = new EntityIMZombie(world, nexus);
 				zombie.setTexture(mobConstruct.getTexture());
@@ -69,8 +73,8 @@ public class MobBuilder {
 				ModLogger.logWarn("Missing mob type in MobBuilder: " + mobConstruct.getMobType());
 				mob = null;
 		}
-		
+
 		return mob;
 	}
-	
+
 }

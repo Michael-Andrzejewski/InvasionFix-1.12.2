@@ -1,5 +1,6 @@
 package invmod.client.gui;
 
+import org.lwjgl.opengl.GL11;
 import invmod.Reference;
 import invmod.inventory.container.ContainerNexus;
 import invmod.tileentity.TileEntityNexus;
@@ -7,39 +8,47 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 
-import org.lwjgl.opengl.GL11;
 
-public class GuiNexus extends GuiContainer {
-	private static final ResourceLocation background = new ResourceLocation(Reference.MODID+":textures/nexusgui.png");
+public class GuiNexus extends GuiContainer
+{
+	private static final ResourceLocation background = new ResourceLocation(Reference.MODID + ":textures/nexusgui.png");
 	private TileEntityNexus tileEntityNexus;
 
-	public GuiNexus(InventoryPlayer inventoryplayer, TileEntityNexus tileentityNexus){
+	public GuiNexus(InventoryPlayer inventoryplayer, TileEntityNexus tileentityNexus)
+	{
 		super(new ContainerNexus(inventoryplayer, tileentityNexus));
 		this.tileEntityNexus = tileentityNexus;
 	}
-	
+
 	@Override
-	protected void drawGuiContainerForegroundLayer(int x, int y){
+	protected void drawGuiContainerForegroundLayer(int x, int y)
+	{
 		this.fontRendererObj.drawString("Nexus - Level " + this.tileEntityNexus.getNexusLevel(), 46, 6, 4210752);
 		this.fontRendererObj.drawString(this.tileEntityNexus.getNexusKills() + " mobs killed", 96, 60, 4210752);
 		this.fontRendererObj.drawString("R: " + this.tileEntityNexus.getSpawnRadius(), 142, 72, 4210752);
 
-		if ((this.tileEntityNexus.getMode() == 1) || (this.tileEntityNexus.getMode() == 3)){
+		if ((this.tileEntityNexus.getMode() == 1) || (this.tileEntityNexus.getMode() == 3))
+		{
 			this.fontRendererObj.drawString("Activated!", 13, 62, 4210752);
 			this.fontRendererObj.drawString("Wave " + this.tileEntityNexus.getCurrentWave(), 55, 37, 4210752);
-		} else if (this.tileEntityNexus.getMode() == 2) {
+		}
+		else if (this.tileEntityNexus.getMode() == 2)
+		{
 			this.fontRendererObj.drawString("Power:", 56, 31, 4210752);
 			this.fontRendererObj.drawString("" + this.tileEntityNexus.getNexusPowerLevel(), 61, 44, 4210752);
 		}
 
-		if ((this.tileEntityNexus.isActivating()) && (this.tileEntityNexus.getMode() == 0)){
+		if ((this.tileEntityNexus.isActivating()) && (this.tileEntityNexus.getMode() == 0))
+		{
 			this.fontRendererObj.drawString("Activating...", 13, 62, 4210752);
 			if (this.tileEntityNexus.getMode() != 4)
 				this.fontRendererObj.drawString("Are you sure?", 8, 72, 4210752);
 		}
 	}
-@Override
-	protected void drawGuiContainerBackgroundLayer(float f, int un1, int un2){
+
+	@Override
+	protected void drawGuiContainerBackgroundLayer(float f, int un1, int un2)
+	{
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.getTextureManager().bindTexture(background);
 		int j = (this.width - this.xSize) / 2;
@@ -51,17 +60,23 @@ public class GuiNexus extends GuiContainer {
 		l = this.tileEntityNexus.getCookProgressScaled(18);
 		this.drawTexturedModalRect(j + 31, k + 51, 204, 0, l, 2);
 
-		if ((this.tileEntityNexus.getMode() == 1) || (this.tileEntityNexus.getMode() == 3)){
+		if ((this.tileEntityNexus.getMode() == 1) || (this.tileEntityNexus.getMode() == 3))
+		{
 			this.drawTexturedModalRect(j + 19, k + 29, 176, 0, 9, 31);
 			this.drawTexturedModalRect(j + 19, k + 19, 194, 0, 9, 9);
-		} else if (this.tileEntityNexus.getMode() == 2) {
+		}
+		else if (this.tileEntityNexus.getMode() == 2)
+		{
 			this.drawTexturedModalRect(j + 19, k + 29, 176, 31, 9, 31);
 		}
 
-		if (((this.tileEntityNexus.getMode() == 0) || (this.tileEntityNexus.getMode() == 2)) && (this.tileEntityNexus.isActivating())){
+		if (((this.tileEntityNexus.getMode() == 0) || (this.tileEntityNexus.getMode() == 2)) && (this.tileEntityNexus.isActivating()))
+		{
 			l = this.tileEntityNexus.getActivationProgressScaled(31);
 			this.drawTexturedModalRect(j + 19, k + 29 + 31 - l, 176, 31 - l, 9, l);
-		} else if ((this.tileEntityNexus.getMode() == 4) && (this.tileEntityNexus.isActivating())){
+		}
+		else if ((this.tileEntityNexus.getMode() == 4) && (this.tileEntityNexus.isActivating()))
+		{
 			l = this.tileEntityNexus.getActivationProgressScaled(31);
 			this.drawTexturedModalRect(j + 19, k + 29 + 31 - l, 176, 62 - l, 9, l);
 		}

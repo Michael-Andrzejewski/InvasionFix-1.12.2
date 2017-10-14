@@ -1,5 +1,12 @@
 package invmod.client;
 
+import java.io.File;
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import invmod.client.render.AnimationRegistry;
 import invmod.client.render.RenderB;
 import invmod.client.render.RenderBolt;
@@ -45,15 +52,6 @@ import invmod.entity.monster.EntityIMZombie;
 import invmod.entity.monster.EntityIMZombiePigman;
 import invmod.entity.projectile.EntityIMBolt;
 import invmod.entity.projectile.EntityIMBoulder;
-
-import java.io.File;
-import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
@@ -62,14 +60,18 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
-public class ProxyClient extends ProxyCommon {
 
-	public void printGuiMessage(ITextComponent message) {
+public class ProxyClient extends ProxyCommon
+{
+
+	public void printGuiMessage(ITextComponent message)
+	{
 		FMLClientHandler.instance().getClient().ingameGUI.getChatGUI().printChatMessage(message);
 	}
 
 	@Override
-	public void registerEntityRenderers() {
+	public void registerEntityRenderers()
+	{
 		registerEntityRenderer(EntityIMZombie.class, RenderIMZombie.class);
 		registerEntityRenderer(EntityIMZombiePigman.class, RenderIMZombiePigman.class);
 		registerEntityRenderer(EntityIMSkeleton.class, RenderIMSkeleton.class);
@@ -84,35 +86,44 @@ public class ProxyClient extends ProxyCommon {
 		registerEntityRenderer(EntityIMBolt.class, RenderBolt.class);
 		registerEntityRenderer(EntityIMSpawnProxy.class, RenderInvis.class);
 		registerEntityRenderer(EntityIMEgg.class, RenderEgg.class);
-		
+
 		registerEntityRenderer(EntityIMCreeper.class, RenderIMCreeper.class);
 		registerEntityRenderer(EntityIMBird.class, RenderB.class);
 		registerEntityRenderer(EntityIMGiantBird.class, RenderGiantBird.class);
 	}
-	
-	private static void registerEntityRenderer(Class<? extends Entity> entityClass, final Class<? extends Render<? extends Entity>> rendererClass, final Object... additionalArgs){
-		RenderingRegistry.registerEntityRenderingHandler(entityClass, new IRenderFactory(){
+
+	private static void registerEntityRenderer(Class<? extends Entity> entityClass, final Class<? extends Render<? extends Entity>> rendererClass, final Object... additionalArgs)
+	{
+		RenderingRegistry.registerEntityRenderingHandler(entityClass, new IRenderFactory()
+		{
 			@Override
-			public Render createRenderFor(RenderManager renderManager){
+			public Render createRenderFor(RenderManager renderManager)
+			{
 				Render renderer;
-				
-				Object[] initArgs = new Object[additionalArgs.length+1];
+
+				Object[] initArgs = new Object[additionalArgs.length + 1];
 				initArgs[0] = renderManager;
-				if(additionalArgs.length != 0){
-					for(int i=0; i<additionalArgs.length; i++){
-						initArgs[i+1] = additionalArgs[i];
+				if (additionalArgs.length != 0)
+				{
+					for (int i = 0; i < additionalArgs.length; i++)
+					{
+						initArgs[i + 1] = additionalArgs[i];
 					}
 				}
-				
+
 				Class<?>[] initClasses = new Class[initArgs.length];
-				for(int i=0; i<initArgs.length; i++){
+				for (int i = 0; i < initArgs.length; i++)
+				{
 					initClasses[i] = initArgs[i].getClass();
 				}
-				
-				try {
+
+				try
+				{
 					Constructor c = rendererClass.getConstructor(initClasses);
-					renderer = (Render) c.newInstance(initArgs);
-				} catch (Exception e) {
+					renderer = (Render)c.newInstance(initArgs);
+				}
+				catch (Exception e)
+				{
 					e.printStackTrace();
 					renderer = null;
 				}
@@ -122,7 +133,8 @@ public class ProxyClient extends ProxyCommon {
 	}
 
 	@Override
-	public void loadAnimations() {
+	public void loadAnimations()
+	{
 		EnumMap allKeyFrames = new EnumMap(BonesBirdLegs.class);
 		List animationPhases = new ArrayList(2);
 		int x = 17;
@@ -184,7 +196,7 @@ public class ProxyClient extends ProxyCommon {
 		leftThighFrames.add(new KeyFrame(25.0F * frameUnit, -57.0F, -6.4F, 9.0F, InterpType.LINEAR));
 		leftThighFrames.add(new KeyFrame(35.0F * frameUnit, -76.5F, -19.299999F, 21.200001F, InterpType.LINEAR));
 		KeyFrame.toRadians(leftThighFrames);
-		
+
 		List leftThighRunCycle = new ArrayList(7);
 		leftThighRunCycle.add(new KeyFrame(38.0F * frameUnit, -74.099998F, 0.0F, -6.5F, InterpType.LINEAR));
 		leftThighRunCycle.add(new KeyFrame(44.0F * frameUnit, -63.700001F, 0.0F, -6.5F, InterpType.LINEAR));
@@ -221,8 +233,8 @@ public class ProxyClient extends ProxyCommon {
 		leftLegFrames.add(new KeyFrame(25.0F * frameUnit, -44.200001F, 0.0F, 0.0F, InterpType.LINEAR));
 		leftLegFrames.add(new KeyFrame(35.0F * frameUnit, -5.6F, 0.0F, 0.0F, InterpType.LINEAR));
 		KeyFrame.toRadians(leftLegFrames);
-		
-		
+
+
 		List leftLegRunCycle = new ArrayList(16);
 		leftLegRunCycle.add(new KeyFrame(38.0F * frameUnit, 6.6F, 0.0F, 0.0F, InterpType.LINEAR));
 		leftLegRunCycle.add(new KeyFrame(44.0F * frameUnit, 6.5F, 0.0F, 0.0F, InterpType.LINEAR));
@@ -453,9 +465,10 @@ public class ProxyClient extends ProxyCommon {
 		Animation beak = new Animation(BonesMouth.class, 1.0F, 0.1F, allKeyFramesBeak, animationPhases);
 		AnimationRegistry.instance().registerAnimation("bird_beak", beak);
 	}
-	
+
 	@Override
-	public File getFile(String fileName) {
+	public File getFile(String fileName)
+	{
 		return new File(FMLClientHandler.instance().getClient().mcDataDir.getPath() + fileName);
 	}
 }

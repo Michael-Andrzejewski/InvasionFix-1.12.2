@@ -7,7 +7,9 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityLookHelper;
 import net.minecraft.util.math.MathHelper;
 
-public class IMLookHelper extends EntityLookHelper {
+
+public class IMLookHelper extends EntityLookHelper
+{
 	private final EntityIMMob theEntity;
 	private float b;
 	private float c;
@@ -16,18 +18,23 @@ public class IMLookHelper extends EntityLookHelper {
 	private double f;
 	private double g;
 
-	public IMLookHelper(EntityIMMob entity) {
+	public IMLookHelper(EntityIMMob entity)
+	{
 		super(entity);
 		this.theEntity = entity;
 	}
 
 	@Override
-	public void setLookPositionWithEntity(Entity par1Entity, float par2, float par3) {
+	public void setLookPositionWithEntity(Entity par1Entity, float par2, float par3)
+	{
 		this.e = par1Entity.posX;
 
-		if ((par1Entity instanceof EntityLiving)) {
+		if ((par1Entity instanceof EntityLiving))
+		{
 			this.f = (par1Entity.posY + par1Entity.getEyeHeight());
-		} else {
+		}
+		else
+		{
 			this.f = ((par1Entity.getEntityBoundingBox().minY + par1Entity.getEntityBoundingBox().maxY) / 2.0D);
 		}
 
@@ -38,7 +45,8 @@ public class IMLookHelper extends EntityLookHelper {
 	}
 
 	@Override
-	public void setLookPosition(double par1, double par3, double par5, float par7, float par8) {
+	public void setLookPosition(double par1, double par3, double par5, float par7, float par8)
+	{
 		this.e = par1;
 		this.f = par3;
 		this.g = par5;
@@ -48,39 +56,45 @@ public class IMLookHelper extends EntityLookHelper {
 	}
 
 	@Override
-	public void onUpdateLook() {
-		if (this.d) {
+	public void onUpdateLook()
+	{
+		if (this.d)
+		{
 			this.d = false;
 			double d0 = this.e - this.theEntity.posX;
 			double d1 = this.f - (this.theEntity.posY + this.theEntity.getEyeHeight());
 			double d2 = this.g - this.theEntity.posZ;
 			double d3 = MathHelper.sqrt(d0 * d0 + d2 * d2);
-			float yaw = (float) MathUtil.boundAngle180Deg(this.theEntity.rotationYaw);
-			float pitch = (float) MathUtil.boundAngle180Deg(this.theEntity.rotationPitch);
-			float yawHeadOffset = (float) (Math.atan2(d2, d0) * 180.0D / 3.141592653589793D) - 90.0F - yaw;
-			float pitchHeadOffset = (float) (Math.atan2(d1, d3) * 180.0D / 3.141592653589793D + 40.0D - pitch);
-			float f2 = (float) MathUtil.boundAngle180Deg(yawHeadOffset);
+			float yaw = (float)MathUtil.boundAngle180Deg(this.theEntity.rotationYaw);
+			float pitch = (float)MathUtil.boundAngle180Deg(this.theEntity.rotationPitch);
+			float yawHeadOffset = (float)(Math.atan2(d2, d0) * 180.0D / 3.141592653589793D) - 90.0F - yaw;
+			float pitchHeadOffset = (float)(Math.atan2(d1, d3) * 180.0D / 3.141592653589793D + 40.0D - pitch);
+			float f2 = (float)MathUtil.boundAngle180Deg(yawHeadOffset);
 			float yawFinal;
 			if ((f2 > 100.0F) || (f2 < -100.0F))
 				yawFinal = 0.0F;
-			else {
+			else
+			{
 				yawFinal = f2 / 6.0F;
 			}
 
-			this.theEntity.setRotationPitchHead(updateRotation(this.theEntity.getRotationPitchHead(), pitchHeadOffset, this.c));
-			this.theEntity.setRotationYawHeadIM(updateRotation(this.theEntity.getRotationYawHeadIM(), yawFinal, this.b));
+			this.theEntity.setRotationPitchHead(this.updateRotation(this.theEntity.getRotationPitchHead(), pitchHeadOffset, this.c));
+			this.theEntity.setRotationYawHeadIM(this.updateRotation(this.theEntity.getRotationYawHeadIM(), yawFinal, this.b));
 		}
 	}
 
-	private float updateRotation(float par1, float par2, float par3) {
+	private float updateRotation(float par1, float par2, float par3)
+	{
 		//float f3 = MathHelper.wrapAngleTo180_float(par2 - par1);
 		float f3 = MathHelper.wrapDegrees(par2 - par1);
 
-		if (f3 > par3) {
+		if (f3 > par3)
+		{
 			f3 = par3;
 		}
 
-		if (f3 < -par3) {
+		if (f3 < -par3)
+		{
 			f3 = -par3;
 		}
 

@@ -1,5 +1,8 @@
 package invmod.entity.ally;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import invmod.BlocksAndItems;
 import invmod.entity.monster.EntityIMMob;
 import invmod.nexus.SpawnPoint;
@@ -7,11 +10,6 @@ import invmod.nexus.SpawnType;
 import invmod.tileentity.TileEntityNexus;
 import invmod.util.ComparatorDistanceFrom;
 import invmod.util.ModLogger;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
@@ -30,15 +28,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class EntityIMWolf extends EntityWolf {
-	
+
+public class EntityIMWolf extends EntityWolf
+{
+
 	//From EntityWolf
 	private static final DataParameter<Float> HEALTH = EntityDataManager.createKey(EntityIMWolf.class, DataSerializers.FLOAT);
-    private static final DataParameter<Boolean> BEGGING = EntityDataManager.createKey(EntityIMWolf.class, DataSerializers.BOOLEAN);
-    private static final DataParameter<Integer> COLLAR_COLOR = EntityDataManager.createKey(EntityIMWolf.class, DataSerializers.VARINT);
-    
-    private static final DataParameter<Boolean> NEXUS_BOUND = EntityDataManager.createKey(EntityIMWolf.class, DataSerializers.BOOLEAN);
-    
+	private static final DataParameter<Boolean> BEGGING = EntityDataManager.createKey(EntityIMWolf.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Integer> COLLAR_COLOR = EntityDataManager.createKey(EntityIMWolf.class, DataSerializers.VARINT);
+
+	private static final DataParameter<Boolean> NEXUS_BOUND = EntityDataManager.createKey(EntityIMWolf.class, DataSerializers.BOOLEAN);
+
 	private static final int META_BOUND = 30;
 	private TileEntityNexus nexus;
 	private BlockPos nexusPos;
@@ -49,11 +49,13 @@ public class EntityIMWolf extends EntityWolf {
 	private boolean loadedFromNBT;
 	private float maxHealth;
 
-	public EntityIMWolf(World world){
+	public EntityIMWolf(World world)
+	{
 		this(world, null);
 	}
 
-	public EntityIMWolf(EntityWolf wolf, TileEntityNexus nexus){
+	public EntityIMWolf(EntityWolf wolf, TileEntityNexus nexus)
+	{
 		this(wolf.world, nexus);
 		this.loadedFromNBT = false;
 		this.setPositionAndRotation(wolf.posX, wolf.posY, wolf.posZ, wolf.rotationYaw, wolf.rotationPitch);
@@ -66,14 +68,16 @@ public class EntityIMWolf extends EntityWolf {
 		this.aiSit.setSitting(this.isSitting());
 	}
 
-	public EntityIMWolf(World world, TileEntityNexus nexus){
+	public EntityIMWolf(World world, TileEntityNexus nexus)
+	{
 		super(world);
 		//this.targetTasks.addTask(5, new EntityAINearestAttackableTarget(this, IMob.class, true)); //DarthXenon: No! classTarget must be a subclass of Entity!
 		this.targetTasks.addTask(5, new EntityAINearestAttackableTarget(this, EntityIMMob.class, true));
 		this.setEntityHealth(this.getMaxHealth());
 		//this.dataWatcher.addObject(30, Byte.valueOf((byte)0));
 		this.nexus = nexus;
-		if (nexus != null){
+		if (nexus != null)
+		{
 			this.nexusPos = this.nexus.getPos();
 			//this.nexusX = nexus.getXCoord();
 			//this.nexusY = nexus.getYCoord();
@@ -81,20 +85,23 @@ public class EntityIMWolf extends EntityWolf {
 			this.getDataManager().set(NEXUS_BOUND, true);
 		}
 	}
-	
+
 	@Override
-	protected void entityInit(){
+	protected void entityInit()
+	{
 		super.entityInit();
 		this.getDataManager().register(HEALTH, 8f);
 		this.getDataManager().register(BEGGING, false);
 		this.getDataManager().register(COLLAR_COLOR, 0);
 		this.getDataManager().register(NEXUS_BOUND, false);
 	}
-	
+
 	@Override
-	public void onEntityUpdate(){
+	public void onEntityUpdate()
+	{
 		super.onEntityUpdate();
-		if (this.loadedFromNBT){
+		if (this.loadedFromNBT)
+		{
 			this.loadedFromNBT = false;
 			this.checkNexus();
 		}
@@ -103,21 +110,26 @@ public class EntityIMWolf extends EntityWolf {
 	}
 
 	@Override
-	public boolean attackEntityAsMob(Entity par1Entity){
-		int damage = isTamed() ? 4 : 2;
+	public boolean attackEntityAsMob(Entity par1Entity)
+	{
+		int damage = this.isTamed() ? 4 : 2;
 		if ((par1Entity instanceof IMob)) damage *= 2;
 		boolean success = par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), damage);
-		if (success) heal(4.0F);
+		if (success) this.heal(4.0F);
 		return success;
 	}
 
 	@Override
-	protected void applyEntityAttributes(){
+	protected void applyEntityAttributes()
+	{
 		super.applyEntityAttributes();
 		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.30000001192092896D);
-		if (this.isTamed()){
+		if (this.isTamed())
+		{
 			this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(25.0D);
-		} else {
+		}
+		else
+		{
 			this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(8.0D);
 		}
 		this.getDataManager().set(HEALTH, this.getMaxHealth());
@@ -133,8 +145,9 @@ public class EntityIMWolf extends EntityWolf {
 	}*/
 
 	@Override
-	protected SoundEvent getHurtSound(){
-		return getAttackTarget() instanceof IMob ? SoundEvents.ENTITY_WOLF_GROWL : SoundEvents.ENTITY_WOLF_HURT;
+	protected SoundEvent getHurtSound()
+	{
+		return this.getAttackTarget() instanceof IMob ? SoundEvents.ENTITY_WOLF_GROWL : SoundEvents.ENTITY_WOLF_HURT;
 		/*if ((getAttackTarget() instanceof IMob)) {
 			return "mob.wolf.growl";
 			
@@ -143,12 +156,16 @@ public class EntityIMWolf extends EntityWolf {
 	}
 
 	@Override
-	protected void onDeathUpdate(){
+	protected void onDeathUpdate()
+	{
 		this.deathTime += 1;
-		if (this.deathTime == 120){
+		if (this.deathTime == 120)
+		{
 			int i;
-			if ((!this.world.isRemote) && ((this.recentlyHit > 0) || (isPlayer())) && (!isChild())){
-				for (i = getExperiencePoints(this.attackingPlayer); i > 0; ){
+			if ((!this.world.isRemote) && ((this.recentlyHit > 0) || (this.isPlayer())) && (!this.isChild()))
+			{
+				for (i = this.getExperiencePoints(this.attackingPlayer); i > 0;)
+				{
 					int k = EntityXPOrb.getXPSplit(i);
 					i -= k;
 					this.world.spawnEntity(new EntityXPOrb(this.world, this.posX, this.posY, this.posZ, k));
@@ -156,7 +173,8 @@ public class EntityIMWolf extends EntityWolf {
 			}
 
 			this.setDead();
-			for (int j = 0; j < 20; j++){
+			for (int j = 0; j < 20; j++)
+			{
 				double d = this.rand.nextGaussian() * 0.02D;
 				double d1 = this.rand.nextGaussian() * 0.02D;
 				double d2 = this.rand.nextGaussian() * 0.02D;
@@ -164,28 +182,36 @@ public class EntityIMWolf extends EntityWolf {
 			}
 		}
 	}
-	
+
 
 	@Override
-	public void setDead() {
+	public void setDead()
+	{
 		this.isDead = true;
-		if (this.nexus != null) {
-			if (this.nexus.getMode() != 0) {
-				respawnAtNexus();
-			} else {
+		if (this.nexus != null)
+		{
+			if (this.nexus.getMode() != 0)
+			{
+				this.respawnAtNexus();
+			}
+			else
+			{
 				super.setDead();
 			}
 		}
 
 	}
 
-	public void setEntityHealth(float par1){
+	public void setEntityHealth(float par1)
+	{
 		//this.dataWatcher.updateObject(6, Float.valueOf(MathHelper.clamp(par1, 0.0F, getMaxHealth())));
 		this.getDataManager().set(HEALTH, MathHelper.clamp(par1, 0f, this.getMaxHealth()));
 	}
 
-	public boolean respawnAtNexus(){
-		if ((!this.world.isRemote) && ( this.getDataManager().get(NEXUS_BOUND) /*this.dataWatcher.getWatchableObjectByte(30) == 1*/) && (this.nexus != null)){
+	public boolean respawnAtNexus()
+	{
+		if ((!this.world.isRemote) && (this.getDataManager().get(NEXUS_BOUND) /*this.dataWatcher.getWatchableObjectByte(30) == 1*/) && (this.nexus != null))
+		{
 			EntityIMWolf wolfRecreation = new EntityIMWolf(this, this.nexus);
 
 			int x = this.nexus.getPos().getX();
@@ -193,9 +219,12 @@ public class EntityIMWolf extends EntityWolf {
 			int z = this.nexus.getPos().getZ();
 			List<SpawnPoint> spawnPoints = new ArrayList<>();
 			this.setRotation(0.0F, 0.0F);
-			for (int vertical = 0; vertical < 3; vertical = vertical > 0 ? vertical * -1 : vertical * -1 + 1){
-				for (int i = -4; i < 5; i++){
-					for (int j = -4; j < 5; j++){
+			for (int vertical = 0; vertical < 3; vertical = vertical > 0 ? vertical * -1 : vertical * -1 + 1)
+			{
+				for (int i = -4; i < 5; i++)
+				{
+					for (int j = -4; j < 5; j++)
+					{
 						wolfRecreation.setPosition(x + i + 0.5F, y + vertical, z + j + 0.5F);
 						if (wolfRecreation.getCanSpawnHere()) spawnPoints.add(new SpawnPoint(x + i, y + vertical, z + i, 0, SpawnType.WOLF));
 					}
@@ -203,7 +232,8 @@ public class EntityIMWolf extends EntityWolf {
 			}
 			Collections.sort(spawnPoints, new ComparatorDistanceFrom(x, y, z));
 
-			if (spawnPoints.size() > 0){
+			if (spawnPoints.size() > 0)
+			{
 				SpawnPoint point = (SpawnPoint)spawnPoints.get(spawnPoints.size() / 2);
 				wolfRecreation.setPosition(point.getPos().getX() + 0.5D, point.getPos().getY(), point.getPos().getZ() + 0.5D);
 				wolfRecreation.heal(60.0F);
@@ -216,7 +246,8 @@ public class EntityIMWolf extends EntityWolf {
 	}
 
 	@Override
-	public boolean getCanSpawnHere(){
+	public boolean getCanSpawnHere()
+	{
 		return (this.world.checkNoEntityCollision(this.getEntityBoundingBox())) && (this.world.getCollisionBoxes(this, this.getEntityBoundingBox()).size() == 0) && (!this.world.containsAnyLiquid(this.getEntityBoundingBox()));
 	}
 
@@ -261,9 +292,11 @@ public class EntityIMWolf extends EntityWolf {
 //	}
 
 	@Override
-	public void writeEntityToNBT(NBTTagCompound nbttagcompound){
+	public void writeEntityToNBT(NBTTagCompound nbttagcompound)
+	{
 		super.writeEntityToNBT(nbttagcompound);
-		if (this.nexus != null){
+		if (this.nexus != null)
+		{
 			nbttagcompound.setInteger("nexusX", this.nexus.getPos().getX());
 			nbttagcompound.setInteger("nexusY", this.nexus.getPos().getY());
 			nbttagcompound.setInteger("nexusZ", this.nexus.getPos().getZ());
@@ -273,7 +306,8 @@ public class EntityIMWolf extends EntityWolf {
 	}
 
 	@Override
-	public void readEntityFromNBT(NBTTagCompound nbttagcompound){
+	public void readEntityFromNBT(NBTTagCompound nbttagcompound)
+	{
 		super.readEntityFromNBT(nbttagcompound);
 		//this.nexusX = ;
 		this.nexusPos = new BlockPos(nbttagcompound.getInteger("nexusX"), nbttagcompound.getInteger("nexusY"), nbttagcompound.getInteger("nexusZ"));
@@ -286,24 +320,32 @@ public class EntityIMWolf extends EntityWolf {
 	{
 	}
 
-	private void checkNexus(){
-		if ((this.world != null) && (this.getDataManager().get(NEXUS_BOUND))){
-			if (this.world.getBlockState(this.nexusPos).getBlock() == BlocksAndItems.blockNexus) {
+	private void checkNexus()
+	{
+		if ((this.world != null) && (this.getDataManager().get(NEXUS_BOUND)))
+		{
+			if (this.world.getBlockState(this.nexusPos).getBlock() == BlocksAndItems.blockNexus)
+			{
 				this.nexus = ((TileEntityNexus)this.world.getTileEntity(this.nexusPos));
 			}
 			if (this.nexus == null) this.getDataManager().set(NEXUS_BOUND, false);
 		}
 	}
 
-	private TileEntityNexus findNexus(){
+	private TileEntityNexus findNexus()
+	{
 		TileEntityNexus nexus = null;
 		int x = MathHelper.floor(this.posX);
 		int y = MathHelper.floor(this.posY);
 		int z = MathHelper.floor(this.posZ);
-		for (int i = -7; i < 8; i++){
-			for (int j = -4; j < 5; j++){
-				for (int k = -7; k < 8; k++){
-					if (this.world.getBlockState(new BlockPos(x + i, y + j, z + k)).getBlock() == BlocksAndItems.blockNexus){
+		for (int i = -7; i < 8; i++)
+		{
+			for (int j = -4; j < 5; j++)
+			{
+				for (int k = -7; k < 8; k++)
+				{
+					if (this.world.getBlockState(new BlockPos(x + i, y + j, z + k)).getBlock() == BlocksAndItems.blockNexus)
+					{
 						nexus = (TileEntityNexus)this.world.getTileEntity(new BlockPos(x + i, y + j, z + k));
 						break;
 					}
@@ -313,10 +355,11 @@ public class EntityIMWolf extends EntityWolf {
 
 		return nexus;
 	}
-	
+
 	@Override
-	public boolean attackEntityFrom(DamageSource damageSource, float par2float){
+	public boolean attackEntityFrom(DamageSource damageSource, float par2float)
+	{
 		return super.attackEntityFrom(damageSource, par2float);
 	}
-	
+
 }

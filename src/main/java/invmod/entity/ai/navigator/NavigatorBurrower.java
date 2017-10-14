@@ -4,6 +4,7 @@ import invmod.entity.IPathSource;
 import invmod.entity.monster.EntityIMBurrower;
 import invmod.util.PosRotate3D;
 
+
 public class NavigatorBurrower extends NavigatorParametric
 {
 	protected PathNode nextNode;
@@ -35,14 +36,14 @@ public class NavigatorBurrower extends NavigatorParametric
 	}
 
 	@Override
-protected PosRotate3D entityPositionAtParam(int param)
+	protected PosRotate3D entityPositionAtParam(int param)
 	{
-		return calcAbsolutePositionAndRotation(param * this.timePerTick, this.prevNode, this.activeNode, this.nextNode);
+		return this.calcAbsolutePositionAndRotation(param * this.timePerTick, this.prevNode, this.activeNode, this.nextNode);
 	}
 
 	protected PosRotate3D positionAtTime(int tick, PathNode start, PathNode middle, PathNode end)
 	{
-		PosRotate3D pos = calcPositionAndRotation(tick * this.timePerTick, start, middle, end);
+		PosRotate3D pos = this.calcPositionAndRotation(tick * this.timePerTick, start, middle, end);
 		pos.setPosX(pos.getPosX() + middle.pos.xCoord);
 		pos.setPosY(pos.getPosY() + middle.pos.yCoord);
 		pos.setPosZ(pos.getPosZ() + middle.pos.zCoord);
@@ -50,16 +51,16 @@ protected PosRotate3D entityPositionAtParam(int param)
 	}
 
 	@Override
-protected boolean isReadyForNextNode(int ticks)
+	protected boolean isReadyForNextNode(int ticks)
 	{
 		return ticks * this.timePerTick >= 1.0D;
 	}
 
 	@Override
-protected void pathFollow(int time)
+	protected void pathFollow(int time)
 	{
 		int nextFrontIndex = this.path.getCurrentPathIndex() + 2;
-		if (isReadyForNextNode(time))
+		if (this.isReadyForNextNode(time))
 		{
 			if (nextFrontIndex < this.path.getCurrentPathLength())
 			{
@@ -80,10 +81,11 @@ protected void pathFollow(int time)
 	protected void doSegmentFollowTo(int ticks, int segmentIndex)
 	{
 		ticks += this.segmentOffsets[segmentIndex];
-		while (ticks <= 0) ticks += 20;
+		while (ticks <= 0)
+			ticks += 20;
 
 		int nextFrontIndex = this.segmentPathIndices[segmentIndex] + 2;
-		if (isReadyForNextNode(ticks))
+		if (this.isReadyForNextNode(ticks))
 		{
 			if (nextFrontIndex < this.path.getCurrentPathLength())
 			{
@@ -92,7 +94,8 @@ protected void pathFollow(int time)
 				this.activeSegmentNodes[segmentIndex] = this.nextSegmentNodes[segmentIndex];
 				if (this.segmentPathIndices[segmentIndex] >= 0)
 					this.nextSegmentNodes[segmentIndex] = this.path.getPathPointFromIndex(nextFrontIndex);
-				else {
+				else
+				{
 					this.nextSegmentNodes[segmentIndex] = this.path.getPathPointFromIndex(0);
 				}
 				this.segmentTime[segmentIndex] = 0;
@@ -105,7 +108,7 @@ protected void pathFollow(int time)
 
 		if (this.segmentPathIndices[segmentIndex] >= 0)
 		{
-			PosRotate3D pos = positionAtTime(this.segmentTime[segmentIndex], this.prevSegmentNodes[segmentIndex], this.activeSegmentNodes[segmentIndex], this.nextSegmentNodes[segmentIndex]);
+			PosRotate3D pos = this.positionAtTime(this.segmentTime[segmentIndex], this.prevSegmentNodes[segmentIndex], this.activeSegmentNodes[segmentIndex], this.nextSegmentNodes[segmentIndex]);
 			((EntityIMBurrower)this.theEntity).setSegment(segmentIndex, pos);
 			if (this.segmentTime[segmentIndex] == 0)
 				((EntityIMBurrower)this.theEntity).setSegment(segmentIndex, pos);
@@ -113,9 +116,9 @@ protected void pathFollow(int time)
 	}
 
 	@Override
-protected void doMovementTo(int time)
+	protected void doMovementTo(int time)
 	{
-		PosRotate3D movePos = entityPositionAtParam(time);
+		PosRotate3D movePos = this.entityPositionAtParam(time);
 		this.theEntity.setVelocity(movePos.getPosX() - this.theEntity.posX, movePos.getPosY() - this.theEntity.posY, movePos.getPosZ() - this.theEntity.posZ);
 		((EntityIMBurrower)this.theEntity).setHeadRotation(movePos);
 
@@ -127,8 +130,9 @@ protected void doMovementTo(int time)
 
 		if (Math.abs(this.theEntity.getDistanceSq(movePos.getPosX(), movePos.getPosY(), movePos.getPosZ())) < this.minMoveToleranceSq)
 		{
-			for (int segmentIndex = 0; segmentIndex < this.segmentPathIndices.length; segmentIndex++) {
-				doSegmentFollowTo(time, segmentIndex);
+			for (int segmentIndex = 0; segmentIndex < this.segmentPathIndices.length; segmentIndex++)
+			{
+				this.doSegmentFollowTo(time, segmentIndex);
 			}
 			this.timeParam = time;
 			this.ticksStuck -= 1;
@@ -140,13 +144,13 @@ protected void doMovementTo(int time)
 	}
 
 	@Override
-public boolean noPath()
+	public boolean noPath()
 	{
 		return (this.path == null) || (this.path.getCurrentPathIndex() >= this.path.getCurrentPathLength() - 2);
 	}
 
 	@Override
-public boolean setPath(Path newPath, float speed)
+	public boolean setPath(Path newPath, float speed)
 	{
 		if ((newPath == null) || (newPath.getCurrentPathLength() < 2))
 		{
@@ -160,7 +164,8 @@ public boolean setPath(Path newPath, float speed)
 			this.activeNode = this.path.getPathPointFromIndex(0);
 			this.prevNode = this.activeNode;
 			this.nextNode = this.path.getPathPointFromIndex(1);
-			if (this.activeNode.action != PathAction.NONE) {
+			if (this.activeNode.action != PathAction.NONE)
+			{
 				this.nodeActionFinished = false;
 			}
 			for (int i = 0; i < this.segmentPathIndices.length; i++)
@@ -188,7 +193,7 @@ public boolean setPath(Path newPath, float speed)
 				int lowestIndex = this.segmentPathIndices[(this.segmentPathIndices.length - 1)];
 				if (lowestIndex < 0)
 					lowestIndex = 0;
-				this.path = extendPath(this.path, newPath, lowestIndex, mainIndex);
+				this.path = this.extendPath(this.path, newPath, lowestIndex, mainIndex);
 				mainIndex -= lowestIndex;
 				this.path.setCurrentPathIndex(mainIndex);
 				this.nextNode = this.path.getPathPointFromIndex(mainIndex + 1);
@@ -212,7 +217,8 @@ public boolean setPath(Path newPath, float speed)
 			this.activeNode = this.path.getPathPointFromIndex(0);
 			this.prevNode = this.activeNode;
 			this.nextNode = this.path.getPathPointFromIndex(1);
-			if (this.activeNode.action != PathAction.NONE) {
+			if (this.activeNode.action != PathAction.NONE)
+			{
 				this.nodeActionFinished = false;
 			}
 			for (int i = 0; i < this.segmentPathIndices.length; i++)
@@ -236,7 +242,7 @@ public boolean setPath(Path newPath, float speed)
 
 		if (this.noSunPathfind)
 		{
-			removeSunnyPath();
+			this.removeSunnyPath();
 		}
 
 		return true;
@@ -244,7 +250,7 @@ public boolean setPath(Path newPath, float speed)
 
 	private PosRotate3D calcAbsolutePositionAndRotation(float time, PathNode start, PathNode middle, PathNode end)
 	{
-		PosRotate3D pos = calcPositionAndRotation(time, start, middle, end);
+		PosRotate3D pos = this.calcPositionAndRotation(time, start, middle, end);
 		pos.setPosX(pos.getPosX() + middle.pos.xCoord);
 		pos.setPosY(pos.getPosY() + middle.pos.yCoord);
 		pos.setPosZ(pos.getPosZ() + middle.pos.zCoord);
@@ -267,66 +273,93 @@ public boolean setPath(Path newPath, float speed)
 		double yOffset = vY * -0.5D * hY;
 		double zOffset = vZ * -0.5D * hZ;
 
-		double posX = 0.0D; double posY = 0.0D; double posZ = 0.0D;
-		float rotX = 0.0F; float rotY = 0.0F; float rotZ = 0.0F;
+		double posX = 0.0D;
+		double posY = 0.0D;
+		double posZ = 0.0D;
+		float rotX = 0.0F;
+		float rotY = 0.0F;
+		float rotZ = 0.0F;
 
-		if ((hX == 1) && (gX == 1)){
+		if ((hX == 1) && (gX == 1))
+		{
 			posX = time * vX * 0.5D + (vX > 0 ? 0 : 1);
 			posY = 0.5D;
 			posZ = 0.5D;
-			rotY = (float) (vX >= 1d ? 0d : Math.PI);
+			rotY = (float)(vX >= 1d ? 0d : Math.PI);
 			return new PosRotate3D(posX, posY, posZ, rotX, rotY, rotZ);
 		}
-		if ((hY == 1) && (gY == 1)){
+		if ((hY == 1) && (gY == 1))
+		{
 			posY = time * vY * 0.5D + (vY > 0 ? 0 : 1);
 			posX = 0.5D;
 			posZ = 0.5D;
 			return new PosRotate3D(posX, posY, posZ, rotX, rotY, rotZ);
 		}
-		if ((hZ == 1) && (gZ == 1)){
+		if ((hZ == 1) && (gZ == 1))
+		{
 			posZ = time * vZ * 0.5D + (vZ > 0 ? 0 : 1);
 			posY = 0.5D;
 			posX = 0.5D;
-			rotY = (float) (vZ * Math.PI / 4d);
+			rotY = (float)(vZ * Math.PI / 4d);
 			return new PosRotate3D(posX, posY, posZ, rotX, rotY, rotZ);
 		}
 
-		if (hX == 1){
+		if (hX == 1)
+		{
 			posX = vX * hX * Math.sin(time * 0.5D * 3.141592653589793D) * 0.5D + xOffset;
-		} else {
+		}
+		else
+		{
 			posX = vX * hX * Math.cos(time * 0.5D * 3.141592653589793D) * 0.5D + xOffset;
 		}
-		if (hY == 1){
+		if (hY == 1)
+		{
 			posY = vY * hY * Math.sin(time * 0.5D * 3.141592653589793D) * 0.5D + yOffset;
-		} else {
+		}
+		else
+		{
 			posY = vY * hY * Math.cos(time * 0.5D * 3.141592653589793D) * 0.5D + yOffset;
 		}
-		if (hZ == 1){
+		if (hZ == 1)
+		{
 			posZ = vZ * hZ * Math.sin(time * 0.5D * 3.141592653589793D) * 0.5D + zOffset;
-		} else {
+		}
+		else
+		{
 			posZ = vZ * hZ * Math.cos(time * 0.5D * 3.141592653589793D) * 0.5D + zOffset;
 		}
-		if (hX == 1){
+		if (hX == 1)
+		{
 			rotY = vX == 1 ? 0.0F : 180.0F;
 			if (gZ == 1)
 				rotY += time * vZ * vX * 90.0F;
 			else if (gY == 1)
-				rotZ = (float) (time * vY * 90d);
-		} else if (hY == 1){
-			if (gX == 1){
+				rotZ = (float)(time * vY * 90d);
+		}
+		else if (hY == 1)
+		{
+			if (gX == 1)
+			{
 				rotX = vX == 1 ? 0.0F : 180.0F;
-				rotZ = (float) (90 * vY + time * vX * -90d);
-			} else if (gZ == 1){
+				rotZ = (float)(90 * vY + time * vX * -90d);
+			}
+			else if (gZ == 1)
+			{
 				rotX = 90.0F;
-				rotY = (float) (vZ * (time * vY * -90d));
+				rotY = (float)(vZ * (time * vY * -90d));
 				rotZ = -90.0F;
 			}
-		} else if (hZ == 1){
-			if (gX == 1){
-				rotY = (float) (vZ * (90d + time * vX * -90d));
-			} else if (gY == 1){
+		}
+		else if (hZ == 1)
+		{
+			if (gX == 1)
+			{
+				rotY = (float)(vZ * (90d + time * vX * -90d));
+			}
+			else if (gY == 1)
+			{
 				rotX = 90.0F;
-				rotY = (float) (-vZ * (-90d + time * vY * -90d));
+				rotY = (float)(-vZ * (-90d + time * vY * -90d));
 				rotZ = -90.0F;
 			}
 		}
@@ -341,15 +374,17 @@ public boolean setPath(Path newPath, float speed)
 		return new PosRotate3D(posX, posY, posZ, rotX, rotY, rotZ);
 	}
 
-	private PosRotate3D calcStraight(float time, PathNode start, PathNode end){
+	private PosRotate3D calcStraight(float time, PathNode start, PathNode end)
+	{
 		PosRotate3D segment = new PosRotate3D();
-		segment.setPosX(start.pos.xCoord + 0.5D +	time * (end.pos.xCoord - start.pos.xCoord) * 0.5D);
-		segment.setPosY(start.pos.yCoord +			time * (end.pos.yCoord - start.pos.yCoord) * 0.5D);
-		segment.setPosZ(start.pos.zCoord + 0.5D +	time * (end.pos.zCoord - start.pos.zCoord * 0.5D));
+		segment.setPosX(start.pos.xCoord + 0.5D + time * (end.pos.xCoord - start.pos.xCoord) * 0.5D);
+		segment.setPosY(start.pos.yCoord + time * (end.pos.yCoord - start.pos.yCoord) * 0.5D);
+		segment.setPosZ(start.pos.zCoord + 0.5D + time * (end.pos.zCoord - start.pos.zCoord * 0.5D));
 		return segment;
 	}
 
-	private Path extendPath(Path path1, Path path2, int lowerBoundP1, int upperBoundP1){
+	private Path extendPath(Path path1, Path path2, int lowerBoundP1, int upperBoundP1)
+	{
 		int k = upperBoundP1 - lowerBoundP1;
 		PathNode[] newPoints = new PathNode[k + path2.getCurrentPathLength()];
 		System.arraycopy(path1.points, lowerBoundP1, newPoints, 0, k);

@@ -4,7 +4,8 @@ import invmod.entity.monster.EntityIMMob;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 
-public class EntityAIKillEntity<T extends EntityLivingBase> extends EntityAIMoveToEntity<T> 
+
+public class EntityAIKillEntity<T extends EntityLivingBase> extends EntityAIMoveToEntity<T>
 {
 	private static final float ATTACK_RANGE = 1.0F;
 	private int attackDelay;
@@ -18,23 +19,28 @@ public class EntityAIKillEntity<T extends EntityLivingBase> extends EntityAIMove
 	}
 
 	@Override
-	public void updateTask() {
+	public void updateTask()
+	{
 		super.updateTask();
-		setAttackTime(getAttackTime() - 1);
-		Entity target = getTarget();
-		if (canAttackEntity(target)) {
-			attackEntity(target);
+		this.setAttackTime(this.getAttackTime() - 1);
+		Entity target = this.getTarget();
+		if (this.canAttackEntity(target))
+		{
+			this.attackEntity(target);
 		}
 	}
 
-	protected void attackEntity(Entity target) {
-		getEntity().attackEntityAsMob(getTarget());
-		setAttackTime(getAttackDelay());
+	protected void attackEntity(Entity target)
+	{
+		this.getEntity().attackEntityAsMob(this.getTarget());
+		this.setAttackTime(this.getAttackDelay());
 	}
 
-	protected boolean canAttackEntity(Entity target) {
-		if (getAttackTime() <= 0) {
-			Entity entity = getEntity();
+	protected boolean canAttackEntity(Entity target)
+	{
+		if (this.getAttackTime() <= 0)
+		{
+			Entity entity = this.getEntity();
 			double d = (entity.width + 1.0F) * (entity.width + 1.0F);
 
 			return entity.getDistanceSq(target.posX, target.getEntityBoundingBox().minY, target.posZ) < d;
@@ -42,19 +48,23 @@ public class EntityAIKillEntity<T extends EntityLivingBase> extends EntityAIMove
 		return false;
 	}
 
-	protected int getAttackTime() {
+	protected int getAttackTime()
+	{
 		return this.nextAttack;
 	}
 
-	protected void setAttackTime(int time) {
+	protected void setAttackTime(int time)
+	{
 		this.nextAttack = time;
 	}
 
-	protected int getAttackDelay() {
+	protected int getAttackDelay()
+	{
 		return this.attackDelay;
 	}
 
-	protected void setAttackDelay(int time) {
+	protected void setAttackDelay(int time)
+	{
 		this.attackDelay = time;
 	}
 }

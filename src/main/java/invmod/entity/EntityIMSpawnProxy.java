@@ -9,17 +9,23 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 
-public class EntityIMSpawnProxy extends EntityLiving{
-	
-	public EntityIMSpawnProxy(World world){
+
+public class EntityIMSpawnProxy extends EntityLiving
+{
+
+	public EntityIMSpawnProxy(World world)
+	{
 		super(world);
 	}
 
 	@Override
-	public void onEntityUpdate(){
-		if (this.world != null){
+	public void onEntityUpdate()
+	{
+		if (this.world != null)
+		{
 			Entity[] entities = mod_Invasion.getNightMobSpawns1(this.world);
-			for (Entity entity : entities){
+			for (Entity entity : entities)
+			{
 				entity.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
 				this.world.spawnEntity(entity);
 			}
@@ -28,24 +34,32 @@ public class EntityIMSpawnProxy extends EntityLiving{
 	}
 
 	@Override
-	public void writeEntityToNBT(NBTTagCompound nbttagcompound){}
+	public void writeEntityToNBT(NBTTagCompound nbttagcompound)
+	{
+	}
 
 	@Override
-	public void readEntityFromNBT(NBTTagCompound nbttagcompound){}
+	public void readEntityFromNBT(NBTTagCompound nbttagcompound)
+	{
+	}
 
-	public float getBlockPathWeight(int i, int j, int k){
+	public float getBlockPathWeight(int i, int j, int k)
+	{
 		return 0.5F - this.world.getLightBrightness(new BlockPos(i, j, k));
 	}
 
-	protected boolean darkEnoughToSpawn(){
+	protected boolean darkEnoughToSpawn()
+	{
 		int i = MathHelper.floor(this.posX);
 		int j = MathHelper.floor(this.getEntityBoundingBox().minY);
 		int k = MathHelper.floor(this.posZ);
-		if (this.world.getLightFor(EnumSkyBlock.SKY, new BlockPos(i, j, k)) > this.rand.nextInt(32)){
+		if (this.world.getLightFor(EnumSkyBlock.SKY, new BlockPos(i, j, k)) > this.rand.nextInt(32))
+		{
 			return false;
 		}
-		int l = this.world.getBlockLightOpacity(new BlockPos(i,j,k));
-		if (this.world.isThundering()){
+		int l = this.world.getBlockLightOpacity(new BlockPos(i, j, k));
+		if (this.world.isThundering())
+		{
 			int i1 = this.world.getSkylightSubtracted();
 			this.world.setSkylightSubtracted(10);
 			l = this.world.getBlockLightOpacity(new BlockPos(i, j, k));
@@ -55,10 +69,11 @@ public class EntityIMSpawnProxy extends EntityLiving{
 	}
 
 	@Override
-	public boolean getCanSpawnHere(){
+	public boolean getCanSpawnHere()
+	{
 		int i = MathHelper.floor(this.posX);
 		int j = MathHelper.floor(this.getEntityBoundingBox().minY);
 		int k = MathHelper.floor(this.posZ);
-		return (darkEnoughToSpawn()) && (super.getCanSpawnHere()) && (getBlockPathWeight(i, j, k) >= 0.0F);
+		return (this.darkEnoughToSpawn()) && (super.getCanSpawnHere()) && (this.getBlockPathWeight(i, j, k) >= 0.0F);
 	}
 }
