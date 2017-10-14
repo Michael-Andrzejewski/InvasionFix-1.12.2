@@ -1,29 +1,35 @@
-package com.whammich.invasion.client.render;
+package invmod.client.render;
 
-import invmod.common.entity.EntityIMImp;
+import invmod.Reference;
+import invmod.client.render.model.ModelImp;
+import invmod.entity.monster.EntityIMImp;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
 
-public class RenderImp extends RenderLiving {
-    private static final ResourceLocation texture = new ResourceLocation("invmod:textures/imp.png");
+public class RenderImp extends RenderLiving<EntityIMImp> {
+	private static final ResourceLocation texture = new ResourceLocation(Reference.MODID + ":textures/imp.png");
+	
+	public RenderImp(RenderManager renderManager){
+		super(renderManager, new ModelImp(), 0.3F);
+	}
 
-    public RenderImp(ModelBase modelbase, float f) {
-        super(modelbase, f);
-    }
+	public RenderImp(RenderManager renderManager, ModelBase modelbase, float f) {
+		super(renderManager, modelbase, f);
+	}
+	
+	@Override
+	protected void preRenderCallback(EntityIMImp entity, float f) {
+		GL11.glScalef(1.0F, 1.0F, 1.0F);
+	}
 
-    protected void preRenderScale(EntityIMImp entity, float f) {
-        GL11.glScalef(1.0F, 1.0F, 1.0F);
-    }
-
-    protected void preRenderCallback(EntityLivingBase entityliving, float f) {
-        preRenderScale((EntityIMImp) entityliving, f);
-    }
-
-    protected ResourceLocation getEntityTexture(Entity entity) {
-        return texture;
-    }
+	@Override
+	protected ResourceLocation getEntityTexture(EntityIMImp entity) {
+		return texture;
+	}
 }

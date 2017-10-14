@@ -1,22 +1,43 @@
-package com.whammich.invasion.client.render;
+package invmod.client.render;
 
+import invmod.Reference;
+import invmod.client.render.layer.LayerSkeletonCloak;
+import invmod.client.render.model.ModelIMSkeleton;
+import invmod.entity.monster.EntityIMSkeleton;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderBiped;
-import net.minecraft.entity.Entity;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
+import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderIMSkeleton extends RenderBiped {
-    private static final ResourceLocation texture = new ResourceLocation("textures/entity/skeleton/skeleton.png");
+public class RenderIMSkeleton extends RenderBiped<EntityIMSkeleton> {
+	
+	private static final ResourceLocation texture = new ResourceLocation(Reference.MODID + ":textures/skeleton.png");
 
-    public RenderIMSkeleton(ModelBiped model, float shadowSize) {
-        super(model, shadowSize);
-    }
+	public RenderIMSkeleton(RenderManager renderManager){
+		this(renderManager, new ModelIMSkeleton(), 0.5f, 1f);
+	}
+	
+	public RenderIMSkeleton(RenderManager renderManager, ModelBiped model, float shadowSize){
+		this(renderManager, model, shadowSize, 1f);
+	}
 
-    public RenderIMSkeleton(ModelBiped model, float shadowSize, float par3) {
-        super(model, shadowSize, par3);
-    }
+	public RenderIMSkeleton(RenderManager renderManager, ModelBiped model, float shadowSize, float scale){
+		super(renderManager, model, shadowSize, scale);
+		this.addLayer(new LayerHeldItem(this));
+		this.addLayer(new LayerBipedArmor(this){
+			@Override
+			protected void initArmor(){
+				this.modelLeggings = new ModelIMSkeleton(0.5f, true);
+				this.modelArmor = new ModelIMSkeleton(1f, true);
+			}
+		});
+		this.addLayer(new LayerSkeletonCloak(this));
+	}
 
-    protected ResourceLocation getEntityTexture(Entity entity) {
-        return texture;
-    }
+	@Override
+	protected ResourceLocation getEntityTexture(EntityIMSkeleton entity){
+		return texture;
+	}
 }

@@ -1,41 +1,44 @@
-package invmod.common.nexus;
+package invmod.nexus;
 
-import invmod.common.entity.EntityIMLiving;
-import invmod.common.entity.ai.AttackerAI;
-import invmod.common.util.IPosition;
-import net.minecraft.world.World;
+import invmod.entity.EntityIMLiving;
+import invmod.entity.ai.AttackerAI;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
-public abstract interface INexusAccess extends IPosition {
-    public abstract void attackNexus(int paramInt);
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
-    public abstract void registerMobDied();
+public interface INexusAccess {
+	/*public void attackNexus(int paramInt);
 
-    public abstract boolean isActivating();
+	public void registerMobDied();
 
-    public abstract int getMode();
+	public boolean isActivating();
 
-    public abstract int getActivationTimer();
+	public int getMode();
 
-    public abstract int getSpawnRadius();
+	public int getActivationTimer();
 
-    public abstract int getNexusKills();
+	public int getSpawnRadius();
 
-    public abstract int getGeneration();
+	public int getNexusKills();
 
-    public abstract int getNexusLevel();
+	public int getGeneration();
 
-    public abstract int getCurrentWave();
+	public int getNexusLevel();
 
-    public abstract World getWorld();
+	public int getCurrentWave();
 
-    public abstract List<EntityIMLiving> getMobList();
+	public World getWorld();
 
-    public abstract AttackerAI getAttackerAI();
+	public List<EntityIMLiving> getMobList();
 
-    public abstract void askForRespawn(EntityIMLiving paramEntityIMLiving);
+	public AttackerAI getAttackerAI();
 
-    public abstract HashMap<String, Long> getBoundPlayers();
+	public void askForRespawn(EntityIMLiving paramEntityIMLiving);
+	
+	public ArrayList<String> getBoundPlayers();
+	
+	public BlockPos getPos();*/
 }

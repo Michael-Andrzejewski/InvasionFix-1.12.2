@@ -1,471 +1,497 @@
-package invmod.common.entity;
+package invmod.entity.monster;
 
-import invmod.Invasion;
-import invmod.common.IBlockAccessExtended;
-import invmod.common.INotifyTask;
-import invmod.common.entity.ai.*;
-import invmod.common.nexus.INexusAccess;
-import invmod.common.util.CoordsInt;
+import invmod.BlocksAndItems;
+import invmod.IBlockAccessExtended;
+import invmod.INotifyTask;
+import invmod.mod_Invasion;
+import invmod.entity.EntityIMLiving;
+import invmod.entity.Goal;
+import invmod.entity.ICanBuild;
+import invmod.entity.ICanDig;
+import invmod.entity.INavigation;
+import invmod.entity.IPathSource;
+import invmod.entity.ITerrainBuild;
+import invmod.entity.ITerrainDig;
+import invmod.entity.TerrainBuilder;
+import invmod.entity.TerrainDigger;
+import invmod.entity.TerrainModifier;
+import invmod.entity.ai.EntityAIAttackNexus;
+import invmod.entity.ai.EntityAIGoToNexus;
+import invmod.entity.ai.EntityAIKillEntity;
+import invmod.entity.ai.EntityAISimpleTarget;
+import invmod.entity.ai.EntityAIWanderIM;
+import invmod.entity.ai.navigator.NavigatorEngy;
+import invmod.entity.ai.navigator.Path;
+import invmod.entity.ai.navigator.PathAction;
+import invmod.entity.ai.navigator.PathNavigateAdapter;
+import invmod.entity.ai.navigator.PathNode;
+import invmod.entity.ai.navigator.PathfinderIM;
+import invmod.tileentity.TileEntityNexus;
+import invmod.util.Coords;
 import net.minecraft.block.Block;
-import net.minecraft.entity.ai.*;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAITasks;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class EntityIMPigEngy extends EntityIMMob implements ICanDig {
-    private static final int MAX_LADDER_TOWER_HEIGHT = 4;
-    private static final int META_ITEM_ID_HELD = 30;
-    private static final int META_SWINGING = 31;
-    private final NavigatorEngy bo;
-    private final PathNavigateAdapter oldNavAdapter;
-    private int swingTimer;
-    private int planks;
-    private int askForScaffoldTimer;
-    private int tier;
-    private float supportThisTick;
-    private TerrainModifier terrainModifier;
-    private TerrainDigger terrainDigger;
-    private TerrainBuilder terrainBuilder;
-    private ItemStack currentItem;
+public class EntityIMPigEngy extends EntityIMMob implements ICanDig, ICanBuild {
+	
+	//private static final DataParameter<Optional<ItemStack>> HELD_ITEM = EntityDataManager.createKey(EntityIMPigEngy.class, DataSerializers.OPTIONAL_ITEM_STACK);
+	private static final DataParameter<Boolean> IS_SWINGING = EntityDataManager.createKey(EntityIMPigEngy.class, DataSerializers.BOOLEAN);
+	
+	//private static final int MAX_LADDER_TOWER_HEIGHT = 4;
+	//private static final int META_ITEM_ID_HELD = 30;
+	//private static final int META_SWINGING = 31;
+	private final NavigatorEngy navigatorEngy;
+	private final PathNavigateAdapter oldNavAdapter;
+	private int swingTimer;
+	private int planks;
+	private int askForScaffoldTimer;
+	//private int tier;
+	private float supportThisTick;
+	
+	private TerrainModifier terrainModifier;
+	private TerrainDigger terrainDigger;
+	private TerrainBuilder terrainBuilder = null;
+	//private ItemStack currentItem;
 
-    public EntityIMPigEngy(World world, INexusAccess nexus) {
-        super(world, nexus);
-        IPathSource pathSource = getPathSource();
-        pathSource.setSearchDepth(1500);
-        pathSource.setQuickFailDepth(1500);
-        this.bo = new NavigatorEngy(this, pathSource);
-        this.oldNavAdapter = new PathNavigateAdapter(this.bo);
-        pathSource.setSearchDepth(1200);
+	public EntityIMPigEngy(World world, TileEntityNexus nexus) {
+		super(world, nexus);
+		IPathSource pathSource = this.getPathSource();
+		pathSource.setSearchDepth(1500);
+		pathSource.setQuickFailDepth(1500);
+		this.navigatorEngy = new NavigatorEngy(this, pathSource);
+		this.oldNavAdapter = new PathNavigateAdapter(this.navigatorEngy);
+		pathSource.setSearchDepth(1200);
+		
+		if(this.terrainBuilder == null){
+			this.terrainModifier = new TerrainModifier(this, 2.8F);
+			this.terrainDigger = new TerrainDigger(this, this.terrainModifier, 1.0F);
+			this.terrainBuilder = new TerrainBuilder(this, this.terrainModifier, 1.0F);
+		}
+		
+		this.setBaseMoveSpeedStat(0.23F);
+		this.attackStrength = 2;
+		this.selfDamage = 0;
+		this.maxSelfDamage = 0;
+		this.planks = 15;
+		//this.tier = 1;
+		this.maxDestructiveness = 2;
+		this.askForScaffoldTimer = 0;
+		this.isImmuneToFire = true;
 
-        this.terrainModifier = new TerrainModifier(this, 2.8F);
-        this.terrainDigger = new TerrainDigger(this, this.terrainModifier, 1.0F);
-        this.terrainBuilder = new TerrainBuilder(this, this.terrainModifier, 1.0F);
+		this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(Items.IRON_PICKAXE));
 
-        setBaseMoveSpeedStat(0.23F);
-        this.attackStrength = 2;
-        this.selfDamage = 0;
-        this.maxSelfDamage = 0;
-        this.planks = 15;
-        this.tier = 1;
-        this.maxDestructiveness = 2;
-        this.askForScaffoldTimer = 0;
+		this.setMaxHealthAndHealth(mod_Invasion.getMobHealth(this));
+		this.setName("Pigman Engineer");
+		this.setGender(1);
+		this.setDestructiveness(2);
+		this.setJumpHeight(1);
+		this.setCanClimb(false);
 
-        this.dataWatcher.addObject(30, new ItemStack(Items.iron_pickaxe, 1));
-        this.dataWatcher.addObject(31, Byte.valueOf((byte) 0));
+		int r = this.rand.nextInt(3);
+		if (r == 0) this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(Item.getItemFromBlock(Blocks.LADDER)));
+		else if (r == 1) this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(Items.IRON_PICKAXE));
+		else this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(BlocksAndItems.itemEngyHammer));
+	}
 
-        setMaxHealthAndHealth(Invasion.getMobHealth(this));
-        setName("Pigman Engineer");
-        setGender(1);
-        setDestructiveness(2);
-        setJumpHeight(1);
-        setCanClimb(false);
-        setAI();
+	public EntityIMPigEngy(World world) {
+		this(world, null);
+	}
+	
+	@Override
+	protected void entityInit(){
+		super.entityInit();
+		this.getDataManager().register(IS_SWINGING, false);
+	}
+	
+	@Override
+	protected void initEntityAI() {
+		this.tasksIM = new EntityAITasks(this.worldObj.theProfiler);
+		this.tasksIM.addTask(0, new EntityAISwimming(this));
+		this.tasksIM.addTask(1, new EntityAIKillEntity(this, EntityPlayer.class, 60));
+		this.tasksIM.addTask(2, new EntityAIAttackNexus(this));
+		this.tasksIM.addTask(3, new EntityAIGoToNexus(this));
+		this.tasksIM.addTask(7, new EntityAIWanderIM(this));
+		this.tasksIM.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 7.0F));
+		this.tasksIM.addTask(9, new EntityAIWatchClosest(this, EntityIMCreeper.class, 12.0F));
+		this.tasksIM.addTask(9, new EntityAILookIdle(this));
 
-        int r = this.rand.nextInt(3);
-        if (r == 0)
-            setCurrentItem(new ItemStack(Item.getItemFromBlock(Blocks.ladder), 1));
-        else if (r == 1)
-            setCurrentItem(new ItemStack(Items.iron_pickaxe, 1));
-        else
-            setCurrentItem(new ItemStack(Invasion.itemEngyHammer, 1));
-    }
+		this.targetTasksIM = new EntityAITasks(this.worldObj.theProfiler);
+		if (this.isNexusBound()) {
+			this.targetTasksIM.addTask(1, new EntityAISimpleTarget(this, EntityPlayer.class, 3.0F, true));
+		} else {
+			this.targetTasksIM.addTask(1, new EntityAISimpleTarget(this, EntityPlayer.class, this.getSenseRange(), false));
+			this.targetTasksIM.addTask(2, new EntityAISimpleTarget(this, EntityPlayer.class, this.getAggroRange(), true));
+		}
+		this.targetTasksIM.addTask(3, new EntityAIHurtByTarget(this, false));
+	}
 
-    public EntityIMPigEngy(World world) {
-        this(world, null);
-    }
+	@Override
+	public void updateAITasks() {
+		super.updateAITasks();
+		this.terrainModifier.onUpdate();
+	}
 
-    public static boolean canPlaceLadderAt(IBlockAccess map, int x, int y, int z) {
-        if (EntityIMLiving.unDestructableBlocks.contains(map.getBlock(x, y, z))) {
-            if ((map.getBlock(x + 1, y, z).isNormalCube()) || (map.getBlock(x - 1, y, z).isNormalCube()) || (map.getBlock(x, y, z + 1).isNormalCube()) || (map.getBlock(x, y, z - 1).isNormalCube())) {
-                return true;
-            }
-        }
-        return false;
-    }
+	@Override
+	public void updateAITick() {
+		super.updateAITick();
+		this.terrainBuilder.setBuildRate(1.0F + this.supportThisTick * 0.33F);
 
-    protected void setAI() {
-        this.tasks = new EntityAITasks(this.worldObj.theProfiler);
-        this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(1, new EntityAIKillEntity(this, EntityPlayer.class, 60));
-        this.tasks.addTask(1, new EntityAIKillEntity(this, EntityPlayerMP.class, 60));
-        this.tasks.addTask(2, new EntityAIAttackNexus(this));
-        this.tasks.addTask(3, new EntityAIGoToNexus(this));
-        this.tasks.addTask(7, new EntityAIWanderIM(this));
-        this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 7.0F));
-        this.tasks.addTask(9, new EntityAIWatchClosest(this, EntityIMCreeper.class, 12.0F));
-        this.tasks.addTask(9, new EntityAILookIdle(this));
+		this.supportThisTick = 0.0F;
 
-        this.targetTasks = new EntityAITasks(this.worldObj.theProfiler);
-        if (this.isNexusBound()) {
-            this.targetTasks.addTask(1, new EntityAISimpleTarget(this, EntityPlayer.class, 3.0F, true));
-        } else {
-            this.targetTasks.addTask(1, new EntityAISimpleTarget(this, EntityPlayer.class, this.getSenseRange(), false));
-            this.targetTasks.addTask(2, new EntityAISimpleTarget(this, EntityPlayer.class, this.getAggroRange(), true));
-        }
-        this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, false));
-    }
+		this.askForScaffoldTimer--;
+		if (this.targetNexus != null) {
+			int weight = 1;
+			if (this.targetNexus.getPos().getY() - this.getPosition().getY() > 1) {
+				weight = Math.max(6000 / this.targetNexus.getPos().getY() - this.getPosition().getY(), 1);
+			}
+			if ((this.currentGoal == Goal.BREAK_NEXUS)
+					&& (((this.getNavigatorNew().getLastPathDistanceToTarget() > 2.0F) &&
+							(this.askForScaffoldTimer <= 0)) ||
+							(this.rand.nextInt(weight) == 0))) {
+				if (this.targetNexus.getAttackerAI().askGenerateScaffolds(this)) {
+					this.getNavigatorNew().clearPath();
+					this.askForScaffoldTimer = 60;
+				} else {
+					this.askForScaffoldTimer = 140;
+				}
+			}
+		}
+	}
 
-    @Override
-    public void updateAITasks() {
-        super.updateAITasks();
-        this.terrainModifier.onUpdate();
-    }
+	@Override
+	public void onLivingUpdate() {
+		super.onLivingUpdate();
+		this.updateAnimation();
+	}
 
-    @Override
-    public void updateAITick() {
-        super.updateAITick();
-        this.terrainBuilder.setBuildRate(1.0F + this.supportThisTick * 0.33F);
+	@Override
+	public void onPathSet() {
+		this.terrainModifier.cancelTask();
+	}
 
-        this.supportThisTick = 0.0F;
+	//TODO Prevents spawning with egg due to conflict with EntityAISwimming
+	/*@Override
+	public PathNavigateAdapter getNavigator() {
+		return this.oldNavAdapter;
+	}*/
 
-        this.askForScaffoldTimer -= 1;
-        if (this.targetNexus != null) {
-            int weight = Math.max(6000 / this.targetNexus.getYCoord() - getYCoord(), 1);
-            if ((this.currentGoal == Goal.BREAK_NEXUS) && (((getNavigatorNew().getLastPathDistanceToTarget() > 2.0F) && (this.askForScaffoldTimer <= 0)) || (this.rand.nextInt(weight) == 0))) {
-                if (this.targetNexus.getAttackerAI().askGenerateScaffolds(this)) {
-                    getNavigatorNew().clearPath();
-                    this.askForScaffoldTimer = 60;
-                } else {
-                    this.askForScaffoldTimer = 140;
-                }
-            }
-        }
-    }
+	@Override
+	public INavigation getNavigatorNew() {
+		return this.navigatorEngy;
+	}
 
-    @Override
-    public void onLivingUpdate() {
-        super.onLivingUpdate();
-        updateAnimation();
-    }
+	@Override
+	public IBlockAccess getTerrain() {
+		return this.worldObj;
+	}
 
-    @Override
-    public void onPathSet() {
-        this.terrainModifier.cancelTask();
-    }
+	@Override
+	public boolean onPathBlocked(Path path, INotifyTask notifee) {
+		if (!path.isFinished()) {
+			PathNode node = path.getPathPointFromIndex(path.getCurrentPathIndex());
+			return this.terrainDigger.askClearPosition(new BlockPos(node.pos), notifee, 1.0F);
+		}
+		return false;
+	}
 
-    @Override
-    public PathNavigateAdapter getNavigator() {
-        return this.oldNavAdapter;
-    }
+	public ITerrainBuild getTerrainBuildEngy() {
+		return this.terrainBuilder;
+	}
 
-    @Override
-    public INavigation getNavigatorNew() {
-        return this.bo;
-    }
+	protected ITerrainDig getTerrainDig() {
+		return this.terrainDigger;
+	}
+	
+	@Override
+	public void setTier(int tier){
+		super.setTier(tier);
+		this.terrainModifier = new TerrainModifier(this, 2.8f);
+		this.terrainDigger = new TerrainDigger(this, this.terrainModifier, tier <= 1 ? 1f : ((float)tier) * 0.75f);
+		this.terrainBuilder = null;
+		if(tier == 2) this.terrainBuilder = new TerrainBuilder(this, this.terrainModifier, 1f, TerrainBuilder.LADDER_COST, TerrainBuilder.COBBLE_COST, Blocks.COBBLESTONE);
+		if(this.terrainBuilder == null) this.terrainBuilder = new TerrainBuilder(this, this.terrainModifier, 1f);
+	}
+	
+	//DarthXenon: Is getLivingSound() replaced by getAmbientSound() ?
+	//TODO: Removed override annotation
+	/*protected String getLivingSound() {
+		return "mob.zombiepig.zpig";
+	}*/
+	
+	@Override
+	protected SoundEvent getAmbientSound(){
+		return SoundEvents.ENTITY_ZOMBIE_PIG_AMBIENT;
+	}
 
-    @Override
-    public IBlockAccess getTerrain() {
-        return this.worldObj;
-    }
+	@Override
+	protected SoundEvent getHurtSound() {
+		return SoundEvents.ENTITY_ZOMBIE_PIG_HURT;
+	}
 
-    @Override
-    protected boolean onPathBlocked(Path path, INotifyTask notifee) {
-        if (!path.isFinished()) {
-            PathNode node = path.getPathPointFromIndex(path.getCurrentPathIndex());
-            return this.terrainDigger.askClearPosition(node.xCoord, node.yCoord, node.zCoord, notifee, 1.0F);
-        }
-        return false;
-    }
+	@Override
+	protected SoundEvent getDeathSound() {
+		return SoundEvents.ENTITY_PIG_DEATH;
+	}
 
-    protected ITerrainBuild getTerrainBuildEngy() {
-        return this.terrainBuilder;
-    }
+	@Override
+	public String getSpecies() {
+		return "Pigman";
+	}
 
-    protected ITerrainDig getTerrainDig() {
-        return this.terrainDigger;
-    }
+	@Override
+	public float getBlockRemovalCost(BlockPos pos) {
+		return this.getBlockStrength(pos) * 20.0F;
+	}
 
-    @Override
-    protected String getLivingSound() {
-        return "mob.zombiepig.zpig";
-    }
+	@Override
+	public boolean canClearBlock(BlockPos pos) {
+		IBlockState blockState = this.worldObj.getBlockState(pos);
+		return (blockState.getBlock() == Blocks.AIR) || (this.isBlockDestructible(this.worldObj, pos, blockState));
+	}
 
-    @Override
-    protected String getHurtSound() {
-        return "mob.zombiepig.zpighurt";
-    }
+	public boolean avoidsBlock(int id) {
+		return ((id == 51) || (id == 7) || (id == 64) || (id == 8) || (id == 9) || (id == 10) || (id == 11));
+	}
 
-    @Override
-    protected String getDeathSound() {
-        return "mob.pig.death";
-    }
+	public void supportForTick(EntityIMLiving entity, float amount) {
+		this.supportThisTick += amount;
+	}
 
-    @Override
-    public String getSpecies() {
-        return "Pigman";
-    }
+	@Override
+	public boolean canBePushed() {
+		return false;
+	}
 
-    @Override
-    public int getTier() {
-        return this.tier;
-    }
+	@Override
+	public float getBlockPathCost(PathNode prevNode, PathNode node, IBlockAccess terrainMap) {
+		if ((node.pos.xCoord == -21) && (node.pos.zCoord == 180)) this.planks = 10;
+		IBlockState blockState = terrainMap.getBlockState(new BlockPos(node.pos));
+		float materialMultiplier = (blockState.getBlock() != Blocks.AIR)
+				&& (this.isBlockDestructible(terrainMap, new BlockPos(node.pos), blockState)) ? 3.2F : 1.0F;
+		
+		switch(node.action){
+		case BRIDGE: return prevNode.distanceTo(node) * 1.7F * materialMultiplier;
+		case SCAFFOLD_UP: return prevNode.distanceTo(node) * 0.5F;
+		case LADDER_UP_NX:
+		case LADDER_UP_NZ:
+		case LADDER_UP_PX:
+		case LADDER_UP_PZ: return prevNode.distanceTo(node) * 1.3F * materialMultiplier;
+		case LADDER_TOWER_UP_PX:
+		case LADDER_TOWER_UP_NX:
+		case LADDER_TOWER_UP_PZ:
+		case LADDER_TOWER_UP_NZ: return prevNode.distanceTo(node) * 1.4F;
+		default: break;
+		}
 
-    @Override
-    public float getBlockRemovalCost(int x, int y, int z) {
-        return getBlockStrength(x, y, z) * 20.0F;
-    }
+		float multiplier = 1.0F;
+		if ((terrainMap instanceof IBlockAccessExtended)) {
+			int mobDensity = ((IBlockAccessExtended) terrainMap).getLayeredData(node.pos.xCoord, node.pos.yCoord, node.pos.zCoord) & 0x7;
+			multiplier += mobDensity;
+		}
+		if (blockState.getBlock() == Blocks.AIR || blockState.getBlock() == Blocks.SNOW) return prevNode.distanceTo(node) * multiplier;
+		if (blockState.getBlock() == Blocks.LADDER) return prevNode.distanceTo(node) * 0.7F * multiplier;
+		if ((!blockState.getBlock().isPassable(terrainMap, new BlockPos(node.pos))) && (blockState != BlocksAndItems.blockNexus)) {
+			return prevNode.distanceTo(node) * 3.2F;
+		}
 
-    @Override
-    public boolean canClearBlock(int x, int y, int z) {
-        Block block = this.worldObj.getBlock(x, y, z);
-        return (block == Blocks.air) || (isBlockDestructible(this.worldObj, x, y, z, block));
-    }
+		return super.getBlockPathCost(prevNode, node, terrainMap);
+	}
 
-    public boolean avoidsBlock(int id) {
-        if ((id == 51) || (id == 7) || (id == 64) || (id == 8) || (id == 9) || (id == 10) || (id == 11)) {
-            return true;
-        }
+	@Override
+	public void getPathOptionsFromNode(IBlockAccess terrainMap, PathNode currentNode, PathfinderIM pathFinder) {
+		super.getPathOptionsFromNode(terrainMap, currentNode, pathFinder);
+		if (this.planks <= 0) return;
 
-        return false;
-    }
+		for (int i = 0; i < 4; i++) {
+			if (this.getCollide(terrainMap, currentNode.pos.addVector(Coords.offsetAdjX[i], 0, Coords.offsetAdjZ[i])) > 0) {
+				for (int yOffset = 0; yOffset > -4; yOffset--) {
+					Vec3d vec = currentNode.pos.addVector(Coords.offsetAdjX[i], yOffset - 1, Coords.offsetAdjZ[i]);
+					if (!terrainMap.isAirBlock(new BlockPos(vec))) break;
+					pathFinder.addNode(currentNode.pos.addVector(Coords.offsetAdjX[i], yOffset, Coords.offsetAdjZ[i]), PathAction.BRIDGE);
+				}
+			}
+		}
+	}
 
-    public void supportForTick(EntityIMLiving entity, float amount) {
-        this.supportThisTick += amount;
-    }
+	@Override
+	protected void calcPathOptionsVertical(IBlockAccess terrainMap, PathNode currentNode, PathfinderIM pathFinder) {
+		if ((currentNode.pos.xCoord == -11) && (currentNode.pos.zCoord == 177)) this.planks = 10;
+		super.calcPathOptionsVertical(terrainMap, currentNode, pathFinder);
+		if (this.planks <= 0) return;
 
-    @Override
-    public boolean canBePushed() {
-        return false;
-    }
+		if (this.getCollide(terrainMap, currentNode.pos.addVector(0d, 1d, 0d)) > 0) {
+			if (terrainMap.isAirBlock(new BlockPos(currentNode.pos.addVector(0d, 1d, 0d)))) {
+				if (currentNode.action == PathAction.NONE) {
+					this.addAnyLadderPoint(terrainMap, currentNode, pathFinder);
+				} else if (!continueLadder(terrainMap, currentNode, pathFinder)) {
+					this.addAnyLadderPoint(terrainMap, currentNode, pathFinder);
+				}
 
-    @Override
-    public float getBlockPathCost(PathNode prevNode, PathNode node, IBlockAccess terrainMap) {
-        if ((node.xCoord == -21) && (node.zCoord == 180)) {
-            this.planks = 10;
-        }
-        Block block = terrainMap.getBlock(node.xCoord, node.yCoord, node.zCoord);
-        float materialMultiplier = (block != Blocks.air) && (isBlockDestructible(terrainMap, node.xCoord, node.yCoord, node.zCoord, block)) ? 3.2F : 1.0F;
+			}
 
-        if (node.action == PathAction.BRIDGE)
-            return prevNode.distanceTo(node) * 1.7F * materialMultiplier;
-        if (node.action == PathAction.SCAFFOLD_UP)
-            return prevNode.distanceTo(node) * 0.5F;
-        if ((node.action == PathAction.LADDER_UP_NX) || (node.action == PathAction.LADDER_UP_NZ) || (node.action == PathAction.LADDER_UP_PX) || (node.action == PathAction.LADDER_UP_PZ))
-            return prevNode.distanceTo(node) * 1.3F * materialMultiplier;
-        if ((node.action == PathAction.LADDER_TOWER_UP_PX) || (node.action == PathAction.LADDER_TOWER_UP_NX) || (node.action == PathAction.LADDER_TOWER_UP_PZ) || (node.action == PathAction.LADDER_TOWER_UP_NZ)) {
-            return prevNode.distanceTo(node) * 1.4F;
-        }
+			if ((currentNode.action == PathAction.NONE) || (currentNode.action == PathAction.BRIDGE)) {
+				int maxHeight = 4;
+				for (int i = this.getCollideSize().getY(); i < 4; i++) {
+					Block block = terrainMap.getBlockState(new BlockPos(currentNode.pos.addVector(0d, i, 0d))).getBlock();
+					if ((block != Blocks.AIR)
+							&& (!block.isPassable(terrainMap,
+									new BlockPos(currentNode.pos.addVector(0d, i, 0d))))) {
+						maxHeight = i - this.getCollideSize().getY();
+						break;
+					}
 
-        float multiplier = 1.0F;
-        if ((terrainMap instanceof IBlockAccessExtended)) {
-            int mobDensity = ((IBlockAccessExtended) terrainMap).getLayeredData(node.xCoord, node.yCoord, node.zCoord) & 0x7;
-            multiplier += mobDensity;
-        }
-        if (block == Blocks.air) {
-            return prevNode.distanceTo(node) * 1.0F * multiplier;
-        }
-        if (block == Blocks.snow) {
-            return prevNode.distanceTo(node) * 1.0F * multiplier;
-        }
-        if (block == Blocks.ladder) {
-            return prevNode.distanceTo(node) * 1.0F * 0.7F * multiplier;
-        }
-        if ((!block.getBlocksMovement(terrainMap, node.xCoord, node.yCoord, node.zCoord)) && (block != Invasion.blockNexus)) {
-            return prevNode.distanceTo(node) * 3.2F;
-        }
+				}
 
-        return super.getBlockPathCost(prevNode, node, terrainMap);
-    }
+				for (int i = 0; i < 4; i++) {
+					IBlockState blockState = terrainMap.getBlockState(new BlockPos(
+							currentNode.pos.addVector(Coords.offsetAdjX[i], 1, Coords.offsetAdjZ[i])));
+					if (blockState.isNormalCube()) {
+						for (int height = 0; height < maxHeight; height++) {
+							blockState = terrainMap.getBlockState(new BlockPos(
+									currentNode.pos.addVector(Coords.offsetAdjX[i], height, Coords.offsetAdjZ[i])));
+							if (blockState.getBlock() != Blocks.AIR) {
+								if (!blockState.isNormalCube()) break;
+								pathFinder.addNode(currentNode.pos.addVector(0d, 1d, 0d), PathAction.ladderTowerIndexOrient[i]);
+								break;
+							}
+						}
+					}
+				}
+			}
 
-    @Override
-    public void getPathOptionsFromNode(IBlockAccess terrainMap, PathNode currentNode, PathfinderIM pathFinder) {
-        super.getPathOptionsFromNode(terrainMap, currentNode, pathFinder);
-        if (this.planks <= 0) {
-            return;
-        }
+		}
 
-        for (int i = 0; i < 4; i++) {
-            if (getCollide(terrainMap, currentNode.xCoord + CoordsInt.offsetAdjX[i], currentNode.yCoord, currentNode.zCoord + CoordsInt.offsetAdjZ[i]) > 0) {
-                for (int yOffset = 0; yOffset > -4; yOffset--) {
-                    Block block = terrainMap.getBlock(currentNode.xCoord + CoordsInt.offsetAdjX[i], currentNode.yCoord - 1 + yOffset, currentNode.zCoord + CoordsInt.offsetAdjZ[i]);
-                    if (block != Blocks.air)
-                        break;
-                    pathFinder.addNode(currentNode.xCoord + CoordsInt.offsetAdjX[i], currentNode.yCoord + yOffset, currentNode.zCoord + CoordsInt.offsetAdjZ[i], PathAction.BRIDGE);
-                }
-            }
-        }
-    }
+		if ((terrainMap instanceof IBlockAccessExtended)) {
+			int data = ((IBlockAccessExtended) terrainMap).getLayeredData(
+					currentNode.pos.xCoord, currentNode.pos.yCoord + 1,
+					currentNode.pos.zCoord);
+			if (data == 16384) {
+				pathFinder.addNode(currentNode.pos.addVector(0d, 1d, 0d), PathAction.SCAFFOLD_UP);
+			}
+		}
+	}
 
-    @Override
-    protected void calcPathOptionsVertical(IBlockAccess terrainMap, PathNode currentNode, PathfinderIM pathFinder) {
-        if ((currentNode.xCoord == -11) && (currentNode.zCoord == 177)) {
-            this.planks = 10;
-        }
-        super.calcPathOptionsVertical(terrainMap, currentNode, pathFinder);
-        if (this.planks <= 0) {
-            return;
-        }
+	protected void addAnyLadderPoint(IBlockAccess terrainMap, PathNode currentNode, PathfinderIM pathFinder) {
+		for (int i = 0; i < 4; i++) {
+			if (terrainMap.getBlockState(new BlockPos(currentNode.pos.addVector(Coords.offsetAdjX[i], 1, Coords.offsetAdjZ[i]))).isNormalCube())
+				pathFinder.addNode(currentNode.pos.addVector(0d, 1d, 0d), PathAction.ladderIndexOrient[i]);
+		}
+	}
 
-        if (getCollide(terrainMap, currentNode.xCoord, currentNode.yCoord + 1, currentNode.zCoord) > 0) {
-            if (terrainMap.getBlock(currentNode.xCoord, currentNode.yCoord + 1, currentNode.zCoord) == Blocks.air) {
-                if (currentNode.action == PathAction.NONE) {
-                    addAnyLadderPoint(terrainMap, currentNode, pathFinder);
-                } else if (!continueLadder(terrainMap, currentNode, pathFinder)) {
-                    addAnyLadderPoint(terrainMap, currentNode, pathFinder);
-                }
+	// NOOB HAUS: possible cases? LADDER_UP_PX, LADDER_UP_NX, LADDER_UP_PZ,
+	// LADDER_UP_NZ, LADDER_TOWER_UP_PX,
+	// LADDER_TOWER_UP_NX, LADDER_TOWER_UP_PZ, LADDER_TOWER_UP_NZ, SCAFFOLD_UP
+	protected boolean continueLadder(IBlockAccess terrainMap, PathNode currentNode, PathfinderIM pathFinder) {
+		switch (currentNode.action) {
+		case LADDER_TOWER_UP_PX:
+			if (terrainMap.getBlockState(new BlockPos(currentNode.pos.addVector(1d, 1d, 0d))).isNormalCube()) {
+				pathFinder.addNode(currentNode.pos.addVector(0d, 1d, 0d), PathAction.LADDER_UP_PX);
+			}
+			return true;
+		case LADDER_TOWER_UP_NX:
+			if (terrainMap.getBlockState(new BlockPos(currentNode.pos.addVector(-1d, 1d, 0d))).isNormalCube()) {
+				pathFinder.addNode(currentNode.pos.addVector(0d, 1d, 0d), PathAction.LADDER_UP_NX);
+			}
+			return true;
+		case LADDER_TOWER_UP_PZ:
+			if (terrainMap.getBlockState(new BlockPos(currentNode.pos.addVector(0d, 1d, 1d))).isNormalCube()) {
+				pathFinder.addNode(currentNode.pos.addVector(0d, 1d, 0d), PathAction.LADDER_UP_PZ);
+			}
+			return true;
+		case LADDER_TOWER_UP_NZ:
+			if (terrainMap.getBlockState(new BlockPos(currentNode.pos.addVector(0d, 1d, -1d))).isNormalCube()) {
+				pathFinder.addNode(currentNode.pos.addVector(0d, 1d, 0d), PathAction.LADDER_UP_NZ);
+			}
+			return true;
+		default:
+			break;
+		}
 
-            }
+		return false;
+	}
 
-            if ((currentNode.action == PathAction.NONE) || (currentNode.action == PathAction.BRIDGE)) {
-                int maxHeight = 4;
-                for (int i = getCollideSize().getYCoord(); i < 4; i++) {
-                    Block block = terrainMap.getBlock(currentNode.xCoord, currentNode.yCoord + i, currentNode.zCoord);
-                    if ((block != Blocks.air) && (!block.getBlocksMovement(terrainMap, currentNode.xCoord, currentNode.yCoord + i, currentNode.zCoord))) {
-                        maxHeight = i - getCollideSize().getYCoord();
-                        break;
-                    }
+	@Override
+	protected void dropFewItems(boolean flag, int bonus) {
+		super.dropFewItems(flag, bonus);
+		if (this.rand.nextInt(2) == 0) {
+			this.entityDropItem(new ItemStack(Items.LEATHER), 0f);
+		} else if (isBurning()){
+			this.entityDropItem(new ItemStack(Items.COOKED_PORKCHOP), 0f);
+		} else {
+			this.entityDropItem(new ItemStack(Items.PORKCHOP), 0f);
+		}
+	}
 
-                }
+	protected void updateAnimation() {
+		if ((!this.worldObj.isRemote) && (this.terrainModifier.isBusy())) {
+			this.setSwinging(true);
+			PathAction currentAction = getNavigatorNew().getCurrentWorkingAction();
+			this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(currentAction == PathAction.NONE ? Items.IRON_PICKAXE : BlocksAndItems.itemEngyHammer));
+		}
+		int swingSpeed = getSwingSpeed();
+		if (this.isSwinging()) {
+			this.swingTimer += 1;
+			if (this.swingTimer >= swingSpeed) {
+				this.swingTimer = 0;
+				this.setSwinging(false);
+			}
+		} else {
+			this.swingTimer = 0;
+		}
 
-                for (int i = 0; i < 4; i++) {
-                    Block block = terrainMap.getBlock(currentNode.xCoord + CoordsInt.offsetAdjX[i], currentNode.yCoord - 1, currentNode.zCoord + CoordsInt.offsetAdjZ[i]);
-                    if (block.isNormalCube()) {
-                        for (int height = 0; height < maxHeight; height++) {
-                            block = terrainMap.getBlock(currentNode.xCoord + CoordsInt.offsetAdjX[i], currentNode.yCoord + height, currentNode.zCoord + CoordsInt.offsetAdjZ[i]);
-                            if (block != Blocks.air) {
-                                if (!block.isNormalCube())
-                                    break;
-                                pathFinder.addNode(currentNode.xCoord, currentNode.yCoord + 1, currentNode.zCoord, PathAction.ladderTowerIndexOrient[i]);
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
+		this.swingProgress = (this.swingTimer / swingSpeed);
+	}
 
-        }
+	protected boolean isSwinging() {
+		return this.getDataManager().get(IS_SWINGING);
+	}
 
-        if ((terrainMap instanceof IBlockAccessExtended)) {
-            int data = ((IBlockAccessExtended) terrainMap).getLayeredData(currentNode.xCoord, currentNode.yCoord + 1, currentNode.zCoord);
-            if (data == 16384) {
-                pathFinder.addNode(currentNode.xCoord, currentNode.yCoord + 1, currentNode.zCoord, PathAction.SCAFFOLD_UP);
-            }
-        }
-    }
+	protected void setSwinging(boolean flag) {
+		this.getDataManager().set(IS_SWINGING, flag);
+	}
 
-    protected void addAnyLadderPoint(IBlockAccess terrainMap, PathNode currentNode, PathfinderIM pathFinder) {
-        for (int i = 0; i < 4; i++) {
-            if (terrainMap.getBlock(currentNode.xCoord + CoordsInt.offsetAdjX[i], currentNode.yCoord + 1, currentNode.zCoord + CoordsInt.offsetAdjZ[i]).isNormalCube())
-                pathFinder.addNode(currentNode.xCoord, currentNode.yCoord + 1, currentNode.zCoord, PathAction.ladderIndexOrient[i]);
-        }
-    }
+	protected int getSwingSpeed() {
+		return 10;
+	}
 
-    //NOOB HAUS: possible cases?  LADDER_UP_PX, LADDER_UP_NX, LADDER_UP_PZ, LADDER_UP_NZ, LADDER_TOWER_UP_PX,
-//	  LADDER_TOWER_UP_NX, LADDER_TOWER_UP_PZ, LADDER_TOWER_UP_NZ, SCAFFOLD_UP
-    protected boolean continueLadder(IBlockAccess terrainMap, PathNode currentNode, PathfinderIM pathFinder) {
-        switch (currentNode.action) {
-            case LADDER_TOWER_UP_PX:
-                if (terrainMap.getBlock(currentNode.xCoord + 1, currentNode.yCoord + 1, currentNode.zCoord).isNormalCube()) {
-                    pathFinder.addNode(currentNode.xCoord, currentNode.yCoord + 1, currentNode.zCoord, PathAction.LADDER_UP_PX);
-                }
-                return true;
-            case LADDER_TOWER_UP_NX:
-                if (terrainMap.getBlock(currentNode.xCoord - 1, currentNode.yCoord + 1, currentNode.zCoord).isNormalCube()) {
-                    pathFinder.addNode(currentNode.xCoord, currentNode.yCoord + 1, currentNode.zCoord, PathAction.LADDER_UP_NX);
-                }
-                return true;
-            case LADDER_TOWER_UP_PZ:
-                if (terrainMap.getBlock(currentNode.xCoord, currentNode.yCoord + 1, currentNode.zCoord + 1).isNormalCube()) {
-                    pathFinder.addNode(currentNode.xCoord, currentNode.yCoord + 1, currentNode.zCoord, PathAction.LADDER_UP_PZ);
-                }
-                return true;
-            case LADDER_TOWER_UP_NZ:
-                if (terrainMap.getBlock(currentNode.xCoord, currentNode.yCoord + 1, currentNode.zCoord - 1).isNormalCube()) {
-                    pathFinder.addNode(currentNode.xCoord, currentNode.yCoord + 1, currentNode.zCoord, PathAction.LADDER_UP_NZ);
-                }
-                return true;
-        }
+	public boolean canPlaceLadderAt(BlockPos pos) {
+		if (EntityIMLiving.unDestructableBlocks.contains(this.worldObj.getBlockState(pos).getBlock())) {
+			return ((this.worldObj.getBlockState(pos.west()).isNormalCube())
+					|| (this.worldObj.getBlockState(pos.east()).isNormalCube())
+					|| (this.worldObj.getBlockState(pos.north()).isNormalCube())
+					|| (this.worldObj.getBlockState(pos.south()).isNormalCube()));
+		}
+		return false;
+	}
 
-        return false;
-    }
+	@Override
+	public void onBlockRemoved(BlockPos pos, IBlockState state) {
+		// TODO Auto-generated method stub
 
-    @Override
-    public ItemStack getHeldItem() {
-        return getCurrentItem();
-    }
+	}
 
-    @Override
-    protected void dropFewItems(boolean flag, int bonus) {
-        super.dropFewItems(flag, bonus);
-        if (this.rand.nextInt(2) == 0) {
-            entityDropItem(new ItemStack(Items.leather, 1, 0), 0.0F);
-        } else if (isBurning())
-            entityDropItem(new ItemStack(Items.cooked_porkchop, 1, 0), 0.0F);
-        else
-            entityDropItem(new ItemStack(Items.porkchop, 1, 0), 0.0F);
-    }
-
-    protected void updateAnimation() {
-        if ((!this.worldObj.isRemote) && (this.terrainModifier.isBusy())) {
-            setSwinging(true);
-            PathAction currentAction = getNavigatorNew().getCurrentWorkingAction();
-            if (currentAction == PathAction.NONE)
-                setCurrentItem(new ItemStack(Items.iron_pickaxe, 1));
-            else {
-                setCurrentItem(new ItemStack(Invasion.itemEngyHammer, 1));
-            }
-        }
-        int swingSpeed = getSwingSpeed();
-        if (isSwinging()) {
-            this.swingTimer += 1;
-            if (this.swingTimer >= swingSpeed) {
-                this.swingTimer = 0;
-                setSwinging(false);
-            }
-        } else {
-            this.swingTimer = 0;
-        }
-
-        this.swingProgress = (this.swingTimer / swingSpeed);
-    }
-
-    protected boolean isSwinging() {
-        return getDataWatcher().getWatchableObjectByte(31) != 0;
-    }
-
-    protected void setSwinging(boolean flag) {
-        if (flag) {
-            getDataWatcher().updateObject(31, Byte.valueOf((byte) 1));
-        } else {
-            getDataWatcher().updateObject(31, Byte.valueOf((byte) 0));
-        }
-
-    }
-
-    protected int getSwingSpeed() {
-        return 10;
-    }
-
-    protected ItemStack getCurrentItem() {
-        if (this.worldObj.isRemote) {
-            ItemStack item = getDataWatcher().getWatchableObjectItemStack(30);
-            if (item != this.currentItem) {
-                this.currentItem = item;
-            }
-        }
-        return this.currentItem;
-    }
-
-    protected void setCurrentItem(ItemStack item) {
-        this.currentItem = item;
-        getDataWatcher().updateObject(30, item);
-    }
-
-    @Override
-    public void onBlockRemoved(int paramInt1, int paramInt2, int paramInt3,
-                               Block block) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public String toString() {
-        return "IMPigManEngineer-T" + this.getTier();
-    }
+	@Override
+	public String toString() {
+		return "IMPigManEngineer-T" + this.getTier();
+	}
 
 }

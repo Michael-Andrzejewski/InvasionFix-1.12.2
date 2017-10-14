@@ -1,0 +1,10 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "mod_invasion:items/nexusAdjuster"
+    },
+    "overrides": [
+		{ "predicate": { "damage": 0 }, "model": "mod_invasion:item/nexusAdjuster" },
+		{ "predicate": { "damage": 1 }, "model": "mod_invasion:item/materialProbe" }
+	]
+}

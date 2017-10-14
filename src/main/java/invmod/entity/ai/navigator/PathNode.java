@@ -1,96 +1,120 @@
-package invmod.common.entity;
+package invmod.entity.ai.navigator;
 
-import invmod.common.util.IPosition;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 
-public class PathNode
-        implements IPosition {
-    public final int xCoord;
-    public final int yCoord;
-    public final int zCoord;
-    public final PathAction action;
-    private final int hash;
-    public boolean isFirst;
-    int index;
-    float totalPathDistance;
-    float distanceToNext;
-    float distanceToTarget;
-    private PathNode previous;
+public class PathNode {
+	
+	//DarthXenon: Changed the following fields to double for added precision: xCoord, yCoord, zCoord, distanceToNext, ditanceToTarget
+	//public final double xCoord;
+	//public final double yCoord;
+	//public final double zCoord;
+	public final Vec3d pos;
+	public final PathAction action;
+	private final int hash;
+	int index;
+	float totalPathDistance;
+	double distanceToNext;
+	double distanceToTarget;
+	private PathNode previous;
+	public boolean isFirst;
 
-    public PathNode(int i, int j, int k) {
-        this(i, j, k, PathAction.NONE);
-    }
+	public PathNode(int i, int j, int k) {
+		this(i, j, k, PathAction.NONE);
+	}
+	
+	public PathNode(int i, int j, int k, PathAction pathAction) {
+		this((double)i, (double)j, (double)k, pathAction);
+	}
+	
+	public PathNode(double i, double j, double k){
+		this(i, j, k, PathAction.NONE);
+	}
+	
+	public PathNode(double i, double j, double k, PathAction pathAction){
+		this(new Vec3d(i, j, k), pathAction);
+	}
+	
+	public PathNode(Vec3d pos, PathAction pathAction){
+		this.index = -1;
+		this.isFirst = false;
+		this.pos = pos;
+		this.action = pathAction;
+		this.hash = makeHash(pos, this.action);
+	}
 
-    public PathNode(int i, int j, int k, PathAction pathAction) {
-        this.index = -1;
-        this.isFirst = false;
-        this.xCoord = i;
-        this.yCoord = j;
-        this.zCoord = k;
-        this.action = pathAction;
-        this.hash = makeHash(i, j, k, this.action);
-    }
+	/*public static int makeHash(int x, int y, int z, PathAction action) {
+		return y & 0xFF | (x & 0xFF) << 8 | (z & 0xFF) << 16
+				| (action.ordinal() & 0xFF) << 24;
+	}*/
+	
+	/*public static int makeHash(double x, double y, double z, PathAction action){
+		return (Double.hashCode(y) & 0xFF) | (Double.hashCode(x) & 0xFF) << 8 | (Double.hashCode(z) & 0xFF) << 16
+				| (action.ordinal() & 0xFF) << 24;
+	}*/
+	
+	//DarthXenon: I hope I'm doing this right.
+	public static int makeHash(Vec3d vec, PathAction action){
+		long j = Integer.toUnsignedLong(action.ordinal());
+		return 31 * vec.hashCode() + (int)(j ^ j >>> 32);
+	}
+	
+	public static int makeHash(double x, double y, double z, PathAction action){
+		return makeHash(new Vec3d(x, y, z), action);
+	}
 
-    public static int makeHash(int x, int y, int z, PathAction action) {
-        return y & 0xFF | (x & 0xFF) << 8 | (z & 0xFF) << 16 | (action.ordinal() & 0xFF) << 24;
-    }
+	public float distanceTo(PathNode pathpoint) {
+		double d0 = pathpoint.pos.xCoord - this.pos.xCoord;
+		double d1 = pathpoint.pos.yCoord - this.pos.yCoord;
+		double d2 = pathpoint.pos.zCoord - this.pos.zCoord;
+		return MathHelper.sqrt_double(d0 * d0 + d1 * d1 + d2 * d2);
+	}
 
-    public float distanceTo(PathNode pathpoint) {
-        float f = pathpoint.xCoord - this.xCoord;
-        float f1 = pathpoint.yCoord - this.yCoord;
-        float f2 = pathpoint.zCoord - this.zCoord;
-        return MathHelper.sqrt_float(f * f + f1 * f1 + f2 * f2);
-    }
+	public float distanceTo(double x, double y, double z) {
+		double d0 = x - this.pos.xCoord;
+		double d1 = y - this.pos.yCoord;
+		double d2 = z - this.pos.zCoord;
+		return MathHelper.sqrt_double(d0 * d0 + d1 * d1 + d2 * d2);
+	}
 
-    public float distanceTo(float x, float y, float z) {
-        float f = x - this.xCoord;
-        float f1 = y - this.yCoord;
-        float f2 = z - this.zCoord;
-        return MathHelper.sqrt_float(f * f + f1 * f1 + f2 * f2);
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if ((obj instanceof PathNode)) {
+			PathNode node = (PathNode) obj;
+			return (this.hash == node.hash) && this.equals(node.pos) && (node.action == this.action);
+		}
 
-    public boolean equals(Object obj) {
-        if ((obj instanceof PathNode)) {
-            PathNode node = (PathNode) obj;
-            return (this.hash == node.hash) && (this.xCoord == node.xCoord) && (this.yCoord == node.yCoord) && (this.zCoord == node.zCoord) && (node.action == this.action);
-        }
+		return false;
+	}
 
-        return false;
-    }
+	public boolean equals(double x, double y, double z) {
+		return (this.pos.xCoord == x) && (this.pos.yCoord == y) && (this.pos.zCoord == z);
+	}
+	
+	public boolean equals(Vec3d pos){
+		return this.pos.equals(pos);
+	}
+	
+	@Override
+	public int hashCode() {
+		return this.hash;
+	}
 
-    public boolean equals(int x, int y, int z) {
-        return (this.xCoord == x) && (this.yCoord == y) && (this.zCoord == z);
-    }
+	public boolean isAssigned() {
+		return this.index >= 0;
+	}
 
-    public int hashCode() {
-        return this.hash;
-    }
+	@Override
+	public String toString() {
+		return this.pos.toString() + ", " + this.action.toString();
+	}
 
-    public boolean isAssigned() {
-        return this.index >= 0;
-    }
+	public PathNode getPrevious() {
+		return previous;
+	}
 
-    public int getXCoord() {
-        return this.xCoord;
-    }
-
-    public int getYCoord() {
-        return this.yCoord;
-    }
-
-    public int getZCoord() {
-        return this.zCoord;
-    }
-
-    public String toString() {
-        return this.xCoord + ", " + this.yCoord + ", " + this.zCoord + ", " + this.action;
-    }
-
-    public PathNode getPrevious() {
-        return previous;
-    }
-
-    public void setPrevious(PathNode previous) {
-        this.previous = previous;
-    }
+	public void setPrevious(PathNode previous) {
+		this.previous = previous;
+	}
 }

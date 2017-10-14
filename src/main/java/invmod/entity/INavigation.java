@@ -1,48 +1,52 @@
-package invmod.common.entity;
+package invmod.entity;
 
-import invmod.common.INotifyTask;
+import invmod.INotifyTask;
+import invmod.entity.ai.navigator.Path;
+import invmod.entity.ai.navigator.PathAction;
 import net.minecraft.entity.Entity;
 
-public abstract interface INavigation extends INotifyTask {
-    public abstract PathAction getCurrentWorkingAction();
+public interface INavigation extends INotifyTask {
+	
+	public PathAction getCurrentWorkingAction();
+	
+	public void setSpeed(float paramFloat);
 
-    public abstract void setSpeed(float paramFloat);
+	public Path getPathToXYZ(double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat);
 
-    public abstract Path getPathToXYZ(double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat);
+	public boolean tryMoveToXYZ(double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat1, float paramFloat2);
 
-    public abstract boolean tryMoveToXYZ(double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat1, float paramFloat2);
+	public Path getPathTowardsXZ(double paramDouble1, double paramDouble2, int paramInt1, int paramInt2, int paramInt3);
 
-    public abstract Path getPathTowardsXZ(double paramDouble1, double paramDouble2, int paramInt1, int paramInt2, int paramInt3);
+	public boolean tryMoveTowardsXZ(double paramDouble1, double paramDouble2, int paramInt1, int paramInt2, int paramInt3, float paramFloat);
 
-    public abstract boolean tryMoveTowardsXZ(double paramDouble1, double paramDouble2, int paramInt1, int paramInt2, int paramInt3, float paramFloat);
+	public Path getPathToEntity(Entity paramEntity, float paramFloat);
 
-    public abstract Path getPathToEntity(Entity paramEntity, float paramFloat);
+	public boolean tryMoveToEntity(Entity paramEntity, float paramFloat1, float paramFloat2);
 
-    public abstract boolean tryMoveToEntity(Entity paramEntity, float paramFloat1, float paramFloat2);
+	public void autoPathToEntity(Entity paramEntity);
 
-    public abstract void autoPathToEntity(Entity paramEntity);
+	public boolean setPath(Path paramPath, float paramFloat);
 
-    public abstract boolean setPath(Path paramPath, float paramFloat);
+	public boolean isWaitingForTask();
 
-    public abstract boolean isWaitingForTask();
+	public Path getPath();
 
-    public abstract Path getPath();
+	public void onUpdateNavigation();
 
-    public abstract void onUpdateNavigation();
+	public int getLastActionResult();
 
-    public abstract int getLastActionResult();
+	public boolean noPath();
 
-    public abstract boolean noPath();
+	public int getStuckTime();
 
-    public abstract int getStuckTime();
+	public float getLastPathDistanceToTarget();
 
-    public abstract float getLastPathDistanceToTarget();
+	public void clearPath();
 
-    public abstract void clearPath();
+	public void haltForTick();
 
-    public abstract void haltForTick();
+	public Entity getTargetEntity();
 
-    public abstract Entity getTargetEntity();
-
-    public abstract String getStatus();
+	public String getStatus();
+	
 }

@@ -1,69 +1,79 @@
-package com.whammich.invasion.client.render;
+package invmod.client.render;
 
-import invmod.common.entity.EntityIMZombiePigman;
+import invmod.Reference;
+import invmod.client.render.layer.LayerHeldItemBigBiped;
+import invmod.client.render.model.ModelBigBiped;
+import invmod.entity.monster.EntityIMZombiePigman;
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.model.ModelZombie;
 import net.minecraft.client.renderer.entity.RenderBiped;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
+import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
 import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
 
-public class RenderIMZombiePigman extends RenderBiped {
-    private static final ResourceLocation t_T1 = new ResourceLocation("invmod:textures/pigzombie64x32.png");
-    private static final ResourceLocation t_T3 = new ResourceLocation("invmod:textures/zombiePigmanT3.png");
-    protected ModelBiped modelBiped;
-    protected ModelBigBiped modelBigBiped;
+public class RenderIMZombiePigman extends RenderBiped<EntityIMZombiePigman> {
+	
+	private static final ResourceLocation t_T1 = new ResourceLocation(Reference.MODID + ":textures/pigzombie64x32.png");
+	private static final ResourceLocation t_T3 = new ResourceLocation(Reference.MODID + ":textures/zombiePigmanT3.png");
+	
+	protected ModelBiped modelBiped;
+	protected ModelBigBiped modelBigBiped = new ModelBigBiped();
+	
+	protected LayerHeldItem layerHeldItem = new LayerHeldItem(this);
+	protected LayerHeldItemBigBiped layerHeldItemBigBiped = new LayerHeldItemBigBiped(this);
+	protected LayerBipedArmor layerBipedArmor = new LayerBipedArmor(this){
+		@Override
+		protected void initArmor(){
+			this.modelLeggings = new ModelZombie(0.5F, true);
+			this.modelArmor = new ModelZombie(1.0F, true);
+		}
+	};
 
-    public RenderIMZombiePigman(ModelBiped model, float par2) {
-        this(model, par2, 1.0F);
-    }
+	public RenderIMZombiePigman(RenderManager renderManager) {
+		super(renderManager, new ModelZombie(0.0F, true), 0.5F);
+		this.modelBiped = (ModelBiped) this.mainModel;
+		this.addLayer(this.layerHeldItem);
+		this.addLayer(this.layerBipedArmor);
+	}
 
-    public RenderIMZombiePigman(ModelBiped model, float par2, float par3) {
-        super(model, par2);
-        this.modelBiped = model;
-        this.modelBigBiped = new ModelBigBiped();
-    }
+	@Override
+	public void doRender(EntityIMZombiePigman entity, double x, double y, double z, float entityYaw, float partialTicks) {
+		this.removeLayer(this.layerHeldItem);
+		this.removeLayer(this.layerHeldItemBigBiped);
+		if (entity.isBigRenderTempHack()) {
+			this.addLayer(this.layerHeldItemBigBiped);
+			this.mainModel = this.modelBigBiped;
+			this.modelBigBiped.setSneaking(entity.isSneaking());
+			this.doRenderBigBiped(entity, x, y, z, entityYaw, partialTicks);
+		} else {
+			this.addLayer(this.layerHeldItem);
+			this.mainModel = this.modelBiped;
+			super.doRender(entity, x, y, z, entityYaw, partialTicks);
+		}
+		
+	}
 
-    @Override
-    public void doRender(EntityLiving entity, double par2, double par4, double par6, float par8, float par9) {
-        if ((entity instanceof EntityIMZombiePigman)) {
-            if (((EntityIMZombiePigman) entity).isBigRenderTempHack()) {
-                this.mainModel = this.modelBigBiped;
-                this.modelBigBiped.setSneaking(entity.isSneaking());
-            } else {
-                this.mainModel = this.modelBiped;
-            }
-            super.doRender(entity, par2, par4, par6, par8, par9);
-        }
-    }
+	public void doRenderBigBiped(EntityIMZombiePigman entity, double x, double y, double z, float entityYaw, float partialTicks) {}
+	
+	@Override
+	protected void preRenderCallback(EntityIMZombiePigman entity, float partialTickTime) {
+		float f = entity.scaleAmount();
+		GL11.glScalef(f, (2.0F + f) / 3.0F, f);
+	}
 
-    @Override
-    protected void preRenderCallback(EntityLivingBase par1EntityLiving, float par2) {
-        float f = ((EntityIMZombiePigman) par1EntityLiving).scaleAmount();
-        GL11.glScalef(f, (2.0F + f) / 3.0F, f);
-    }
+	protected ResourceLocation getTexture(EntityIMZombiePigman entity) {
+		switch (entity.getTextureId()) {
+		case 0: return t_T1;
+		case 2: return t_T3;
+		default: return t_T1;
+		}
+	}
 
-    @Override
-    protected void renderEquippedItems(EntityLivingBase entity, float par2) {
-        if (((EntityIMZombiePigman) entity).getTier() != 3) {
-            super.renderEquippedItems(entity, par2);
-        }
-    }
-
-
-    protected ResourceLocation getTexture(EntityIMZombiePigman entity) {
-        switch (entity.getTextureId()) {
-            case 0:
-                return t_T1;
-            case 2:
-                return t_T3;
-
-        }
-        return t_T1;
-    }
-
-    protected ResourceLocation getEntityTexture(Entity entity) {
-        return getTexture((EntityIMZombiePigman) entity);
-    }
+	@Override
+	protected ResourceLocation getEntityTexture(EntityIMZombiePigman entity) {
+		return getTexture((EntityIMZombiePigman) entity);
+	}
 }

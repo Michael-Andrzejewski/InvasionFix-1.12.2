@@ -1,9 +1,21 @@
-package invmod.common.entity;
+package invmod.entity;
 
-import invmod.common.INotifyTask;
+import invmod.INotifyTask;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 
-public abstract interface ITerrainDig {
-    public abstract boolean askRemoveBlock(int paramInt1, int paramInt2, int paramInt3, INotifyTask paramINotifyTask, float paramFloat);
-
-    public abstract boolean askClearPosition(int paramInt1, int paramInt2, int paramInt3, INotifyTask paramINotifyTask, float paramFloat);
+public interface ITerrainDig {
+	
+	public boolean askRemoveBlock(BlockPos pos, INotifyTask onFinished, float costMultiplier);
+	
+	public boolean askClearPosition(BlockPos pos, INotifyTask onFinished, float costMultiplier);
+	
+	public default boolean askRemoveBlock(Vec3d vec, INotifyTask onFinished, float costMultiplier){
+		return this.askRemoveBlock(new BlockPos(vec), onFinished, costMultiplier);
+	}
+	
+	public default boolean askClearPosition(Vec3d vec, INotifyTask onFinished, float costMultiplier){
+		return this.askClearPosition(new BlockPos(vec), onFinished, costMultiplier);
+	}
+	
 }

@@ -1,107 +1,95 @@
-package com.whammich.invasion.items;
+package invmod.item;
 
-import com.whammich.invasion.InvasionMod;
-import com.whammich.invasion.Reference;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import invmod.Invasion;
-import invmod.common.entity.EntityIMLiving;
-import invmod.common.nexus.TileEntityNexus;
+import invmod.BlocksAndItems;
+import invmod.mod_Invasion;
+import invmod.entity.monster.EntityIMMob;
+import invmod.tileentity.TileEntityNexus;
+import invmod.util.ModLogger;
+
+import java.util.List;
+
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
+public class ItemProbe extends ModItem {
+	
+	public static final String[] probeNames = { "nexusAdjuster", "materialProbe" };
+	
+	public ItemProbe() {
+		super("probe");
+		this.setHasSubtypes(true);
+		this.setMaxDamage(1);
+		this.setMaxStackSize(1);
+		this.setCreativeTab(mod_Invasion.tabInvmod);
+	}
 
-public class ItemProbe extends Item {
+	@Override
+	public boolean isFull3D() {
+		return true;
+	}
 
-    public static String[] names = { "adjuster.nexus", "material" };
-    public IIcon[] icons = new IIcon[names.length];
+	@Override
+	public EnumActionResult onItemUseFirst(ItemStack itemstack,
+			EntityPlayer player, World world, BlockPos blockPos,
+			EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+		
+		//if (world.isRemote) return EnumActionResult.FAIL;
+		Block block = world.getBlockState(blockPos).getBlock();
+		
+		//Change Nexus spawn range
+		if (block == BlocksAndItems.blockNexus) {
+			TileEntityNexus nexus = (TileEntityNexus) world.getTileEntity(blockPos);
+			int newRange = nexus.getSpawnRadius();
 
-    public ItemProbe() {
-        super();
-        setUnlocalizedName(Reference.PREFIX + ".probe");
-        setCreativeTab(InvasionMod.tabInvasion);
-        setHasSubtypes(true);
-        setMaxDamage(0);
-    }
+			// check if the player wants to increase or decrease the range
+			newRange += player.isSneaking() ? -8 : 8;
+			
+			if (newRange < 32) newRange = 128;
+			if (newRange > 128) newRange = 32;
+			nexus.setSpawnRadius(newRange);
+			mod_Invasion.sendMessageToPlayer(player, "Nexus range changed to: " + nexus.getSpawnRadius());
+			return EnumActionResult.SUCCESS;
+		}
+		
+		//Display block strength; material probe only
+		if (itemstack.getItemDamage() == 1) {
+			float blockStrength = EntityIMMob.getBlockStrength(blockPos, block, world);
+			mod_Invasion.sendMessageToPlayer(player, "Block strength: " + (int) ((blockStrength + 0.005D) * 100.0D) / 100.0D);
+			return EnumActionResult.SUCCESS;
+		}
+		return EnumActionResult.FAIL;
+	}
 
-    @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        return getUnlocalizedName() + "." + names[stack.getItemDamage() % names.length];
-    }
+	@Override
+	public String getUnlocalizedName(ItemStack itemstack) {
+		if (itemstack.getItemDamage() < probeNames.length) {
+			return super.getUnlocalizedName() + "." + probeNames[itemstack.getItemDamage()];
+		}
+		return super.getUnlocalizedName();
+	}
 
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void registerIcons(IIconRegister par1IconRegister) {
-        this.icons[0] = par1IconRegister.registerIcon(Reference.PREFIX + ":adjuster");
-        this.icons[1] = par1IconRegister.registerIcon(Reference.PREFIX + ":probe");
-    }
+	@Override
+	public int getItemEnchantability() {
+		return 14;
+	}
 
-    @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(int meta) {
-        return this.icons[meta];
-    }
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void getSubItems(Item item, CreativeTabs tab, List dest) {
+		dest.add(new ItemStack(item, 1, 0));
+		dest.add(new ItemStack(item, 1, 1));
+	}
 
-    @Override
-    public boolean onItemUseFirst(ItemStack itemstack, EntityPlayer entityplayer, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-
-        if (world.isRemote) {
-            return false;
-        }
-        Block block = world.getBlock(x, y, z);
-        EntityPlayerMP player = (EntityPlayerMP) entityplayer;
-        if (block == Invasion.blockNexus) {
-
-            TileEntityNexus nexus = (TileEntityNexus) world.getTileEntity(x, y, z);
-            int newRange = nexus.getSpawnRadius();
-
-            //check if the player wants to increase or decrease the range
-            if (entityplayer.isSneaking()) {
-
-                newRange -= 8;
-                if (newRange < 32) {
-                    newRange = 128;
-                }
-
-            } else {
-
-                newRange += 8;
-                if (newRange > 128) {
-                    newRange = 32;
-                }
-
-            }
-
-            nexus.setSpawnRadius(newRange);
-            Invasion.sendMessageToPlayer(player, "Nexus range changed to: " + nexus.getSpawnRadius());
-            return true;
-        }
-        if (itemstack.getItemDamage() == 1) {
-
-            float blockStrength = EntityIMLiving.getBlockStrength(x, y, z, block, world);
-            Invasion.sendMessageToPlayer(player, "Block strength: " + (int) ((blockStrength + 0.005D) * 100.0D) / 100.0D);
-            return true;
-        }
-        return false;
-    }
-
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tabs, List list) {
-        for (int i = 0; i < names.length; i++) {
-            list.add(new ItemStack(this, 1, i));
-        }
-    }
-
-    @Override
-    public int getItemEnchantability() {
-        return 14;
-    }
 }

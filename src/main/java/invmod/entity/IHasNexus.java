@@ -1,9 +1,10 @@
-package invmod.common.entity;
+package invmod.entity;
 
-import invmod.common.nexus.INexusAccess;
+import invmod.tileentity.TileEntityNexus;
 
-public abstract interface IHasNexus {
-    public abstract INexusAccess getNexus();
+public interface IHasNexus
+{
+  public TileEntityNexus getNexus();
 
-    public abstract void acquiredByNexus(INexusAccess paramINexusAccess);
+  public void acquiredByNexus(TileEntityNexus nexus);
 }

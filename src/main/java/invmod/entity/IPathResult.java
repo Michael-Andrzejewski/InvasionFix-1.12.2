@@ -1,5 +1,8 @@
-package invmod.common.entity;
+package invmod.entity;
 
-public abstract interface IPathResult {
-    public abstract void pathCompleted(Path paramPath);
+import invmod.entity.ai.navigator.Path;
+
+public abstract interface IPathResult
+{
+  public abstract void pathCompleted(Path paramPath);
 }

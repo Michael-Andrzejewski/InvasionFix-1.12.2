@@ -1,5 +1,6 @@
-package invmod.common;
+package invmod;
 
-public abstract interface INotifyTask {
-    public abstract void notifyTask(int paramInt);
+public abstract interface INotifyTask
+{
+  public abstract void notifyTask(int paramInt);
 }

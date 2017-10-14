@@ -1,21 +1,21 @@
-package invmod.common.creativetab;
+package invmod.creativetab;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import invmod.Invasion;
+import invmod.BlocksAndItems;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class CreativeTabInvmod extends CreativeTabs {
+public class CreativeTabInvmod extends CreativeTabs{
 
-    public CreativeTabInvmod() {
-        super("invasionTab");
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public Item getTabIconItem() {
-        return Item.getItemFromBlock(Invasion.blockNexus);
-    }
-
+	public CreativeTabInvmod() {
+		super("invasionTab");
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Item getTabIconItem(){
+		return Item.getItemFromBlock(BlocksAndItems.blockNexus);
+	}
+	
 }

@@ -1,81 +1,136 @@
-package invmod.common.entity;
+package invmod.entity.ai.navigator;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.pathfinding.PathEntity;
-import net.minecraft.pathfinding.PathNavigate;
+import net.minecraft.pathfinding.PathFinder;
+import net.minecraft.pathfinding.PathNavigateGround;
+import net.minecraft.pathfinding.WalkNodeProcessor;
+import net.minecraft.util.math.Vec3d;
 
-public class PathNavigateAdapter extends PathNavigate {
-    private NavigatorIM navigator;
+public class PathNavigateAdapter extends PathNavigateGround {
+	
+	private NavigatorIM navigator;
+    protected WalkNodeProcessor walkNodeProcessor;
+    
+	public PathNavigateAdapter(NavigatorIM navigator) {
+		super(navigator.getEntity(), navigator.getEntity().worldObj);
+		this.navigator = navigator;
+		if(this.nodeProcessor == null) this.nodeProcessor = this.walkNodeProcessor;
+	}
 
-    public PathNavigateAdapter(NavigatorIM navigator) {
-        super(navigator.getEntity(), navigator.getEntity().worldObj);
-        this.navigator = navigator;
-    }
+	@Override
+	public void onUpdateNavigation() {
+		this.navigator.onUpdateNavigation();
+	}
 
-    public void onUpdateNavigation() {
-        this.navigator.onUpdateNavigation();
-    }
+	@Override
+	public boolean noPath() {
+		return this.navigator.noPath();
+	}
 
-    public boolean noPath() {
-        return this.navigator.noPath();
-    }
+	@Override
+	public void clearPathEntity() {
+		this.navigator.clearPath();
+	}
 
-    public void clearPathEntity() {
-        this.navigator.clearPath();
-    }
+	@Override
+	public void setSpeed(double speed) {
+		this.navigator.setSpeed((float) speed);
+	}
 
-    public void setSpeed(double speed) {
-        this.navigator.setSpeed((float) speed);
-    }
+	@Override
+	public boolean tryMoveToXYZ(double x, double y, double z, double movespeed) {
+		return this.navigator.tryMoveToXYZ(x, y, z, 0.0F, (float) movespeed);
+	}
 
-    public boolean tryMoveToXYZ(double x, double y, double z, double movespeed) {
-        return this.navigator.tryMoveToXYZ(x, y, z, 0.0F, (float) movespeed);
-    }
+	@Override
+	public boolean tryMoveToEntityLiving(Entity entity, double movespeed) {
+		return this.navigator.tryMoveToEntity(entity, 0.0F, (float) movespeed);
+	}
 
-    public boolean tryMoveToEntityLiving(Entity entity, double movespeed) {
-        return this.navigator.tryMoveToEntity(entity, 0.0F, (float) movespeed);
-    }
+	public boolean setPath(invmod.entity.ai.navigator.Path entity, float movespeed) {
+		return this.navigator.setPath(entity, movespeed);
+	}
 
-    public boolean setPath(Path entity, float movespeed) {
-        return this.navigator.setPath(entity, movespeed);
-    }
+	@Override
+	public boolean setPath(net.minecraft.pathfinding.Path entity, double movespeed) {
+		return false;
+	}
 
-    public boolean setPath(PathEntity entity, double movespeed) {
-        return false;
-    }
+	// @Override
+	// public PathEntity getPathToXYZ(double x, double y, double z) {
+	// return null;
+	// }
+	//
+	// @Override
+	// public void setAvoidsWater(boolean avoidsWater) {
+	// }
+	//
+	// @Override
+	// public boolean getAvoidsWater() {
+	// return false;
+	// }
+	//
+	// @Override
+	// public void setBreakDoors(boolean breakDoors) {
+	// }
+	//
+	// @Override
+	// public void setEnterDoors(boolean enterDoors) {
+	// }
+	//
+	// @Override
+	// public boolean getCanBreakDoors() {
+	// return false;
+	// }
+	//
+	// @Override
+	// public void setAvoidSun(boolean shouldAvoidSun) {
+	// }
+	//
+	// @Override
+	// public void setCanSwim(boolean shouldBeAbleToSwim) {
+	// }
 
-    public PathEntity getPathToXYZ(double x, double y, double z) {
-        return null;
-    }
+	@Override
+	public net.minecraft.pathfinding.Path getPathToEntityLiving(Entity entity) {
+		return null;
+	}
 
-    public boolean getAvoidsWater() {
-        return false;
-    }
+	@Override
+	public net.minecraft.pathfinding.Path getPath() {
+		return null;
+	}
 
-    public void setAvoidsWater(boolean par1) {
-    }
+	@Override
+	protected PathFinder getPathFinder() {
+		this.walkNodeProcessor = new WalkNodeProcessor();
+        this.walkNodeProcessor.setCanBreakDoors(true); //.func_176175_a(true); //TODO: Unsure.
+        return new PathFinder(this.walkNodeProcessor);
+	}
 
-    public void setBreakDoors(boolean par1) {
-    }
+	@Override
+	protected Vec3d getEntityPosition() {
+		return null;
+	}
 
-    public void setEnterDoors(boolean par1) {
-    }
+	@Override
+	protected boolean canNavigate() {
+		return false;
+	}
 
-    public boolean getCanBreakDoors() {
-        return false;
-    }
-
-    public void setAvoidSun(boolean par1) {
-    }
-
-    public void setCanSwim(boolean par1) {
-    }
-
-    public PathEntity getPathToEntityLiving(Entity par1EntityLiving) {
-        return null;
-    }
-
-    public PathEntity getPath() {
-        return null;
-    }
+	@Override
+	protected boolean isDirectPathBetweenPoints(Vec3d p_75493_1_, Vec3d p_75493_2_, int p_75493_3_, int p_75493_4_, int p_75493_5_) {
+		return false;
+	}
+	
+	/*@Override
+	public void func_179693_d(boolean thing) {
+		this.walkNodeProcessor.func_176178_d(thing);
+	}*/
+	
+	//TODO: Unsure.
+	@Override
+	public void setBreakDoors(boolean thing){
+		this.walkNodeProcessor.setCanBreakDoors(thing);
+	}
 }

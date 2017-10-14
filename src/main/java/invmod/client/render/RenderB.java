@@ -1,73 +1,92 @@
-package com.whammich.invasion.client.render;
+package invmod.client.render;
 
-import invmod.common.entity.EntityIMBird;
+import invmod.Reference;
+import invmod.client.render.model.ModelBird;
+import invmod.entity.monster.EntityIMBird;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.Entity;
+import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.Vec3d;
+
 import org.lwjgl.opengl.GL11;
 
-public class RenderB extends RenderLiving {
-    private static final ResourceLocation texture = new ResourceLocation("invmod:textures/bird_tx1.png");
-    private ModelBird modelBird;
+public class RenderB extends RenderLiving<EntityIMBird> {
+	private ModelBird modelBird;
+	private static final ResourceLocation texture = new ResourceLocation(Reference.MODID + ":textures/bird_tx1.png");
 
-    public RenderB() {
-        super(new ModelBird(), 0.4F);
-        this.modelBird = ((ModelBird) this.mainModel);
-    }
+	public RenderB(RenderManager renderManager) {
+		super(renderManager, new ModelBird(), 0.4F);
+		this.modelBird = ((ModelBird) this.mainModel);
+	}
+	
+	@Override
+	public void doRender(EntityIMBird entityBird, double renderX, double renderY, double renderZ, float interpYaw, float partialTick) {
+		if (entityBird.hasFlyingDebug()) {
+			renderNavigationVector(entityBird, renderX, renderY, renderZ);
+		}
 
-    public void renderBz(EntityIMBird entityBird, double renderX, double renderY, double renderZ, float interpYaw, float partialTick) {
-        if (entityBird.hasFlyingDebug()) {
-            renderNavigationVector(entityBird, renderX, renderY, renderZ);
-        }
+		float flapProgress = entityBird.getWingAnimationState().getCurrentAnimationTimeInterp(partialTick);
+		this.modelBird.setFlyingAnimations(flapProgress, entityBird.getLegSweepProgress(), entityBird.getRotationRoll());
+		super.doRender(entityBird, renderX, renderY, renderZ, interpYaw, partialTick);
+	}
 
-        float flapProgress = entityBird.getWingAnimationState().getCurrentAnimationTimeInterp(partialTick);
-        this.modelBird.setFlyingAnimations(flapProgress, entityBird.getLegSweepProgress(), entityBird.getRotationRoll());
-        super.doRender(entityBird, renderX, renderY, renderZ, interpYaw, partialTick);
-    }
+	/*@Override
+	public void doRender(T entity, double d, double d1, double d2, float f, float f1) {
+		renderBz((EntityIMBird) entity, d, d1, d2, f, f1);
+	}*/
+	
+	
+	private void renderNavigationVector(EntityIMBird entityBird, double entityRenderOffsetX, double entityRenderOffsetY, double entityRenderOffsetZ) {
+		Tessellator tessellator = Tessellator.getInstance();
+		VertexBuffer buffer = tessellator.getBuffer();
+		GL11.glPushMatrix();
 
-    public void doRender(Entity entity, double d, double d1, double d2, float f, float f1) {
-        renderBz((EntityIMBird) entity, d, d1, d2, f, f1);
-    }
+		GL11.glDisable(3553);
+		GL11.glDisable(2896);
+		GL11.glEnable(3042);
+		GL11.glBlendFunc(770, 1);
 
-    private void renderNavigationVector(EntityIMBird entityBird, double entityRenderOffsetX, double entityRenderOffsetY, double entityRenderOffsetZ) {
-        Tessellator tessellator = Tessellator.instance;
-        GL11.glPushMatrix();
+		Vec3d target = entityBird.getFlyTarget();
+		double drawWidth = 0.1D;
 
-        GL11.glDisable(3553);
-        GL11.glDisable(2896);
-        GL11.glEnable(3042);
-        GL11.glBlendFunc(770, 1);
+		//tessellator.getWorldRenderer().startDrawing(5);
+		//tessellator.getWorldRenderer()./*setColorRGBA_F*/func_178960_a(1.0F, 0.0F, 0.0F, 1.0F);
+		buffer.begin(5, new VertexFormat());
+		buffer.color(1f, 0f, 0f, 1f);
+		for (int j = 0; j < 5; j++) {
+			double xOffset = drawWidth;
+			double zOffset = drawWidth;
+			if ((j == 1) || (j == 2)) {
+				xOffset += drawWidth * 2.0D;
+			}
+			if ((j == 2) || (j == 3)) {
+				zOffset += drawWidth * 2.0D;
+			}
+			buffer.addVertexData(new int[]{
+				(int)(entityRenderOffsetX - entityBird.width / 2.0F + xOffset),
+				(int)(entityRenderOffsetY + entityBird.height / 2.0F),
+				(int)(entityRenderOffsetZ - entityBird.width / 2.0F + zOffset)
+			});
+			buffer.addVertexData(new int[]{
+				(int)(target.xCoord + xOffset - renderManager.viewerPosX),
+				(int)(target.yCoord - renderManager.viewerPosY),
+				(int)(target.zCoord + zOffset - renderManager.viewerPosZ)
+			});
+		}
+		tessellator.draw();
 
-        Vec3 target = entityBird.getFlyTarget();
-        double drawWidth = 0.1D;
+		GL11.glDisable(3042);
+		GL11.glEnable(2896);
+		GL11.glEnable(3553);
 
-        tessellator.startDrawing(5);
-        tessellator.setColorRGBA_F(1.0F, 0.0F, 0.0F, 1.0F);
-        for (int j = 0; j < 5; j++) {
-            double xOffset = drawWidth;
-            double zOffset = drawWidth;
-            if ((j == 1) || (j == 2)) {
-                xOffset += drawWidth * 2.0D;
-            }
-            if ((j == 2) || (j == 3)) {
-                zOffset += drawWidth * 2.0D;
-            }
-            tessellator.addVertex(entityRenderOffsetX - entityBird.width / 2.0F + xOffset, entityRenderOffsetY + entityBird.height / 2.0F, entityRenderOffsetZ - entityBird.width / 2.0F + zOffset);
-            tessellator.addVertex(target.xCoord + xOffset - RenderManager.renderPosX, target.yCoord - RenderManager.renderPosY, target.zCoord + zOffset - RenderManager.renderPosZ);
-        }
-        tessellator.draw();
+		GL11.glPopMatrix();
+	}
 
-        GL11.glDisable(3042);
-        GL11.glEnable(2896);
-        GL11.glEnable(3553);
-
-        GL11.glPopMatrix();
-    }
-
-    protected ResourceLocation getEntityTexture(Entity entity) {
-        return texture;
-    }
+	@Override
+	protected ResourceLocation getEntityTexture(EntityIMBird entity) {
+		return texture;
+	}
 }

@@ -1,11 +1,12 @@
-package invmod.common.entity;
+package invmod.entity;
 
-import invmod.common.INotifyTask;
+import invmod.INotifyTask;
 
-public abstract interface ITerrainModify {
-    public abstract boolean isReadyForTask(INotifyTask paramINotifyTask);
+public interface ITerrainModify
+{
+  public boolean isReadyForTask(INotifyTask paramINotifyTask);
 
-    public abstract boolean requestTask(ModifyBlockEntry[] paramArrayOfModifyBlockEntry, INotifyTask paramINotifyTask1, INotifyTask paramINotifyTask2);
+  public boolean requestTask(ModifyBlockEntry[] paramArrayOfModifyBlockEntry, INotifyTask paramINotifyTask1, INotifyTask paramINotifyTask2);
 
-    public abstract ModifyBlockEntry getLastBlockModified();
+  public ModifyBlockEntry getLastBlockModified();
 }

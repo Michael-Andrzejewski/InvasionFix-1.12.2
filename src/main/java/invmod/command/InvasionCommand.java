@@ -1,123 +1,220 @@
-package invmod.common;
+package invmod.command;
 
-import invmod.Invasion;
+import invmod.mod_Invasion;
+import invmod.entity.EntityIMLiving;
+import invmod.entity.ally.EntityIMWolf;
+import invmod.tileentity.TileEntityNexus;
+
+import java.lang.reflect.Constructor;
+
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatStyle;
-import net.minecraft.util.EnumChatFormatting;
-
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 
 public class InvasionCommand extends CommandBase {
 
-    public void processCommand(ICommandSender sender, String[] args) {
-        String username = sender.getCommandSenderName();
-        if ((args.length > 0) && (args.length <= 7)) {
-            if (args[0].equals("help")) {
-                sender.addChatMessage(new ChatComponentText("--- Showing Invasion help page 1 of 1 ---").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)));
-                sender.addChatMessage(new ChatComponentText("/begin x to start a wave"));
-                sender.addChatMessage(new ChatComponentText("/end to end the invasion"));
-                sender.addChatMessage(new ChatComponentText("/range x to set the spawn range"));
-            } else if (args[0].equals("begin")) {
-                if (args.length == 2) {
-                    int startWave = Integer.parseInt(args[1]);
-                    if (Invasion.getFocusNexus() != null) {
-                        Invasion.getFocusNexus().debugStartInvaion(startWave);
-                    }
-                }
-            } else if (args[0].equals("end")) {
-                if (Invasion.getActiveNexus() != null) {
-                    Invasion.getActiveNexus().emergencyStop();
-                    Invasion.broadcastToAll(username + " ended invasion");
-                } else {
-                    sender.addChatMessage(new ChatComponentText(username + ": No invasion to end"));
-                }
-            } else if (args[0].equals("range")) {
-                if (args.length == 2) {
-                    int radius = Integer.parseInt(args[1]);
-                    if (Invasion.getFocusNexus() != null) {
-                        if ((radius >= 32) && (radius <= 128)) {
-                            if (Invasion.getFocusNexus().setSpawnRadius(radius)) {
-                                sender.addChatMessage(new ChatComponentText("Set nexus range to " + radius));
-                            } else {
-                                sender.addChatMessage(new ChatComponentText(username + ": Can't change range while nexus is active"));
-                            }
-                        } else {
-                            sender.addChatMessage(new ChatComponentText(username + ": Range must be between 32 and 128"));
-                        }
-                    } else {
-                        sender.addChatMessage(new ChatComponentText(username + ": Right-click the nexus first to set target for command"));
-                    }
-                }
-            } else if (args[0].equals("spawnertest")) {
-                int startWave = 1;
-                int endWave = 11;
+	@Override
+	public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
+		String username = sender.getName();
+		TileEntityNexus focusNexus = null;
+		if (sender instanceof EntityPlayer) {
+			focusNexus = TileEntityNexus.getNearest((EntityPlayer) sender, 50);
+		}
+		if(args.length <= 0 || args.length > 7){
+			this.sendMessage(sender, "Command not recognised, use /invasion help for a list of all the available commands", TextFormatting.RED);
+			return;
+		}
+		switch(args[0].toLowerCase()){
+		case "help":
+			if(args.length == 1) this.sendHelp(sender, 1);
+			if(args.length == 2){
+				try {
+					this.sendHelp(sender, Integer.parseInt(args[1]));
+				} catch (NumberFormatException e) {
+					this.sendMessage(sender, "Help page argument is not a number", TextFormatting.RED);
+				}
+			}
+			break;
+		case "begin":
+			if(focusNexus == null){
+				this.sendMessage(sender, "No nexus detected", TextFormatting.RED);
+				return;
+			}
+			if (args.length == 2) {
+				int startWave = 1;
+				try {
+					startWave = Integer.parseInt(args[1]);
+				} catch(NumberFormatException e){
+					if(args[1].equalsIgnoreCase("continuous") || args[1].equalsIgnoreCase("cont") || args[1].equalsIgnoreCase("c")){
+						this.sendMessage(sender, "Starting continuous invasion");
+						focusNexus.debugStartContinuous();
+					} else {
+						this.sendMessage(sender, "Unknown start wave", TextFormatting.RED);
+						return;
+					}
+				}
+				this.sendMessage(sender, "Starting invasion at wave " + startWave);
+				focusNexus.debugStartInvaion(startWave);
+			} else {
+				this.sendMessage(sender, "No start wave specified, starting at wave 1");
+				focusNexus.debugStartInvaion(1);
+			}
+			break;
+		case "end":
+			if (focusNexus != null) {
+				focusNexus.emergencyStop();
+				mod_Invasion.broadcastToAll(username + " ended invasion");
+			} else {
+				this.sendMessage(sender, "No invasion to end", TextFormatting.RED);
+			}
+			break;
+		case "range":
+			if (args.length == 2) {
+				try {
+					int radius = Integer.parseInt(args[1]);
+					this.changeRadius(sender, focusNexus, radius);
+				} catch (NumberFormatException e){
+					this.sendMessage(sender, "Cannot set range to a value that is not a number", TextFormatting.RED);
+				}
+			}
+			break;
+		case "nexusstatus":
+			if (focusNexus != null){
+				this.sendMessage(sender, "Nexus status sent to bound players");
+				focusNexus.debugStatus();
+			} else {
+				this.sendMessage(sender, "No nexus detected", TextFormatting.RED);
+			}
+			break;
+		case "bolt":
+			this.spawnBolt(sender, focusNexus, args);
+			break;
+		case "status":
+			if(focusNexus != null){
+				this.sendMessage(sender, "Is invasion active: " + focusNexus.isActive());
+			} else {
+				this.sendMessage(sender, "No nexus detected", TextFormatting.RED);
+			}
+			break;
+		case "debug":
+			if(args.length == 2){
+				if(sender instanceof EntityPlayer) this.spawnDebugMob((EntityPlayer)sender, focusNexus, args[1]);
+			} else {
+				this.sendMessage(sender, "No mob specified", TextFormatting.RED);
+			}
+			break;
+		default:
+			this.sendMessage(sender, "Command not recognised, use /invasion help for a list of all the available commands", TextFormatting.RED);
+		}
+	}
+	
+	private void sendHelp(ICommandSender sender, int page){
+		switch(page){
+		case 1:
+			this.sendMessage(sender, "--- Showing Invasion help page 1 of 2 ---", TextFormatting.GREEN);
+			this.sendMessage(sender, "/invasion begin [x] - Starts an invasion at wave x (default: 1)");
+			this.sendMessage(sender, "/invasion begin c - Starts a continuous invasion");
+			this.sendMessage(sender, "/invasion end - Ends the invasion, if active");
+			this.sendMessage(sender, "/invasion range <x> - Sets the mobs' spawn range (min: 32, max: 128)");
+			this.sendMessage(sender, "/invasion nexusstatus - Displays debug status to bound players (only displayed if nexus is active)");
+			break;
+		case 2:
+			this.sendMessage(sender, "--- Showing Invasion help page 2 of 2 ---", TextFormatting.GREEN);
+			this.sendMessage(sender, "/invasion bolt [targX] [targY] [targZ] [durationTicks] - Spawns a lightning bolt to the specified coordinates for the specified amound of time in ticks");
+			this.sendMessage(sender, "/invasion status - Returns whether an invasion is active");
+			this.sendMessage(sender, "/invasion debug <IMEntityName> - Spawns an IM mob and binds it to an available nexus for debugging purposes");
+			break;
+		default:
+			this.sendMessage(sender, "Unknown help page " + page, TextFormatting.RED);
+		}
+	}
+	
+	private void changeRadius(ICommandSender sender, TileEntityNexus focusNexus, int radius){
+		String username = sender.getName();
+		if (focusNexus != null) {
+			if ((radius >= 32) && (radius <= 128)) {
+				if (focusNexus.setSpawnRadius(radius)) {
+					this.sendMessage(sender, "Set nexus range to " + radius);
+				} else {
+					this.sendMessage(sender, username + ": Can't change range while nexus is active", TextFormatting.RED);
+				}
+			} else {
+				this.sendMessage(sender, username + ": Range must be between 32 and 128", TextFormatting.RED);
+			}
+		} else {
+			this.sendMessage(sender, username + ": Right-click the nexus first to set target for command", TextFormatting.RED);
+		}
+	}
+	
+	private void spawnBolt(ICommandSender sender, TileEntityNexus focusNexus, String[] args){
+		if (focusNexus != null) {
+			int x = focusNexus.getPos().getX();
+			int y = focusNexus.getPos().getY();
+			int z = focusNexus.getPos().getZ();
+			int time = 40;
+			if (args.length >= 6) return;
+			try {
+				if (args.length >= 5) time = Integer.parseInt(args[4]);
+				if (args.length >= 4) z += Integer.parseInt(args[3]);
+				if (args.length >= 3) y += Integer.parseInt(args[2]);
+				if (args.length >= 2) x += Integer.parseInt(args[1]);
+			} catch(NumberFormatException e) {
+				this.sendMessage(sender, "Bolt argument(s) must be integer(s)", TextFormatting.RED);
+			}
+			this.sendMessage(sender, "Spawning bolt at (" + x + ", " + y + ", " + z + ") (time=" + time + ")");
+			focusNexus.createBolt(x, y, z, time);
+		} else {
+			this.sendMessage(sender, "Cannot spawn bolt because no nexus detected", TextFormatting.RED);
+		}
+	}
+	
+	private void spawnDebugMob(EntityPlayer sender, TileEntityNexus focusNexus, String entityName){
+		if(focusNexus != null){
+			try {
+				Class<?> clazz = Class.forName(entityName);
+				if(EntityIMLiving.class.isAssignableFrom(clazz)){
+					Constructor<? extends EntityIMLiving> c = ((Class<? extends EntityIMLiving>)clazz).getConstructor(World.class, TileEntityNexus.class);
+					EntityIMLiving entity = c.newInstance(sender.worldObj, focusNexus);
+					entity.setPosition(sender.posX, sender.posY, sender.posZ);
+					sender.worldObj.spawnEntityInWorld(entity);
+				} else if(EntityIMWolf.class.isAssignableFrom(clazz)){
+					Constructor<? extends EntityIMWolf> c = ((Class<? extends EntityIMWolf>)clazz).getConstructor(World.class, TileEntityNexus.class);
+					EntityIMWolf entity = c.newInstance(sender.worldObj, focusNexus);
+					entity.setPosition(sender.posX, sender.posY, sender.posZ);
+					sender.worldObj.spawnEntityInWorld(entity);
+				} else {
+					this.sendMessage(sender, "Entity is not an IM mob", TextFormatting.RED);
+				}
+			} catch (Exception e) {
+				this.sendMessage(sender, "Unable to spawn entity", TextFormatting.RED);
+				e.printStackTrace();
+			}
+		} else {
+			this.sendMessage(sender, "No nexus detected", TextFormatting.RED);
+		}
+	}
+	
+	private void sendMessage(ICommandSender sender, String msg){
+		this.sendMessage(sender, msg, null);
+	}
+	
+	private void sendMessage(ICommandSender sender, String msg, TextFormatting format){
+		TextComponentTranslation s = new TextComponentTranslation(msg);
+		if(format != null) s.getStyle().setColor(format);
+		sender.addChatMessage(s);
+	}
 
-                if (args.length >= 4)
-                    return;
-                if (args.length >= 3)
-                    endWave = Integer.parseInt(args[2]);
-                if (args.length >= 2) {
-                    startWave = Integer.parseInt(args[1]);
-                }
-                Tester tester = new Tester();
-                tester.doWaveSpawnerTest(startWave, endWave);
-            } else if (args[0].equals("pointcontainertest")) {
-                Tester tester = new Tester();
-                tester.doSpawnPointSelectionTest();
-            } else if (args[0].equals("wavebuildertest")) {
-                float difficulty = 1.0F;
-                float tierLevel = 1.0F;
-                int lengthSeconds = 160;
+	@Override
+	public String getCommandName() {
+		return "invasion";
+	}
 
-                if (args.length >= 5)
-                    return;
-                if (args.length >= 4)
-                    lengthSeconds = Integer.parseInt(args[3]);
-                if (args.length >= 3)
-                    tierLevel = Float.parseFloat(args[2]);
-                if (args.length >= 2) {
-                    difficulty = Float.parseFloat(args[1]);
-                }
-                Tester tester = new Tester();
-                tester.doWaveBuilderTest(difficulty, tierLevel, lengthSeconds);
-            } else if (args[0].equals("nexusstatus")) {
-                if (Invasion.getFocusNexus() != null)
-                    Invasion.getFocusNexus().debugStatus();
-            } else if (args[0].equals("bolt")) {
-                if (Invasion.getFocusNexus() != null) {
-                    int x = Invasion.getFocusNexus().getXCoord();
-                    int y = Invasion.getFocusNexus().getYCoord();
-                    int z = Invasion.getFocusNexus().getZCoord();
-                    int time = 40;
-                    if (args.length >= 6)
-                        return;
-                    if (args.length >= 5)
-                        time = Integer.parseInt(args[4]);
-                    if (args.length >= 4)
-                        z += Integer.parseInt(args[3]);
-                    if (args.length >= 3)
-                        y += Integer.parseInt(args[2]);
-                    if (args.length >= 2) {
-                        x += Integer.parseInt(args[1]);
-                    }
-                    Invasion.getFocusNexus().createBolt(x, y, z, time);
-                }
-            } else if (args[0].equals("status")) {
-                sender.addChatMessage(new ChatComponentText("nexus status:" + Invasion.getFocusNexus().isActive()));
-
-            } else {
-                sender.addChatMessage(new ChatComponentText("Command not recognised, use /invasion help for a list of all the available commands").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
-            }
-
-        }
-    }
-
-    public String getCommandName() {
-        return "invasion";
-    }
-
-    public String getCommandUsage(ICommandSender icommandsender) {
-        return "";
-    }
+	@Override
+	public String getCommandUsage(ICommandSender icommandsender) {
+		return "";
+	}
 }

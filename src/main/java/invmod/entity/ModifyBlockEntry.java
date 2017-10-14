@@ -1,64 +1,84 @@
-package invmod.common.entity;
+package invmod.entity;
 
-import invmod.common.util.IPosition;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.math.BlockPos;
 
-public class ModifyBlockEntry implements IPosition {
-    private int xCoord;
-    private int yCoord;
-    private int zCoord;
-    private Block oldBlock;
-    private Block newBlock;
-    private int newBlockMeta;
-    private int cost;
+public class ModifyBlockEntry /*implements IPosition*/{
+	private BlockPos pos;
+	private IBlockState oldBlock;
+	private IBlockState newBlock;
+	//private IBlockState newBlockMeta;
+	private int cost;
 
-    public ModifyBlockEntry(int x, int y, int z, Block block) {
-        this(x, y, z, block, 0, 0, null);
-    }
+	public ModifyBlockEntry(BlockPos pos, Block newBlock)
+	{
+		this(pos, newBlock.getDefaultState(), 0, null);
+	}
+	
+	public ModifyBlockEntry(BlockPos pos, IBlockState newBlock){
+		this(pos, newBlock, 0, null);
+	}
+	
+	public ModifyBlockEntry(BlockPos pos, Block newBlock, int cost){
+		this(pos, newBlock != null ? newBlock.getDefaultState() : null, cost, null);
+	}
 
-    public ModifyBlockEntry(int x, int y, int z, Block planks, int cost) {
-        this(x, y, z, planks, cost, 0, null);
-    }
+	public ModifyBlockEntry(BlockPos pos, IBlockState newBlock, int cost){
+		this(pos, newBlock, cost, null);
+	}
+	
+	public ModifyBlockEntry(BlockPos pos, Block newBlock, int cost, Block oldBlock){
+		this(pos, newBlock.getDefaultState(), cost, oldBlock != null ? oldBlock.getDefaultState() : null);
+	}
 
-    public ModifyBlockEntry(int x, int y, int z, Block block, int cost, int newBlockMeta, Block oldBlock) {
-        this.xCoord = x;
-        this.yCoord = y;
-        this.zCoord = z;
-        this.newBlock = block;
-        this.cost = cost;
-        this.newBlockMeta = newBlockMeta;
-        this.oldBlock = oldBlock;
-    }
+	public ModifyBlockEntry(BlockPos pos, IBlockState newBlock, int cost, /*IBlockState newBlockMeta,*/ IBlockState oldBlock){
+		this.pos = pos;
+		this.newBlock= newBlock;
+		this.cost = cost;
+		//this.newBlockMeta = newBlockMeta;
+		this.oldBlock = oldBlock;
+	}
+	
+	public BlockPos getPos(){
+		return this.pos;
+	}
 
-    public int getXCoord() {
-        return this.xCoord;
-    }
+	/*@Override
+	public int getXCoord(){
+		return this.xCoord;
+	}
 
-    public int getYCoord() {
-        return this.yCoord;
-    }
+	@Override
+	public int getYCoord(){
+		return this.yCoord;
+	}
 
-    public int getZCoord() {
-        return this.zCoord;
-    }
+	@Override
+	public int getZCoord(){
+		return this.zCoord;
+	}*/
 
-    public Block getNewBlock() {
-        return this.newBlock;
-    }
+	public IBlockState getNewBlock()
+	{
+		return this.newBlock;
+	}
 
-    public int getNewBlockMeta() {
-        return this.newBlockMeta;
-    }
+	/*public IBlockState getNewBlockMeta()
+	{
+		return this.newBlockMeta;
+	}*/
 
-    public int getCost() {
-        return this.cost;
-    }
+	public int getCost(){
+		return this.cost;
+	}
 
-    public Block getOldBlock() {
-        return this.oldBlock;
-    }
+	public IBlockState getOldBlock(){
+		return this.oldBlock;
+	}
 
-    public void setOldBlock(Block block) {
-        this.oldBlock = block;
-    }
+	public void setOldBlock(IBlockState state){
+		this.oldBlock = state;
+	}
+	
 }

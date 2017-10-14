@@ -1,28 +1,29 @@
-package invmod.common.util;
-
-import net.minecraft.entity.Entity;
+package invmod.util;
 
 import java.util.Comparator;
 
+import net.minecraft.entity.Entity;
+
 public class ComparatorEntityDistanceFrom implements Comparator<Entity> {
-    private double x;
-    private double y;
-    private double z;
+	private double posX;
+	private double posY;
+	private double posZ;
 
-    public ComparatorEntityDistanceFrom(double x, double y, double z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
+	public ComparatorEntityDistanceFrom(double x, double y, double z) {
+		this.posX = x;
+		this.posY = y;
+		this.posZ = z;
+	}
 
-    public int compare(Entity entity1, Entity entity2) {
-        double d1 = (this.x - entity1.posX) * (this.x - entity1.posX) + (this.y - entity1.posY) * (this.y - entity1.posY) + (this.z - entity1.posZ) * (this.z - entity1.posZ);
-        double d2 = (this.x - entity2.posX) * (this.x - entity2.posX) + (this.y - entity2.posY) * (this.y - entity2.posY) + (this.z - entity2.posZ) * (this.z - entity2.posZ);
-        if (d1 > d2)
-            return -1;
-        if (d1 < d2) {
-            return 1;
-        }
-        return 0;
-    }
+	@Override
+	public int compare(Entity entity1, Entity entity2) {
+		double d1 = (this.posX - entity1.posX) * (this.posX - entity1.posX) + (this.posY - entity1.posY) * (this.posY - entity1.posY) + (this.posZ - entity1.posZ) * (this.posZ - entity1.posZ);
+		double d2 = (this.posX - entity2.posX) * (this.posX - entity2.posX) + (this.posY - entity2.posY) * (this.posY - entity2.posY) + (this.posZ - entity2.posZ) * (this.posZ - entity2.posZ);
+		if (d1 > d2)
+			return -1;
+		if (d1 < d2) {
+			return 1;
+		}
+		return 0;
+	}
 }

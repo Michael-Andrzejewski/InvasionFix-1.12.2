@@ -1,86 +1,85 @@
-package invmod.common.entity.ai;
+package invmod.entity.ai;
 
 //NOOB HAUS:Done
 
-import invmod.common.entity.EntityIMMob;
-import invmod.common.entity.Goal;
-import invmod.common.entity.Path;
-import invmod.common.nexus.INexusAccess;
-import invmod.common.util.CoordsInt;
-import invmod.common.util.Distance;
-import invmod.common.util.IPosition;
+import invmod.entity.Goal;
+import invmod.entity.ai.navigator.Path;
+import invmod.entity.monster.EntityIMMob;
+import invmod.tileentity.TileEntityNexus;
+import invmod.util.Distance;
 import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 
 public class EntityAIGoToNexus extends EntityAIBase {
-    private EntityIMMob theEntity;
-    private IPosition lastPathRequestPos;
-    private int pathRequestTimer;
-    private int pathFailedCount;
+	private EntityIMMob theEntity;
+	private BlockPos lastPathRequestPos;
+	private int pathRequestTimer;
+	private int pathFailedCount;
 
-    public EntityAIGoToNexus(EntityIMMob entity) {
-        this.theEntity = entity;
-        this.lastPathRequestPos = new CoordsInt(0, -128, 0);
-        this.pathRequestTimer = 0;
-        this.pathFailedCount = 0;
-        setMutexBits(1);
-    }
+	public EntityAIGoToNexus(EntityIMMob entity){
+		this.theEntity = entity;
+		this.lastPathRequestPos = new BlockPos(0, -128, 0);
+		this.pathRequestTimer = 0;
+		this.pathFailedCount = 0;
+		setMutexBits(1);
+	}
 
-    @Override
-    public boolean shouldExecute() {
-        if (this.theEntity.getAIGoal() == Goal.BREAK_NEXUS) {
-            return true;
-        }
-        return false;
-    }
+	@Override
+	public boolean shouldExecute(){
+		return this.theEntity.getAIGoal() == Goal.BREAK_NEXUS && this.theEntity.getNexus() != null;
+	}
 
-    @Override
-    public void startExecuting() {
-        setPathToNexus();
-    }
+	@Override
+	public void startExecuting(){
+		this.setPathToNexus();
+	}
 
-    @Override
-    public void updateTask() {
-        if (this.pathFailedCount > 1) {
-            wanderToNexus();
-        }
-        if ((this.theEntity.getNavigatorNew().noPath()) || (this.theEntity.getNavigatorNew().getStuckTime() > 40))
-            setPathToNexus();
-    }
+	@Override
+	public void updateTask(){
+		if (this.pathFailedCount > 1) this.wanderToNexus();
+		if ((this.theEntity.getNavigatorNew().noPath()) || (this.theEntity.getNavigatorNew().getStuckTime() > 40))
+			this.setPathToNexus();
+	}
 
-    private void setPathToNexus() {
-        INexusAccess nexus = this.theEntity.getNexus();
-        if ((nexus != null) && (this.pathRequestTimer-- <= 0)) {
-            boolean pathSet = false;
-            double distance = this.theEntity.findDistanceToNexus();
-            if (distance > 2000.0D) {
-                pathSet = this.theEntity.getNavigatorNew().tryMoveTowardsXZ(nexus.getXCoord(), nexus.getZCoord(), 1, 6, 4, this.theEntity.getMoveSpeedStat());
-            } else if (distance > 1.5D) {
-                pathSet = this.theEntity.getNavigatorNew().tryMoveToXYZ(nexus.getXCoord(), nexus.getYCoord(), nexus.getZCoord(), 1.0F, this.theEntity.getMoveSpeedStat());
-            }
+	private void setPathToNexus(){
+		TileEntityNexus nexus = this.theEntity.getNexus();
+		if ((nexus != null) && (this.pathRequestTimer-- <= 0)){
+			boolean pathSet = false;
+			double distance = this.theEntity.findDistanceToNexus();
+			double x = nexus.getPos().getX() + 0.5d;
+			double y = nexus.getPos().getY() + 1d;
+			double z = nexus.getPos().getZ() + 0.5d;
+			if (distance > 2000.0D){
+				pathSet = this.theEntity.getNavigatorNew().tryMoveTowardsXZ(x, z, 1, 6, 4, this.theEntity.getMoveSpeedStat());
+			} else if(distance > 1.5D){
+				pathSet = this.theEntity.getNavigatorNew().tryMoveToXYZ(x, y, z, 1.0F, this.theEntity.getMoveSpeedStat());
+				//if(!pathSet) pathSet = this.theEntity.getNavigator().tryMoveToXYZ(x, y, z, 1.0F);
+			}
 
-            if ((!pathSet) || ((this.theEntity.getNavigatorNew().getLastPathDistanceToTarget() > 3.0F) && (Distance.distanceBetween(this.lastPathRequestPos, this.theEntity) < 3.5D))) {
-                this.pathFailedCount += 1;
-                this.pathRequestTimer = (40 * this.pathFailedCount + this.theEntity.worldObj.rand.nextInt(10));
-            } else {
-                this.pathFailedCount = 0;
-                this.pathRequestTimer = 20;
-            }
+			if ((!pathSet) || ((this.theEntity.getNavigatorNew().getLastPathDistanceToTarget() > 3.0F) && (Distance.distanceBetween(this.lastPathRequestPos, this.theEntity.getPosition()) < 3.5D))){
+				this.pathFailedCount += 1;
+				this.pathRequestTimer = (40 * this.pathFailedCount + this.theEntity.worldObj.rand.nextInt(10));
+			} else {
+				this.pathFailedCount = 0;
+				this.pathRequestTimer = 20;
+			}
 
-            this.lastPathRequestPos = new CoordsInt(this.theEntity.getXCoord(), this.theEntity.getYCoord(), this.theEntity.getZCoord());
-        }
-    }
+			this.lastPathRequestPos = this.theEntity.getPosition();
+		}
+	}
 
-    private boolean pathTooShort() {
-        Path path = this.theEntity.getNavigatorNew().getPath();
-        if (path != null) {
-            IPosition pos = path.getFinalPathPoint();
-            return this.theEntity.getDistanceSq(pos.getXCoord(), pos.getYCoord(), pos.getZCoord()) < 4.0D;
-        }
-        return true;
-    }
+	private boolean pathTooShort(){
+		Path path = this.theEntity.getNavigatorNew().getPath();
+		if (path != null){
+			Vec3d vec = path.getFinalPathPoint().pos;
+			return this.theEntity.getDistanceSq(vec.xCoord, vec.yCoord, vec.zCoord) < 4.0D;
+		}
+		return true;
+	}
 
-    protected void wanderToNexus() {
-        INexusAccess nexus = this.theEntity.getNexus();
-        this.theEntity.getMoveHelper().setMoveTo(nexus.getXCoord() + 0.5D, nexus.getYCoord(), nexus.getZCoord() + 0.5D, this.theEntity.getMoveSpeedStat());
-    }
+	protected void wanderToNexus(){
+		TileEntityNexus nexus = this.theEntity.getNexus();
+		this.theEntity.getMoveHelper().setMoveTo(nexus.getPos().add(0.5d, 0d, 0.5d), this.theEntity.getMoveSpeedStat());
+	}
 }

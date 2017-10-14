@@ -1,37 +1,38 @@
-package com.whammich.invasion.proxies;
-
-import cpw.mods.fml.common.FMLCommonHandler;
-import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.ChatComponentText;
+package invmod.common;
 
 import java.io.File;
+import java.util.List;
 
-public class CommonProxy {
-    public void preloadTexture(String texture) {
-    }
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
-    public int addTextureOverride(String fileToOverride, String fileToAdd) {
-        return 0;
-    }
+public class ProxyCommon {
 
-    public void registerEntityRenderingHandler(Class<? extends Entity> entityClass, Render renderer) {
-    }
+	public int addTextureOverride(String fileToOverride, String fileToAdd) {
+		return 0;
+	}
 
-    public void broadcastToAll(String message) {
-        FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().sendChatMsg(new ChatComponentText(message));
-    }
+	public void broadcastToAll(String message) {
+		//FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().sendChatMsg(new ChatComponentText(message));
+		List<EntityPlayerMP> playerList = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerList();
+		for(int i=0; i<playerList.size(); i++){
+			playerList.get(i).addChatComponentMessage(new TextComponentString(message));
+		}
+	}
 
-    public void printGuiMessage(String message) {
-    }
+	public void printGuiMessage(String message) {
+	}
 
-    public void registerEntityRenderers() {
-    }
+	public void registerEntityRenderers() {
+	}
 
-    public void loadAnimations() {
-    }
+	public void loadAnimations() {
+	}
 
-    public File getFile(String fileName) {
-        return FMLCommonHandler.instance().getMinecraftServerInstance().getFile(fileName);
-    }
+	public File getFile(String fileName) {
+		return FMLCommonHandler.instance().getMinecraftServerInstance().getFile(fileName);
+	}
 }

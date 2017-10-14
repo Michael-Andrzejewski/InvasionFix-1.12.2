@@ -1,5 +1,6 @@
-package com.whammich.invasion.client.render.animation;
+package invmod.client.render.animation;
 
-public enum InterpType {
-    LINEAR;
+public enum InterpType
+{
+  LINEAR;
 }

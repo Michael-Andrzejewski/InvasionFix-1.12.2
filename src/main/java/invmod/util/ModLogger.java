@@ -1,27 +1,31 @@
-package com.whammich.invasion.util;
+package invmod.util;
 
-import com.whammich.invasion.ConfigHandler;
-import com.whammich.invasion.Reference;
+import invmod.Reference;
+
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class LogHelper {
+public final class ModLogger {
+	private static Logger logger = LogManager.getLogger(Reference.MODID);
 
-    private static Logger logger = LogManager.getLogger(Reference.NAME);
+	public static void logInfo(String message) {
+		logger.log(Level.INFO, message);
+	}
 
-    public static void info(Object info) {
-        if (ConfigHandler.enableLogging)
-            logger.info(info);
-    }
+	public static void logWarn(String message) {
+		logger.log(Level.WARN, message);
+	}
 
-    public static void error(Object error) {
-        if (ConfigHandler.enableLogging)
-            logger.error(error);
-    }
+	public static void logFatal(String message) {
+		logger.log(Level.FATAL, message);
+	}
 
-    public static void debug(Object debug) {
-        if (ConfigHandler.enableLogging)
-            logger.debug(debug);
-    }
+	public static void logDebug(String message) {
+		logger.log(Level.DEBUG, message);
+	}
 
+	public static void log(Level level, String message) {
+		logger.log(level, message);
+	}
 }

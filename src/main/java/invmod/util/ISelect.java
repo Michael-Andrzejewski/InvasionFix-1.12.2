@@ -1,7 +1,8 @@
-package invmod.common.util;
+package invmod.util;
 
-public abstract interface ISelect<T> {
-    public abstract T selectNext();
+public abstract interface ISelect<T>
+{
+  public abstract T selectNext();
 
-    public abstract void reset();
+  public abstract void reset();
 }

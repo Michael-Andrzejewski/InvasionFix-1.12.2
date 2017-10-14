@@ -1,17 +1,19 @@
-package invmod.common.entity;
+package invmod.entity;
 
-import invmod.common.util.IPosition;
-import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
-public abstract interface ICanDig {
-    public abstract IPosition[] getBlockRemovalOrder(int paramInt1, int paramInt2, int paramInt3);
+public interface ICanDig {
+	
+	public BlockPos[] getBlockRemovalOrder(BlockPos pos);
 
-    public abstract float getBlockRemovalCost(int paramInt1, int paramInt2, int paramInt3);
+	public float getBlockRemovalCost(BlockPos pos);
 
-    public abstract boolean canClearBlock(int paramInt1, int paramInt2, int paramInt3);
+	public boolean canClearBlock(BlockPos pos);
 
-    public abstract void onBlockRemoved(int paramInt1, int paramInt2, int paramInt3, Block block);
+	public void onBlockRemoved(BlockPos pos, IBlockState state);
 
-    public abstract IBlockAccess getTerrain();
+	public IBlockAccess getTerrain();
+	
 }

@@ -1,153 +1,156 @@
-package invmod.common.entity;
+package invmod.entity;
 
-import invmod.Invasion;
-import invmod.common.INotifyTask;
-import invmod.common.util.Distance;
-import net.minecraft.block.Block;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.init.Blocks;
+import invmod.BlocksAndItems;
+import invmod.INotifyTask;
+import invmod.util.Distance;
+import invmod.util.config.Config;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TerrainModifier
-        implements ITerrainModify {
-    private static final float DEFAULT_REACH = 2.0F;
-    private EntityLiving theEntity;
-    private INotifyTask taskSetter;
-    private INotifyTask blockNotify;
-    private List<ModifyBlockEntry> modList;
-    private ModifyBlockEntry nextEntry;
-    private ModifyBlockEntry lastEntry;
-    private int entryIndex;
-    private int timer;
-    private float reach;
-    private boolean outOfRangeFlag;
-    private boolean terrainFailFlag;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 
-    public TerrainModifier(EntityLiving entity, float defaultReach) {
-        this.theEntity = entity;
-        this.modList = new ArrayList();
-        this.entryIndex = 0;
-        this.timer = 0;
-        this.reach = defaultReach;
-    }
+public class TerrainModifier implements ITerrainModify {
+	
+	private static final float DEFAULT_REACH = 2.0F;
+	private EntityIMLiving theEntity;
+	private INotifyTask taskSetter;
+	private INotifyTask blockNotify;
+	private List<ModifyBlockEntry> modList;
+	private ModifyBlockEntry nextEntry;
+	private ModifyBlockEntry lastEntry;
+	private int entryIndex;
+	private int timer;
+	private float reach;
+	private boolean outOfRangeFlag;
+	private boolean terrainFailFlag;
 
-    public void onUpdate() {
-        taskUpdate();
-    }
+	public TerrainModifier(EntityIMLiving entity, float defaultReach) {
+		this.theEntity = entity;
+		this.modList = new ArrayList();
+		this.entryIndex = 0;
+		this.timer = 0;
+		this.reach = defaultReach;
+	}
 
-    public boolean isReadyForTask(INotifyTask asker) {
-        return (this.modList.size() == 0) || (this.taskSetter == asker);
-    }
+	public void onUpdate() {
+		this.taskUpdate();
+	}
 
-    public void cancelTask() {
-        endTask();
-    }
+	@Override
+	public boolean isReadyForTask(INotifyTask asker) {
+		return (this.modList.size() == 0) || (this.taskSetter == asker);
+	}
 
-    public boolean isBusy() {
-        return this.timer > 0;
-    }
+	public void cancelTask() {
+		this.endTask();
+	}
 
-    public boolean requestTask(ModifyBlockEntry[] entries, INotifyTask onFinished, INotifyTask onBlockChange) {
-        if (isReadyForTask(onFinished)) {
-            for (ModifyBlockEntry entry : entries) {
-                this.modList.add(entry);
-            }
-            this.taskSetter = onFinished;
-            this.blockNotify = onBlockChange;
-            return true;
-        }
-        return false;
-    }
+	public boolean isBusy() {
+		return this.timer > 0;
+	}
 
-    public ModifyBlockEntry getLastBlockModified() {
-        return this.lastEntry;
-    }
+	@Override
+	public boolean requestTask(ModifyBlockEntry[] entries, INotifyTask onFinished, INotifyTask onBlockChange) {
+		if (this.isReadyForTask(onFinished)) {
+			for (ModifyBlockEntry entry : entries) {
+				this.modList.add(entry);
+			}
+			this.taskSetter = onFinished;
+			this.blockNotify = onBlockChange;
+			return true;
+		}
+		return false;
+	}
 
-    private void taskUpdate() {
-        if (this.timer > 1) {
-            this.timer -= 1;
-            return;
-        }
-        if (this.timer == 1) {
-            this.entryIndex += 1;
-            this.timer = 0;
-            int result = changeBlock(this.nextEntry) ? 0 : 1;
-            this.lastEntry = this.nextEntry;
-            if (this.blockNotify != null) {
-                this.blockNotify.notifyTask(result);
-            }
-        }
+	@Override
+	public ModifyBlockEntry getLastBlockModified() {
+		return this.lastEntry;
+	}
 
-        if (this.entryIndex < this.modList.size()) {
-            this.nextEntry = ((ModifyBlockEntry) this.modList.get(this.entryIndex));
-            while (isTerrainIdentical(this.nextEntry)) {
-                this.entryIndex += 1;
-                if (this.entryIndex < this.modList.size()) {
-                    this.nextEntry = ((ModifyBlockEntry) this.modList.get(this.entryIndex));
-                } else {
-                    endTask();
-                    return;
-                }
-            }
+	private void taskUpdate() {
+		if (this.timer-- > 1) return;
+		if (this.timer <= 1 && this.nextEntry != null) {
+			this.entryIndex += 1;
+			this.timer = 0;
+			int result = this.changeBlock(this.nextEntry) ? 0 : 1;
+			this.lastEntry = this.nextEntry;
+			if (this.blockNotify != null) this.blockNotify.notifyTask(result);
+		}
 
-            this.timer = this.nextEntry.getCost();
-            if (this.timer == 0)
-                this.timer = 1;
-        } else if (this.modList.size() > 0) {
-            endTask();
-        }
-    }
+		if (this.modList != null && this.entryIndex < this.modList.size()) {
+			this.nextEntry = (this.modList.get(this.entryIndex));
+			while (this.isTerrainIdentical(this.nextEntry)) {
+				this.entryIndex += 1;
+				if (this.entryIndex < this.modList.size()) {
+					this.nextEntry = (this.modList.get(this.entryIndex));
+				} else {
+					this.endTask();
+					return;
+				}
+			}
 
-    private void endTask() {
-        this.entryIndex = 0;
-        this.timer = 0;
-        this.modList.clear();
-        if (this.taskSetter != null)
-            this.taskSetter.notifyTask(this.outOfRangeFlag ? 1 : this.terrainFailFlag ? 2 : 0);
-    }
+			this.timer = this.nextEntry.getCost();
+			if (this.timer <= 0) this.timer = 1;
+		} else if (this.modList.size() > 0) {
+			this.endTask();
+		}
+	}
 
-    private boolean changeBlock(ModifyBlockEntry entry) {
-        if (Distance.distanceBetween(this.theEntity.posX, this.theEntity.posY + this.theEntity.height / 2.0F, this.theEntity.posZ, entry.getXCoord() + 0.5D, entry.getYCoord() + 0.5D, entry.getZCoord() + 0.5D) > this.reach) {
-            this.outOfRangeFlag = true;
-            return false;
-        }
+	private void endTask() {
+		this.entryIndex = 0;
+		this.timer = 0;
+		this.modList.clear();
+		if (this.taskSetter != null)
+			this.taskSetter.notifyTask(this.outOfRangeFlag ? 1 : this.terrainFailFlag ? 2 : 0);
+	}
 
-        Block newBlock = entry.getNewBlock();
-        Block oldBlock = this.theEntity.worldObj.getBlock(entry.getXCoord(), entry.getYCoord(), entry.getZCoord());
-        int oldMeta = this.theEntity.worldObj.getBlockMetadata(entry.getXCoord(), entry.getYCoord(), entry.getZCoord());
-        entry.setOldBlock(oldBlock);
-        if (oldBlock == Invasion.blockNexus) {
-            this.terrainFailFlag = true;
-            return false;
-        }
+	private boolean changeBlock(ModifyBlockEntry entry) {
+		double dist = Distance.distanceBetween(
+				this.theEntity.posX, this.theEntity.posY + this.theEntity.height / 2.0F, this.theEntity.posZ,
+				entry.getPos().getX() + 0.5D, entry.getPos().getY() + 0.5D, entry.getPos().getZ() + 0.5D);
+		if (dist > this.reach) {
+			this.outOfRangeFlag = true;
+			return false;
+		}
 
-        boolean succeeded = this.theEntity.worldObj.setBlock(entry.getXCoord(), entry.getYCoord(), entry.getZCoord(), entry.getNewBlock(), entry.getNewBlockMeta(), 3);
-        if (succeeded) {
-            if (newBlock == Blocks.air) {
-                oldBlock.onBlockDestroyedByPlayer(this.theEntity.worldObj, entry.getXCoord(), entry.getYCoord(), entry.getZCoord(), oldMeta);
+		IBlockState newState = entry.getNewBlock();
+		IBlockState oldState = this.theEntity.worldObj.getBlockState(entry.getPos());
+		entry.setOldBlock(oldState);
+		if (oldState.getBlock() == BlocksAndItems.blockNexus || oldState.getBlock() == newState.getBlock()) {
+			this.terrainFailFlag = true;
+			return false;
+		}
 
-                if (Invasion.getDestructedBlocksDrop()) {
-                    oldBlock.dropBlockAsItem(this.theEntity.worldObj, entry.getXCoord(), entry.getYCoord(), entry.getZCoord(), oldMeta, 0);
-                }
-            }
-            if (newBlock == Blocks.ladder) {
-                int meta = newBlock.onBlockPlaced(this.theEntity.worldObj, entry.getXCoord(), entry.getYCoord(), entry.getZCoord(), 0, 0.0F, 0.0F, 0.0F, oldMeta);
-                this.theEntity.worldObj.setBlockMetadataWithNotify(entry.getXCoord(), entry.getYCoord(), entry.getZCoord(), meta, 3);
+		boolean succeeded = this.theEntity.worldObj.setBlockState(entry.getPos(), newState);
+		if (succeeded) {
+			if (oldState.getBlock() != Blocks.AIR) {
+				oldState.getBlock().onBlockDestroyedByPlayer(this.theEntity.worldObj, entry.getPos(), oldState);
 
-                Blocks.ladder.onPostBlockPlaced(this.theEntity.worldObj, entry.getXCoord(), entry.getYCoord(), entry.getZCoord(), meta);
-            }
-        } else {
-            this.terrainFailFlag = true;
-        }
-        return succeeded;
-    }
+				if (Config.DROP_DESTRUCTED_BLOCKS) {
+					oldState.getBlock().dropBlockAsItem(this.theEntity.worldObj, entry.getPos(), oldState, 0);
+				}
+			}
+			/*if (newState.getBlock() == Blocks.LADDER) {
+				this.theEntity.worldObj.setBlockState(entry.getPos(), newState);
+//TODO: Figure out what this did
+//				Blocks.ladder.onPostBlockPlaced(this.theEntity.worldObj,
+//						new BlockPos(entry.getXCoord(), entry.getYCoord(),
+//						entry.getZCoord()), meta);
+			}*/
+		} else {
+			this.terrainFailFlag = true;
+		}
+		return succeeded;
+	}
 
-    private boolean isTerrainIdentical(ModifyBlockEntry entry) {
-        if ((this.theEntity.worldObj.getBlock(entry.getXCoord(), entry.getYCoord(), entry.getZCoord()) == entry.getNewBlock()) && (this.theEntity.worldObj.getBlockMetadata(entry.getXCoord(), entry.getYCoord(), entry.getZCoord()) == entry.getNewBlockMeta())) {
-            return true;
-        }
-        return false;
-    }
+	private boolean isTerrainIdentical(ModifyBlockEntry entry) {
+		if ((this.theEntity.worldObj.getBlockState(entry.getPos()).getBlock() == entry.getNewBlock().getBlock())
+				&& (this.theEntity.worldObj.getBlockState(entry.getPos()) == entry.getNewBlock())) {
+			return true;
+		}
+		return false;
+	}
+	
 }
