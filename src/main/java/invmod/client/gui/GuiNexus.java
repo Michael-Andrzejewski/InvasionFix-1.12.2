@@ -23,26 +23,26 @@ public class GuiNexus extends GuiContainer
 	@Override
 	protected void drawGuiContainerForegroundLayer(int x, int y)
 	{
-		this.fontRendererObj.drawString("Nexus - Level " + this.tileEntityNexus.getNexusLevel(), 46, 6, 4210752);
-		this.fontRendererObj.drawString(this.tileEntityNexus.getNexusKills() + " mobs killed", 96, 60, 4210752);
-		this.fontRendererObj.drawString("R: " + this.tileEntityNexus.getSpawnRadius(), 142, 72, 4210752);
+		this.fontRenderer.drawString("Nexus - Level " + this.tileEntityNexus.getNexusLevel(), 46, 6, 4210752);
+		this.fontRenderer.drawString(this.tileEntityNexus.getNexusKills() + " mobs killed", 96, 60, 4210752);
+		this.fontRenderer.drawString("R: " + this.tileEntityNexus.getSpawnRadius(), 142, 72, 4210752);
 
 		if ((this.tileEntityNexus.getMode() == 1) || (this.tileEntityNexus.getMode() == 3))
 		{
-			this.fontRendererObj.drawString("Activated!", 13, 62, 4210752);
-			this.fontRendererObj.drawString("Wave " + this.tileEntityNexus.getCurrentWave(), 55, 37, 4210752);
+			this.fontRenderer.drawString("Activated!", 13, 62, 4210752);
+			this.fontRenderer.drawString("Wave " + this.tileEntityNexus.getCurrentWave(), 55, 37, 4210752);
 		}
 		else if (this.tileEntityNexus.getMode() == 2)
 		{
-			this.fontRendererObj.drawString("Power:", 56, 31, 4210752);
-			this.fontRendererObj.drawString("" + this.tileEntityNexus.getNexusPowerLevel(), 61, 44, 4210752);
+			this.fontRenderer.drawString("Power:", 56, 31, 4210752);
+			this.fontRenderer.drawString("" + this.tileEntityNexus.getNexusPowerLevel(), 61, 44, 4210752);
 		}
 
 		if ((this.tileEntityNexus.isActivating()) && (this.tileEntityNexus.getMode() == 0))
 		{
-			this.fontRendererObj.drawString("Activating...", 13, 62, 4210752);
+			this.fontRenderer.drawString("Activating...", 13, 62, 4210752);
 			if (this.tileEntityNexus.getMode() != 4)
-				this.fontRendererObj.drawString("Are you sure?", 8, 72, 4210752);
+				this.fontRenderer.drawString("Are you sure?", 8, 72, 4210752);
 		}
 	}
 

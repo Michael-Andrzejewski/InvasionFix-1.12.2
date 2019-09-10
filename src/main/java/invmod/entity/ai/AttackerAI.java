@@ -123,7 +123,7 @@ public class AttackerAI
 			{
 				TerrainDataLayer terrainMap = new TerrainDataLayer(this.getChunkCache(pos.getX(), pos.getY(), pos.getZ(), this.nexus.getPos().getX(), this.nexus.getPos().getY(), this.nexus.getPos().getZ(), 12.0F));
 				Scaffold s = (Scaffold)scaffoldPositions.get(i);
-				terrainMap.setData(s.getPos().xCoord, s.getPos().yCoord, s.getPos().zCoord, Integer.valueOf(200000));
+				terrainMap.setData(s.getPos().x, s.getPos().y, s.getPos().z, Integer.valueOf(200000));
 				Path path = this.createPath(pather, pos, this.nexus.getPos(), terrainMap);
 				if ((path.getTotalPathCost() < lowestCost) && (path.getFinalPathPoint().equals(this.nexus.getPos())))
 				{
@@ -147,7 +147,7 @@ public class AttackerAI
 				{
 					if (j != i)
 					{
-						terrainMap.setData(s.getPos().xCoord, s.getPos().yCoord, s.getPos().zCoord, Integer.valueOf(200000));
+						terrainMap.setData(s.getPos().x, s.getPos().y, s.getPos().z, Integer.valueOf(200000));
 					}
 				}
 				Path path = this.createPath(pather, pos, this.nexus.getPos(), terrainMap);
@@ -176,8 +176,8 @@ public class AttackerAI
 		{
 			for (int i = 0; i < scaffold.getTargetHeight(); i++)
 			{
-				int data = terrainMap.getLayeredData(scaffold.getPos().xCoord, scaffold.getPos().yCoord + i, scaffold.getPos().zCoord);
-				terrainMap.setData(scaffold.getPos().xCoord, scaffold.getPos().yCoord + i, scaffold.getPos().zCoord, Integer.valueOf(data | 0x4000));
+				int data = terrainMap.getLayeredData(scaffold.getPos().x, scaffold.getPos().y + i, scaffold.getPos().z);
+				terrainMap.setData(scaffold.getPos().x, scaffold.getPos().y + i, scaffold.getPos().z, Integer.valueOf(data | 0x4000));
 			}
 		}
 	}
@@ -191,9 +191,9 @@ public class AttackerAI
 	{
 		for (Scaffold scaffold : this.scaffolds)
 		{
-			if ((scaffold.getPos().xCoord == x) && (scaffold.getPos().zCoord == z))
+			if ((scaffold.getPos().x == x) && (scaffold.getPos().z == z))
 			{
-				if ((scaffold.getPos().yCoord <= y) && (scaffold.getPos().yCoord + scaffold.getTargetHeight() >= y))
+				if ((scaffold.getPos().y <= y) && (scaffold.getPos().y + scaffold.getTargetHeight() >= y))
 					return scaffold;
 			}
 		}
@@ -316,13 +316,13 @@ public class AttackerAI
 				if (node.action == PathAction.SCAFFOLD_UP)
 				{
 					flag = true;
-					startHeight = node.pos.yCoord - 1;
+					startHeight = node.pos.y - 1;
 				}
 
 			}
 			else if (node.action != PathAction.SCAFFOLD_UP)
 			{
-				Scaffold scaffold = new Scaffold(node.getPrevious().pos.xCoord, startHeight, node.getPrevious().pos.zCoord, MathHelper.floor(node.pos.yCoord - startHeight), this.nexus);
+				Scaffold scaffold = new Scaffold(node.getPrevious().pos.x, startHeight, node.getPrevious().pos.z, MathHelper.floor(node.pos.y - startHeight), this.nexus);
 				this.orientScaffold(scaffold, this.nexus.getWorld());
 				scaffold.setInitialIntegrity();
 				scaffoldPositions.add(scaffold);
@@ -340,7 +340,7 @@ public class AttackerAI
 		for (int i = 0; i < 4; i++)
 		{
 			int blockCount = 0;
-			for (int height = 0; height < scaffold.getPos().yCoord; height++)
+			for (int height = 0; height < scaffold.getPos().y; height++)
 			{
 				if (terrainMap.getBlockState(new BlockPos(scaffold.getPos().addVector(Coords.offsetAdjX[i], height, Coords.offsetAdjZ[i]))).isNormalCube())
 				{
@@ -365,21 +365,21 @@ public class AttackerAI
 		{
 			for (Scaffold existingScaffold : this.scaffolds)
 			{
-				if ((existingScaffold.getPos().xCoord == newScaffold.getPos().xCoord) && (existingScaffold.getPos().zCoord == newScaffold.getPos().zCoord))
+				if ((existingScaffold.getPos().x == newScaffold.getPos().x) && (existingScaffold.getPos().z == newScaffold.getPos().z))
 				{
-					if (newScaffold.getPos().yCoord > existingScaffold.getPos().yCoord)
+					if (newScaffold.getPos().y > existingScaffold.getPos().y)
 					{
-						if (newScaffold.getPos().yCoord < existingScaffold.getPos().yCoord + existingScaffold.getTargetHeight())
+						if (newScaffold.getPos().y < existingScaffold.getPos().y + existingScaffold.getTargetHeight())
 						{
-							existingScaffold.setHeight(MathHelper.floor(newScaffold.getPos().yCoord + newScaffold.getTargetHeight() - existingScaffold.getPos().yCoord));
+							existingScaffold.setHeight(MathHelper.floor(newScaffold.getPos().y + newScaffold.getTargetHeight() - existingScaffold.getPos().y));
 							break;
 						}
 
 					}
-					else if (newScaffold.getPos().yCoord + newScaffold.getTargetHeight() > existingScaffold.getPos().yCoord)
+					else if (newScaffold.getPos().x + newScaffold.getTargetHeight() > existingScaffold.getPos().y)
 					{
 						existingScaffold.setPosition(newScaffold.getPos());
-						existingScaffold.setHeight(MathHelper.floor(existingScaffold.getPos().yCoord + existingScaffold.getTargetHeight() - newScaffold.getPos().yCoord));
+						existingScaffold.setHeight(MathHelper.floor(existingScaffold.getPos().y + existingScaffold.getTargetHeight() - newScaffold.getPos().y));
 						break;
 					}
 				}
@@ -395,7 +395,7 @@ public class AttackerAI
 		for (int i = 0; i < this.scaffolds.size(); i++)
 		{
 			Scaffold lol = this.scaffolds.get(i);
-			this.nexus.getWorld().spawnParticle(EnumParticleTypes.HEART, lol.getPos().xCoord + 0.2D, lol.getPos().yCoord + 0.2D, lol.getPos().zCoord + 0.2D, lol.getPos().xCoord + 0.5D, lol.getPos().yCoord + 0.5D, lol.getPos().zCoord + 0.5D);
+			this.nexus.getWorld().spawnParticle(EnumParticleTypes.HEART, lol.getPos().x + 0.2D, lol.getPos().y + 0.2D, lol.getPos().z + 0.2D, lol.getPos().x + 0.5D, lol.getPos().y + 0.5D, lol.getPos().z + 0.5D);
 
 			this.scaffolds.get(i).forceStatusUpdate();
 			if (this.scaffolds.get(i).getPercentIntactCached() + 0.05F < 0.4F * this.scaffolds.get(i).getPercentCompletedCached())

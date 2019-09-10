@@ -64,7 +64,7 @@ public class ItemStrangeBone extends ModItem
 					EntityIMWolf newWolf = new EntityIMWolf(wolf, nexus);
 					wolf.world.spawnEntity(newWolf);
 					wolf.setDead();
-					itemStack.stackSize -= 1;
+					itemStack.shrink(1);
 				}
 				else
 				{

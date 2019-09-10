@@ -33,18 +33,18 @@ public class IMMoveHelperSpider extends IMMoveHelper
 			for (int i = path.getCurrentPathIndex(); i < pathLength; i++)
 			{
 				PathNode point = path.getPathPointFromIndex(i);
-				if (point.pos.xCoord > currentPoint.pos.xCoord) break;
-				if (point.pos.xCoord < currentPoint.pos.xCoord)
+				if (point.pos.x > currentPoint.pos.x) break;
+				if (point.pos.x < currentPoint.pos.x)
 				{
 					index = 2;
 					break;
 				}
-				if (point.pos.zCoord > currentPoint.pos.zCoord)
+				if (point.pos.z > currentPoint.pos.z)
 				{
 					index = 4;
 					break;
 				}
-				if (point.pos.zCoord < currentPoint.pos.zCoord)
+				if (point.pos.z < currentPoint.pos.z)
 				{
 					index = 6;
 					break;

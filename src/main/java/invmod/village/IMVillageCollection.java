@@ -3,10 +3,9 @@ package invmod.village;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
-import net.minecraft.world.WorldSavedData;
 
 
-public class IMVillageCollection extends WorldSavedData
+public class IMVillageCollection extends net.minecraft.world.storage.WorldSavedData
 {
 
 	private World world;

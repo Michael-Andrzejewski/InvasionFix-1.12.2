@@ -329,8 +329,7 @@ public class EntityIMGuardian extends EntityIMMob implements ICanDig
 	}
 
 	@Override
-	protected SoundEvent getHurtSound()
-	{
+	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return this.isElder() ? (this.isInWater() ? SoundEvents.ENTITY_ELDER_GUARDIAN_HURT : SoundEvents.ENTITY_ELDER_GUARDIAN_HURT_LAND) : (this.isInWater() ? SoundEvents.ENTITY_GUARDIAN_HURT : SoundEvents.ENTITY_GUARDIAN_HURT_LAND);
 	}
 
@@ -422,7 +421,7 @@ public class EntityIMGuardian extends EntityIMMob implements ICanDig
 
 				for (int i = 0; i < 2; ++i)
 				{
-					this.world.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX + (this.rand.nextDouble() - 0.5D) * (double)this.width - vec3d.xCoord * 1.5D, this.posY + this.rand.nextDouble() * (double)this.height - vec3d.yCoord * 1.5D, this.posZ + (this.rand.nextDouble() - 0.5D) * (double)this.width - vec3d.zCoord * 1.5D, 0.0D, 0.0D, 0.0D, new int[0]);
+					this.world.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX + (this.rand.nextDouble() - 0.5D) * (double)this.width - vec3d.x * 1.5D, this.posY + this.rand.nextDouble() * (double)this.height - vec3d.y * 1.5D, this.posZ + (this.rand.nextDouble() - 0.5D) * (double)this.width - vec3d.z * 1.5D, 0.0D, 0.0D, 0.0D, new int[0]);
 				}
 			}
 
@@ -515,7 +514,7 @@ public class EntityIMGuardian extends EntityIMMob implements ICanDig
 					@Override
 					public boolean apply(@Nullable EntityPlayerMP p_apply_1_)
 					{
-						return EntityIMGuardian.this.getDistanceSqToEntity(p_apply_1_) < 2500.0D && p_apply_1_.interactionManager.survivalOrAdventure();
+						return EntityIMGuardian.this.getDistanceSq(p_apply_1_) < 2500.0D && p_apply_1_.interactionManager.survivalOrAdventure();
 					}
 				}))
 				{
@@ -573,9 +572,9 @@ public class EntityIMGuardian extends EntityIMMob implements ICanDig
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount)
 	{
-		if (!this.isMoving() && !source.isMagicDamage() && source.getSourceOfDamage() instanceof EntityLivingBase)
+		if (!this.isMoving() && !source.isMagicDamage() && source.getTrueSource() instanceof EntityLivingBase)
 		{
-			EntityLivingBase entitylivingbase = (EntityLivingBase)source.getSourceOfDamage();
+			EntityLivingBase entitylivingbase = (EntityLivingBase)source.getTrueSource();
 			if (!source.isExplosion()) entitylivingbase.attackEntityFrom(DamageSource.causeThornsDamage(this), 2.0F);
 		}
 		if (this.wander != null) this.wander.makeUpdate();
@@ -595,14 +594,16 @@ public class EntityIMGuardian extends EntityIMMob implements ICanDig
 	/**
 	 * Moves the entity based on the specified heading.
 	 */
-	@Override
+	/*@Override
 	public void moveEntityWithHeading(float strafe, float forward)
-	{
+	{*/
+	@Override
+	public void moveRelative(float strafe, float up, float forward, float friction) {
 		if (this.isServerWorld())
 		{
 			if (this.isInWater())
 			{
-				this.moveRelative(strafe, forward, 0.1F);
+				this.moveRelative(strafe, 0.1F, forward, 0.1F);
 				this.setVelocity(this.motionX, this.motionY, this.motionZ);
 				this.motionX *= 0.8999999761581421D;
 				this.motionY *= 0.8999999761581421D;
@@ -612,12 +613,14 @@ public class EntityIMGuardian extends EntityIMMob implements ICanDig
 			}
 			else
 			{
-				super.moveEntityWithHeading(strafe, forward);
+				//super.moveEntityWithHeading(strafe, forward);
+				super.moveRelative(strafe, up, forward, friction);
 			}
 		}
 		else
 		{
-			super.moveEntityWithHeading(strafe, forward);
+			//super.moveEntityWithHeading(strafe, forward);
+			super.moveRelative(strafe, up, forward, friction);
 		}
 	}
 
@@ -646,9 +649,9 @@ public class EntityIMGuardian extends EntityIMMob implements ICanDig
 		 * Returns whether an in-progress EntityAIBase should continue executing
 		 */
 		@Override
-		public boolean continueExecuting()
+		public boolean shouldContinueExecuting()
 		{
-			return super.continueExecuting() && (this.theEntity.isElder() || this.theEntity.getDistanceSqToEntity(this.theEntity.getAttackTarget()) > 9.0D);
+			return super.shouldContinueExecuting() && (this.theEntity.isElder() || this.theEntity.getDistanceSq(this.theEntity.getAttackTarget()) > 9.0D);
 		}
 
 		/**
@@ -658,7 +661,7 @@ public class EntityIMGuardian extends EntityIMMob implements ICanDig
 		public void startExecuting()
 		{
 			this.tickCounter = -10;
-			this.theEntity.getNavigator().clearPathEntity();
+			this.theEntity.getNavigator().clearPath();
 			this.theEntity.getLookHelper().setLookPositionWithEntity(this.theEntity.getAttackTarget(), 90.0F, 90.0F);
 			this.theEntity.isAirBorne = true;
 		}
@@ -681,7 +684,7 @@ public class EntityIMGuardian extends EntityIMMob implements ICanDig
 		public void updateTask()
 		{
 			EntityLivingBase entitylivingbase = this.theEntity.getAttackTarget();
-			this.theEntity.getNavigator().clearPathEntity();
+			this.theEntity.getNavigator().clearPath();
 			this.theEntity.getLookHelper().setLookPositionWithEntity(entitylivingbase, 90.0F, 90.0F);
 
 			if (!this.theEntity.canEntityBeSeen(entitylivingbase))
@@ -787,7 +790,7 @@ public class EntityIMGuardian extends EntityIMMob implements ICanDig
 		@Override
 		public boolean apply(@Nullable EntityLivingBase p_apply_1_)
 		{
-			return (p_apply_1_ instanceof EntityPlayer || p_apply_1_ instanceof EntitySquid) && p_apply_1_.getDistanceSqToEntity(this.parentEntity) > 9.0D;
+			return (p_apply_1_ instanceof EntityPlayer || p_apply_1_ instanceof EntitySquid) && p_apply_1_.getDistanceSq(this.parentEntity) > 9.0D;
 		}
 	}
 

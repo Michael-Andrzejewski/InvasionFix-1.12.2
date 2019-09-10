@@ -27,7 +27,7 @@ public class EntityAIStabiliseFlying extends EntityAIBase
 	}
 
 	@Override
-	public boolean continueExecuting()
+	public boolean shouldContinueExecuting()
 	{
 		if (this.time >= this.stabiliseTime)
 		{

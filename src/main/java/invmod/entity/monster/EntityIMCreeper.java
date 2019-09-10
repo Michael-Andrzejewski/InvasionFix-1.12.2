@@ -1,6 +1,7 @@
 package invmod.entity.monster;
 
 import com.google.common.base.Predicate;
+
 import invmod.BlocksAndItems;
 import invmod.INotifyTask;
 import invmod.mod_Invasion;
@@ -73,7 +74,7 @@ public class EntityIMCreeper extends EntityIMMob
 	@Override
 	protected void initEntityAI()
 	{
-		this.tasksIM = new EntityAITasks(this.world.theProfiler);
+		this.tasksIM = new EntityAITasks(this.world.profiler);
 		this.tasksIM.addTask(0, new EntityAISwimming(this));
 		this.tasksIM.addTask(1, new EntityAICreeperIMSwell(this));
 		this.tasksIM.addTask(2, new EntityAIAvoidEntity(this, EntityOcelot.class, new Predicate()
@@ -94,7 +95,7 @@ public class EntityIMCreeper extends EntityIMMob
 		this.tasksIM.addTask(9, new EntityAIWatchClosest(this, EntityPlayer.class, 4.8F));
 		this.tasksIM.addTask(9, new EntityAILookIdle(this));
 
-		this.targetTasksIM = new EntityAITasks(this.world.theProfiler);
+		this.targetTasksIM = new EntityAITasks(this.world.profiler);
 		this.targetTasksIM.addTask(0, new EntityAITargetRetaliate(this, EntityLiving.class, 12.0F));
 		if (this.isNexusBound())
 		{
@@ -126,8 +127,8 @@ public class EntityIMCreeper extends EntityIMMob
 		if (!path.isFinished())
 		{
 			PathNode node = path.getPathPointFromIndex(path.getCurrentPathIndex());
-			double dX = node.pos.xCoord + 0.5D - this.posX;
-			double dZ = node.pos.zCoord + 0.5D - this.posZ;
+			double dX = node.pos.x + 0.5D - this.posX;
+			double dZ = node.pos.z + 0.5D - this.posZ;
 			float facing = (float)(Math.atan2(dZ, dX) * 180.0D / 3.141592653589793D) - 90.0F;
 			if (facing < 0.0F) facing += 360.0F;
 			facing %= 360.0F;
@@ -201,11 +202,9 @@ public class EntityIMCreeper extends EntityIMMob
 //	{
 //		return this.explosionDeath;
 //	}
-
+	
 	@Override
-	protected SoundEvent getHurtSound()
-	{
-		//return "mob.creeper.say";
+	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return SoundEvents.ENTITY_CREEPER_HURT;
 	}
 
@@ -227,7 +226,7 @@ public class EntityIMCreeper extends EntityIMMob
 	{
 		super.onDeath(par1DamageSource);
 
-		if ((par1DamageSource.getEntity() instanceof EntitySkeleton))
+		if ((par1DamageSource.getTrueSource() instanceof EntitySkeleton))
 		{
 			this.dropItem(Item.getItemById(Item.getIdFromItem(Items.RECORD_13) + this.rand.nextInt(10)), 1);
 		}

@@ -25,11 +25,11 @@ public class EntityAITargetOnNoNexusPath extends EntityAISimpleTarget
 	}
 
 	@Override
-	public boolean continueExecuting()
+	public boolean shouldContinueExecuting()
 	{
 		if ((this.getEntity().getAIGoal() == Goal.BREAK_NEXUS) && (this.getEntity().getNavigatorNew().getLastPathDistanceToTarget() > 4.0F))
 		{
-			return super.continueExecuting();
+			return super.shouldContinueExecuting();
 		}
 		return false;
 	}

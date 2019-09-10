@@ -1,6 +1,7 @@
 package invmod.entity.projectile;
 
 import java.util.List;
+
 import invmod.BlocksAndItems;
 import invmod.tileentity.TileEntityNexus;
 import net.minecraft.block.Block;
@@ -205,11 +206,11 @@ public class EntityIMPrimedTNT extends EntityTNTPrimed
 		vec3d1 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 		if (movingobjectposition != null)
 		{
-			vec3d1 = new Vec3d(movingobjectposition.hitVec.xCoord, movingobjectposition.hitVec.yCoord, movingobjectposition.hitVec.zCoord);
+			vec3d1 = new Vec3d(movingobjectposition.hitVec.x, movingobjectposition.hitVec.y, movingobjectposition.hitVec.z);
 		}
 
 		Entity entity = null;
-		List list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
+		List list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().offset(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
 		double d = 0.0D;
 		for (int l = 0; l < list.size(); l++)
 		{
@@ -262,9 +263,9 @@ public class EntityIMPrimedTNT extends EntityTNTPrimed
 				this.zTile = movingobjectposition.getBlockPos().getZ();
 				this.inTile = this.world.getBlockState(new BlockPos(this.xTile, this.yTile, this.zTile)).getBlock();
 //					this.inData = this.world.getBlockMetadata(this.xTile, this.yTile, this.zTile);
-				this.motionX = ((float)(movingobjectposition.hitVec.xCoord - this.posX));
-				this.motionY = ((float)(movingobjectposition.hitVec.yCoord - this.posY));
-				this.motionZ = ((float)(movingobjectposition.hitVec.zCoord - this.posZ));
+				this.motionX = ((float)(movingobjectposition.hitVec.x - this.posX));
+				this.motionY = ((float)(movingobjectposition.hitVec.y - this.posY));
+				this.motionZ = ((float)(movingobjectposition.hitVec.z - this.posZ));
 				float f2 = MathHelper.sqrt(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
 				this.posX -= this.motionX / f2 * 0.05D;
 				this.posY -= this.motionY / f2 * 0.05D;

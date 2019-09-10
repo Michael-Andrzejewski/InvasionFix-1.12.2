@@ -2,7 +2,9 @@ package invmod.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.commons.lang3.Validate;
+
 import invmod.INotifyTask;
 import invmod.util.Coords;
 import net.minecraft.block.Block;
@@ -65,7 +67,7 @@ public class TerrainBuilder implements ITerrainBuild
 			Scaffold scaffold = this.theEntity.getEntity().getNexus().getAttackerAI().getScaffoldAt(pos);
 			if (scaffold != null)
 			{
-				int height = pos.getY() - MathHelper.floor(scaffold.getPos().yCoord);
+				int height = pos.getY() - MathHelper.floor(scaffold.getPos().y);
 				int xOffset = Coords.offsetAdjX[scaffold.getOrientation()];
 				int zOffset = Coords.offsetAdjZ[scaffold.getOrientation()];
 				//Block block = this.theEntity.world.getBlockState(new BlockPos(pos.getXCoord() + xOffset, pos.getYCoord() - 1, pos.getZCoord() + zOffset)).getBlock();

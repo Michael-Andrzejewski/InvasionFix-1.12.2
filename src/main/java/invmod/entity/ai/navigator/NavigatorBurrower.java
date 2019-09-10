@@ -44,9 +44,9 @@ public class NavigatorBurrower extends NavigatorParametric
 	protected PosRotate3D positionAtTime(int tick, PathNode start, PathNode middle, PathNode end)
 	{
 		PosRotate3D pos = this.calcPositionAndRotation(tick * this.timePerTick, start, middle, end);
-		pos.setPosX(pos.getPosX() + middle.pos.xCoord);
-		pos.setPosY(pos.getPosY() + middle.pos.yCoord);
-		pos.setPosZ(pos.getPosZ() + middle.pos.zCoord);
+		pos.setPosX(pos.getPosX() + middle.pos.x);
+		pos.setPosY(pos.getPosY() + middle.pos.y);
+		pos.setPosZ(pos.getPosZ() + middle.pos.z);
 		return pos;
 	}
 
@@ -251,24 +251,24 @@ public class NavigatorBurrower extends NavigatorParametric
 	private PosRotate3D calcAbsolutePositionAndRotation(float time, PathNode start, PathNode middle, PathNode end)
 	{
 		PosRotate3D pos = this.calcPositionAndRotation(time, start, middle, end);
-		pos.setPosX(pos.getPosX() + middle.pos.xCoord);
-		pos.setPosY(pos.getPosY() + middle.pos.yCoord);
-		pos.setPosZ(pos.getPosZ() + middle.pos.zCoord);
+		pos.setPosX(pos.getPosX() + middle.pos.x);
+		pos.setPosY(pos.getPosY() + middle.pos.y);
+		pos.setPosZ(pos.getPosZ() + middle.pos.z);
 		return pos;
 	}
 
 	private PosRotate3D calcPositionAndRotation(float time, PathNode start, PathNode middle, PathNode end)
 	{
 		//DarthXenon: Changed to double
-		double vX = end.pos.xCoord - start.pos.xCoord;
-		double vY = end.pos.yCoord - start.pos.yCoord;
-		double vZ = end.pos.zCoord - start.pos.zCoord;
-		int hX = middle.pos.xCoord != start.pos.xCoord ? 1 : -1;
-		int hY = middle.pos.yCoord != start.pos.yCoord ? 1 : -1;
-		int hZ = middle.pos.zCoord != start.pos.zCoord ? 1 : -1;
-		int gX = middle.pos.xCoord != end.pos.xCoord ? 1 : -1;
-		int gY = middle.pos.yCoord != end.pos.yCoord ? 1 : -1;
-		int gZ = middle.pos.zCoord != end.pos.zCoord ? 1 : -1;
+		double vX = end.pos.x - start.pos.x;
+		double vY = end.pos.y - start.pos.y;
+		double vZ = end.pos.z - start.pos.z;
+		int hX = middle.pos.x != start.pos.x ? 1 : -1;
+		int hY = middle.pos.y != start.pos.y ? 1 : -1;
+		int hZ = middle.pos.z != start.pos.z ? 1 : -1;
+		int gX = middle.pos.x != end.pos.x ? 1 : -1;
+		int gY = middle.pos.y != end.pos.y ? 1 : -1;
+		int gZ = middle.pos.z != end.pos.z ? 1 : -1;
 		double xOffset = vX * -0.5D * hX;
 		double yOffset = vY * -0.5D * hY;
 		double zOffset = vZ * -0.5D * hZ;
@@ -377,9 +377,9 @@ public class NavigatorBurrower extends NavigatorParametric
 	private PosRotate3D calcStraight(float time, PathNode start, PathNode end)
 	{
 		PosRotate3D segment = new PosRotate3D();
-		segment.setPosX(start.pos.xCoord + 0.5D + time * (end.pos.xCoord - start.pos.xCoord) * 0.5D);
-		segment.setPosY(start.pos.yCoord + time * (end.pos.yCoord - start.pos.yCoord) * 0.5D);
-		segment.setPosZ(start.pos.zCoord + 0.5D + time * (end.pos.zCoord - start.pos.zCoord * 0.5D));
+		segment.setPosX(start.pos.x + 0.5D + time * (end.pos.x - start.pos.x) * 0.5D);
+		segment.setPosY(start.pos.y + time * (end.pos.y - start.pos.y) * 0.5D);
+		segment.setPosZ(start.pos.z + 0.5D + time * (end.pos.z - start.pos.z * 0.5D));
 		return segment;
 	}
 

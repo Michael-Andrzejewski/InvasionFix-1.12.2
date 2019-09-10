@@ -17,7 +17,7 @@ public interface IBlockAccessExtended extends IBlockAccess
 
 	public default int getLayeredData(Vec3d vec)
 	{
-		return this.getLayeredData(vec.xCoord, vec.yCoord, vec.zCoord);
+		return this.getLayeredData(vec.x, vec.y, vec.z);
 	}
 
 	public void setData(double x, double y, double z, Integer paramInteger);

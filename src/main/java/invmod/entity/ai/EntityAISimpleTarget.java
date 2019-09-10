@@ -79,7 +79,7 @@ public class EntityAISimpleTarget extends EntityAIBase
 	}
 
 	@Override
-	public boolean continueExecuting()
+	public boolean shouldContinueExecuting()
 	{
 		EntityLivingBase entityliving = this.theEntity.getAttackTarget();
 		if (entityliving == null)
@@ -90,7 +90,7 @@ public class EntityAISimpleTarget extends EntityAIBase
 		{
 			return false;
 		}
-		if (this.theEntity.getDistanceSqToEntity(entityliving) > this.distance
+		if (this.theEntity.getDistanceSq(entityliving) > this.distance
 			* this.distance)
 		{
 			return false;

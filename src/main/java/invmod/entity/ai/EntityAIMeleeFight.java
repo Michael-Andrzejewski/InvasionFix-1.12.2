@@ -35,7 +35,7 @@ public class EntityAIMeleeFight<T extends EntityLivingBase> extends EntityAIMele
 	}
 
 	@Override
-	public boolean continueExecuting()
+	public boolean shouldContinueExecuting()
 	{
 		return ((this.theEntity.getAIGoal() == Goal.MELEE_TARGET) || (this.isWaitingForTransition())) && (this.theEntity.getAttackTarget() != null);
 	}

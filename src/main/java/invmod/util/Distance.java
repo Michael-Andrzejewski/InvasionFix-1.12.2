@@ -17,9 +17,9 @@ public class Distance
 
 	public static double distanceBetween(BlockPos pos1, Vec3d pos2)
 	{
-		double dX = pos2.xCoord - pos1.getX();
-		double dY = pos2.yCoord - pos1.getY();
-		double dZ = pos2.zCoord - pos1.getZ();
+		double dX = pos2.x - pos1.getX();
+		double dY = pos2.y - pos1.getY();
+		double dZ = pos2.z - pos1.getZ();
 		return Math.sqrt(dX * dX + dY * dY + dZ * dZ);
 	}
 
@@ -41,17 +41,17 @@ public class Distance
 
 	public static double distanceBetween(Entity entity, Vec3d pos2)
 	{
-		double dX = pos2.xCoord - entity.posX;
-		double dY = pos2.yCoord - entity.posY;
-		double dZ = pos2.zCoord - entity.posZ;
+		double dX = pos2.x - entity.posX;
+		double dY = pos2.y - entity.posY;
+		double dZ = pos2.z - entity.posZ;
 		return Math.sqrt(dX * dX + dY * dY + dZ * dZ);
 	}
 
 	public static double distanceBetween(Vec3d vec0, Vec3d vec1)
 	{
-		double dX = vec1.xCoord - vec0.xCoord;
-		double dY = vec1.yCoord - vec0.yCoord;
-		double dZ = vec1.zCoord - vec0.zCoord;
+		double dX = vec1.x - vec0.x;
+		double dY = vec1.y - vec0.y;
+		double dZ = vec1.z - vec0.z;
 		return Math.sqrt(dX * dX + dY * dY + dZ * dZ);
 	}
 }

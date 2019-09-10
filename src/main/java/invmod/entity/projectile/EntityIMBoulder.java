@@ -1,6 +1,7 @@
 package invmod.entity.projectile;
 
 import java.util.List;
+
 import invmod.BlocksAndItems;
 import invmod.tileentity.TileEntityNexus;
 import net.minecraft.block.Block;
@@ -174,7 +175,7 @@ public class EntityIMBoulder extends Entity
 			//block.setBlockBoundsBasedOnState(this.world, new BlockPos(this.xTile, this.yTile, this.zTile));
 			//AxisAlignedBB axisalignedbb = block.getSelectedBoundingBox(this.world.getBlockState(new BlockPos(this.xTile, this.yTile, this.zTile)),this.world, new BlockPos(this.xTile, this.yTile, this.zTile));
 			AxisAlignedBB axisalignedbb = blockState.getBlock().getBoundingBox(blockState, this.world, new BlockPos(this.xTile, this.yTile, this.zTile));
-			if ((axisalignedbb != null) && (axisalignedbb.isVecInside(new Vec3d(this.posX, this.posY, this.posZ))))
+			if ((axisalignedbb != null) && (axisalignedbb.contains(new Vec3d(this.posX, this.posY, this.posZ))))
 			{
 				this.inGround = true;
 			}
@@ -195,11 +196,11 @@ public class EntityIMBoulder extends Entity
 		RayTraceResult rtr0 = this.world.rayTraceBlocks(vec3d, vec3d1, false);
 		vec3d = new Vec3d(this.posX, this.posY, this.posZ);
 		vec3d1 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
-		if (rtr0 != null) vec3d1 = new Vec3d(rtr0.hitVec.xCoord, rtr0.hitVec.yCoord, rtr0.hitVec.zCoord);
+		if (rtr0 != null) vec3d1 = new Vec3d(rtr0.hitVec.x, rtr0.hitVec.y, rtr0.hitVec.z);
 
 		Entity entity = null;
 		List list = this.world.getEntitiesWithinAABBExcludingEntity(
-			this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
+			this, this.getEntityBoundingBox().offset(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
 		double d = 0.0D;
 		for (int l = 0; l < list.size(); l++)
 		{
@@ -250,9 +251,9 @@ public class EntityIMBoulder extends Entity
 				this.zTile = rtr0.getBlockPos().getZ();
 				this.inTile = this.world.getBlockState(new BlockPos(this.xTile, this.yTile, this.zTile)).getBlock();
 //				this.inData = this.world.getBlockMetadata(this.xTile, this.yTile, this.zTile);
-				this.motionX = ((float)(rtr0.hitVec.xCoord - this.posX));
-				this.motionY = ((float)(rtr0.hitVec.yCoord - this.posY));
-				this.motionZ = ((float)(rtr0.hitVec.zCoord - this.posZ));
+				this.motionX = ((float)(rtr0.hitVec.x - this.posX));
+				this.motionY = ((float)(rtr0.hitVec.y - this.posY));
+				this.motionZ = ((float)(rtr0.hitVec.z - this.posZ));
 				float f2 = MathHelper.sqrt(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
 				this.posX -= this.motionX / f2 * 0.05D;
 				this.posY -= this.motionY / f2 * 0.05D;

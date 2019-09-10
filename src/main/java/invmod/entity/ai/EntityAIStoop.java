@@ -32,7 +32,7 @@ public class EntityAIStoop extends EntityAIBase
 	}
 
 	@Override
-	public boolean continueExecuting()
+	public boolean shouldContinueExecuting()
 	{
 		return !this.stopStoop;
 	}

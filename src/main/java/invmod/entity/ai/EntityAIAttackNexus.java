@@ -38,7 +38,7 @@ public class EntityAIAttackNexus extends EntityAIBase
 	}
 
 	@Override
-	public boolean continueExecuting()
+	public boolean shouldContinueExecuting()
 	{
 		return !this.attacked;
 	}

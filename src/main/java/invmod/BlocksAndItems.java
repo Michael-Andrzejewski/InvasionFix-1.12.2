@@ -75,10 +75,15 @@ public class BlocksAndItems
 		itemRiftFlux = new ModItem("riftFlux")
 		{
 			@Override
+			public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+				return EnumActionResult.FAIL;
+			};
+			
+			/*@Override
 			public EnumActionResult onItemUseFirst(ItemStack itemstack, EntityPlayer entityplayer, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
 			{
 				return EnumActionResult.FAIL;
-			}
+			}*/
 		}.setMaxDamage(0).setMaxStackSize(64);
 		itemSmallRemnants = new ModItem("smallRemnants").setMaxDamage(0).setMaxStackSize(64);
 		itemNexusCatalyst = new ModItem("nexusCatalyst").setMaxStackSize(1);

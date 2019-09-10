@@ -54,7 +54,7 @@ public class EntityAIPickUpEntity extends EntityAIBase
 	}
 
 	@Override
-	public boolean continueExecuting()
+	public boolean shouldContinueExecuting()
 	{
 		EntityLivingBase target = this.theEntity.getAttackTarget();
 		if ((target != null) && (!target.isDead))

@@ -1,9 +1,10 @@
 package invmod.client.render;
 
 import org.lwjgl.opengl.GL11;
+
 import invmod.entity.projectile.EntityIMBolt;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.VertexFormat;
@@ -34,7 +35,7 @@ public class RenderBolt extends Render<EntityIMBolt>
 
 	public void renderFromVertices(EntityIMBolt entityBolt, Tessellator tessellator)
 	{
-		VertexBuffer buffer = tessellator.getBuffer();
+		BufferBuilder buffer = tessellator.getBuffer();
 		double[][] vertices = entityBolt.getVertices();
 		if (vertices == null)
 		{

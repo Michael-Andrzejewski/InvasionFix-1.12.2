@@ -34,7 +34,7 @@ public class ItemFlameTrap extends ModItem
 				world.spawnEntity(trap);
 
 				// players in creative mode won't lose the item
-				if (!entityplayer.capabilities.isCreativeMode) itemstack.stackSize -= 1;
+				if (!entityplayer.capabilities.isCreativeMode) itemstack.shrink(1);
 			}
 			return EnumActionResult.SUCCESS;
 		}

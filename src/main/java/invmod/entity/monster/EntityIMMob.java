@@ -196,10 +196,10 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 	{
 		if (!this.nexusBound)
 		{
-			float brightness = this.getBrightness(1.0F);
+			float brightness = this.getBrightness();
 			if ((brightness > 0.5F) || (this.posY < 55.0D))
 			{
-				this.entityAge += 2;
+				this.ticksExisted += 2;
 			}
 			if ((this.getBurnsInDay()) && (this.world.isDaytime()) && (!this.world.isRemote))
 			{
@@ -218,7 +218,7 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 	{
 		if (super.attackEntityFrom(damagesource, damage))
 		{
-			Entity entity = damagesource.getEntity();
+			Entity entity = damagesource.getTrueSource();
 			//if ((this.riddenByEntity == entity) || (this.ridingEntity == entity)) {
 			if (this.getPassengers().contains(entity) || this.getRidingEntity() == entity)
 			{
@@ -250,9 +250,16 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 	}
 
 	@Override
+	public void moveRelative(float strafe, float up, float forward, float friction) {
+	/*	// TODO Auto-generated method stub
+		super.moveRelative(strafe, up, forward, friction);
+	}
+	
+	@Override
 	public void moveEntityWithHeading(float strafe, float forward)
-	{
-		super.moveEntityWithHeading(strafe, forward);
+	{*/
+		//super.moveEntityWithHeading(strafe, forward);
+		super.moveRelative(strafe, up, forward, friction);
 		if (this.isInWater())
 		{
 			double y = this.posY;
@@ -262,7 +269,7 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 			this.motionY *= 0.8D;
 			this.motionZ *= 0.8D;
 			this.motionY -= 0.02D;
-			if ((this.isCollidedHorizontally)
+			if ((this.collidedHorizontally)
 				&& (this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6D - this.posY + y, this.motionZ)))
 				this.motionY = 0.3D;
 		}
@@ -275,7 +282,7 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 			this.motionY *= 0.5D;
 			this.motionZ *= 0.5D;
 			this.motionY -= 0.02D;
-			if ((this.isCollidedHorizontally)
+			if ((this.collidedHorizontally)
 				&& (this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6D - this.posY + y, this.motionZ)))
 				this.motionY = 0.3D;
 		}
@@ -321,7 +328,7 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 			}
 			this.setVelocity(this.motionX, this.motionY, this.motionZ);
 
-			if ((this.isCollidedHorizontally) && (this.isOnLadder())) this.motionY = 0.2D;
+			if ((this.collidedHorizontally) && (this.isOnLadder())) this.motionY = 0.2D;
 			this.motionY -= this.getGravity();
 			this.motionY *= this.airResistance;
 			this.motionX *= groundFriction * this.airResistance;
@@ -386,7 +393,7 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 	{
 		if (this.getHealth() > this.maxHealth - this.maxSelfDamage)
 		{
-			this.attackEntityFrom(DamageSource.generic, this.selfDamage);
+			this.attackEntityFrom(DamageSource.GENERIC, this.selfDamage);
 		}
 
 		if ((this.throttled == 0) && ((id == 3) || (id == 2) || (id == 12) || (id == 13)))
@@ -403,7 +410,7 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 
 	public boolean canEntityBeDetected(Entity entity)
 	{
-		float distance = this.getDistanceToEntity(entity);
+		float distance = this.getDistance(entity);
 		return (distance <= this.getSenseRange())
 			|| ((this.canEntityBeSeen(entity)) && (distance <= this.getAggroRange()));
 	}
@@ -866,8 +873,8 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 	@Override
 	protected void updateAITasks()
 	{
-		this.world.theProfiler.startSection("Entity IM");
-		this.entityAge++;
+		this.world.profiler.startSection("Entity IM");
+		this.ticksExisted++;
 		this.despawnEntity();
 		this.getEntitySenses().clearSensingCache();
 		this.targetTasksIM.onUpdateTasks();
@@ -877,7 +884,7 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 		this.getLookHelper().onUpdateLook();
 		this.getMoveHelper().onUpdateMoveHelper();
 		this.getJumpHelper().doJump();
-		this.world.theProfiler.endSection();
+		this.world.profiler.endSection();
 	}
 
 	@Override
@@ -939,7 +946,7 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 	{
 		if (this.isImmuneToFire)
 		{
-			this.damageEntity(DamageSource.generic, 3.0F);
+			this.damageEntity(DamageSource.GENERIC, 3.0F);
 		}
 		else
 		{
@@ -971,7 +978,7 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 			multiplier += mobDensity * 3;
 		}
 
-		if ((node.pos.yCoord > prevNode.pos.yCoord) && (this.getCollide(terrainMap, node.pos) == 2))
+		if ((node.pos.y > prevNode.pos.y) && (this.getCollide(terrainMap, node.pos) == 2))
 		{
 			multiplier += 2.0F;
 		}
@@ -983,7 +990,7 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 
 		if (node.action == PathAction.SWIM)
 		{
-			multiplier *= ((node.pos.yCoord <= prevNode.pos.yCoord)
+			multiplier *= ((node.pos.y <= prevNode.pos.y)
 				&& (!terrainMap.isAirBlock(new BlockPos(node.pos.addVector(0d, 1d, 0d)))) ? 3.0F : 1.0F);
 			return prevNode.distanceTo(node) * 1.3F * multiplier;
 		}
@@ -994,7 +1001,7 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 
 	protected void calcPathOptions(IBlockAccess terrainMap, PathNode currentNode, PathfinderIM pathFinder)
 	{
-		if ((currentNode.pos.yCoord <= 0) || (currentNode.pos.yCoord > 255)) return;
+		if ((currentNode.pos.y <= 0) || (currentNode.pos.y > 255)) return;
 
 		this.calcPathOptionsVertical(terrainMap, currentNode, pathFinder);
 
@@ -1023,28 +1030,28 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 				if ((i == 3) && (currentNode.action == PathAction.LADDER_UP_PZ)) height = 0;
 			}
 			int yOffset = 0;
-			int currentY = MathHelper.floor(currentNode.pos.yCoord) + height;
+			int currentY = MathHelper.floor(currentNode.pos.y) + height;
 			boolean passedLevel = false;
 			do
 			{
 				yOffset = this.getNextLowestSafeYOffset(terrainMap,
-					new BlockPos(currentNode.pos.xCoord + Coords.offsetAdjX[i], currentY, currentNode.pos.zCoord + Coords.offsetAdjZ[i]),
-					maxFall + currentY - MathHelper.floor(currentNode.pos.yCoord));
+					new BlockPos(currentNode.pos.x + Coords.offsetAdjX[i], currentY, currentNode.pos.z + Coords.offsetAdjZ[i]),
+					maxFall + currentY - MathHelper.floor(currentNode.pos.y));
 				if (yOffset > 0)
 					break;
 				if (yOffset > -maxFall)
 				{
 					pathFinder.addNode(new Vec3d(
-						currentNode.pos.xCoord + Coords.offsetAdjX[i], currentY + yOffset + 1, currentNode.pos.zCoord + Coords.offsetAdjZ[i]),
+						currentNode.pos.x + Coords.offsetAdjX[i], currentY + yOffset + 1, currentNode.pos.z + Coords.offsetAdjZ[i]),
 						PathAction.NONE);
 				}
 
 				currentY += yOffset - 1;
 
-				if ((!passedLevel) && (currentY <= currentNode.pos.yCoord))
+				if ((!passedLevel) && (currentY <= currentNode.pos.y))
 				{
 					passedLevel = true;
-					if (currentY != currentNode.pos.yCoord)
+					if (currentY != currentNode.pos.y)
 					{
 						this.addAdjacent(terrainMap,
 							new BlockPos(currentNode.pos.addVector(Coords.offsetAdjX[i], 0, Coords.offsetAdjZ[i])),
@@ -1055,7 +1062,7 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 
 			}
 
-			while (currentY >= currentNode.pos.yCoord);
+			while (currentY >= currentNode.pos.y);
 		}
 
 		if (this.canSwimHorizontal())

@@ -305,9 +305,9 @@ public class IMMoveHelperFlying extends IMMoveHelper
 				}
 				double desiredVThrustRatio = (dVelY - yAccel) / this.a.getThrust();
 				Vec3d thrust = this.calcThrust(desiredVThrustRatio);
-				xAccel += thrust.xCoord;
-				yAccel += thrust.yCoord;
-				zAccel += thrust.zCoord;
+				xAccel += thrust.x;
+				yAccel += thrust.y;
+				zAccel += thrust.z;
 			}
 			else if (flySpeed > this.targetFlySpeed * 1.8D)
 			{
@@ -319,9 +319,9 @@ public class IMMoveHelperFlying extends IMMoveHelper
 				double desiredVThrustRatio = (dVelY - yAccel)
 					/ (this.a.getThrust() * 10.0F);
 				Vec3d thrust = this.calcThrust(desiredVThrustRatio);
-				xAccel += -thrust.xCoord;
-				yAccel += thrust.yCoord;
-				zAccel += -thrust.zCoord;
+				xAccel += -thrust.x;
+				yAccel += thrust.y;
+				zAccel += -thrust.z;
 			}
 			else if (this.a.isThrustOn())
 			{
@@ -346,12 +346,12 @@ public class IMMoveHelperFlying extends IMMoveHelper
 		{
 			return FlyState.GROUNDED;
 		}
-		if (this.a.isCollidedHorizontally)
+		if (this.a.collidedHorizontally)
 		{
 			this.a.getJumpHelper().setJumping();
 		}
 		Vec3d thrust = this.calcThrust(0.0D);
-		this.a.setFlightAccelerationVector((float)thrust.xCoord, (float)thrust.yCoord, (float)thrust.zCoord);
+		this.a.setFlightAccelerationVector((float)thrust.x, (float)thrust.y, (float)thrust.z);
 		double speed = Math.sqrt(this.a.motionX * this.a.motionX + this.a.motionY * this.a.motionY + this.a.motionZ * this.a.motionZ);
 
 		this.a.rotationPitch = this.correctRotation(this.a.rotationPitch, 40.0F,

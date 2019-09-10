@@ -31,6 +31,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -97,7 +98,7 @@ public class EntityIMSkeleton extends EntityIMMob implements IRangedAttackMob
 	@Override
 	protected void initEntityAI()
 	{
-		this.tasksIM = new EntityAITasks(this.world.theProfiler);
+		this.tasksIM = new EntityAITasks(this.world.profiler);
 		this.tasksIM.addTask(0, new EntityAISwimming(this));
 		this.tasksIM.addTask(1, new EntityAIKillWithArrow(this, EntityPlayer.class, 65, 16.0F));
 		this.tasksIM.addTask(1, new EntityAIKillWithArrow(this, EntityPlayerMP.class, 65, 16.0F));
@@ -110,7 +111,7 @@ public class EntityIMSkeleton extends EntityIMMob implements IRangedAttackMob
 		this.tasksIM.addTask(6, new EntityAILookIdle(this));
 		this.tasksIM.addTask(6, new EntityAIWatchClosest(this, EntityIMCreeper.class, 12.0F));
 
-		this.targetTasksIM = new EntityAITasks(this.world.theProfiler);
+		this.targetTasksIM = new EntityAITasks(this.world.profiler);
 		this.targetTasksIM.addTask(0, new EntityAISimpleTarget(this, EntityPlayer.class, this.getSenseRange(), false));
 		this.targetTasksIM.addTask(1, new EntityAIHurtByTarget(this, false));
 	}
@@ -122,9 +123,7 @@ public class EntityIMSkeleton extends EntityIMMob implements IRangedAttackMob
 	}
 
 	@Override
-	protected SoundEvent getHurtSound()
-	{
-		//return "mob.skeleton.hurt";
+	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return SoundEvents.ENTITY_SKELETON_HURT;
 	}
 

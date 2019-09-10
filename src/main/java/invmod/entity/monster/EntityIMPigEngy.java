@@ -44,6 +44,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -131,7 +132,7 @@ public class EntityIMPigEngy extends EntityIMMob implements ICanDig, ICanBuild
 	@Override
 	protected void initEntityAI()
 	{
-		this.tasksIM = new EntityAITasks(this.world.theProfiler);
+		this.tasksIM = new EntityAITasks(this.world.profiler);
 		this.tasksIM.addTask(0, new EntityAISwimming(this));
 		this.tasksIM.addTask(1, new EntityAIKillEntity(this, EntityPlayer.class, 60));
 		this.tasksIM.addTask(2, new EntityAIAttackNexus(this));
@@ -141,7 +142,7 @@ public class EntityIMPigEngy extends EntityIMMob implements ICanDig, ICanBuild
 		this.tasksIM.addTask(9, new EntityAIWatchClosest(this, EntityIMCreeper.class, 12.0F));
 		this.tasksIM.addTask(9, new EntityAILookIdle(this));
 
-		this.targetTasksIM = new EntityAITasks(this.world.theProfiler);
+		this.targetTasksIM = new EntityAITasks(this.world.profiler);
 		if (this.isNexusBound())
 		{
 			this.targetTasksIM.addTask(1, new EntityAISimpleTarget(this, EntityPlayer.class, 3.0F, true));
@@ -271,8 +272,7 @@ public class EntityIMPigEngy extends EntityIMMob implements ICanDig, ICanBuild
 	}
 
 	@Override
-	protected SoundEvent getHurtSound()
-	{
+	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return SoundEvents.ENTITY_ZOMBIE_PIG_HURT;
 	}
 
@@ -320,7 +320,7 @@ public class EntityIMPigEngy extends EntityIMMob implements ICanDig, ICanBuild
 	@Override
 	public float getBlockPathCost(PathNode prevNode, PathNode node, IBlockAccess terrainMap)
 	{
-		if ((node.pos.xCoord == -21) && (node.pos.zCoord == 180)) this.planks = 10;
+		if ((node.pos.x == -21) && (node.pos.z == 180)) this.planks = 10;
 		IBlockState blockState = terrainMap.getBlockState(new BlockPos(node.pos));
 		float materialMultiplier = (blockState.getBlock() != Blocks.AIR)
 			&& (this.isBlockDestructible(terrainMap, new BlockPos(node.pos), blockState)) ? 3.2F : 1.0F;
@@ -348,7 +348,7 @@ public class EntityIMPigEngy extends EntityIMMob implements ICanDig, ICanBuild
 		float multiplier = 1.0F;
 		if ((terrainMap instanceof IBlockAccessExtended))
 		{
-			int mobDensity = ((IBlockAccessExtended)terrainMap).getLayeredData(node.pos.xCoord, node.pos.yCoord, node.pos.zCoord) & 0x7;
+			int mobDensity = ((IBlockAccessExtended)terrainMap).getLayeredData(node.pos.x, node.pos.y, node.pos.z) & 0x7;
 			multiplier += mobDensity;
 		}
 		if (blockState.getBlock() == Blocks.AIR || blockState.getBlock() == Blocks.SNOW) return prevNode.distanceTo(node) * multiplier;
@@ -384,7 +384,7 @@ public class EntityIMPigEngy extends EntityIMMob implements ICanDig, ICanBuild
 	@Override
 	protected void calcPathOptionsVertical(IBlockAccess terrainMap, PathNode currentNode, PathfinderIM pathFinder)
 	{
-		if ((currentNode.pos.xCoord == -11) && (currentNode.pos.zCoord == 177)) this.planks = 10;
+		if ((currentNode.pos.x == -11) && (currentNode.pos.z == 177)) this.planks = 10;
 		super.calcPathOptionsVertical(terrainMap, currentNode, pathFinder);
 		if (this.planks <= 0) return;
 
@@ -445,8 +445,8 @@ public class EntityIMPigEngy extends EntityIMMob implements ICanDig, ICanBuild
 		if ((terrainMap instanceof IBlockAccessExtended))
 		{
 			int data = ((IBlockAccessExtended)terrainMap).getLayeredData(
-				currentNode.pos.xCoord, currentNode.pos.yCoord + 1,
-				currentNode.pos.zCoord);
+				currentNode.pos.x, currentNode.pos.y + 1,
+				currentNode.pos.z);
 			if (data == 16384)
 			{
 				pathFinder.addNode(currentNode.pos.addVector(0d, 1d, 0d), PathAction.SCAFFOLD_UP);

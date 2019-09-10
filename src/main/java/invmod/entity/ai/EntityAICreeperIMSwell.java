@@ -26,7 +26,7 @@ public class EntityAICreeperIMSwell extends EntityAIBase
 	{
 		EntityLivingBase entityliving = this.theEntity.getAttackTarget();
 
-		return (this.theEntity.getCreeperState() > 0) || ((entityliving != null) && (this.theEntity.getDistanceSqToEntity(entityliving) < 9.0D) && ((entityliving.getClass() == EntityPlayer.class) || (entityliving.getClass() == EntityIMWolf.class) || (entityliving.getClass() == EntityPlayerMP.class)));
+		return (this.theEntity.getCreeperState() > 0) || ((entityliving != null) && (this.theEntity.getDistanceSq(entityliving) < 9.0D) && ((entityliving.getClass() == EntityPlayer.class) || (entityliving.getClass() == EntityIMWolf.class) || (entityliving.getClass() == EntityPlayerMP.class)));
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class EntityAICreeperIMSwell extends EntityAIBase
 			return;
 		}
 
-		if (this.theEntity.getDistanceSqToEntity(this.targetEntity) > 49.0D)
+		if (this.theEntity.getDistanceSq(this.targetEntity) > 49.0D)
 		{
 			this.theEntity.setCreeperState(-1);
 			return;

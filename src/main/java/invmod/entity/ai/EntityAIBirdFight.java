@@ -51,7 +51,7 @@ public class EntityAIBirdFight<T extends EntityLivingBase> extends EntityAIMelee
 			nav.clearPath();
 			nav.setMovementType(INavigationFlying.MoveType.PREFER_WALKING);
 			Path path = nav.getPathToEntity(target, 0.0F);
-			if ((path != null) && (path.getCurrentPathLength() > 1.6D * this.theEntity.getDistanceToEntity(target)))
+			if ((path != null) && (path.getCurrentPathLength() > 1.6D * this.theEntity.getDistance(target)))
 			{
 				nav.setMovementType(INavigationFlying.MoveType.MIXED);
 			}

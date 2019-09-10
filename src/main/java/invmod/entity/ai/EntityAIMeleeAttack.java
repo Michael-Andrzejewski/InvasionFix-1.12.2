@@ -27,7 +27,7 @@ public class EntityAIMeleeAttack<T extends EntityLivingBase> extends EntityAIBas
 	public boolean shouldExecute()
 	{
 		EntityLivingBase target = this.theEntity.getAttackTarget();
-		return (target != null) && (this.theEntity.getAIGoal() == Goal.MELEE_TARGET) && (this.theEntity.getDistanceToEntity(target) < (this.attackRange + this.theEntity.width + target.width) * 4.0F) && (target.getClass().isAssignableFrom(this.targetClass));
+		return (target != null) && (this.theEntity.getAIGoal() == Goal.MELEE_TARGET) && (this.theEntity.getDistance(target) < (this.attackRange + this.theEntity.width + target.width) * 4.0F) && (target.getClass().isAssignableFrom(this.targetClass));
 	}
 
 	@Override

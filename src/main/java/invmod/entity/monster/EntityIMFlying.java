@@ -117,9 +117,9 @@ public abstract class EntityIMFlying extends EntityIMMob
 				float oldTargetX = MathUtil.unpackFloat(this.getDataManager().get(TARGET).getX());
 				float oldTargetY = MathUtil.unpackFloat(this.getDataManager().get(TARGET).getY());
 				float oldTargetZ = MathUtil.unpackFloat(this.getDataManager().get(TARGET).getZ());
-				float targX = (float)target.xCoord;
-				float targY = (float)target.yCoord;
-				float targZ = (float)target.zCoord;
+				float targX = (float)target.x;
+				float targY = (float)target.y;
+				float targZ = (float)target.z;
 
 				if ((!MathUtil.floatEquals(oldTargetX, targX, 0.1F)) || (!MathUtil.floatEquals(oldTargetY, targY, 0.1F)) || (!MathUtil.floatEquals(oldTargetZ, targZ, 0.1F)))
 				{
@@ -220,7 +220,7 @@ public abstract class EntityIMFlying extends EntityIMMob
 			this.motionY *= 0.8D;
 			this.motionZ *= 0.8D;
 			this.motionY -= 0.02D;
-			if ((this.isCollidedHorizontally)
+			if ((this.collidedHorizontally)
 				&& (this.isOffsetPositionInLiquid(this.motionX, this.motionY
 					+ 0.6D - this.posY + y, this.motionZ)))
 				this.motionY = 0.3D;
@@ -234,7 +234,7 @@ public abstract class EntityIMFlying extends EntityIMMob
 			this.motionY *= 0.5D;
 			this.motionZ *= 0.5D;
 			this.motionY -= 0.02D;
-			if ((this.isCollidedHorizontally)
+			if ((this.collidedHorizontally)
 				&& (this.isOffsetPositionInLiquid(this.motionX, this.motionY
 					+ 0.6D - this.posY + y, this.motionZ)))
 				this.motionY = 0.3D;
@@ -441,7 +441,7 @@ public abstract class EntityIMFlying extends EntityIMMob
 	protected void calcPathOptionsFlying(IBlockAccess terrainMap,
 		PathNode currentNode, PathfinderIM pathFinder)
 	{
-		if ((currentNode.pos.yCoord <= 0) || (currentNode.pos.yCoord > 255))
+		if ((currentNode.pos.y <= 0) || (currentNode.pos.y > 255))
 		{
 			return;
 		}
@@ -481,7 +481,7 @@ public abstract class EntityIMFlying extends EntityIMMob
 		if ((terrainMap instanceof IBlockAccessExtended))
 		{
 			int mobDensity = ((IBlockAccessExtended)terrainMap)
-				.getLayeredData(node.pos.xCoord, node.pos.yCoord, node.pos.zCoord) & 0x7;
+				.getLayeredData(node.pos.x, node.pos.y, node.pos.z) & 0x7;
 			multiplier += mobDensity * 3;
 		}
 
@@ -522,14 +522,14 @@ public abstract class EntityIMFlying extends EntityIMMob
 
 		if (node.action == PathAction.SWIM)
 		{
-			multiplier *= ((node.pos.yCoord <= prevNode.pos.yCoord)
-				&& (!terrainMap.isAirBlock(new BlockPos(node.pos.xCoord,
-					node.pos.yCoord + 1, node.pos.zCoord))) ? 3.0F : 1.0F);
+			multiplier *= ((node.pos.y <= prevNode.pos.y)
+				&& (!terrainMap.isAirBlock(new BlockPos(node.pos.x,
+					node.pos.y + 1, node.pos.z))) ? 3.0F : 1.0F);
 			return prevNode.distanceTo(node) * 1.3F * multiplier;
 		}
 
 		Block block = terrainMap.getBlockState(
-			new BlockPos(node.pos.xCoord, node.pos.yCoord, node.pos.zCoord)).getBlock();
+			new BlockPos(node.pos.x, node.pos.y, node.pos.z)).getBlock();
 		return prevNode.distanceTo(node) * block.getExplosionResistance(null)
 			* multiplier;
 	}

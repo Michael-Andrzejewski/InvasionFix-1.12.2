@@ -26,9 +26,9 @@ public class EntityAIRallyBehindEntity<T extends EntityLivingBase, ILeader> exte
 	}
 
 	@Override
-	public boolean continueExecuting()
+	public boolean shouldContinueExecuting()
 	{
-		return (this.getEntity().readyToRally()) && (super.continueExecuting());
+		return (this.getEntity().readyToRally()) && (super.shouldContinueExecuting());
 	}
 
 	@Override

@@ -34,7 +34,7 @@ public class EntityAICircleTarget extends EntityAIBase
 	}
 
 	@Override
-	public boolean continueExecuting()
+	public boolean shouldContinueExecuting()
 	{
 		return ((this.theEntity.getAIGoal() == Goal.STAY_AT_RANGE) || (this.isWaitingForTransition())) && (this.theEntity.getAttackTarget() != null);
 	}

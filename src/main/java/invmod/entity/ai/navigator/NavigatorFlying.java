@@ -108,9 +108,9 @@ public class NavigatorFlying extends NavigatorIM implements INavigationFlying
 	@Override
 	public float getDistanceToCirclingRadius()
 	{
-		double dX = this.finalTarget.xCoord - this.theEntity.posX;
-		double dY = this.finalTarget.yCoord - this.theEntity.posY;
-		double dZ = this.finalTarget.zCoord - this.theEntity.posZ;
+		double dX = this.finalTarget.x - this.theEntity.posX;
+		double dY = this.finalTarget.y - this.theEntity.posY;
+		double dZ = this.finalTarget.z - this.theEntity.posZ;
 		return (float)(Math.sqrt(dX * dX + dZ * dZ) - this.circlingRadius);
 	}
 
@@ -130,7 +130,7 @@ public class NavigatorFlying extends NavigatorIM implements INavigationFlying
 	@Override
 	protected void updateAutoPathToEntity()
 	{
-		double dist = this.theEntity.getDistanceToEntity(this.pathEndEntity);
+		double dist = this.theEntity.getDistance(this.pathEndEntity);
 		if (dist < this.closestDistToTarget - 1.0F)
 		{
 			this.closestDistToTarget = ((float)dist);
@@ -145,7 +145,7 @@ public class NavigatorFlying extends NavigatorIM implements INavigationFlying
 		boolean needsPathfinder = false;
 		if (this.path != null)
 		{
-			double dSq = this.theEntity.getDistanceSqToEntity(this.pathEndEntity);
+			double dSq = this.theEntity.getDistanceSq(this.pathEndEntity);
 			if (((this.moveType == INavigationFlying.MoveType.PREFER_FLYING) || ((this.moveType == INavigationFlying.MoveType.MIXED) && (dSq > 100.0D))) && (this.theEntity.canEntityBeSeen(this.pathEndEntity)))
 			{
 				this.timeLookingForEntity = 0;
@@ -171,7 +171,7 @@ public class NavigatorFlying extends NavigatorIM implements INavigationFlying
 		}
 		else if (this.moveType == INavigationFlying.MoveType.MIXED)
 		{
-			double dSq = this.theEntity.getDistanceSqToEntity(this.pathEndEntity);
+			double dSq = this.theEntity.getDistanceSq(this.pathEndEntity);
 			if (dSq < 100.0D)
 			{
 				pathUpdate = true;
@@ -286,7 +286,7 @@ public class NavigatorFlying extends NavigatorIM implements INavigationFlying
 		Vec3d target = this.findValidPointNear(x, z, min, max, verticalRange);
 		if (target != null)
 		{
-			return this.tryMoveToXYZ(target.xCoord, target.yCoord, target.zCoord, 0.0F, speed);
+			return this.tryMoveToXYZ(target.x, target.y, target.z, 0.0F, speed);
 		}
 		return false;
 	}
@@ -382,7 +382,7 @@ public class NavigatorFlying extends NavigatorIM implements INavigationFlying
 			}
 			this.intermediateTarget = this.convertToVector(this.targetYaw, this.targetPitch, this.targetSpeed);
 		}
-		this.theEntity.getMoveHelper().setMoveTo(this.intermediateTarget.xCoord, this.intermediateTarget.yCoord, this.intermediateTarget.zCoord, this.targetSpeed);
+		this.theEntity.getMoveHelper().setMoveTo(this.intermediateTarget.x, this.intermediateTarget.y, this.intermediateTarget.z, this.targetSpeed);
 	}
 
 	protected Vec3d convertToVector(float yaw, float pitch, float idealSpeed)
@@ -448,9 +448,9 @@ public class NavigatorFlying extends NavigatorIM implements INavigationFlying
 
 		if (this.isCircling)
 		{
-			double dX = this.finalTarget.xCoord - this.theEntity.posX;
-			double dY = this.finalTarget.yCoord - this.theEntity.posY;
-			double dZ = this.finalTarget.zCoord - this.theEntity.posZ;
+			double dX = this.finalTarget.x - this.theEntity.posX;
+			double dY = this.finalTarget.y - this.theEntity.posY;
+			double dZ = this.finalTarget.z - this.theEntity.posZ;
 			double dXZ = Math.sqrt(dX * dX + dZ * dZ);
 
 			if ((dXZ > 0.0D) && (dXZ > this.circlingRadius * 0.6D))
@@ -645,7 +645,7 @@ public class NavigatorFlying extends NavigatorIM implements INavigationFlying
 			RayTraceResult rtr = this.theEntity.world.rayTraceBlocks(origin, target);
 			if (rtr != null)
 			{
-				Block Block = this.theEntity.world.getBlockState(new BlockPos(rtr.hitVec.xCoord, rtr.hitVec.yCoord, rtr.hitVec.zCoord)).getBlock();
+				Block Block = this.theEntity.world.getBlockState(new BlockPos(rtr.hitVec.x, rtr.hitVec.y, rtr.hitVec.z)).getBlock();
 				if (!this.theEntity.avoidsBlock(Block))
 				{
 					safety += 0.7F;
@@ -654,9 +654,9 @@ public class NavigatorFlying extends NavigatorIM implements INavigationFlying
 				{
 					safety += 0.3F;
 				}
-				double dX = rtr.hitVec.xCoord - this.theEntity.posX;
-				double dY = rtr.hitVec.yCoord - this.theEntity.posY;
-				double dZ = rtr.hitVec.zCoord - this.theEntity.posZ;
+				double dX = rtr.hitVec.x - this.theEntity.posX;
+				double dY = rtr.hitVec.y - this.theEntity.posY;
+				double dZ = rtr.hitVec.z - this.theEntity.posZ;
 				distance = (float)(distance + Math.sqrt(dX * dX + dY * dY + dZ * dZ));
 			}
 			else

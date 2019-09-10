@@ -35,7 +35,7 @@ public class EntityAIFlyingMoveToEntity extends EntityAIBase
 			nav.clearPath();
 			nav.setMovementType(INavigationFlying.MoveType.PREFER_WALKING);
 			Path path = nav.getPathToEntity(target, 0.0F);
-			if (path.getCurrentPathLength() > 2.0D * this.theEntity.getDistanceToEntity(target))
+			if (path.getCurrentPathLength() > 2.0D * this.theEntity.getDistance(target))
 			{
 				nav.setMovementType(INavigationFlying.MoveType.MIXED);
 			}

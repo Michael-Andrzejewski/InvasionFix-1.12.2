@@ -14,10 +14,10 @@ public class EntityAITargetRetaliate extends EntityAISimpleTarget
 	@Override
 	public boolean shouldExecute()
 	{
-		EntityLivingBase attacker = this.getEntity().getAITarget();
+		EntityLivingBase attacker = this.getEntity().getAttackingEntity();
 		if (attacker != null)
 		{
-			if ((this.getEntity().getDistanceToEntity(attacker) <= this.getAggroRange()) && (this.getTargetType().isAssignableFrom(attacker.getClass())))
+			if ((this.getEntity().getDistance(attacker) <= this.getAggroRange()) && (this.getTargetType().isAssignableFrom(attacker.getClass())))
 			{
 				this.setTarget(attacker);
 				return true;

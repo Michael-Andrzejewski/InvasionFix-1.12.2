@@ -10,9 +10,9 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.IForgeRegistry;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession;
+import net.minecraftforge.registries.IForgeRegistry;
 import scala.actors.threadpool.Arrays;
 
 
@@ -74,7 +74,7 @@ public class EntityIMVillager extends EntityIMLiving
 	public static class IMVillageAssignment
 	{
 
-		public static final IForgeRegistry<VillagerProfession> REGISTRY = VillagerRegistry.instance().getRegistry();
+		public static final IForgeRegistry<VillagerProfession> REGISTRY = VillagerRegistry.instance();//.getRegistry();
 
 		public static final IMVillageAssignment WARRIOR = new IMVillageAssignment("warrior",
 			REGISTRY.getValue(new ResourceLocation("minecraft:butcher")));

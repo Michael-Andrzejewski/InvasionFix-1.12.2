@@ -62,47 +62,47 @@ public class ContainerNexus extends Container
 			if (this.activationTimer != this.nexus.getActivationTimer())
 			{
 				//icrafting.sendProgressBarUpdate(this, 0, this.nexus.getActivationTimer());
-				this.listeners.get(i).sendProgressBarUpdate(this, 0, this.nexus.getActivationTimer());
+				this.listeners.get(i).sendWindowProperty(this, 0, this.nexus.getActivationTimer());
 			}
 			if (this.mode != this.nexus.getMode())
 			{
 				//icrafting.sendProgressBarUpdate(this, 1, this.nexus.getMode());
-				this.listeners.get(i).sendProgressBarUpdate(this, 1, this.nexus.getMode());
+				this.listeners.get(i).sendWindowProperty(this, 1, this.nexus.getMode());
 			}
 			if (this.currentWave != this.nexus.getCurrentWave())
 			{
 				//icrafting.sendProgressBarUpdate(this, 2, this.nexus.getCurrentWave());
-				this.listeners.get(i).sendProgressBarUpdate(this, 2, this.nexus.getCurrentWave());
+				this.listeners.get(i).sendWindowProperty(this, 2, this.nexus.getCurrentWave());
 			}
 			if (this.nexusLevel != this.nexus.getNexusLevel())
 			{
 				//icrafting.sendProgressBarUpdate(this, 3, this.nexus.getNexusLevel());
-				this.listeners.get(i).sendProgressBarUpdate(this, 3, this.nexus.getNexusLevel());
+				this.listeners.get(i).sendWindowProperty(this, 3, this.nexus.getNexusLevel());
 			}
 			if (this.nexusKills != this.nexus.getNexusKills())
 			{
 				//icrafting.sendProgressBarUpdate(this, 4, this.nexus.getNexusKills());
-				this.listeners.get(i).sendProgressBarUpdate(this, 4, this.nexus.getNexusKills());
+				this.listeners.get(i).sendWindowProperty(this, 4, this.nexus.getNexusKills());
 			}
 			if (this.spawnRadius != this.nexus.getSpawnRadius())
 			{
 				//icrafting.sendProgressBarUpdate(this, 5, this.nexus.getSpawnRadius());
-				this.listeners.get(i).sendProgressBarUpdate(this, 4, this.nexus.getSpawnRadius());
+				this.listeners.get(i).sendWindowProperty(this, 4, this.nexus.getSpawnRadius());
 			}
 			if (this.generation != this.nexus.getGeneration())
 			{
 				//icrafting.sendProgressBarUpdate(this, 6, this.nexus.getGeneration());
-				this.listeners.get(i).sendProgressBarUpdate(this, 4, this.nexus.getGeneration());
+				this.listeners.get(i).sendWindowProperty(this, 4, this.nexus.getGeneration());
 			}
 			if (this.generation != this.nexus.getNexusPowerLevel())
 			{
 				//icrafting.sendProgressBarUpdate(this, 7, this.nexus.getNexusPowerLevel());
-				this.listeners.get(i).sendProgressBarUpdate(this, 4, this.nexus.getPowerLevel());
+				this.listeners.get(i).sendWindowProperty(this, 4, this.nexus.getPowerLevel());
 			}
 			if (this.generation != this.nexus.getCookTime())
 			{
 				//icrafting.sendProgressBarUpdate(this, 9, this.nexus.getCookTime());
-				this.listeners.get(i).sendProgressBarUpdate(this, 4, this.nexus.getCookTime());
+				this.listeners.get(i).sendWindowProperty(this, 4, this.nexus.getCookTime());
 			}
 		}
 
@@ -198,7 +198,7 @@ public class ContainerNexus extends Container
 			{
 				return null;
 			}
-			if (itemstack1.stackSize == 0)
+			if (itemstack1.isEmpty())
 			{
 				slot.putStack(null);
 			}
@@ -206,9 +206,9 @@ public class ContainerNexus extends Container
 			{
 				slot.onSlotChanged();
 			}
-			if (itemstack1.stackSize != itemstack.stackSize)
+			if (itemstack1.getCount() != itemstack.getCount())
 			{
-				slot.onPickupFromSlot(player, itemstack1);
+				slot.onTake(player, itemstack1);
 			}
 			else
 			{

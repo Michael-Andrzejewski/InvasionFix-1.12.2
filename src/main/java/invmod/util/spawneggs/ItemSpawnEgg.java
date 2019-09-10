@@ -18,6 +18,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
@@ -91,19 +92,24 @@ public class ItemSpawnEgg extends Item
 		return color;
 	}
 
+	//public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
 	@Override
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
-	{
-		if (world.isRemote) return EnumActionResult.PASS;
+	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand,
+			EnumFacing facing, float hitX, float hitY, float hitZ) {
+		/*
+		return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+	}*/
+		ItemStack stack = player.getHeldItem(hand);
+		if (worldIn.isRemote) return EnumActionResult.PASS;
 
-		Block block = world.getBlockState(pos).getBlock();
-		pos = pos.offset(side);
+		Block block = worldIn.getBlockState(pos).getBlock();
+		pos = pos.offset(facing);
 		double d0 = 0.0D;
 
-		if (side == EnumFacing.UP && block != null)// && //TODO block.getRenderType() == 11)
+		if (facing == EnumFacing.UP && block != null)// && //TODO block.getRenderType() == 11)
 			d0 = 0.5D;
 
-		Entity entity = spawnCreature(world, stack,
+		Entity entity = spawnCreature(worldIn, stack,
 			new BlockPos((double)pos.getX() + 0.5D, (double)pos.getY() + d0,
 				(double)pos.getZ() + 0.5D));
 
@@ -112,7 +118,8 @@ public class ItemSpawnEgg extends Item
 			if (entity instanceof EntityLiving && stack.hasDisplayName())
 				((EntityLiving)entity).setCustomNameTag(stack.getDisplayName());
 			if (!player.capabilities.isCreativeMode)
-				--stack.stackSize;
+				//--stack.stackSize;
+				stack.shrink(1);
 		}
 		return EnumActionResult.SUCCESS;
 
@@ -142,7 +149,7 @@ public class ItemSpawnEgg extends Item
 				if (entity != null)
 				{
 					if (entity instanceof EntityLiving && stack.hasDisplayName()) ((EntityLiving)entity).setCustomNameTag(stack.getDisplayName());
-					if (!player.capabilities.isCreativeMode) --stack.stackSize;
+					if (!player.capabilities.isCreativeMode) stack.shrink(1);;
 				}
 			}
 		}
@@ -225,12 +232,16 @@ public class ItemSpawnEgg extends Item
 	}
 
 	@Override
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+		for (SpawnEggInfo info : SpawnEggRegistry.getEggInfoList())
+			items.add(new ItemStack(this, 1, info.eggID));
+	}
+	/*@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void getSubItems(Item item, CreativeTabs par2CreativeTabs, List list)
 	{
 		for (SpawnEggInfo info : SpawnEggRegistry.getEggInfoList())
 			list.add(new ItemStack(item, 1, info.eggID));
-	}
+	}*/
 
 	public static String attemptToTranslate(String key, String _default)
 	{

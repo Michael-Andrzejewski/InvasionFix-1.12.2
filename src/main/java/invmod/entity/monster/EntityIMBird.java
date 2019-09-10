@@ -164,7 +164,7 @@ public class EntityIMBird extends EntityIMFlying
 		if (ForgeHooks.onLivingAttack(this, par1DamageSource, par2)) return false;
 		if (this.isUnkillable()) return false;
 		if (this.world.isRemote) return false;
-		this.entityAge = 0;
+		this.ticksExisted = 0;
 		if (this.getHealth() <= 0.0F) return false;
 		if ((par1DamageSource.isFireDamage()) && (this.isPotionActive(MobEffects.FIRE_RESISTANCE))) return false;
 
@@ -196,7 +196,7 @@ public class EntityIMBird extends EntityIMFlying
 		}
 
 		this.attackedAtYaw = 0.0F;
-		Entity entity = par1DamageSource.getEntity();
+		Entity entity = par1DamageSource.getTrueSource();
 
 		if (entity != null)
 		{
@@ -222,7 +222,7 @@ public class EntityIMBird extends EntityIMFlying
 		if (flag)
 		{
 			this.world.setEntityState(this, (byte)2);
-			if (par1DamageSource != DamageSource.drown) this.setBeenAttacked();
+			if (par1DamageSource != DamageSource.DROWN) this.setBeenAttacked();
 			if (entity != null)
 			{
 				double d0 = entity.posX - this.posX;

@@ -87,7 +87,7 @@ public class EntityAISwoop extends EntityAIBase
 	}
 
 	@Override
-	public boolean continueExecuting()
+	public boolean shouldContinueExecuting()
 	{
 		return (this.theEntity.getAttackTarget() == this.swoopTarget) && (!this.endSwoop) && (this.theEntity.getMoveState() == MoveState.FLYING);
 	}
@@ -122,7 +122,7 @@ public class EntityAISwoop extends EntityAIBase
 		this.time += 1;
 		if (!this.isCommittedToFinalRun)
 		{
-			if (this.theEntity.getDistanceToEntity(this.swoopTarget) < this.finalRunLength)
+			if (this.theEntity.getDistance(this.swoopTarget) < this.finalRunLength)
 			{
 				this.theEntity.getNavigatorNew().setPitchBias(0.0F, 1.0F);
 				if (this.isFinalRunLinedUp())
@@ -151,7 +151,7 @@ public class EntityAISwoop extends EntityAIBase
 			}
 
 		}
-		else if (this.theEntity.getDistanceToEntity(this.swoopTarget) < this.strikeDistance)
+		else if (this.theEntity.getDistance(this.swoopTarget) < this.strikeDistance)
 		{
 			this.theEntity.transitionAIGoal(Goal.FLYING_STRIKE);
 

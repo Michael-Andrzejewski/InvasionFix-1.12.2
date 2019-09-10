@@ -89,7 +89,7 @@ public class EntityAIGoToNexus extends EntityAIBase
 		if (path != null)
 		{
 			Vec3d vec = path.getFinalPathPoint().pos;
-			return this.theEntity.getDistanceSq(vec.xCoord, vec.yCoord, vec.zCoord) < 4.0D;
+			return this.theEntity.getDistanceSq(vec.x, vec.y, vec.z) < 4.0D;
 		}
 		return true;
 	}

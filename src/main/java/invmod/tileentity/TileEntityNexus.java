@@ -416,9 +416,9 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 	{
 		this.nexusItemStacks[i] = itemstack;
 		if ((itemstack != null)
-			&& (itemstack.stackSize > this.getInventoryStackLimit()))
+			&& (itemstack.getCount() > this.getInventoryStackLimit()))
 		{
-			itemstack.stackSize = this.getInventoryStackLimit();
+			itemstack.setCount(this.getInventoryStackLimit());
 		}
 	}
 
@@ -433,14 +433,14 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 	{
 		if (this.nexusItemStacks[i] != null)
 		{
-			if (this.nexusItemStacks[i].stackSize <= j)
+			if (this.nexusItemStacks[i].getCount() <= j)
 			{
 				ItemStack itemstack = this.nexusItemStacks[i];
 				this.nexusItemStacks[i] = null;
 				return itemstack;
 			}
 			ItemStack itemstack1 = this.nexusItemStacks[i].splitStack(j);
-			if (this.nexusItemStacks[i].stackSize == 0)
+			if (this.nexusItemStacks[i].isEmpty())
 			{
 				this.nexusItemStacks[i] = null;
 			}
@@ -476,8 +476,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 			byte byte0 = nbttagcompound1.getByte("Slot");
 			if ((byte0 >= 0) && (byte0 < this.nexusItemStacks.length))
 			{
-				this.nexusItemStacks[byte0] = ItemStack
-					.loadItemStackFromNBT(nbttagcompound1);
+				this.nexusItemStacks[byte0] = new ItemStack(nbttagcompound1);
 			}
 
 		}
@@ -944,14 +943,14 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 					{
 						this.nexusItemStacks[1] = new ItemStack(
 							BlocksAndItems.itemRiftTrap, 1);
-						if (--this.nexusItemStacks[0].stackSize <= 0)
+						if ((this.nexusItemStacks[0].getCount() -1) <= 0)
 							this.nexusItemStacks[0] = null;
 						this.cookTime = 0;
 					}
 					else if ((this.nexusItemStacks[1].getItem() == BlocksAndItems.itemRiftTrap))
 					{
-						this.nexusItemStacks[1].stackSize += 1;
-						if (--this.nexusItemStacks[0].stackSize <= 0)
+						this.nexusItemStacks[1].grow(1);
+						if ((this.nexusItemStacks[0].getCount() -1) <= 0)
 							this.nexusItemStacks[0] = null;
 						this.cookTime = 0;
 					}
@@ -966,7 +965,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 					if (this.nexusItemStacks[1] == null)
 					{
 						this.nexusItemStacks[1] = new ItemStack(BlocksAndItems.itemStrongCatalyst, 1);
-						if (--this.nexusItemStacks[0].stackSize <= 0) this.nexusItemStacks[0] = null;
+						if ((this.nexusItemStacks[0].getCount() -1) <= 0) this.nexusItemStacks[0] = null;
 						this.cookTime = 0;
 					}
 				}
@@ -985,8 +984,8 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 
 				if (this.nexusItemStacks[0].getItem() == BlocksAndItems.itemNexusCatalyst)
 				{
-					this.nexusItemStacks[0].stackSize -= 1;
-					if (this.nexusItemStacks[0].stackSize == 0) this.nexusItemStacks[0] = null;
+					this.nexusItemStacks[0].shrink(1);
+					if (this.nexusItemStacks[0].isEmpty()) this.nexusItemStacks[0] = null;
 					this.activated = true;
 					BlockNexus.setBlockView(true, this.getWorld(), this.getPos());
 					this.startInvasion(1);
@@ -994,8 +993,8 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 				}
 				else if (this.nexusItemStacks[0].getItem() == BlocksAndItems.itemStrongCatalyst)
 				{
-					this.nexusItemStacks[0].stackSize -= 1;
-					if (this.nexusItemStacks[0].stackSize == 0) this.nexusItemStacks[0] = null;
+					this.nexusItemStacks[0].shrink(1);
+					if (this.nexusItemStacks[0].isEmpty()) this.nexusItemStacks[0] = null;
 					this.activated = true;
 					BlockNexus.setBlockView(true, this.getWorld(), this.getPos());
 					this.startInvasion(10);
@@ -1003,8 +1002,8 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 				}
 				else if (this.nexusItemStacks[0].getItem() == BlocksAndItems.itemStableNexusCatalyst)
 				{
-					this.nexusItemStacks[0].stackSize -= 1;
-					if (this.nexusItemStacks[0].stackSize == 0) this.nexusItemStacks[0] = null;
+					this.nexusItemStacks[0].shrink(1);
+					if (this.nexusItemStacks[0].isEmpty()) this.nexusItemStacks[0] = null;
 					this.activated = true;
 					BlockNexus.setBlockView(true, this.getWorld(), this.getPos());
 					this.startContinuousPlay();
@@ -1062,7 +1061,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 			}
 			else if (this.nexusItemStacks[1].getItem() == BlocksAndItems.itemRiftFlux)
 			{
-				this.nexusItemStacks[1].stackSize += 1;
+				this.nexusItemStacks[1].grow(1);
 				this.generation -= 3000;
 			}
 		}
@@ -1170,7 +1169,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 				EntityPlayer player = this.world.getPlayerEntityByName(this.getBoundPlayers().get(i));
 				if (player != null)
 				{
-					player.attackEntityFrom(DamageSource.magic, Float.MAX_VALUE);
+					player.attackEntityFrom(DamageSource.MAGIC, Float.MAX_VALUE);
 					//playSoundForBoundPlayers("random.explode");
 					this.playSoundForBoundPlayers(SoundEvents.ENTITY_GENERIC_EXPLODE);
 				}
@@ -1202,12 +1201,12 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 		// monsters
 		List<EntityIMLiving> mobs = this.world.getEntitiesWithinAABB(EntityIMLiving.class, this.boundingBoxToRadius);
 		for (EntityIMLiving mob : mobs)
-			mob.attackEntityFrom(DamageSource.magic, Float.MAX_VALUE);
+			mob.attackEntityFrom(DamageSource.MAGIC, Float.MAX_VALUE);
 
 		// wolves
 		List<EntityIMWolf> wolves = this.world.getEntitiesWithinAABB(EntityIMWolf.class, this.boundingBoxToRadius);
 		for (EntityIMWolf wolf : wolves)
-			wolf.attackEntityFrom(DamageSource.magic, Float.MAX_VALUE);
+			wolf.attackEntityFrom(DamageSource.MAGIC, Float.MAX_VALUE);
 	}
 
 	private boolean zapEnemy(int sfx)
@@ -1219,7 +1218,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 				Collections.sort(this.mobList, new ComparatorEntityDistance(this.pos.getX(), this.pos.getY(), this.pos.getZ()));
 			}
 			EntityIMLiving mob = this.mobList.remove(this.mobList.size() - 1);
-			mob.attackEntityFrom(DamageSource.magic, 500.0F);
+			mob.attackEntityFrom(DamageSource.MAGIC, 500.0F);
 			EntityIMBolt bolt = new EntityIMBolt(this.world,
 				this.pos.getX() + 0.5D, this.pos.getY() + 0.5D, this.pos.getZ() + 0.5D,
 				mob.posX, mob.posY, mob.posZ, 15, sfx);

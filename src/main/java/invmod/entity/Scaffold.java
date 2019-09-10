@@ -1,6 +1,7 @@
 package invmod.entity;
 
 import java.util.List;
+
 import invmod.IPathfindable;
 import invmod.entity.ai.navigator.PathAction;
 import invmod.entity.ai.navigator.PathNode;
@@ -156,9 +157,9 @@ public class Scaffold implements IPathfindable
 
 	public void writeToNBT(NBTTagCompound nbttagcompound)
 	{
-		nbttagcompound.setDouble("xCoord", this.vec.xCoord);
-		nbttagcompound.setDouble("yCoord", this.vec.yCoord);
-		nbttagcompound.setDouble("zCoord", this.vec.zCoord);
+		nbttagcompound.setDouble("xCoord", this.vec.x);
+		nbttagcompound.setDouble("yCoord", this.vec.y);
+		nbttagcompound.setDouble("zCoord", this.vec.z);
 		nbttagcompound.setInteger("targetHeight", this.targetHeight);
 		nbttagcompound.setInteger("orientation", this.orientation);
 		nbttagcompound.setFloat("initialCompletion", this.initialCompletion);
@@ -277,7 +278,7 @@ public class Scaffold implements IPathfindable
 		{
 			this.pathfindBase.getPathOptionsFromNode(terrainMap, currentNode, pathFinder);
 		}
-		Block block = terrainMap.getBlockState(new BlockPos(currentNode.pos.xCoord, currentNode.pos.yCoord + 1, currentNode.pos.zCoord)).getBlock();
+		Block block = terrainMap.getBlockState(new BlockPos(currentNode.pos.x, currentNode.pos.y + 1, currentNode.pos.z)).getBlock();
 		if ((currentNode.getPrevious() != null) && (currentNode.getPrevious().action == PathAction.SCAFFOLD_UP) && (!this.avoidsBlock(block)))
 		{
 			pathFinder.addNode(currentNode.pos.addVector(0d, 1d, 0d), PathAction.SCAFFOLD_UP);

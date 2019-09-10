@@ -1,11 +1,12 @@
 package invmod.client.render;
 
 import org.lwjgl.opengl.GL11;
+
 import invmod.Reference;
 import invmod.entity.monster.EntityIMBird;
 import invmod.util.MathUtil;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.entity.EntityLiving;
@@ -51,7 +52,7 @@ public class RenderGiantBird extends RenderIMMob<EntityIMBird>
 	private void renderNavigationVector(EntityIMBird entityBird, double entityRenderOffsetX, double entityRenderOffsetY, double entityRenderOffsetZ)
 	{
 		Tessellator tessellator = Tessellator.getInstance();
-		VertexBuffer buffer = tessellator.getBuffer();
+		BufferBuilder buffer = tessellator.getBuffer();
 		GL11.glPushMatrix();
 
 		GL11.glDisable(3553);
@@ -86,9 +87,9 @@ public class RenderGiantBird extends RenderIMMob<EntityIMBird>
 				(int)(entityRenderOffsetZ - entityBird.width / 2.0F + zOffset)
 			});
 			buffer.addVertexData(new int[] {
-				(int)(target.xCoord + xOffset - this.renderManager.viewerPosX),
-				(int)(target.yCoord - this.renderManager.viewerPosY),
-				(int)(target.zCoord + zOffset - this.renderManager.viewerPosZ)
+				(int)(target.x + xOffset - this.renderManager.viewerPosX),
+				(int)(target.y - this.renderManager.viewerPosY),
+				(int)(target.z + zOffset - this.renderManager.viewerPosZ)
 			});
 		}
 		tessellator.draw();

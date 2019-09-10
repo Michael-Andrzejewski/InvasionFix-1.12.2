@@ -200,7 +200,7 @@ public class EntityIMGiantBird extends EntityIMBird
 
 	private void setAI()
 	{
-		this.tasksIM = new EntityAITasks(this.world.theProfiler);
+		this.tasksIM = new EntityAITasks(this.world.profiler);
 
 		this.tasksIM.addTask(0, new EntityAISwoop(this));
 
@@ -213,7 +213,7 @@ public class EntityIMGiantBird extends EntityIMBird
 		this.tasksIM.addTask(4, new EntityAIBirdFight(this, EntityZombie.class, 25, 0.4F));
 		this.tasksIM.addTask(4, new EntityAIWatchTarget(this));
 
-		this.targetTasksIM = new EntityAITasks(this.world.theProfiler);
+		this.targetTasksIM = new EntityAITasks(this.world.profiler);
 
 		this.targetTasksIM.addTask(2, new EntityAISimpleTarget(this, EntityZombie.class, 58.0F, true));
 	}

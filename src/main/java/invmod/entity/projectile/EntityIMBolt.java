@@ -158,7 +158,7 @@ public class EntityIMBolt extends Entity implements IEntityAdditionalSpawnData
 
 	private void doVertexUpdate()
 	{
-		this.world.theProfiler.startSection("IMBolt");
+		this.world.profiler.startSection("IMBolt");
 		this.widthVariance = (10.0F / (float)Math.log10(this.distance + 1.0D));
 		int numberOfVertexes = 60;
 		if (numberOfVertexes != this.vertices[0].length)
@@ -174,7 +174,7 @@ public class EntityIMBolt extends Entity implements IEntityAdditionalSpawnData
 		}
 
 		this.createSegment(0, numberOfVertexes - 1);
-		this.world.theProfiler.endSection();
+		this.world.profiler.endSection();
 	}
 
 	private void createSegment(int begin, int end)

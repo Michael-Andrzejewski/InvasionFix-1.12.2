@@ -133,7 +133,7 @@ public class PathfinderIM
 
 	private double estimateDistance(PathNode start, PathNode target)
 	{
-		return Math.abs(target.pos.xCoord - start.pos.xCoord) + Math.abs(target.pos.yCoord - start.pos.yCoord) + Math.abs(target.pos.zCoord - start.pos.zCoord) * 1.01d;
+		return Math.abs(target.pos.x - start.pos.x) + Math.abs(target.pos.y - start.pos.y) + Math.abs(target.pos.z - start.pos.z) * 1.01d;
 	}
 
 	protected PathNode openPoint(double x, double y, double z)

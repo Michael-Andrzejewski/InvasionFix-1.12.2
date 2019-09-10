@@ -3,6 +3,7 @@ package invmod.entity.ally;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import invmod.BlocksAndItems;
 import invmod.entity.monster.EntityIMMob;
 import invmod.nexus.SpawnPoint;
@@ -145,8 +146,7 @@ public class EntityIMWolf extends EntityWolf
 	}*/
 
 	@Override
-	protected SoundEvent getHurtSound()
-	{
+	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return this.getAttackTarget() instanceof IMob ? SoundEvents.ENTITY_WOLF_GROWL : SoundEvents.ENTITY_WOLF_HURT;
 		/*if ((getAttackTarget() instanceof IMob)) {
 			return "mob.wolf.growl";

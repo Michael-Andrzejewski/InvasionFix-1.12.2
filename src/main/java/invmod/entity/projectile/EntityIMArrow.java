@@ -1,6 +1,7 @@
 package invmod.entity.projectile;
 
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -90,7 +91,7 @@ public class EntityIMArrow extends EntityTippedArrow
 				//blockState.getBlock().setBlockBoundsBasedOnState(this.world, this.getPosition());
 				//AxisAlignedBB axisalignedbb = blockState.getSelectedBoundingBox(this.world, this.getPosition());
 				AxisAlignedBB axisalignedbb = blockState.getBlock().getBoundingBox(blockState, this.world, this.getPosition());
-				if (axisalignedbb != null && axisalignedbb.isVecInside(new Vec3d(this.posX, this.posY, this.posZ)))
+				if (axisalignedbb != null && axisalignedbb.contains(new Vec3d(this.posX, this.posY, this.posZ)))
 				{
 					this.inGround = true;
 				}
@@ -127,11 +128,11 @@ public class EntityIMArrow extends EntityTippedArrow
 			vec31 = new Vec3d(this.posX, this.posY, this.posZ);
 			vec3 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 
-			if (rtr != null) vec3 = new Vec3d(rtr.hitVec.xCoord, rtr.hitVec.yCoord, rtr.hitVec.zCoord);
+			if (rtr != null) vec3 = new Vec3d(rtr.hitVec.x, rtr.hitVec.y, rtr.hitVec.z);
 
 			Entity entity = null;
 			List list = this.world.getEntitiesWithinAABBExcludingEntity(
-				this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
+				this, this.getEntityBoundingBox().offset(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
 
 			double d0 = 0.0D;
 			int i;
@@ -246,9 +247,9 @@ public class EntityIMArrow extends EntityTippedArrow
 					this.posY = rtr.getBlockPos().getY();
 					this.posZ = rtr.getBlockPos().getZ();
 					this.inBlock = this.world.getBlockState(new BlockPos(this.posX, this.posY, this.posZ)).getBlock();
-					this.motionX = ((float)(rtr.hitVec.xCoord - this.posX));
-					this.motionY = ((float)(rtr.hitVec.yCoord - this.posY));
-					this.motionZ = ((float)(rtr.hitVec.zCoord - this.posZ));
+					this.motionX = ((float)(rtr.hitVec.x - this.posX));
+					this.motionY = ((float)(rtr.hitVec.y - this.posY));
+					this.motionZ = ((float)(rtr.hitVec.z - this.posZ));
 					f2 = MathHelper.sqrt(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
 					this.posX -= this.motionX / f2 * 0.05000000074505806D;
 					this.posY -= this.motionY / f2 * 0.05000000074505806D;

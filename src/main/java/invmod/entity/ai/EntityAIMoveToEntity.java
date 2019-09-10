@@ -48,7 +48,7 @@ public class EntityAIMoveToEntity<T extends EntityLivingBase> extends EntityAIBa
 	}
 
 	@Override
-	public boolean continueExecuting()
+	public boolean shouldContinueExecuting()
 	{
 		EntityLivingBase target = this.theEntity.getAttackTarget();
 		if ((target != null) && (target == this.targetEntity))

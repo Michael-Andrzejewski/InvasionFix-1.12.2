@@ -139,7 +139,7 @@ public class NavigatorIM implements INotifyTask, INavigation
 			Vec3d target = this.findValidPointNear(x, z, min, max, verticalRange);
 			if (target != null)
 			{
-				Path entityPath = this.getPathToXYZ(target.xCoord, target.yCoord, target.zCoord, 0.0F);
+				Path entityPath = this.getPathToXYZ(target.x, target.y, target.z, 0.0F);
 				if (entityPath != null)
 					return entityPath;
 			}
@@ -236,7 +236,7 @@ public class NavigatorIM implements INotifyTask, INavigation
 		{
 			//UnstoppableN Custom Code
 			//changed < to > this seems to have fixed some stuffs, not sure why
-			while (this.theEntity.getDistanceSq(this.activeNode.pos.xCoord + this.entityCentre.xCoord, this.activeNode.pos.yCoord + this.entityCentre.yCoord, this.activeNode.pos.zCoord + this.entityCentre.zCoord) > this.theEntity.width)
+			while (this.theEntity.getDistanceSq(this.activeNode.pos.x + this.entityCentre.x, this.activeNode.pos.y + this.entityCentre.y, this.activeNode.pos.z + this.entityCentre.z) > this.theEntity.width)
 			{
 				this.path.incrementPathIndex();
 				if (!this.path.isFinished())
@@ -298,7 +298,7 @@ public class NavigatorIM implements INotifyTask, INavigation
 		{
 			if (this.isMaintainingPos())
 			{
-				this.theEntity.getMoveHelper().setMoveTo(this.holdingPos.xCoord, this.holdingPos.yCoord, this.holdingPos.zCoord, this.moveSpeed);
+				this.theEntity.getMoveHelper().setMoveTo(this.holdingPos.x, this.holdingPos.y, this.holdingPos.z, this.moveSpeed);
 			}
 			return;
 		}
@@ -351,7 +351,7 @@ public class NavigatorIM implements INotifyTask, INavigation
 					this.theEntity.getMoveHelper().setMoveTo(this.pathEndEntity.posX, this.pathEndEntity.getEntityBoundingBox().minY, this.pathEndEntity.posZ, this.moveSpeed);
 				else
 				{
-					this.theEntity.getMoveHelper().setMoveTo(this.activeNode.pos.xCoord + this.entityCentre.xCoord, this.activeNode.pos.yCoord + this.entityCentre.yCoord, this.activeNode.pos.zCoord + this.entityCentre.zCoord, this.moveSpeed);
+					this.theEntity.getMoveHelper().setMoveTo(this.activeNode.pos.x + this.entityCentre.x, this.activeNode.pos.y + this.entityCentre.y, this.activeNode.pos.z + this.entityCentre.z, this.moveSpeed);
 				}
 			}
 			else
@@ -378,9 +378,9 @@ public class NavigatorIM implements INotifyTask, INavigation
 				//If entity is at the target path point, set the target path point to the next one on the path.
 				Vec3d vec0 = this.getEntityPosition();
 				Vec3d vec1 = this.path.getPositionAtIndex(this.theEntity, this.path.getCurrentPathIndex());
-				if (vec0.yCoord > vec1.yCoord && this.theEntity.onGround &&
-					MathHelper.floor(vec0.xCoord) == MathHelper.floor(vec1.xCoord) &&
-					MathHelper.floor(vec0.zCoord) == MathHelper.floor(vec1.zCoord))
+				if (vec0.y > vec1.y && this.theEntity.onGround &&
+					MathHelper.floor(vec0.x) == MathHelper.floor(vec1.x) &&
+					MathHelper.floor(vec0.z) == MathHelper.floor(vec1.z))
 				{
 					this.path.incrementPathIndex();
 					//this.activeNode = this.path.points[this.path.getCurrentPathIndex()];
@@ -395,7 +395,7 @@ public class NavigatorIM implements INotifyTask, INavigation
 						BlockPos pos = (new BlockPos(vec2)).down();
 						AxisAlignedBB axisalignedbb = this.theEntity.world.getBlockState(pos).getBoundingBox(this.theEntity.world, pos);
 						vec2 = vec2.subtract(0.0D, 1.0D - axisalignedbb.maxY, 0.0D);
-						this.theEntity.getMoveHelper().setMoveTo(vec2.xCoord, vec2.yCoord, vec2.zCoord, this.moveSpeed);
+						this.theEntity.getMoveHelper().setMoveTo(vec2.x, vec2.y, vec2.z, this.moveSpeed);
 					}
 				}
 
@@ -445,7 +445,7 @@ public class NavigatorIM implements INotifyTask, INavigation
 			if ((this.path != null) && (this.path.getIntendedTarget() != null))
 			{
 				PathNode node = this.path.getIntendedTarget();
-				return (float)this.theEntity.getDistance(node.pos.xCoord, node.pos.yCoord, node.pos.zCoord);
+				return (float)this.theEntity.getDistance(node.pos.x, node.pos.y, node.pos.z);
 			}
 			return 0.0F;
 		}
@@ -517,7 +517,7 @@ public class NavigatorIM implements INotifyTask, INavigation
 		int maxNextLegIndex = this.path.getCurrentPathIndex() - 1;
 
 		PathNode nextPoint = this.path.getPathPointFromIndex(this.path.getCurrentPathIndex());
-		if ((nextPoint.pos.yCoord == vec3d.yCoord) && (maxNextLegIndex < this.path.getCurrentPathLength() - 1))
+		if ((nextPoint.pos.y == vec3d.y) && (maxNextLegIndex < this.path.getCurrentPathLength() - 1))
 		{
 			maxNextLegIndex++;
 
@@ -529,7 +529,7 @@ public class NavigatorIM implements INotifyTask, INavigation
 			}
 			if ((canConsolidate) && (this.theEntity.canStandAt(this.theEntity.world, this.theEntity.getPosition())))
 			{//MathHelper.floor(this.theEntity.posX), MathHelper.floor(this.theEntity.posY), MathHelper.floor(this.theEntity.posZ)))) {
-				while ((maxNextLegIndex < this.path.getCurrentPathLength() - 1) && (this.path.getPathPointFromIndex(maxNextLegIndex).pos.yCoord == vec3d.yCoord) && (this.path.getPathPointFromIndex(maxNextLegIndex).action == PathAction.NONE))
+				while ((maxNextLegIndex < this.path.getCurrentPathLength() - 1) && (this.path.getPathPointFromIndex(maxNextLegIndex).pos.y == vec3d.y) && (this.path.getPathPointFromIndex(maxNextLegIndex).action == PathAction.NONE))
 				{
 					maxNextLegIndex++;
 				}
@@ -616,9 +616,9 @@ public class NavigatorIM implements INotifyTask, INavigation
 	{
 		if (this.activeNode != null)
 		{
-			double dX = this.activeNode.pos.xCoord + 0.5D - this.theEntity.posX;
-			double dY = this.activeNode.pos.yCoord - this.theEntity.posY;
-			double dZ = this.activeNode.pos.zCoord + 0.5D - this.theEntity.posZ;
+			double dX = this.activeNode.pos.x + 0.5D - this.theEntity.posX;
+			double dY = this.activeNode.pos.y - this.theEntity.posY;
+			double dZ = this.activeNode.pos.z + 0.5D - this.theEntity.posZ;
 			return Math.sqrt(dX * dX + dY * dY + dZ * dZ);
 		}
 		return 0.0D;
@@ -769,10 +769,10 @@ public class NavigatorIM implements INotifyTask, INavigation
 
 	protected boolean isDirectPathBetweenPoints(Vec3d pos1, Vec3d pos2, int xSize, int ySize, int zSize)
 	{
-		int x = MathHelper.floor(pos1.xCoord);
-		int z = MathHelper.floor(pos1.zCoord);
-		double dX = pos2.xCoord - pos1.xCoord;
-		double dZ = pos2.zCoord - pos1.zCoord;
+		int x = MathHelper.floor(pos1.x);
+		int z = MathHelper.floor(pos1.z);
+		double dX = pos2.x - pos1.x;
+		double dZ = pos2.z - pos1.z;
 		double dXZsq = dX * dX + dZ * dZ;
 
 		if (dXZsq < 1.0E-008D)
@@ -786,7 +786,7 @@ public class NavigatorIM implements INotifyTask, INavigation
 		xSize += 2;
 		zSize += 2;
 
-		if (!this.isSafeToStandAt(x, (int)pos1.yCoord, z, xSize, ySize, zSize, pos1, dX, dZ))
+		if (!this.isSafeToStandAt(x, (int)pos1.y, z, xSize, ySize, zSize, pos1, dX, dZ))
 		{
 			return false;
 		}
@@ -795,8 +795,8 @@ public class NavigatorIM implements INotifyTask, INavigation
 		zSize -= 2;
 		double xIncrement = 1.0D / Math.abs(dX);
 		double zIncrement = 1.0D / Math.abs(dZ);
-		double xOffset = x * 1 - pos1.xCoord;
-		double zOffset = z * 1 - pos1.zCoord;
+		double xOffset = x * 1 - pos1.x;
+		double zOffset = z * 1 - pos1.z;
 
 		if (dX >= 0.0D)
 		{
@@ -812,8 +812,8 @@ public class NavigatorIM implements INotifyTask, INavigation
 		zOffset /= dZ;
 		byte xDirection = (byte)(dX >= 0.0D ? 1 : -1);
 		byte zDirection = (byte)(dZ >= 0.0D ? 1 : -1);
-		int x2 = MathHelper.floor(pos2.xCoord);
-		int z2 = MathHelper.floor(pos2.zCoord);
+		int x2 = MathHelper.floor(pos2.x);
+		int z2 = MathHelper.floor(pos2.z);
 		int xDiff = x2 - x;
 
 		for (int i = z2 - z; (xDiff * xDirection > 0) || (i * zDirection > 0);)
@@ -831,7 +831,7 @@ public class NavigatorIM implements INotifyTask, INavigation
 				i = z2 - z;
 			}
 
-			if (!this.isSafeToStandAt(x, (int)pos1.yCoord, z, xSize, ySize, zSize, pos1, dX, dZ))
+			if (!this.isSafeToStandAt(x, (int)pos1.y, z, xSize, ySize, zSize, pos1, dX, dZ))
 			{
 				return false;
 			}
@@ -854,8 +854,8 @@ public class NavigatorIM implements INotifyTask, INavigation
 		{
 			for (int l = j; l < j + zSize; l++)
 			{
-				double d = k + 0.5D - entityPostion.xCoord;
-				double d1 = l + 0.5D - entityPostion.zCoord;
+				double d = k + 0.5D - entityPostion.x;
+				double d1 = l + 0.5D - entityPostion.z;
 
 				if (d * par8 + d1 * par10 >= 0.0D)
 				{
@@ -886,8 +886,8 @@ public class NavigatorIM implements INotifyTask, INavigation
 			{
 				for (int k = zOffset; k < zOffset + zSize; k++)
 				{
-					double d = i + 0.5D - entityPostion.xCoord;
-					double d1 = k + 0.5D - entityPostion.zCoord;
+					double d = i + 0.5D - entityPostion.x;
+					double d1 = k + 0.5D - entityPostion.z;
 
 					if (d * vecX + d1 * vecZ >= 0.0D)
 					{

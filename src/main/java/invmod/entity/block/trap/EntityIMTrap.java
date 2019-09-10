@@ -132,17 +132,17 @@ public class EntityIMTrap extends Entity
 		switch (this.trapType)
 		{
 			default:
-				triggerEntity.attackEntityFrom(DamageSource.generic, 4.0F);
+				triggerEntity.attackEntityFrom(DamageSource.GENERIC, 4.0F);
 				break;
 			case 1:
-				triggerEntity.attackEntityFrom(DamageSource.magic,
+				triggerEntity.attackEntityFrom(DamageSource.MAGIC,
 					(triggerEntity instanceof EntityPlayer) ? 12.0F : 38.0F);
 
 				List<Entity> entities = this.world.getEntitiesWithinAABBExcludingEntity(this,
 					this.getEntityBoundingBox().expand(1.899999976158142D, 1.0D, 1.899999976158142D));
 				for (Entity entity : entities)
 				{
-					entity.attackEntityFrom(DamageSource.magic, 8.0F);
+					entity.attackEntityFrom(DamageSource.MAGIC, 8.0F);
 					if ((entity instanceof EntityIMMob))
 					{
 						((EntityIMMob)entity).stunEntity(60);
@@ -309,7 +309,7 @@ public class EntityIMTrap extends Entity
 		for (Entity entity : entities)
 		{
 			entity.setFire(8);
-			entity.attackEntityFrom(DamageSource.onFire, initialDamage);
+			entity.attackEntityFrom(DamageSource.ON_FIRE, initialDamage);
 		}
 	}
 

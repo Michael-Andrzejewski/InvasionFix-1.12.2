@@ -1,6 +1,7 @@
 package invmod.entity.monster;
 
 import java.util.List;
+
 import invmod.IBlockAccessExtended;
 import invmod.INotifyTask;
 import invmod.SoundHandler;
@@ -131,7 +132,7 @@ public class EntityIMZombie extends EntityIMMob implements ICanDig
 	protected void initEntityAI()
 	{
 		//added entityaiswimming and increased all other tasksordernumers with 1
-		this.tasksIM = new EntityAITasks(this.world.theProfiler);
+		this.tasksIM = new EntityAITasks(this.world.profiler);
 		this.tasksIM.addTask(0, new EntityAISwimming(this));
 		this.tasksIM.addTask(1, new EntityAIKillEntity(this, EntityPlayer.class, 40));
 		this.tasksIM.addTask(1, new EntityAIKillEntity(this, EntityPlayerMP.class, 40));
@@ -147,7 +148,7 @@ public class EntityIMZombie extends EntityIMMob implements ICanDig
 		this.tasksIM.addTask(8, new EntityAILookIdle(this));
 
 
-		this.targetTasksIM = new EntityAITasks(this.world.theProfiler);
+		this.targetTasksIM = new EntityAITasks(this.world.profiler);
 		this.targetTasksIM.addTask(0, new EntityAITargetRetaliate(this, EntityLiving.class, Config.NIGHTSPAWNS_MOB_SENSERANGE));
 		this.targetTasksIM.addTask(2, new EntityAISimpleTarget(this, EntityPlayer.class, Config.NIGHTSPAWNS_MOB_SIGHTRANGE, true));
 		this.targetTasksIM.addTask(5, new EntityAIHurtByTarget(this, false));
@@ -272,7 +273,7 @@ public class EntityIMZombie extends EntityIMMob implements ICanDig
 				multiplier += mobDensity * 3;
 			}
 
-			if ((node.pos.yCoord > prevNode.pos.yCoord) && (this.getCollide(terrainMap, node.pos) == 2))
+			if ((node.pos.y > prevNode.pos.y) && (this.getCollide(terrainMap, node.pos) == 2))
 			{
 				multiplier += 2.0F;
 			}
@@ -409,7 +410,7 @@ public class EntityIMZombie extends EntityIMMob implements ICanDig
 	{
 		if ((this.getTier() == 2) && (this.flavour == 2))
 		{
-			this.damageEntity(DamageSource.generic, 3.0F);
+			this.damageEntity(DamageSource.GENERIC, 3.0F);
 		}
 		else
 		{
@@ -512,9 +513,10 @@ public class EntityIMZombie extends EntityIMMob implements ICanDig
 		return SoundEvents.ENTITY_ZOMBIE_AMBIENT;
 	}
 
+	//@Override
+	//protected SoundEvent getHurtSound()
 	@Override
-	protected SoundEvent getHurtSound()
-	{
+	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return SoundEvents.ENTITY_ZOMBIE_HURT;
 	}
 
@@ -667,7 +669,7 @@ public class EntityIMZombie extends EntityIMMob implements ICanDig
 		{
 			entities.get(el).setFire(8);
 		}
-		this.attackEntityFrom(DamageSource.inFire, 500.0F);
+		this.attackEntityFrom(DamageSource.IN_FIRE, 500.0F);
 	}
 
 	@Override

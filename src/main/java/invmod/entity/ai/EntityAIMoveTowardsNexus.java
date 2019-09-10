@@ -25,7 +25,7 @@ public class EntityAIMoveTowardsNexus extends EntityAIBase
 	}
 
 	@Override
-	public boolean continueExecuting()
+	public boolean shouldContinueExecuting()
 	{
 		return this.theEntityIM.getDistanceSq(this.target) >= 16d;
 	}

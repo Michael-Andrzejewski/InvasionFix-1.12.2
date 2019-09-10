@@ -38,7 +38,7 @@ public class EntityAIPounce extends EntityAIBase
 	}
 
 	@Override
-	public boolean continueExecuting()
+	public boolean shouldContinueExecuting()
 	{
 		return this.isPouncing;
 	}

@@ -85,9 +85,9 @@ public class Path
 	 */
 	public Vec3d getPositionAtIndex(Entity entity, int index)
 	{
-		double d = this.points[index].pos.xCoord + (int)(entity.width + 1.0F) * 0.5D;
-		double d1 = this.points[index].pos.yCoord;
-		double d2 = this.points[index].pos.zCoord + (int)(entity.width + 1.0F) * 0.5D;
+		double d = this.points[index].pos.x + (int)(entity.width + 1.0F) * 0.5D;
+		double d1 = this.points[index].pos.y;
+		double d2 = this.points[index].pos.z + (int)(entity.width + 1.0F) * 0.5D;
 		return new Vec3d(d, d1, d2);
 	}
 
@@ -122,7 +122,7 @@ public class Path
 	{
 		PathNode pathpoint = this.getFinalPathPoint();
 		if (pathpoint == null) return false;
-		return (pathpoint.pos.xCoord == par1Vec3D.xCoord) && (pathpoint.pos.zCoord == par1Vec3D.zCoord);
+		return (pathpoint.pos.x == par1Vec3D.x) && (pathpoint.pos.z == par1Vec3D.z);
 	}
 
 }

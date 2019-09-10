@@ -24,7 +24,7 @@ public class EntityAIFlyingStrike extends EntityAIBase
 	}
 
 	@Override
-	public boolean continueExecuting()
+	public boolean shouldContinueExecuting()
 	{
 		return this.shouldExecute();
 	}

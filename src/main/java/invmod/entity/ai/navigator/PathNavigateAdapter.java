@@ -33,7 +33,7 @@ public class PathNavigateAdapter extends PathNavigateGround
 	}
 
 	@Override
-	public void clearPathEntity()
+	public void clearPath()
 	{
 		this.navigator.clearPath();
 	}
@@ -118,7 +118,9 @@ public class PathNavigateAdapter extends PathNavigateGround
 	protected PathFinder getPathFinder()
 	{
 		this.walkNodeProcessor = new WalkNodeProcessor();
-		this.walkNodeProcessor.setCanBreakDoors(true); //.func_176175_a(true); //TODO: Unsure.
+		//was canBreakDoors
+		this.walkNodeProcessor.setCanOpenDoors(true);
+		this.walkNodeProcessor.setCanEnterDoors(true); //.func_176175_a(true); //TODO: Unsure.
 		return new PathFinder(this.walkNodeProcessor);
 	}
 
@@ -149,6 +151,8 @@ public class PathNavigateAdapter extends PathNavigateGround
 	@Override
 	public void setBreakDoors(boolean thing)
 	{
-		this.walkNodeProcessor.setCanBreakDoors(thing);
+		//was canBreakDoors
+		this.walkNodeProcessor.setCanOpenDoors(true);
+		this.walkNodeProcessor.setCanEnterDoors(thing);
 	}
 }

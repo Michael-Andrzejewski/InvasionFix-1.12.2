@@ -27,7 +27,7 @@ public class PlayerEvents
 					.getPlayerEntityByName((String)entry.getKey());
 				if (player != null)
 				{
-					player.attackEntityFrom(DamageSource.magic, 500.0F);
+					player.attackEntityFrom(DamageSource.MAGIC, 500.0F);
 					player.setDead();
 					mod_Invasion.deathList.remove(player.getDisplayName());
 					mod_Invasion.broadcastToAll("Nexus energies caught up to "

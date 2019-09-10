@@ -3,6 +3,7 @@ package invmod.creativetab;
 import invmod.BlocksAndItems;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -17,9 +18,9 @@ public class CreativeTabInvmod extends CreativeTabs
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Item getTabIconItem()
+	public ItemStack getTabIconItem()
 	{
-		return Item.getItemFromBlock(BlocksAndItems.blockNexus);
+		return new ItemStack(Item.getItemFromBlock(BlocksAndItems.blockNexus),1);
 	}
 
 }

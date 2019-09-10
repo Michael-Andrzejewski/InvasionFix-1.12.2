@@ -52,7 +52,7 @@ public class EntityIMImp extends EntityIMMob
 	protected void initEntityAI()
 	{
 		//added entityaiswimming and increased all other tasksordernumers with 1
-		this.tasksIM = new EntityAITasks(this.world.theProfiler);
+		this.tasksIM = new EntityAITasks(this.world.profiler);
 		this.tasksIM.addTask(0, new EntityAISwimming(this));
 		this.tasksIM.addTask(1, new EntityAIKillEntity(this, EntityPlayer.class, 40));
 		this.tasksIM.addTask(1, new EntityAIKillEntity(this, EntityPlayerMP.class, 40));
@@ -65,7 +65,7 @@ public class EntityIMImp extends EntityIMMob
 		this.tasksIM.addTask(8, new EntityAIWatchClosest(this, EntityIMCreeper.class, 12.0F));
 		this.tasksIM.addTask(8, new EntityAILookIdle(this));
 
-		this.targetTasksIM = new EntityAITasks(this.world.theProfiler);
+		this.targetTasksIM = new EntityAITasks(this.world.profiler);
 		this.targetTasksIM.addTask(0, new EntityAITargetRetaliate(this, EntityLiving.class, this.getAggroRange()));
 		this.targetTasksIM.addTask(1, new EntityAISimpleTarget(this, EntityPlayer.class, this.getSenseRange(), false));
 		this.targetTasksIM.addTask(2, new EntityAISimpleTarget(this, EntityPlayer.class, this.getAggroRange(), true));

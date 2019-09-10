@@ -27,6 +27,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -65,7 +66,7 @@ public class EntityIMThrower extends EntityIMMob
 	@Override
 	protected void initEntityAI()
 	{
-		this.tasksIM = new EntityAITasks(this.world.theProfiler);
+		this.tasksIM = new EntityAITasks(this.world.profiler);
 		this.tasksIM.addTask(0, new EntityAISwimming(this));
 		if (this.getTier() == 1)
 		{
@@ -86,7 +87,7 @@ public class EntityIMThrower extends EntityIMMob
 		this.tasksIM.addTask(10, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
 		this.tasksIM.addTask(10, new EntityAILookIdle(this));
 
-		this.targetTasksIM = new EntityAITasks(this.world.theProfiler);
+		this.targetTasksIM = new EntityAITasks(this.world.profiler);
 		this.targetTasksIM.addTask(1, new EntityAISimpleTarget(this, EntityPlayer.class, this.getSenseRange(), false));
 		this.targetTasksIM.addTask(2, new EntityAISimpleTarget(this, EntityPlayer.class, this.getAggroRange(), true));
 		this.targetTasksIM.addTask(3, new EntityAIHurtByTarget(this, false));
@@ -215,8 +216,7 @@ public class EntityIMThrower extends EntityIMMob
 	}
 
 	@Override
-	protected SoundEvent getHurtSound()
-	{
+	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return SoundEvents.ENTITY_ZOMBIE_HURT;
 	}
 

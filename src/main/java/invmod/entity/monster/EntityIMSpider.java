@@ -38,6 +38,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -81,7 +82,7 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring
 	@Override
 	protected void initEntityAI()
 	{
-		this.tasksIM = new EntityAITasks(this.world.theProfiler);
+		this.tasksIM = new EntityAITasks(this.world.profiler);
 		this.tasksIM.addTask(0, new EntityAISwimming(this));
 		this.tasksIM.addTask(1, new EntityAIKillEntity(this, EntityPlayer.class, 40));
 		this.tasksIM.addTask(1, new EntityAIKillEntity(this, EntityPlayerMP.class, 40));
@@ -94,7 +95,7 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring
 
 		this.tasksIM.addTask(9, new EntityAILookIdle(this));
 
-		this.targetTasksIM = new EntityAITasks(this.world.theProfiler);
+		this.targetTasksIM = new EntityAITasks(this.world.profiler);
 		this.targetTasksIM.addTask(0, new EntityAITargetRetaliate(this, EntityLiving.class, 12.0F));
 		this.targetTasksIM.addTask(1, new EntityAISimpleTarget(this, EntityPlayer.class, this.getSenseRange(), false));
 		this.targetTasksIM.addTask(2, new EntityAISimpleTarget(this, EntityPlayer.class, this.getAggroRange(), true));
@@ -151,7 +152,7 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring
 			this.motionY *= 0.8D;
 			this.motionZ *= 0.8D;
 			this.motionY -= 0.02D;
-			if ((this.isCollidedHorizontally) && (this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6D - this.posY + y, this.motionZ)))
+			if ((this.collidedHorizontally) && (this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6D - this.posY + y, this.motionZ)))
 				this.motionY = 0.3D;
 		}
 		else if (this.isInLava())
@@ -163,7 +164,7 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring
 			this.motionY *= 0.5D;
 			this.motionZ *= 0.5D;
 			this.motionY -= 0.02D;
-			if ((this.isCollidedHorizontally)
+			if ((this.collidedHorizontally)
 				&& (this.isOffsetPositionInLiquid(this.motionX, this.motionY
 					+ 0.6D - this.posY + y, this.motionZ)))
 				this.motionY = 0.3D;
@@ -227,7 +228,7 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring
 				}
 			}
 			this.setVelocity(this.motionX, this.motionY, this.motionZ);
-			if (((this.isCollidedHorizontally) || (this.isJumping))
+			if (((this.collidedHorizontally) || (this.isJumping))
 				&& (this.isOnLadder()))
 			{
 				this.motionY = 0.2D;
@@ -366,7 +367,7 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring
 	@Override
 	public boolean checkForAdjacentClimbBlock()
 	{
-		return this.isCollidedHorizontally;
+		return this.collidedHorizontally;
 	}
 
 	@Override
@@ -393,9 +394,7 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring
 	}
 
 	@Override
-	protected SoundEvent getHurtSound()
-	{
-		//return "mob.spider.say";
+	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return SoundEvents.ENTITY_SPIDER_HURT;
 	}
 

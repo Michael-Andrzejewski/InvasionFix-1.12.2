@@ -74,17 +74,17 @@ public class PathNode
 
 	public float distanceTo(PathNode pathpoint)
 	{
-		double d0 = pathpoint.pos.xCoord - this.pos.xCoord;
-		double d1 = pathpoint.pos.yCoord - this.pos.yCoord;
-		double d2 = pathpoint.pos.zCoord - this.pos.zCoord;
+		double d0 = pathpoint.pos.x - this.pos.x;
+		double d1 = pathpoint.pos.y - this.pos.y;
+		double d2 = pathpoint.pos.z - this.pos.z;
 		return MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
 	}
 
 	public float distanceTo(double x, double y, double z)
 	{
-		double d0 = x - this.pos.xCoord;
-		double d1 = y - this.pos.yCoord;
-		double d2 = z - this.pos.zCoord;
+		double d0 = x - this.pos.x;
+		double d1 = y - this.pos.y;
+		double d2 = z - this.pos.z;
 		return MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
 	}
 
@@ -102,7 +102,7 @@ public class PathNode
 
 	public boolean equals(double x, double y, double z)
 	{
-		return (this.pos.xCoord == x) && (this.pos.yCoord == y) && (this.pos.zCoord == z);
+		return (this.pos.x == x) && (this.pos.y == y) && (this.pos.z == z);
 	}
 
 	public boolean equals(Vec3d pos)

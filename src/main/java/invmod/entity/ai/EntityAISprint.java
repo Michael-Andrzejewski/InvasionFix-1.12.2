@@ -158,7 +158,7 @@ public class EntityAISprint extends EntityAIBase
 	protected void crash()
 	{
 		this.theEntity.stunEntity(40);
-		this.theEntity.attackEntityFrom(DamageSource.generic, 5.0F);
+		this.theEntity.attackEntityFrom(DamageSource.GENERIC, 5.0F);
 		//this.theEntity.world.playSoundAtEntity(this.theEntity, "random.explode", 1.0F, 0.6F);
 		this.theEntity.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE, 1f, 0.6f);
 		this.endSprint();

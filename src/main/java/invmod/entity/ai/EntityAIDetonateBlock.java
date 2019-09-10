@@ -49,7 +49,7 @@ public class EntityAIDetonateBlock extends EntityAIBase
 	}
 
 	@Override
-	public boolean continueExecuting()
+	public boolean shouldContinueExecuting()
 	{
 		return this.shouldExecute();
 	}

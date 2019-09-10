@@ -50,7 +50,7 @@ public class EntityAICharge<T extends EntityLivingBase> extends EntityAIMoveToEn
 
 		}
 		double distance = Math.sqrt(this.charger
-			.getDistanceSqToEntity(this.chargeTarget));
+			.getDistanceSq(this.chargeTarget));
 		if ((distance < 5.0D) || (distance > 20.0D))
 		{
 			return false;
@@ -65,9 +65,9 @@ public class EntityAICharge<T extends EntityLivingBase> extends EntityAIMoveToEn
 			return false;
 		}
 
-		this.chargeX = chargePos.xCoord;
-		this.chargeY = chargePos.yCoord;
-		this.chargeZ = chargePos.zCoord;
+		this.chargeX = chargePos.x;
+		this.chargeY = chargePos.y;
+		this.chargeZ = chargePos.z;
 
 		return this.charger.getRNG().nextInt(1) == 0;
 	}

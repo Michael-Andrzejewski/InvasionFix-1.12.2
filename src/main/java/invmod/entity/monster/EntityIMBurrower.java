@@ -92,16 +92,16 @@ public class EntityIMBurrower extends EntityIMMob implements ICanDig
 
 	public float getBlockPathCost(PathPoint prevNode, PathPoint node, IBlockAccess worldMap)
 	{
-		Block block = worldMap.getBlockState(new BlockPos(node.xCoord, node.yCoord, node.zCoord)).getBlock();
+		Block block = worldMap.getBlockState(new BlockPos(node.x, node.y, node.z)).getBlock();
 
 		float penalty = 0.0F;
 		int enclosedLevelSide = 0;
-		if (!this.world.getBlockState(new BlockPos(node.xCoord, node.yCoord - 1, node.zCoord)).isNormalCube()) penalty += 0.3F;
-		if (!this.world.getBlockState(new BlockPos(node.xCoord, node.yCoord + 1, node.zCoord)).isNormalCube()) penalty += 2.0F;
-		if (!this.world.getBlockState(new BlockPos(node.xCoord + 1, node.yCoord, node.zCoord)).isNormalCube()) enclosedLevelSide++;
-		if (!this.world.getBlockState(new BlockPos(node.xCoord - 1, node.yCoord, node.zCoord)).isNormalCube()) enclosedLevelSide++;
-		if (!this.world.getBlockState(new BlockPos(node.xCoord, node.yCoord, node.zCoord + 1)).isNormalCube()) enclosedLevelSide++;
-		if (!this.world.getBlockState(new BlockPos(node.xCoord, node.yCoord, node.zCoord - 1)).isNormalCube()) enclosedLevelSide++;
+		if (!this.world.getBlockState(new BlockPos(node.x, node.y - 1, node.z)).isNormalCube()) penalty += 0.3F;
+		if (!this.world.getBlockState(new BlockPos(node.x, node.y + 1, node.z)).isNormalCube()) penalty += 2.0F;
+		if (!this.world.getBlockState(new BlockPos(node.x + 1, node.y, node.z)).isNormalCube()) enclosedLevelSide++;
+		if (!this.world.getBlockState(new BlockPos(node.x - 1, node.y, node.z)).isNormalCube()) enclosedLevelSide++;
+		if (!this.world.getBlockState(new BlockPos(node.x, node.y, node.z + 1)).isNormalCube()) enclosedLevelSide++;
+		if (!this.world.getBlockState(new BlockPos(node.x, node.y, node.z - 1)).isNormalCube()) enclosedLevelSide++;
 
 		if (enclosedLevelSide > 2) enclosedLevelSide = 2;
 		penalty += enclosedLevelSide * 0.5F;
@@ -224,7 +224,7 @@ public class EntityIMBurrower extends EntityIMMob implements ICanDig
 			this.motionY *= 0.8D;
 			this.motionZ *= 0.8D;
 			this.motionY -= 0.02D;
-			if ((this.isCollidedHorizontally) && (this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6D - this.posY + y, this.motionZ))) this.motionY = 0.3D;
+			if ((this.collidedHorizontally) && (this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6D - this.posY + y, this.motionZ))) this.motionY = 0.3D;
 		}
 		else if (this.isInLava())
 		{
@@ -235,7 +235,7 @@ public class EntityIMBurrower extends EntityIMMob implements ICanDig
 			this.motionY *= 0.5D;
 			this.motionZ *= 0.5D;
 			this.motionY -= 0.02D;
-			if ((this.isCollidedHorizontally) && (this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6D - this.posY + y, this.motionZ))) this.motionY = 0.3D;
+			if ((this.collidedHorizontally) && (this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6D - this.posY + y, this.motionZ))) this.motionY = 0.3D;
 		}
 		else
 		{
@@ -280,7 +280,7 @@ public class EntityIMBurrower extends EntityIMMob implements ICanDig
 				}
 			}
 			this.setVelocity(this.motionX, this.motionY, this.motionZ);
-			if ((this.isCollidedHorizontally) && (this.isOnLadder()))
+			if ((this.collidedHorizontally) && (this.isOnLadder()))
 			{
 				this.motionY = 0.2D;
 			}
