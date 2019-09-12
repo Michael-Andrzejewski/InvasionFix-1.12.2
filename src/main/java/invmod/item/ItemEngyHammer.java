@@ -2,7 +2,6 @@ package invmod.item;
 
 import invmod.Reference;
 import net.minecraft.item.Item;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 
 public class ItemEngyHammer extends Item
@@ -13,7 +12,7 @@ public class ItemEngyHammer extends Item
 	public ItemEngyHammer()
 	{
 		this.setRegistryName(this.name);
-		GameRegistry.register(this);
+		//GameRegistry.register(this);
 		this.setCreativeTab(null);
 		this.setUnlocalizedName(Reference.MODID + "_" + this.name);
 		this.setFull3D();

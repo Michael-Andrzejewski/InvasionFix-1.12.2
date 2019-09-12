@@ -98,7 +98,8 @@ public abstract class EntityIMLiving extends EntityCreature implements IHasNexus
 				this.isJumping = true;
 				break;
 			case FLYING:
-				this.moveEntityWithHeading(this.moveStrafing, this.moveForward);
+				//this.moveEntityWithHeading(this.moveStrafing, this.moveForward);
+				this.moveRelative(this.moveStrafing, 0.0F, this.moveForward, 0.0F);
 				break;
 			case JUMPING:
 				this.jump();
@@ -111,7 +112,8 @@ public abstract class EntityIMLiving extends EntityCreature implements IHasNexus
 			case RUNNING:
 				//this.setVelocityToPosition(this.getMoveHelper().getX(), this.getMoveHelper().getY(), this.getMoveHelper().getZ(), this.getMoveHelper().getSpeed());
 				//this.moveEntityWithHeading(this.getMoveHelper().getMoveStrafe(), this.getMoveHelper().getMoveForward());
-				this.moveEntityWithHeading(this.moveStrafing, (float)this.getMoveHelper().getSpeed());
+				//this.moveEntityWithHeading(this.moveStrafing, (float)this.getMoveHelper().getSpeed());
+				this.moveRelative(this.moveStrafing, 0.0F, (float)this.getMoveHelper().getSpeed(), 0.0F);
 				//this.moveEntityWithHeading(this.moveStrafing, this.moveForward);
 				//this.moveEntityWithHeading(0f, (float)this.getMoveHelper().getSpeed());
 				break;

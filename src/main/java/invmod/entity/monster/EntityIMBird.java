@@ -222,7 +222,7 @@ public class EntityIMBird extends EntityIMFlying
 		if (flag)
 		{
 			this.world.setEntityState(this, (byte)2);
-			if (par1DamageSource != DamageSource.DROWN) this.setBeenAttacked();
+			//if (par1DamageSource != DamageSource.DROWN) this.setBeenAttacked();
 			if (entity != null)
 			{
 				double d0 = entity.posX - this.posX;

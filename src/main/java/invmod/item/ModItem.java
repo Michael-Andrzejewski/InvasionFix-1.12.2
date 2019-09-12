@@ -3,7 +3,6 @@ package invmod.item;
 import invmod.mod_Invasion;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 
 public class ModItem extends Item
@@ -17,7 +16,7 @@ public class ModItem extends Item
 		this.setRegistryName(name);
 		this.setUnlocalizedName(name);
 		this.setCreativeTab(mod_Invasion.tabInvmod);
-		GameRegistry.register(this);
+		//GameRegistry.register(this);
 	}
 
 	@Override

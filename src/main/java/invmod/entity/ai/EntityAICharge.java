@@ -80,7 +80,7 @@ public class EntityAICharge<T extends EntityLivingBase> extends EntityAIMoveToEn
 	}
 
 	@Override
-	public boolean continueExecuting()
+	public boolean shouldContinueExecuting()
 	{
 		if (this.windup == 0 && this.runTime > 0)
 		{

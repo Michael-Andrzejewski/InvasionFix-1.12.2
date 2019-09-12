@@ -38,7 +38,7 @@ public class ItemSpawnEgg extends Item
 		this.setCreativeTab(mod_Invasion.tabInvmod);
 		this.setUnlocalizedName(this.name);
 		this.setRegistryName(this.name);
-		GameRegistry.register(this);
+		//GameRegistry.register(this);
 	}
 
 	@Override
@@ -125,9 +125,12 @@ public class ItemSpawnEgg extends Item
 
 	}
 
-	@Override
+	/*@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
-	{
+	{*/
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand handIn) {
+		ItemStack stack = player.getHeldItem(handIn);
 		if (world.isRemote) return new ActionResult(EnumActionResult.PASS, stack);
 
 		RayTraceResult trace = this.rayTrace(world, player, true); //getMovingObjectPositionFromPlayer(world, player, true);

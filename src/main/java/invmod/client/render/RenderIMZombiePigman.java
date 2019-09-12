@@ -46,8 +46,12 @@ public class RenderIMZombiePigman extends RenderBiped<EntityIMZombiePigman>
 	@Override
 	public void doRender(EntityIMZombiePigman entity, double x, double y, double z, float entityYaw, float partialTicks)
 	{
-		this.removeLayer(this.layerHeldItem);
-		this.removeLayer(this.layerHeldItemBigBiped);
+		try {
+			this.layerRenderers.remove(this.layerHeldItem);//removeLayer(this.layerHeldItem);
+			this.layerRenderers.remove(this.layerHeldItemBigBiped);//this.removeLayer(this.layerHeldItemBigBiped);
+		} catch(Exception ex) {
+			
+		}
 		if (entity.isBigRenderTempHack())
 		{
 			this.addLayer(this.layerHeldItemBigBiped);

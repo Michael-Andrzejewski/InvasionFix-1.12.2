@@ -14,7 +14,7 @@ public class ItemEmptyTrap extends Item
 	public ItemEmptyTrap()
 	{
 		this.setRegistryName(this.name);
-		GameRegistry.register(this);
+		//GameRegistry.register(this);
 		this.setMaxStackSize(64);
 		this.setUnlocalizedName(Reference.MODID + "_" + this.name);
 		this.setCreativeTab(mod_Invasion.tabInvmod);

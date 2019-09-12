@@ -36,7 +36,7 @@ public class RenderPigEngy extends RenderBiped<EntityIMPigEngy>
 
 	public RenderPigEngy(RenderManager renderManager, ModelBiped model, float shadowSize, float par3)
 	{
-		super(renderManager, model, shadowSize, par3);
+		super(renderManager, model, shadowSize);
 	}
 
 	@Override

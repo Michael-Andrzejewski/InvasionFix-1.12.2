@@ -275,7 +275,7 @@ public class EntityIMSkeleton extends EntityIMMob implements IRangedAttackMob
 			entitytippedarrow.setKnockbackStrength(j);
 		}
 
-		boolean flag = this.isBurning() && difficultyinstance.isHard() && this.rand.nextBoolean();
+		boolean flag = this.isBurning() && getEntityWorld().getDifficulty().equals(EnumDifficulty.HARD) && this.rand.nextBoolean();
 		flag = flag || EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.FLAME, this) > 0;
 
 		if (flag)

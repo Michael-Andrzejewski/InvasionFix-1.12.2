@@ -1,26 +1,22 @@
 package invmod;
 
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.OreDictionary;
 
 
 public class CraftingAndSmelting
 {
 
-	private static final ItemStack DIAMOND_SWORD = new ItemStack(Items.DIAMOND_SWORD, 1, OreDictionary.WILDCARD_VALUE);
+	/*private static final ItemStack DIAMOND_SWORD = new ItemStack(Items.DIAMOND_SWORD, 1, OreDictionary.WILDCARD_VALUE);
 	private static final ItemStack BOW = new ItemStack(Items.BOW, 1, OreDictionary.WILDCARD_VALUE);
 	private static final ItemStack LAPIS_LAZULI = new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage());
 	private static final ItemStack NEXUS_ADJUSTER = new ItemStack(BlocksAndItems.itemProbe, 1, 0);
-	private static final ItemStack MATERIAL_PROBE = new ItemStack(BlocksAndItems.itemProbe, 1, 1);
+	private static final ItemStack MATERIAL_PROBE = new ItemStack(BlocksAndItems.itemProbe, 1, 1);*/
 
 	//Register Recipes
 	static void addRecipes()
 	{
-
+/** HANDLED VIA RESOURCEPACK -> TODO
 		//Nexus block
 		GameRegistry.addRecipe(new ItemStack(BlocksAndItems.blockNexus), new Object[] { " X ", "#D#", " # ", 'X', BlocksAndItems.itemPhaseCrystal, '#', Items.REDSTONE, 'D', Blocks.OBSIDIAN });
 
@@ -58,7 +54,7 @@ public class CraftingAndSmelting
 		GameRegistry.addRecipe(NEXUS_ADJUSTER, new Object[] { " X", "XX", "XX", 'X', Items.IRON_INGOT });
 		GameRegistry.addRecipe(NEXUS_ADJUSTER, new Object[] { "X ", "XX", "XX", 'X', Items.IRON_INGOT });
 		GameRegistry.addRecipe(MATERIAL_PROBE, new Object[] { "D", "#", "X", 'X', Items.STICK, '#', BlocksAndItems.itemPhaseCrystal, 'D', NEXUS_ADJUSTER });
-
+**/
 		//Smelting
 		GameRegistry.addSmelting(BlocksAndItems.itemCatalystMixture, new ItemStack(BlocksAndItems.itemNexusCatalyst), 1f);
 		GameRegistry.addSmelting(BlocksAndItems.itemStableCatalystMixture, new ItemStack(BlocksAndItems.itemStableNexusCatalyst), 1f);

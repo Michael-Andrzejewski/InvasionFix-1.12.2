@@ -3,7 +3,6 @@ package invmod.item;
 import invmod.Reference;
 import invmod.mod_Invasion;
 import net.minecraft.item.Item;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 
 public class ItemSmallRemnants extends Item
@@ -14,7 +13,7 @@ public class ItemSmallRemnants extends Item
 	public ItemSmallRemnants()
 	{
 		this.setRegistryName(this.name);
-		GameRegistry.register(this);
+		//GameRegistry.register(this);
 		this.setMaxDamage(0);
 		this.setUnlocalizedName(Reference.MODID + "_" + this.name);
 		this.setMaxStackSize(64);

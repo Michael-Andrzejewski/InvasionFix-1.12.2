@@ -16,7 +16,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 
 public class ItemSearingBow extends ItemBow
@@ -28,7 +27,7 @@ public class ItemSearingBow extends ItemBow
 	public ItemSearingBow()
 	{
 		this.setRegistryName(this.name);
-		GameRegistry.register(this);
+		//GameRegistry.register(this);
 		this.setUnlocalizedName(this.name);
 		this.setCreativeTab(mod_Invasion.tabInvmod);
 	}

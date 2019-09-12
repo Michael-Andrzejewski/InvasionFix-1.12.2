@@ -180,11 +180,13 @@ public class EntityIMTrap extends Entity
 		}
 	}
 
-	@Override
+	//@Override
 	//public boolean interactFirst(EntityPlayer entityPlayer) {
-	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, @Nullable ItemStack stack, EnumHand hand)
-	{
-		if ((this.world.isRemote) || (this.isEmpty)) return EnumActionResult.FAIL;
+	//public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, @Nullable ItemStack stack, EnumHand hand)
+	//{
+	@Override
+	public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
+		if ((this.world.isRemote) || (this.isEmpty)) return false;
 		ItemStack curItem = player.inventory.getCurrentItem();
 		if ((curItem != null) && (curItem.getItem() == BlocksAndItems.itemProbe) && (curItem.getItemDamage() >= 1))
 		{
@@ -209,9 +211,9 @@ public class EntityIMTrap extends Entity
 			entityitem.setPickupDelay(5);
 			this.world.spawnEntity(entityitem);
 			this.setDead();
-			return EnumActionResult.SUCCESS;
+			return true;
 		}
-		return EnumActionResult.FAIL;
+		return false;
 	}
 
 	public boolean isEmpty()

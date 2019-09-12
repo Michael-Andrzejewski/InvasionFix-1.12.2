@@ -14,7 +14,7 @@ public class ItemNexusCatalyst extends Item
 	public ItemNexusCatalyst()
 	{
 		this.setRegistryName(this.name);
-		GameRegistry.register(this);
+		//GameRegistry.register(this);
 		this.setUnlocalizedName(Reference.MODID + "_" + this.name);
 		this.setMaxStackSize(1);
 		this.setCreativeTab(mod_Invasion.tabInvmod);

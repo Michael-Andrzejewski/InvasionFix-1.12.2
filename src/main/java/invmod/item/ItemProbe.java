@@ -1,6 +1,5 @@
 package invmod.item;
 
-import java.util.List;
 import invmod.BlocksAndItems;
 import invmod.mod_Invasion;
 import invmod.entity.monster.EntityIMMob;
@@ -8,7 +7,6 @@ import invmod.tileentity.TileEntityNexus;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -16,8 +14,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 public class ItemProbe extends ModItem
@@ -40,19 +36,23 @@ public class ItemProbe extends ModItem
 		return true;
 	}
 
-	@Override
+	/*@Override
 	public EnumActionResult onItemUseFirst(ItemStack itemstack,
 		EntityPlayer player, World world, BlockPos blockPos,
 		EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
-	{
+	{*/
+	@Override
+	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX,
+			float hitY, float hitZ, EnumHand hand) {
 
+		ItemStack itemstack = player.getHeldItem(hand);
 		//if (world.isRemote) return EnumActionResult.FAIL;
-		Block block = world.getBlockState(blockPos).getBlock();
+		Block block = world.getBlockState(pos).getBlock();
 
 		//Change Nexus spawn range
 		if (block == BlocksAndItems.blockNexus)
 		{
-			TileEntityNexus nexus = (TileEntityNexus)world.getTileEntity(blockPos);
+			TileEntityNexus nexus = (TileEntityNexus)world.getTileEntity(pos);
 			int newRange = nexus.getSpawnRadius();
 
 			// check if the player wants to increase or decrease the range
@@ -68,7 +68,7 @@ public class ItemProbe extends ModItem
 		//Display block strength; material probe only
 		if (itemstack.getItemDamage() == 1)
 		{
-			float blockStrength = EntityIMMob.getBlockStrength(blockPos, block, world);
+			float blockStrength = EntityIMMob.getBlockStrength(pos, block, world);
 			mod_Invasion.sendMessageToPlayer(player, "Block strength: " + (int)((blockStrength + 0.005D) * 100.0D) / 100.0D);
 			return EnumActionResult.SUCCESS;
 		}

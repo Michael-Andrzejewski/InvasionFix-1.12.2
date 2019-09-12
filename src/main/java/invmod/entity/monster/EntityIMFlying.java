@@ -208,9 +208,11 @@ public abstract class EntityIMFlying extends EntityIMMob
 		return this.bn;
 	}
 
-	@Override
+	/*@Override
 	public void moveEntityWithHeading(float x, float z)
-	{
+	{*/
+	@Override
+	public void moveRelative(float x, float up, float z, float friction) {
 		if (this.isInWater())
 		{
 			double y = this.posY;

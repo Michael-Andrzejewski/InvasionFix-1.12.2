@@ -29,7 +29,8 @@ public class RenderIMSkeleton extends RenderBiped<EntityIMSkeleton>
 
 	public RenderIMSkeleton(RenderManager renderManager, ModelBiped model, float shadowSize, float scale)
 	{
-		super(renderManager, model, shadowSize, scale);
+		//super(rendermanagerIn, new ModelBiped(), 0.5F, new ResourceLocation(Reference.MODID, "textures/entity/entity_mob_cqrdwarf.png"));
+		super(renderManager, model, shadowSize);
 		this.addLayer(new LayerHeldItem(this));
 		this.addLayer(new LayerBipedArmor(this)
 		{

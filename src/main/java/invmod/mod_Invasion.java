@@ -242,7 +242,7 @@ public class mod_Invasion
 		//proxy.registerEntityRenderers();
 
 		//Register Entities
-		EntityRegistry.registerModEntity(EntityIMZombie.class, "IMZombie", 5, this, 128, 1, true, 0x6B753F, 0x281B0A);
+		/**EntityRegistry.registerModEntity(EntityIMZombie.class, "IMZombie", 5, this, 128, 1, true, 0x6B753F, 0x281B0A);
 		EntityRegistry.registerModEntity(EntityIMSkeleton.class, "IMSkeleton", 6, this, 128, 1, true, 0x9B9B9B, 0x797979);
 		EntityRegistry.registerModEntity(EntityIMSpider.class, "IMSpider", 7, this, 128, 1, true, 0x504A3E, 0xA4121C);
 		EntityRegistry.registerModEntity(EntityIMPigEngy.class, "IMPigEngy", 8, this, 128, 1, true, 0xEC9695, 0x420000);
@@ -262,7 +262,7 @@ public class mod_Invasion
 		{
 			EntityRegistry.registerModEntity(EntityIMBird.class, "IMBird", 15, this, 128, 1, true);
 			EntityRegistry.registerModEntity(EntityIMGiantBird.class, "IMGiantBird", 16, this, 128, 1, true, 0x2B2B2B, 0xEA7EDC);
-		}
+		}**/
 
 		//spawneggs needed things and despensebehavior
 		//BlockDispenser.dispenseBehaviorRegistry.putObject(itemSpawnEgg, new DispenserBehaviorSpawnEgg());

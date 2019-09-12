@@ -20,15 +20,18 @@ public class ItemPoisonTrap extends ModItem
 		this.setMaxStackSize(64);
 	}
 
+	//@Override
+	//public EnumActionResult onItemUseFirst(ItemStack itemstack, EntityPlayer entityplayer, World world, BlockPos blockPos,
+		//EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
+	//{
 	@Override
-	public EnumActionResult onItemUseFirst(ItemStack itemstack, EntityPlayer entityplayer, World world, BlockPos blockPos,
-		EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
-	{
+	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX,
+			float hitY, float hitZ, EnumHand hand) {
 		if (world.isRemote) return EnumActionResult.FAIL;
 		if (side == EnumFacing.UP)
 		{
-			EntityIMTrap trap = new EntityIMTrap(world, blockPos.getX() + 0.5D,
-				blockPos.getY() + 1.0D, blockPos.getZ() + 0.5D, 3);
+			EntityIMTrap trap = new EntityIMTrap(world, pos.getX() + 0.5D,
+				pos.getY() + 1.0D, pos.getZ() + 0.5D, 3);
 
 			if ((trap.isValidPlacement())
 				&& (world.getEntitiesWithinAABB(EntityIMTrap.class,
@@ -37,9 +40,11 @@ public class ItemPoisonTrap extends ModItem
 				world.spawnEntity(trap);
 
 				// players in creative mode won't lose the item
-				if (!entityplayer.capabilities.isCreativeMode)
+				if (!player.capabilities.isCreativeMode)
 				{
-					itemstack.stackSize -= 1;
+					ItemStack item = player.getHeldItem(hand);
+					//itemstack.stackSize -= 1;
+					item.shrink(1);
 				}
 			}
 			return EnumActionResult.SUCCESS;

@@ -1,7 +1,7 @@
 package invmod.block;
 
 import java.util.Random;
-import javax.annotation.Nullable;
+
 import invmod.BlocksAndItems;
 import invmod.mod_Invasion;
 import invmod.tileentity.TileEntityNexus;
@@ -21,7 +21,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -43,15 +42,18 @@ public class BlockNexus extends BlockContainer
 		this.setSoundType(Blocks.GLASS.getSoundType());
 		this.itemBlock = new ItemBlock(this);
 		this.itemBlock.setRegistryName(this.name);
-		GameRegistry.register(this);
-		GameRegistry.register(this.itemBlock);
+		//GameRegistry.register(this);
+		//GameRegistry.register(this.itemBlock);
 		this.setCreativeTab(mod_Invasion.tabInvmod);
 	}
 
+	//@Override
+	//public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
-	{
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
+			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		Item item = null;
+		ItemStack heldItem = playerIn.getHeldItem(hand);
 		if (heldItem != null) item = heldItem.getItem();
 
 		if (worldIn.isRemote) return true;

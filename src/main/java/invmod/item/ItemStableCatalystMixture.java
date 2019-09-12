@@ -3,7 +3,6 @@ package invmod.item;
 import invmod.Reference;
 import invmod.mod_Invasion;
 import net.minecraft.item.Item;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 
 public class ItemStableCatalystMixture extends Item
@@ -14,7 +13,7 @@ public class ItemStableCatalystMixture extends Item
 	public ItemStableCatalystMixture()
 	{
 		this.setRegistryName(this.name);
-		GameRegistry.register(this);
+		//GameRegistry.register(this);
 		this.setUnlocalizedName(Reference.MODID + "_" + this.name);
 		this.setMaxStackSize(1);
 		this.setCreativeTab(mod_Invasion.tabInvmod);

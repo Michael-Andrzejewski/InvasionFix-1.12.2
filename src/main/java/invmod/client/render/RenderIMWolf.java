@@ -1,8 +1,8 @@
 package invmod.client.render;
 
 import org.lwjgl.opengl.GL11;
+
 import invmod.Reference;
-import net.minecraft.client.model.ModelWolf;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderWolf;
 import net.minecraft.entity.passive.EntityWolf;
@@ -13,7 +13,8 @@ public class RenderIMWolf extends RenderWolf
 {
 	public RenderIMWolf(RenderManager renderManager)
 	{
-		super(renderManager, new ModelWolf(), 1.0F);
+		//super(renderManager, new ModelWolf(), 1.0F);
+		super(renderManager);
 	}
 
 	private static final ResourceLocation wolf = new ResourceLocation(Reference.MODID + ":textures/wolf_tame_nexus.png");
