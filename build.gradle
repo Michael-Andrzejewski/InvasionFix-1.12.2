@@ -1,42 +1,45 @@
 buildscript {
-	repositories {
-		jcenter()
-		maven { url = "http://files.minecraftforge.net/maven" }
-	}
-	dependencies {
-		classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
-	}
+    repositories {
+        jcenter()
+        maven { url = "https://files.minecraftforge.net/maven" }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+    }
 }
+
 apply plugin: 'net.minecraftforge.gradle.forge'
 
+version = "${mc_version}-${mod_version}"
+group = "com.teamcqr.chocolatequestrepoured"
+archivesBaseName = "${mod_name}"
 
-version = "1.2.6"
-group = "com.whammich.invasion"
-archivesBaseName = "Invasion-1.10"
-
-sourceCompatibility = targetCompatibility = "1.8"
+sourceCompatibility = targetCompatibility = '1.8'
 compileJava {
-	sourceCompatibility = targetCompatibility = "1.8"
+    sourceCompatibility = targetCompatibility = '1.8'
 }
 
 minecraft {
-	version = "1.10.2-12.18.3.2185"
-	runDir = "run"
-	mappings = "stable_29"
-	makeObfSourceJar = false
+    version = "${mc_version}-${forge_version}"
+    runDir = "run"
+    mappings = "${mcp_mappings}"
+    makeObfSourceJar = false
 }
 
-dependencies {
-}
+dependencies {}
 
 processResources {
-	inputs.property "version", project.version
-	inputs.property "mcversion", project.minecraft.version
-	from(sourceSets.main.resources.srcDirs) {
-		include 'mcmod.info'
-		expand 'version':project.version, 'mcversion':project.minecraft.version
-	}
-	from(sourceSets.main.resources.srcDirs) {
-		exclude 'mcmod.info'
-	}
+
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+                
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+        
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
 }

@@ -1,8 +1,8 @@
 package invmod.entity.monster;
 
-import invmod.BlocksAndItems;
 import invmod.IBlockAccessExtended;
 import invmod.INotifyTask;
+import invmod.ModBlocks;
 import invmod.SoundHandler;
 import invmod.mod_Invasion;
 import invmod.entity.ICanDig;
@@ -409,7 +409,7 @@ public class EntityIMZombiePigman extends EntityIMMob implements ICanDig
 							IBlockState blockState = this.world.getBlockState(new BlockPos(j, i, k));
 							if (blockState.getMaterial() != Material.AIR)
 							{
-								if (this.isBlockDestructible(this.world, new BlockPos(j, i, k), blockState) && blockState.getBlock() != BlocksAndItems.blockNexus)
+								if (this.isBlockDestructible(this.world, new BlockPos(j, i, k), blockState) && blockState.getBlock() != /*BlocksAndItems.blockNexus*/ModBlocks.NEXUS_BLOCK)
 								{
 									if (blockState.getBlock().getExplosionResistance(this) >= maxResistance)
 									{

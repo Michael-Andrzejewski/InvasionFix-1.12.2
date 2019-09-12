@@ -1,6 +1,5 @@
 package invmod.item;
 
-import invmod.mod_Invasion;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,12 +25,12 @@ public class ItemInfusedSword extends ItemSword
 	public ItemInfusedSword()
 	{
 		super(ToolMaterial.DIAMOND);
-		this.setRegistryName(this.name);
+		//this.setRegistryName(this.name);
 		//GameRegistry.register(this);
 		// amount of entity hits it takes to recharge sword.
 		this.setMaxDamage(40);
-		this.setUnlocalizedName(this.name);
-		this.setCreativeTab(mod_Invasion.tabInvmod);
+		//this.setUnlocalizedName(this.name);
+		//this.setCreativeTab(mod_Invasion.tabInvmod);
 		this.setMaxStackSize(1);
 	}
 

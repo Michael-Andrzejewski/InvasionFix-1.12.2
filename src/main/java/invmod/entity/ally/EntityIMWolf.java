@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import invmod.BlocksAndItems;
+import invmod.ModBlocks;
 import invmod.entity.monster.EntityIMMob;
 import invmod.nexus.SpawnPoint;
 import invmod.nexus.SpawnType;
@@ -324,7 +324,7 @@ public class EntityIMWolf extends EntityWolf
 	{
 		if ((this.world != null) && (this.getDataManager().get(NEXUS_BOUND)))
 		{
-			if (this.world.getBlockState(this.nexusPos).getBlock() == BlocksAndItems.blockNexus)
+			if (this.world.getBlockState(this.nexusPos).getBlock() == /*BlocksAndItems.blockNexus*/ModBlocks.NEXUS_BLOCK)
 			{
 				this.nexus = ((TileEntityNexus)this.world.getTileEntity(this.nexusPos));
 			}
@@ -344,7 +344,7 @@ public class EntityIMWolf extends EntityWolf
 			{
 				for (int k = -7; k < 8; k++)
 				{
-					if (this.world.getBlockState(new BlockPos(x + i, y + j, z + k)).getBlock() == BlocksAndItems.blockNexus)
+					if (this.world.getBlockState(new BlockPos(x + i, y + j, z + k)).getBlock() == /*BlocksAndItems.blockNexus*/ModBlocks.NEXUS_BLOCK)
 					{
 						nexus = (TileEntityNexus)this.world.getTileEntity(new BlockPos(x + i, y + j, z + k));
 						break;

@@ -1,6 +1,6 @@
 package invmod.item;
 
-import invmod.BlocksAndItems;
+import invmod.ModBlocks;
 import invmod.mod_Invasion;
 import invmod.entity.monster.EntityIMMob;
 import invmod.tileentity.TileEntityNexus;
@@ -27,7 +27,7 @@ public class ItemProbe extends ModItem
 		this.setHasSubtypes(true);
 		this.setMaxDamage(1);
 		this.setMaxStackSize(1);
-		this.setCreativeTab(mod_Invasion.tabInvmod);
+		//this.setCreativeTab(mod_Invasion.tabInvmod);
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class ItemProbe extends ModItem
 		Block block = world.getBlockState(pos).getBlock();
 
 		//Change Nexus spawn range
-		if (block == BlocksAndItems.blockNexus)
+		if (block == /*BlocksAndItems.blockNexus*/ModBlocks.NEXUS_BLOCK)
 		{
 			TileEntityNexus nexus = (TileEntityNexus)world.getTileEntity(pos);
 			int newRange = nexus.getSpawnRadius();

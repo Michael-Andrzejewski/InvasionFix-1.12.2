@@ -1,8 +1,9 @@
 package invmod.entity.monster;
 
-import invmod.BlocksAndItems;
 import invmod.IBlockAccessExtended;
 import invmod.INotifyTask;
+import invmod.ModBlocks;
+import invmod.ModItems;
 import invmod.mod_Invasion;
 import invmod.entity.EntityIMLiving;
 import invmod.entity.Goal;
@@ -114,7 +115,7 @@ public class EntityIMPigEngy extends EntityIMMob implements ICanDig, ICanBuild
 		int r = this.rand.nextInt(3);
 		if (r == 0) this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(Item.getItemFromBlock(Blocks.LADDER)));
 		else if (r == 1) this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(Items.IRON_PICKAXE));
-		else this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(BlocksAndItems.itemEngyHammer));
+		else this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(/*BlocksAndItems.itemEngyHammer*/ModItems.ENGY_HAMMER));
 	}
 
 	public EntityIMPigEngy(World world)
@@ -353,7 +354,7 @@ public class EntityIMPigEngy extends EntityIMMob implements ICanDig, ICanBuild
 		}
 		if (blockState.getBlock() == Blocks.AIR || blockState.getBlock() == Blocks.SNOW) return prevNode.distanceTo(node) * multiplier;
 		if (blockState.getBlock() == Blocks.LADDER) return prevNode.distanceTo(node) * 0.7F * multiplier;
-		if ((!blockState.getBlock().isPassable(terrainMap, new BlockPos(node.pos))) && (blockState != BlocksAndItems.blockNexus))
+		if ((!blockState.getBlock().isPassable(terrainMap, new BlockPos(node.pos))) && (blockState != /*BlocksAndItems.blockNexus*/ModBlocks.NEXUS_BLOCK))
 		{
 			return prevNode.distanceTo(node) * 3.2F;
 		}
@@ -525,7 +526,7 @@ public class EntityIMPigEngy extends EntityIMMob implements ICanDig, ICanBuild
 		{
 			this.setSwinging(true);
 			PathAction currentAction = this.getNavigatorNew().getCurrentWorkingAction();
-			this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(currentAction == PathAction.NONE ? Items.IRON_PICKAXE : BlocksAndItems.itemEngyHammer));
+			this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(currentAction == PathAction.NONE ? Items.IRON_PICKAXE : /*BlocksAndItems.itemEngyHammer*/ModItems.ENGY_HAMMER));
 		}
 		int swingSpeed = this.getSwingSpeed();
 		if (this.isSwinging())

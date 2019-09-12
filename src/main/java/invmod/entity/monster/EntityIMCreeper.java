@@ -2,8 +2,8 @@ package invmod.entity.monster;
 
 import com.google.common.base.Predicate;
 
-import invmod.BlocksAndItems;
 import invmod.INotifyTask;
+import invmod.ModBlocks;
 import invmod.mod_Invasion;
 import invmod.entity.ai.EntityAIAttackNexus;
 import invmod.entity.ai.EntityAICreeperIMSwell;
@@ -247,7 +247,7 @@ public class EntityIMCreeper extends EntityIMMob
 	public float getBlockPathCost(PathNode prevNode, PathNode node, IBlockAccess terrainMap)
 	{
 		Block block = terrainMap.getBlockState(new BlockPos(node.pos)).getBlock();
-		if ((block != Blocks.AIR) && (!block.isPassable(terrainMap, new BlockPos(node.pos))) && (block != BlocksAndItems.blockNexus))
+		if ((block != Blocks.AIR) && (!block.isPassable(terrainMap, new BlockPos(node.pos))) && (block != /*BlocksAndItems.blockNexus*/ModBlocks.NEXUS_BLOCK))
 		{
 			return prevNode.distanceTo(node) * 12.0F;
 		}

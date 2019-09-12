@@ -1,6 +1,6 @@
 package invmod.creativetab;
 
-import invmod.BlocksAndItems;
+import invmod.ModBlocks;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -20,7 +20,7 @@ public class CreativeTabInvmod extends CreativeTabs
 	@SideOnly(Side.CLIENT)
 	public ItemStack getTabIconItem()
 	{
-		return new ItemStack(Item.getItemFromBlock(BlocksAndItems.blockNexus),1);
+		return new ItemStack(Item.getItemFromBlock(/*BlocksAndItems.blockNexus*/ModBlocks.NEXUS_BLOCK),1);
 	}
 
 }

@@ -1,8 +1,6 @@
 package invmod.item;
 
-import invmod.BlocksAndItems;
-import invmod.Reference;
-import invmod.mod_Invasion;
+import invmod.ModBlocks;
 import invmod.entity.monster.EntityIMBird;
 import invmod.entity.monster.EntityIMCreeper;
 import invmod.entity.monster.EntityIMGiantBird;
@@ -33,12 +31,12 @@ public class ItemDebugWand extends Item
 
 	public ItemDebugWand()
 	{
-		this.setRegistryName(this.name);
+		//this.setRegistryName(this.name);
 		//GameRegistry.register(this);
 		this.setMaxDamage(0);
-		this.setUnlocalizedName(Reference.MODID + "_" + this.name);
+		//this.setUnlocalizedName(Reference.MODID + "_" + this.name);
 		this.setMaxStackSize(1);
-		this.setCreativeTab(mod_Invasion.tabInvmod);
+		//this.setCreativeTab(mod_Invasion.tabInvmod);
 	}
 
 	/*@Override
@@ -50,7 +48,7 @@ public class ItemDebugWand extends Item
 			float hitY, float hitZ, EnumHand hand) {
 		if (world.isRemote) return EnumActionResult.FAIL;
 		Block block = world.getBlockState(pos).getBlock();
-		if (block == BlocksAndItems.blockNexus)
+		if (block == /*BlocksAndItems.blockNexus*/ModBlocks.NEXUS_BLOCK)
 		{
 			this.nexus = ((TileEntityNexus)world.getTileEntity(pos));
 			return EnumActionResult.SUCCESS;

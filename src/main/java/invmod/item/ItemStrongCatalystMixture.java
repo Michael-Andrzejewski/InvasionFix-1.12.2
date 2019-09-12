@@ -2,13 +2,11 @@ package invmod.item;
 
 import net.minecraft.item.Item;
 
+public class ItemStrongCatalystMixture extends Item {
 
-public class ItemStrongCatalyst extends Item
-{
+	private final String name = "strongCatalystMixture";
 
-	private final String name = "strongCatalyst";
-
-	public ItemStrongCatalyst()
+	public ItemStrongCatalystMixture()
 	{
 		//this.setRegistryName(this.name);
 		//GameRegistry.register(this);

@@ -3,7 +3,9 @@ package invmod.tileentity;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import invmod.BlocksAndItems;
+
+import invmod.ModBlocks;
+import invmod.ModItems;
 import invmod.SoundHandler;
 import invmod.mod_Invasion;
 import invmod.block.BlockNexus;
@@ -190,7 +192,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 		if (this.cleanupTimer++ > 40)
 		{
 			this.cleanupTimer = 0;
-			if (this.world.getBlockState(new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ())).getBlock() != BlocksAndItems.blockNexus)
+			if (this.world.getBlockState(new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ())).getBlock() != ModBlocks.NEXUS_BLOCK)
 			{
 				this.stop();
 				this.invalidate();
@@ -289,7 +291,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 		}
 	}
 
-	//TODO Unused.
+	//DONE Unused.
 	/*public void registerMobClose() {
 	}*/
 
@@ -799,14 +801,14 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 			this.powerLevelTimer -= 2200;
 			this.generateFlux(5 + (int)(5 * this.powerLevel / 1550.0F));
 			if ((this.nexusItemStacks[0] == null)
-				|| (this.nexusItemStacks[0].getItem() != BlocksAndItems.itemDampingAgent))
+				|| (this.nexusItemStacks[0].getItem() != /*BlocksAndItems.itemDampingAgent*/ModItems.DAMPING_AGENT))
 			{
 				this.powerLevel += 1;
 			}
 		}
 
 		if ((this.nexusItemStacks[0] != null)
-			&& (this.nexusItemStacks[0].getItem() == BlocksAndItems.itemStrongDampingAgent))
+			&& (this.nexusItemStacks[0].getItem() == /*BlocksAndItems.itemStrongDampingAgent*/ModItems.STRONG_DAMPING_AGENT))
 		{
 			if ((this.powerLevel >= 0) && (!this.continuousAttack))
 			{
@@ -926,7 +928,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 		if (this.immuneTicks < 0) this.immuneTicks = 0;
 		if (this.nexusItemStacks[0] != null)
 		{
-			if ((this.nexusItemStacks[0].getItem() == BlocksAndItems.itemEmptyTrap))
+			if ((this.nexusItemStacks[0].getItem() == /*BlocksAndItems.itemEmptyTrap*/ModItems.TRAP_EMPTY))
 			{
 				if (this.cookTime < 1200)
 				{
@@ -942,12 +944,12 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 					if (this.nexusItemStacks[1] == null)
 					{
 						this.nexusItemStacks[1] = new ItemStack(
-							BlocksAndItems.itemRiftTrap, 1);
+							/*BlocksAndItems.itemRiftTrap*/ModItems.TRAP_RIFT, 1);
 						if ((this.nexusItemStacks[0].getCount() -1) <= 0)
 							this.nexusItemStacks[0] = null;
 						this.cookTime = 0;
 					}
-					else if ((this.nexusItemStacks[1].getItem() == BlocksAndItems.itemRiftTrap))
+					else if ((this.nexusItemStacks[1].getItem() == /*BlocksAndItems.itemRiftTrap*/ModItems.TRAP_RIFT))
 					{
 						this.nexusItemStacks[1].grow(1);
 						if ((this.nexusItemStacks[0].getCount() -1) <= 0)
@@ -956,7 +958,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 					}
 				}
 			}
-			else if ((this.nexusItemStacks[0].getItem() == BlocksAndItems.itemRiftFlux) && (this.nexusItemStacks[0].getItemDamage() == 1))
+			else if ((this.nexusItemStacks[0].getItem() == /*BlocksAndItems.itemRiftFlux*/ModItems.RIFT_FLUX) && (this.nexusItemStacks[0].getItemDamage() == 1))
 			{
 				if ((this.cookTime < 1200) && (this.nexusLevel >= 10)) this.cookTime += 5;
 
@@ -964,7 +966,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 				{
 					if (this.nexusItemStacks[1] == null)
 					{
-						this.nexusItemStacks[1] = new ItemStack(BlocksAndItems.itemStrongCatalyst, 1);
+						this.nexusItemStacks[1] = new ItemStack(/*BlocksAndItems.itemStrongCatalyst*/ModItems.STRONG_CATALYST, 1);
 						if ((this.nexusItemStacks[0].getCount() -1) <= 0) this.nexusItemStacks[0] = null;
 						this.cookTime = 0;
 					}
@@ -982,7 +984,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 			if (this.nexusItemStacks[0] != null)
 			{
 
-				if (this.nexusItemStacks[0].getItem() == BlocksAndItems.itemNexusCatalyst)
+				if (this.nexusItemStacks[0].getItem() == /*BlocksAndItems.itemNexusCatalyst*/ModItems.NEXUS_CATALYST)
 				{
 					this.nexusItemStacks[0].shrink(1);
 					if (this.nexusItemStacks[0].isEmpty()) this.nexusItemStacks[0] = null;
@@ -991,7 +993,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 					this.startInvasion(1);
 
 				}
-				else if (this.nexusItemStacks[0].getItem() == BlocksAndItems.itemStrongCatalyst)
+				else if (this.nexusItemStacks[0].getItem() == /*BlocksAndItems.itemStrongCatalyst*/ModItems.STRONG_CATALYST)
 				{
 					this.nexusItemStacks[0].shrink(1);
 					if (this.nexusItemStacks[0].isEmpty()) this.nexusItemStacks[0] = null;
@@ -1000,7 +1002,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 					this.startInvasion(10);
 
 				}
-				else if (this.nexusItemStacks[0].getItem() == BlocksAndItems.itemStableNexusCatalyst)
+				else if (this.nexusItemStacks[0].getItem() == /*BlocksAndItems.itemStableNexusCatalyst*/ModItems.STABLE_NEXUS_CATALYST)
 				{
 					this.nexusItemStacks[0].shrink(1);
 					if (this.nexusItemStacks[0].isEmpty()) this.nexusItemStacks[0] = null;
@@ -1016,13 +1018,13 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 		{
 			if (this.nexusItemStacks[0] != null)
 			{
-				if ((this.nexusItemStacks[0].getItem() == BlocksAndItems.itemNexusCatalyst)
-					|| (this.nexusItemStacks[0].getItem() == BlocksAndItems.itemStrongCatalyst))
+				if ((this.nexusItemStacks[0].getItem() == /*BlocksAndItems.itemNexusCatalyst*/ModItems.NEXUS_CATALYST)
+					|| (this.nexusItemStacks[0].getItem() == /*BlocksAndItems.itemStrongCatalyst*/ModItems.STRONG_CATALYST))
 				{
 					this.activationTimer += 1;
 					this.mode = 0;
 				}
-				else if (this.nexusItemStacks[0].getItem() == BlocksAndItems.itemStableNexusCatalyst)
+				else if (this.nexusItemStacks[0].getItem() == /*BlocksAndItems.itemStableNexusCatalyst*/ModItems.STABLE_NEXUS_CATALYST)
 				{
 					this.activationTimer += 1;
 					this.mode = 4;
@@ -1037,8 +1039,8 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 		{
 			if (this.nexusItemStacks[0] != null)
 			{
-				if ((this.nexusItemStacks[0].getItem() == BlocksAndItems.itemNexusCatalyst)
-					|| (this.nexusItemStacks[0].getItem() == BlocksAndItems.itemStrongCatalyst))
+				if ((this.nexusItemStacks[0].getItem() == /*BlocksAndItems.itemNexusCatalyst*/ModItems.NEXUS_CATALYST)
+					|| (this.nexusItemStacks[0].getItem() == /*BlocksAndItems.itemStrongCatalyst*/ModItems.STRONG_CATALYST))
 				{
 					this.activationTimer += 1;
 				}
@@ -1056,10 +1058,10 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 			if (this.nexusItemStacks[1] == null)
 			{
 				this.nexusItemStacks[1] = new ItemStack(
-					BlocksAndItems.itemRiftFlux, 1);
+					/*BlocksAndItems.itemRiftFlux*/ModItems.RIFT_FLUX, 1);
 				this.generation -= 3000;
 			}
-			else if (this.nexusItemStacks[1].getItem() == BlocksAndItems.itemRiftFlux)
+			else if (this.nexusItemStacks[1].getItem() == /*BlocksAndItems.itemRiftFlux*/ModItems.RIFT_FLUX)
 			{
 				this.nexusItemStacks[1].grow(1);
 				this.generation -= 3000;
@@ -1306,14 +1308,14 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 		return this.activated;
 	}
 
-	//TODO Unused.
+	//DONE Unused.
 	/*@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
 		this.readFromNBT(pkt.getNbtCompound());
 		this.world.markBlockForUpdate(this.pos);
 	}*/
 
-	//TODO: Unused.
+	//DONE: Unused.
 	/*@Override
 	public Packet getDescriptionPacket() {
 		NBTTagCompound tag = new NBTTagCompound();
@@ -1348,42 +1350,48 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 	@Override
 	public ITextComponent getDisplayName()
 	{
-		// TODO Auto-generated method stub
+		// DONE Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public int getField(int id)
 	{
-		// TODO Auto-generated method stub
+		// DONE Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public void setField(int id, int value)
 	{
-		// TODO Auto-generated method stub
+		// DONE Auto-generated method stub
 
 	}
 
 	@Override
 	public int getFieldCount()
 	{
-		// TODO Auto-generated method stub
+		// DONE Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public void clear()
 	{
-		// TODO Auto-generated method stub
+		// DONE Auto-generated method stub
 
 	}
 
 	@Override
 	public ItemStack removeStackFromSlot(int index)
 	{
-		// TODO Auto-generated method stub
+		// DONE Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

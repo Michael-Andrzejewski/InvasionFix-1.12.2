@@ -1,6 +1,7 @@
 package invmod.entity.monster;
 
 import javax.annotation.Nullable;
+
 import invmod.mod_Invasion;
 import invmod.entity.ai.EntityAIAttackNexus;
 import invmod.entity.ai.EntityAIAttackRangedBowIM;
@@ -259,10 +260,11 @@ public class EntityIMSkeleton extends EntityIMMob implements IRangedAttackMob
 		double d1 = target.getEntityBoundingBox().minY + (double)(target.height / 3.0F) - entitytippedarrow.posY;
 		double d2 = target.posZ - this.posZ;
 		double d3 = (double)MathHelper.sqrt(d0 * d0 + d2 * d2);
-		entitytippedarrow.setThrowableHeading(d0, d1 + d3 * 0.20000000298023224D, d2, 1.6F, (float)(14 - this.world.getDifficulty().getDifficultyId() * 4));
+		//setThrowableHeading(double x, double y, double z, float velocity, float inaccuracy)
+		entitytippedarrow.shoot(d0, d1 + d3 * 0.20000000298023224D, d2, 1.6F, (float)(14 - this.world.getDifficulty().getDifficultyId() * 4));
 		int i = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.POWER, this);
 		int j = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.PUNCH, this);
-		DifficultyInstance difficultyinstance = this.world.getDifficultyForLocation(new BlockPos(this));
+		DifficultyInstance difficultyinstance = this.world.getDifficultyForLocation(getPosition());
 		entitytippedarrow.setDamage((double)(p_82196_2_ * 2.0F) + this.rand.nextGaussian() * 0.25D + (double)((float)this.world.getDifficulty().getDifficultyId() * 0.11F));
 
 		if (i > 0)
@@ -275,7 +277,7 @@ public class EntityIMSkeleton extends EntityIMMob implements IRangedAttackMob
 			entitytippedarrow.setKnockbackStrength(j);
 		}
 
-		boolean flag = this.isBurning() && getEntityWorld().getDifficulty().equals(EnumDifficulty.HARD) && this.rand.nextBoolean();
+		boolean flag = this.isBurning() && difficultyinstance.getAdditionalDifficulty() >= (float) EnumDifficulty.HARD.ordinal() && this.rand.nextBoolean();
 		flag = flag || EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.FLAME, this) > 0;
 
 		if (flag)

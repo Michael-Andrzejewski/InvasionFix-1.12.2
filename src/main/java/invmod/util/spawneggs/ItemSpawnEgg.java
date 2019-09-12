@@ -181,7 +181,7 @@ public class ItemSpawnEgg extends Item
 
 		Entity entity = null;
 
-		entity = EntityList.createEntityByName(mobID, world);
+		/*entity = EntityList.createEntityByName(mobID, world);
 
 		if (entity != null)
 		{
@@ -199,7 +199,7 @@ public class ItemSpawnEgg extends Item
 				entityliving.playLivingSound();
 				spawnRiddenCreatures(entity, world, spawnData);
 			}
-		}
+		}*/
 
 		return entity;
 	}
@@ -209,7 +209,7 @@ public class ItemSpawnEgg extends Item
 		while (cur.hasKey("Riding"))
 		{
 			cur = cur.getCompoundTag("Riding");
-			Entity newEntity = EntityList.createEntityByName(cur.getString("id"), world);
+			/*Entity newEntity = EntityList.createEntityByName(cur.getString("id"), world);
 			if (newEntity != null)
 			{
 				addNBTData(newEntity, cur);
@@ -218,7 +218,7 @@ public class ItemSpawnEgg extends Item
 				//entity.mountEntity(newEntity);
 				entity.startRiding(newEntity);
 			}
-			entity = newEntity;
+			entity = newEntity;*/
 		}
 	}
 

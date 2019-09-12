@@ -2,7 +2,7 @@ package invmod.entity.projectile;
 
 import java.util.List;
 
-import invmod.BlocksAndItems;
+import invmod.ModBlocks;
 import invmod.tileentity.TileEntityNexus;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -264,7 +264,7 @@ public class EntityIMBoulder extends Entity
 				this.arrowCritical = false;
 
 				Block block2 = this.world.getBlockState(new BlockPos(this.xTile, this.yTile, this.zTile)).getBlock();
-				if (block2 == BlocksAndItems.blockNexus)
+				if (block2 == /*BlocksAndItems.blockNexus*/ModBlocks.NEXUS_BLOCK)
 				{
 					TileEntityNexus tileEntityNexus = (TileEntityNexus)this.world.getTileEntity(new BlockPos(this.xTile, this.yTile, this.zTile));
 					if (tileEntityNexus != null)
@@ -274,7 +274,7 @@ public class EntityIMBoulder extends Entity
 				}
 				else if (block2 != Blocks.BEDROCK)
 				{
-					if ((block2 != null) && (block2 != BlocksAndItems.blockNexus) && (block2 != Blocks.CHEST))
+					if ((block2 != null) && (block2 != /*BlocksAndItems.blockNexus*/ModBlocks.NEXUS_BLOCK) && (block2 != Blocks.CHEST))
 					{
 						// check if mobgriefing is enabled
 						boolean mobgriefing = this.world.getGameRules().getBoolean("mobGriefing");

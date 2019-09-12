@@ -14,6 +14,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.EnumDifficulty;
 
 
 public class EntityAIKillWithArrow<T extends EntityLivingBase> extends EntityAIKillEntity<T>
@@ -51,7 +52,7 @@ public class EntityAIKillWithArrow<T extends EntityLivingBase> extends EntityAIK
 		double d2 = this.getTarget().posZ - this.getEntity().posZ;
 		double d3 = (double)MathHelper.sqrt(d0 * d0 + d2 * d2);
 		//SetThrowableHeading: Was used to set the motion and the veloctiy and something else
-		arrow.setThrowableHeading(d0, d1 + d3 * 0.20000000298023224D, d2, 1.6F, (float)(14 - this.getEntity().world.getDifficulty().getDifficultyId() * 4));
+		arrow.shoot(d0, d1 + d3 * 0.20000000298023224D, d2, 1.6F, (float)(14 - this.getEntity().world.getDifficulty().getDifficultyId() * 4));
 
 		int i = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.POWER, this.getEntity());
 		int j = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.PUNCH, this.getEntity());
@@ -61,7 +62,7 @@ public class EntityAIKillWithArrow<T extends EntityLivingBase> extends EntityAIK
 		if (i > 0) arrow.setDamage(arrow.getDamage() + (double)i * 0.5D + 0.5D);
 		if (j > 0) arrow.setKnockbackStrength(j);
 
-		boolean flag = this.getEntity().isBurning() && difficultyinstance.isHard() && this.getEntity().getRNG().nextBoolean();
+		boolean flag = this.getEntity().isBurning() && difficultyinstance.getAdditionalDifficulty() >= (float) EnumDifficulty.HARD.ordinal() && this.getEntity().getRNG().nextBoolean();
 		flag = flag || EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.FLAME, this.getEntity()) > 0;
 
 		if (flag) arrow.setFire(100);

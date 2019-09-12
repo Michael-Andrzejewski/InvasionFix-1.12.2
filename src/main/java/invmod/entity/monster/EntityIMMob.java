@@ -1,7 +1,7 @@
 package invmod.entity.monster;
 
-import invmod.BlocksAndItems;
 import invmod.IBlockAccessExtended;
+import invmod.ModItems;
 import invmod.SparrowAPI;
 import invmod.mod_Invasion;
 import invmod.entity.EntityIMLiving;
@@ -965,7 +965,7 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 	{
 		if (this.rand.nextInt(4) == 0)
 		{
-			this.entityDropItem(new ItemStack(BlocksAndItems.itemSmallRemnants), 0f);
+			this.entityDropItem(new ItemStack(/*BlocksAndItems.itemSmallRemnants*/ModItems.SMALL_REMNANTS), 0f);
 		}
 	}
 

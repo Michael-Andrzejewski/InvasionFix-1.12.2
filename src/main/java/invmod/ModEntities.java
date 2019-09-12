@@ -7,7 +7,9 @@ import javax.annotation.Nonnull;
 import invmod.entity.ally.EntityIMWolf;
 import invmod.entity.block.EntityIMEgg;
 import invmod.entity.block.trap.EntityIMTrap;
+import invmod.entity.monster.EntityIMBird;
 import invmod.entity.monster.EntityIMCreeper;
+import invmod.entity.monster.EntityIMGiantBird;
 import invmod.entity.monster.EntityIMImp;
 import invmod.entity.monster.EntityIMPigEngy;
 import invmod.entity.monster.EntityIMSkeleton;
@@ -32,6 +34,13 @@ public class ModEntities {
 	
 	private static int entityID = 0;
 
+	//No Egg
+	public static final EntityEntry IM_EGG = Null();
+	public static final EntityEntry IM_BOULDER = Null();
+	public static final EntityEntry IM_BOLT = Null();
+	public static final EntityEntry IM_TRAP = Null();
+	public static final EntityEntry IM_PRIMED_TNT = Null();
+	
 	public static final EntityEntry IM_ZOMBIE = Null();
 	public static final EntityEntry IM_SKELETON = Null();
 	public static final EntityEntry IM_SPIDER = Null();
@@ -43,13 +52,6 @@ public class ModEntities {
 	public static final EntityEntry IM_THROWER = Null();
 	public static final EntityEntry IM_BIRD = Null();
 	public static final EntityEntry IM_GIANT_BIRD = Null();
-	
-	//No Egg
-	public static final EntityEntry IM_EGG = Null();
-	public static final EntityEntry IM_BOULDER = Null();
-	public static final EntityEntry IM_BOLT = Null();
-	public static final EntityEntry IM_TRAP = Null();
-	public static final EntityEntry IM_PRIMED_TNT = Null();
 	
 	
 	@EventBusSubscriber(modid = Reference.MODID)
@@ -74,7 +76,11 @@ public class ModEntities {
 					createEntityEntry(EntityIMCreeper.class, "IMCreeper", 128, 1, true, 0x238F1F, 0xA5AAA6),
 					createEntityEntry(EntityIMImp.class, "IMImp", 128, 1, true, 0xB40113, 0xFF0000),
 					createEntityEntry(EntityIMZombiePigman.class, "IMZombiePigman", 128, 1, true, 0xEB8E91, 0x49652F),
-					createEntityEntry(EntityIMThrower.class, "IMThrower", 128, 1, true, 0x5303814, 0x632808)
+					createEntityEntry(EntityIMThrower.class, "IMThrower", 128, 1, true, 0x5303814, 0x632808),
+					//EntityRegistry.registerModEntity(EntityIMBird.class, "IMBird", 15, this, 128, 1, true);
+					createEntityEntry(EntityIMBird.class, "IMBird", 128, 1, true, 0x2B2B2B, 0xEA7EDC),
+					//EntityRegistry.registerModEntity(EntityIMGiantBird.class, "IMGiantBird", 16, this, 128, 1, true, 0x2B2B2B, 0xEA7EDC);
+					createEntityEntry(EntityIMGiantBird.class, "IMGiantBird", 128, 1, true, 0x2B2B2B, 0xEA7EDC)
 					
 			};
 

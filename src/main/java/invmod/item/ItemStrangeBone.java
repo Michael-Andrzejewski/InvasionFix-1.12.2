@@ -1,6 +1,6 @@
 package invmod.item;
 
-import invmod.BlocksAndItems;
+import invmod.ModBlocks;
 import invmod.entity.ally.EntityIMWolf;
 import invmod.tileentity.TileEntityNexus;
 import net.minecraft.entity.EntityLivingBase;
@@ -50,7 +50,7 @@ public class ItemStrangeBone extends ModItem
 						for (int k = -7; k < 8; k++)
 						{
 							BlockPos newBlockPos = new BlockPos(x, y, z).add(i, j, k);
-							if (wolf.world.getBlockState(newBlockPos).getBlock() == BlocksAndItems.blockNexus)
+							if (wolf.world.getBlockState(newBlockPos).getBlock() == /*BlocksAndItems.blockNexus*/ModBlocks.NEXUS_BLOCK)
 							{
 								nexus = (TileEntityNexus)wolf.world.getTileEntity(newBlockPos);
 								break;

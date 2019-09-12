@@ -2,7 +2,8 @@ package invmod.block;
 
 import java.util.Random;
 
-import invmod.BlocksAndItems;
+import invmod.ModBlocks;
+import invmod.ModItems;
 import invmod.mod_Invasion;
 import invmod.tileentity.TileEntityNexus;
 import invmod.util.config.Config;
@@ -58,7 +59,7 @@ public class BlockNexus extends BlockContainer
 
 		if (worldIn.isRemote) return true;
 
-		if ((item != BlocksAndItems.itemProbe) && ((!Config.DEBUG) || (item != BlocksAndItems.itemDebugWand)))
+		if ((item != /*BlocksAndItems.itemProbe*/ModItems.PROBE) && ((!Config.DEBUG) || (item != /*BlocksAndItems.itemDebugWand*/ModItems.DEBUG_WAND)))
 		{
 			TileEntityNexus tileEntityNexus = (TileEntityNexus)worldIn.getTileEntity(pos);
 			if (tileEntityNexus != null)
@@ -135,7 +136,7 @@ public class BlockNexus extends BlockContainer
 			}
 			else
 			{
-				worldIn.setBlockState(blockPos, BlocksAndItems.blockNexus.getDefaultState(), 3);
+				worldIn.setBlockState(blockPos, /*BlocksAndItems.blockNexus*/ModBlocks.NEXUS_BLOCK.getDefaultState(), 3);
 			}
 			if (tileentity != null)
 			{

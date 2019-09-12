@@ -2,8 +2,9 @@ package invmod.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-import invmod.BlocksAndItems;
+
 import invmod.INotifyTask;
+import invmod.ModBlocks;
 import invmod.util.Distance;
 import invmod.util.config.Config;
 import net.minecraft.block.state.IBlockState;
@@ -139,7 +140,7 @@ public class TerrainModifier implements ITerrainModify
 		IBlockState newState = entry.getNewBlock();
 		IBlockState oldState = this.theEntity.world.getBlockState(entry.getPos());
 		entry.setOldBlock(oldState);
-		if (oldState.getBlock() == BlocksAndItems.blockNexus || oldState.getBlock() == newState.getBlock())
+		if (oldState.getBlock() == /*BlocksAndItems.blockNexus*/ModBlocks.NEXUS_BLOCK || oldState.getBlock() == newState.getBlock())
 		{
 			this.terrainFailFlag = true;
 			return false;

@@ -1,7 +1,5 @@
 package invmod.item;
 
-import invmod.Reference;
-import invmod.mod_Invasion;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumActionResult;
@@ -18,12 +16,12 @@ public class ItemRiftFlux extends Item
 
 	public ItemRiftFlux()
 	{
-		this.setRegistryName(this.name);
+		//this.setRegistryName(this.name);
 		//GameRegistry.register(this);
 		this.setMaxDamage(0);
-		this.setUnlocalizedName(Reference.MODID + "_" + this.name);
+		//this.setUnlocalizedName(Reference.MODID + "_" + this.name);
 		this.setMaxStackSize(64);
-		this.setCreativeTab(mod_Invasion.tabInvmod);
+		//this.setCreativeTab(mod_Invasion.tabInvmod);
 	}
 
 	/*@Override

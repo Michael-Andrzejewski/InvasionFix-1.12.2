@@ -56,9 +56,12 @@ public class CraftingAndSmelting
 		GameRegistry.addRecipe(MATERIAL_PROBE, new Object[] { "D", "#", "X", 'X', Items.STICK, '#', BlocksAndItems.itemPhaseCrystal, 'D', NEXUS_ADJUSTER });
 **/
 		//Smelting
-		GameRegistry.addSmelting(BlocksAndItems.itemCatalystMixture, new ItemStack(BlocksAndItems.itemNexusCatalyst), 1f);
-		GameRegistry.addSmelting(BlocksAndItems.itemStableCatalystMixture, new ItemStack(BlocksAndItems.itemStableNexusCatalyst), 1f);
-		GameRegistry.addSmelting(BlocksAndItems.itemStrongCatalystMixture, new ItemStack(BlocksAndItems.itemStrongCatalyst), 10f);
+		//GameRegistry.addSmelting(BlocksAndItems.itemCatalystMixture, new ItemStack(BlocksAndItems.itemNexusCatalyst), 1f);
+		GameRegistry.addSmelting(ModItems.CATALYST_MIXTURE, new ItemStack(ModItems.NEXUS_CATALYST), 1f);
+		//GameRegistry.addSmelting(BlocksAndItems.itemStableCatalystMixture, new ItemStack(BlocksAndItems.itemStableNexusCatalyst), 1f);
+		GameRegistry.addSmelting(ModItems.STABLE_CATALYST_MIXTURE, new ItemStack(ModItems.STABLE_NEXUS_CATALYST), 1f);
+		//GameRegistry.addSmelting(BlocksAndItems.itemStrongCatalystMixture, new ItemStack(BlocksAndItems.itemStrongCatalyst), 10f);
+		GameRegistry.addSmelting(ModItems.STRONG_CATALYST_MIXTURE, new ItemStack(ModItems.STRONG_CATALYST), 10f);
 	}
 
 }

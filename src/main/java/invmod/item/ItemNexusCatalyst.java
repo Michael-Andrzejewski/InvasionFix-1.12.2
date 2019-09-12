@@ -1,9 +1,6 @@
 package invmod.item;
 
-import invmod.Reference;
-import invmod.mod_Invasion;
 import net.minecraft.item.Item;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 
 public class ItemNexusCatalyst extends Item
@@ -13,11 +10,11 @@ public class ItemNexusCatalyst extends Item
 
 	public ItemNexusCatalyst()
 	{
-		this.setRegistryName(this.name);
+		//this.setRegistryName(this.name);
 		//GameRegistry.register(this);
-		this.setUnlocalizedName(Reference.MODID + "_" + this.name);
+		//this.setUnlocalizedName(Reference.MODID + "_" + this.name);
 		this.setMaxStackSize(1);
-		this.setCreativeTab(mod_Invasion.tabInvmod);
+		//this.setCreativeTab(mod_Invasion.tabInvmod);
 	}
 
 	public String getName()

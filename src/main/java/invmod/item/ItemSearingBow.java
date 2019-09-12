@@ -1,6 +1,5 @@
 package invmod.item;
 
-import invmod.mod_Invasion;
 import invmod.entity.projectile.EntityIMArrow;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -26,10 +25,11 @@ public class ItemSearingBow extends ItemBow
 
 	public ItemSearingBow()
 	{
-		this.setRegistryName(this.name);
+		//super();
+		//this.setRegistryName(this.name);
 		//GameRegistry.register(this);
-		this.setUnlocalizedName(this.name);
-		this.setCreativeTab(mod_Invasion.tabInvmod);
+		//this.setUnlocalizedName(this.name);
+		//this.setCreativeTab(mod_Invasion.tabInvmod);
 	}
 
 	@Override

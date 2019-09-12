@@ -1,8 +1,8 @@
 package invmod.entity.block.trap;
 
 import java.util.List;
-import javax.annotation.Nullable;
-import invmod.BlocksAndItems;
+
+import invmod.ModItems;
 import invmod.SoundHandler;
 import invmod.entity.monster.EntityIMMob;
 import net.minecraft.entity.Entity;
@@ -18,12 +18,10 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 
@@ -100,7 +98,7 @@ public class EntityIMTrap extends Entity
 		if (!this.isValidPlacement())
 		{
 			EntityItem entityitem = new EntityItem(this.world, this.posX,
-				this.posY, this.posZ, new ItemStack(BlocksAndItems.itemEmptyTrap, 1));
+				this.posY, this.posZ, new ItemStack(/*BlocksAndItems.itemEmptyTrap*/ModItems.TRAP_EMPTY, 1));
 			entityitem.setDefaultPickupDelay();
 			this.world.spawnEntity(entityitem);
 			this.setDead();
@@ -170,7 +168,7 @@ public class EntityIMTrap extends Entity
 	{
 		if ((!this.world.isRemote) && (this.ticks > 30) && (this.isEmpty))
 		{
-			if (entityPlayer.inventory.addItemStackToInventory(new ItemStack(BlocksAndItems.itemEmptyTrap, 1)))
+			if (entityPlayer.inventory.addItemStackToInventory(new ItemStack(/*BlocksAndItems.itemEmptyTrap*/ModItems.TRAP_EMPTY, 1)))
 			{
 				//this.world.playSoundAtEntity(this, "random.pop", 0.2F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
 				this.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 0.2f, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7f + 1f) * 2f);
@@ -188,20 +186,20 @@ public class EntityIMTrap extends Entity
 	public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
 		if ((this.world.isRemote) || (this.isEmpty)) return false;
 		ItemStack curItem = player.inventory.getCurrentItem();
-		if ((curItem != null) && (curItem.getItem() == BlocksAndItems.itemProbe) && (curItem.getItemDamage() >= 1))
+		if ((curItem != null) && (curItem.getItem() == /*BlocksAndItems.itemProbe*/ModItems.PROBE) && (curItem.getItemDamage() >= 1))
 		{
-			Item item = BlocksAndItems.itemEmptyTrap;
+			Item item = /*BlocksAndItems.itemEmptyTrap*/ModItems.TRAP_EMPTY;
 
 			switch (this.trapType)
 			{
 				case 1:
-					item = BlocksAndItems.itemFlameTrap;
+					item = /*BlocksAndItems.itemFlameTrap*/ModItems.TRAP_FLAME;
 					break;
 				case 2:
-					item = BlocksAndItems.itemRiftTrap;
+					item = /*BlocksAndItems.itemRiftTrap*/ModItems.TRAP_RIFT;
 					break;
 				case 3:
-					item = BlocksAndItems.itemPoisonTrap;
+					item = /*BlocksAndItems.itemPoisonTrap*/ModItems.TRAP_POISON;
 					break;
 				default:
 					break;

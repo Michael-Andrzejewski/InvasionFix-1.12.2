@@ -105,8 +105,8 @@ public class mod_Invasion
 		this.nightSpawnConfig();
 		this.loadHealthConfig();
 		this.loadCreativeTabs();
-		BlocksAndItems.loadBlocks();
-		BlocksAndItems.loadItems();
+		//BlocksAndItems.loadBlocks();
+		//BlocksAndItems.loadItems();
 		SoundHandler.init();
 		proxy.registerEntityRenderers();
 	}
@@ -121,7 +121,7 @@ public class mod_Invasion
 		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.register(new PlayerEvents());
 		FMLInterModComms.sendMessage("Waila", "register", "invmod.common.util.IMWailaProvider.callbackRegister");
-		BlocksAndItems.registerItems(event);
+		//BlocksAndItems.registerItems(event);
 		this.loadEntities();
 		CraftingAndSmelting.addRecipes();
 
@@ -266,7 +266,7 @@ public class mod_Invasion
 
 		//spawneggs needed things and despensebehavior
 		//BlockDispenser.dispenseBehaviorRegistry.putObject(itemSpawnEgg, new DispenserBehaviorSpawnEgg());
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(BlocksAndItems.itemSpawnEgg, new DispenserBehaviorSpawnEgg());
+		//BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(BlocksAndItems.itemSpawnEgg, new DispenserBehaviorSpawnEgg());
 
 		//Add spawneggs
 		/*SpawnEggRegistry.registerSpawnEgg(new SpawnEggInfo((short) 1, Reference.MODID+".IMZombie", "Zombie T1", CustomTags.IMZombie_T1(), 0x6B753F, 0x281B0A));
@@ -363,7 +363,7 @@ public class mod_Invasion
 
 	public static ItemStack getRenderHammerItem()
 	{
-		return new ItemStack(BlocksAndItems.itemEngyHammer, 1);
+		return new ItemStack(ModItems.ENGY_HAMMER, 1);
 	}
 
 	public static mod_Invasion instance()

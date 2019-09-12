@@ -1,6 +1,5 @@
 package invmod.item;
 
-import invmod.Reference;
 import net.minecraft.item.Item;
 
 
@@ -11,10 +10,10 @@ public class ItemEngyHammer extends Item
 
 	public ItemEngyHammer()
 	{
-		this.setRegistryName(this.name);
+		//this.setRegistryName(this.name);
 		//GameRegistry.register(this);
-		this.setCreativeTab(null);
-		this.setUnlocalizedName(Reference.MODID + "_" + this.name);
+		//this.setCreativeTab(null);
+		//this.setUnlocalizedName(Reference.MODID + "_" + this.name);
 		this.setFull3D();
 		this.setMaxStackSize(1);
 	}

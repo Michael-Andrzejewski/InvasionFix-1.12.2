@@ -31,7 +31,8 @@ public class ModBlocks {
 
 		@SubscribeEvent
 		public static void registerBlocks(RegistryEvent.Register<Block> event) {
-			final Block[] blocks = { setBlockName(new BlockNexus(), "blockNexus")
+			final Block[] blocks = { 
+					setBlockName(new BlockNexus(), "blockNexus")
 					};
 
 			IForgeRegistry<Block> registry = event.getRegistry();

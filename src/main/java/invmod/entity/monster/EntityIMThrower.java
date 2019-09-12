@@ -1,7 +1,8 @@
 package invmod.entity.monster;
 
-import invmod.BlocksAndItems;
 import invmod.INotifyTask;
+import invmod.ModBlocks;
+import invmod.ModItems;
 import invmod.mod_Invasion;
 import invmod.entity.ai.EntityAIAttackNexus;
 import invmod.entity.ai.EntityAIGoToNexus;
@@ -321,11 +322,11 @@ public class EntityIMThrower extends EntityIMMob
 		//if ((block != null) && ((isNexusBound()) || (this.j != null))) {
 		if ((block != null) || (this.entity != null))
 		{
-			if ((block == BlocksAndItems.blockNexus) && (pos.equals(this.targetNexus.getPos())))
+			if ((block == /*BlocksAndItems.blockNexus*/ModBlocks.NEXUS_BLOCK) && (pos.equals(this.targetNexus.getPos())))
 			{
 				this.targetNexus.attackNexus(5);
 			}
-			else if (block != BlocksAndItems.blockNexus)
+			else if (block != /*BlocksAndItems.blockNexus*/ModBlocks.NEXUS_BLOCK)
 			{
 				IBlockState blockState = this.world.getBlockState(pos);
 				this.world.setBlockToAir(pos);
@@ -428,7 +429,7 @@ public class EntityIMThrower extends EntityIMMob
 	protected void dropFewItems(boolean flag, int bonus)
 	{
 		super.dropFewItems(flag, bonus);
-		this.entityDropItem(new ItemStack(BlocksAndItems.itemSmallRemnants, 1), 0.0F);
+		this.entityDropItem(new ItemStack(/*BlocksAndItems.itemSmallRemnants*/ModItems.SMALL_REMNANTS, 1), 0.0F);
 	}
 
 	@Override
