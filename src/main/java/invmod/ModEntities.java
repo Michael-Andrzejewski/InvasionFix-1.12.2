@@ -35,22 +35,39 @@ public class ModEntities {
 	private static int entityID = 0;
 
 	//No Egg
+	@ObjectHolder("IMEgg")
 	public static final EntityEntry IM_EGG = Null();
+	@ObjectHolder("IMBoulder")
 	public static final EntityEntry IM_BOULDER = Null();
+	@ObjectHolder("IMBolt")
 	public static final EntityEntry IM_BOLT = Null();
+	@ObjectHolder("IMTrap")
 	public static final EntityEntry IM_TRAP = Null();
+	@ObjectHolder("IMPrimedTNT")
 	public static final EntityEntry IM_PRIMED_TNT = Null();
 	
+	//Egg
+	@ObjectHolder("IMZombie")
 	public static final EntityEntry IM_ZOMBIE = Null();
+	@ObjectHolder("IMSkeleton")
 	public static final EntityEntry IM_SKELETON = Null();
+	@ObjectHolder("IMSpider")
 	public static final EntityEntry IM_SPIDER = Null();
+	@ObjectHolder("IMPigEngy")
 	public static final EntityEntry IM_PIG_ENGY = Null();
+	@ObjectHolder("IMWolf")
 	public static final EntityEntry IM_WOLF = Null();
+	@ObjectHolder("IMCreeper")
 	public static final EntityEntry IM_CREEPER = Null();
+	@ObjectHolder("IMImp")
 	public static final EntityEntry IM_IMP = Null();
+	@ObjectHolder("IMZombiePigman")
 	public static final EntityEntry IM_ZOMBIE_PIGMAN = Null();
+	@ObjectHolder("IMThrower")
 	public static final EntityEntry IM_THROWER = Null();
+	@ObjectHolder("IMBird")
 	public static final EntityEntry IM_BIRD = Null();
+	@ObjectHolder("IMGiantBird")
 	public static final EntityEntry IM_GIANT_BIRD = Null();
 	
 	

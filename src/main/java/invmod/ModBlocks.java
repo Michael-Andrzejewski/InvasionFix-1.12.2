@@ -22,6 +22,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 @ObjectHolder(Reference.MODID)
 public class ModBlocks {
 
+	@ObjectHolder("blockNexus")
 	public static final BlockNexus NEXUS_BLOCK = Null();
 	
 	
@@ -71,13 +72,9 @@ public class ModBlocks {
 					//.setRegistryName(block.getRegistryName());
 			ItemBlock retItem = new ItemBlock(block);
 			
-			if(retItem == null) {
-				System.out.println("ITEM IS NULL");
-			}
-			
-			if(block == null) {
+			/*if(block == null) {
 				System.out.println("BLOCK IS NULL");
-			}
+			}*/
 			
 			//Cause of error: The block is null ?!?!?
 			

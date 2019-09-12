@@ -40,28 +40,49 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class ModItems {
 
 	//TRAPS
+	@ObjectHolder("emptyTrap")
 	public static final Item TRAP_EMPTY = Null();
+	@ObjectHolder("flameTrap")
 	public static final Item TRAP_FLAME = Null();
+	@ObjectHolder("poisonTrap")
 	public static final Item TRAP_POISON = Null();
+	@ObjectHolder("riftTrap")
 	public static final Item TRAP_RIFT = Null();
 	
 	//Crafting shit
+	@ObjectHolder("catalystMixture")
 	public static final Item CATALYST_MIXTURE = Null();
+	@ObjectHolder("dampingAgent")
 	public static final Item DAMPING_AGENT = Null();
+	@ObjectHolder("debugWand")
 	public static final Item DEBUG_WAND = Null();
+	@ObjectHolder("engyHammer")
 	public static final Item ENGY_HAMMER = Null();
+	@ObjectHolder("infusedSword")
 	public static final Item INFUSED_SWORD = Null();
+	@ObjectHolder("nexusCatalyst")
 	public static final Item NEXUS_CATALYST = Null();
+	@ObjectHolder("phaseCrystal")
 	public static final Item PHASE_CRYSTAL = Null();
+	@ObjectHolder("probe")
 	public static final Item PROBE = Null();
+	@ObjectHolder("riftFlux")
 	public static final Item RIFT_FLUX = Null();
+	@ObjectHolder("searingBow")
 	public static final Item SEARING_BOW = Null();
+	@ObjectHolder("smallRemnants")
 	public static final Item SMALL_REMNANTS = Null();
+	@ObjectHolder("stableCatalystMixture")
 	public static final Item STABLE_CATALYST_MIXTURE = Null();
+	@ObjectHolder("stableNexusCatalyst")
 	public static final Item STABLE_NEXUS_CATALYST = Null();
+	@ObjectHolder("strangeBone")
 	public static final Item STRANGE_BONE = Null();
+	@ObjectHolder("strongCatalyst")
 	public static final Item STRONG_CATALYST = Null();
+	@ObjectHolder("strongCatalystMixture")
 	public static final Item STRONG_CATALYST_MIXTURE = Null();
+	@ObjectHolder("strongDampingAgent")
 	public static final Item STRONG_DAMPING_AGENT = Null();
 	
 	@EventBusSubscriber(modid = Reference.MODID)
