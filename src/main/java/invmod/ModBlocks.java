@@ -14,6 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -29,7 +30,7 @@ public class ModBlocks {
 
 		public static final List<ItemBlock> ITEM_BLOCKS = new ArrayList<ItemBlock>();
 
-		@SubscribeEvent
+		@SubscribeEvent(priority = EventPriority.HIGH)
 		public static void registerBlocks(RegistryEvent.Register<Block> event) {
 			final Block[] blocks = { 
 					setBlockName(new BlockNexus(), "blockNexus")
@@ -54,7 +55,8 @@ public class ModBlocks {
 		@SubscribeEvent
 		public static void registerItemBlocks(RegistryEvent.Register<Item> event) {
 			final ItemBlock[] itemBlocks = {
-					createItemBlock(NEXUS_BLOCK)};
+					createItemBlock(NEXUS_BLOCK)
+				};
 
 			IForgeRegistry<Item> registry = event.getRegistry();
 
@@ -65,8 +67,25 @@ public class ModBlocks {
 		}
 
 		private static ItemBlock createItemBlock(Block block) {
-			return (ItemBlock) new ItemBlock(block).setUnlocalizedName(block.getLocalizedName())
-					.setRegistryName(block.getRegistryName());
+			//return (ItemBlock) new ItemBlock(block).setUnlocalizedName(block.getLocalizedName())
+					//.setRegistryName(block.getRegistryName());
+			ItemBlock retItem = new ItemBlock(block);
+			
+			if(retItem == null) {
+				System.out.println("ITEM IS NULL");
+			}
+			
+			if(block == null) {
+				System.out.println("BLOCK IS NULL");
+			}
+			
+			//Cause of error: The block is null ?!?!?
+			
+			retItem.setUnlocalizedName(block.getUnlocalizedName());
+			retItem.setRegistryName(block.getRegistryName());
+			retItem.setCreativeTab(mod_Invasion.tabInvmod);
+			
+			return retItem;
 		}
 
 	}

@@ -5,27 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import invmod.command.InvasionCommand;
 import invmod.common.ProxyCommon;
-import invmod.creativetab.CreativeTabInvmod;
 import invmod.entity.EntityIMSpawnProxy;
-import invmod.entity.ally.EntityIMWolf;
-import invmod.entity.block.EntityIMEgg;
-import invmod.entity.block.trap.EntityIMTrap;
-import invmod.entity.monster.EntityIMBird;
-import invmod.entity.monster.EntityIMCreeper;
-import invmod.entity.monster.EntityIMGiantBird;
-import invmod.entity.monster.EntityIMImp;
 import invmod.entity.monster.EntityIMMob;
-import invmod.entity.monster.EntityIMPigEngy;
-import invmod.entity.monster.EntityIMSkeleton;
-import invmod.entity.monster.EntityIMSpider;
-import invmod.entity.monster.EntityIMThrower;
-import invmod.entity.monster.EntityIMZombie;
-import invmod.entity.monster.EntityIMZombiePigman;
-import invmod.entity.projectile.EntityIMBolt;
-import invmod.entity.projectile.EntityIMBoulder;
-import invmod.entity.projectile.EntityIMPrimedTNT;
 import invmod.event.PlayerEvents;
 import invmod.nexus.IEntityIMPattern;
 import invmod.nexus.IMWaveBuilder;
@@ -35,10 +19,9 @@ import invmod.util.ModLogger;
 import invmod.util.RandomSelectionPool;
 import invmod.util.VersionChecker;
 import invmod.util.config.Config;
-import invmod.util.spawneggs.DispenserBehaviorSpawnEgg;
-import net.minecraft.block.BlockDispenser;
 import net.minecraft.command.CommandHandler;
 import net.minecraft.command.ICommandManager;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
@@ -88,7 +71,14 @@ public class mod_Invasion
 	public static HashMap<String, Integer> mobHealthInvasion = new HashMap();
 
 	// Creative tab declaration
-	public static CreativeTabInvmod tabInvmod;
+	public static CreativeTabs tabInvmod= new CreativeTabs("invasionTab")
+	{
+		@Override
+		public ItemStack getTabIconItem() 
+		{
+			return new ItemStack(ModItems.STRONG_CATALYST);
+		}
+	};
 
 	public static mod_Invasion instance;
 
@@ -104,7 +94,7 @@ public class mod_Invasion
 	{
 		this.nightSpawnConfig();
 		this.loadHealthConfig();
-		this.loadCreativeTabs();
+		//this.loadCreativeTabs();
 		//BlocksAndItems.loadBlocks();
 		//BlocksAndItems.loadItems();
 		SoundHandler.init();
@@ -226,11 +216,11 @@ public class mod_Invasion
 
 	}
 
-	//load Creativetab
+	/*//load Creativetab
 	protected void loadCreativeTabs()
 	{
 		tabInvmod = new CreativeTabInvmod();
-	}
+	}*/
 
 
 	//Load Entities

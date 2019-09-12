@@ -35,8 +35,8 @@ public class BlockNexus extends BlockContainer
 	public BlockNexus()
 	{
 		super(Material.ROCK);
-		this.setUnlocalizedName(this.name);
-		this.setRegistryName(this.name);
+		//this.setUnlocalizedName(this.name);
+		//this.setRegistryName(this.name);
 		this.setResistance(6000000.0F);
 		this.setHardness(3.0F);
 		//this.setStepSound(Blocks.glass.stepSound);
@@ -45,7 +45,7 @@ public class BlockNexus extends BlockContainer
 		this.itemBlock.setRegistryName(this.name);
 		//GameRegistry.register(this);
 		//GameRegistry.register(this.itemBlock);
-		this.setCreativeTab(mod_Invasion.tabInvmod);
+		//this.setCreativeTab(mod_Invasion.tabInvmod);
 	}
 
 	//@Override
