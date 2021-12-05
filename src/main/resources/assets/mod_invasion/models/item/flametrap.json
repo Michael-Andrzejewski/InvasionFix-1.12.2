@@ -1,8 +1,7 @@
 {
     "parent": "builtin/generated",
     "textures": {
-        "layer0": "item/spawn_egg",
-        "layer1": "item/spawn_egg_overlay"
+        "layer0": "mod_invasion:item/flametrap"
     },
     "display": {
         "thirdperson": {

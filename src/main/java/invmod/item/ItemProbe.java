@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 public class ItemProbe extends ModItem
 {
 
-	public static final String[] probeNames = { "nexusAdjuster", "materialProbe" };
+	public static final String[] probeNames = { "nexusadjuster", "materialprobe" };
 
 	public ItemProbe()
 	{

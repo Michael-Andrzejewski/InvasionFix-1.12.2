@@ -29,7 +29,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockNexus extends BlockContainer
 {
 
-	public final String name = "blockNexus";
+	public final String name = "blocknexus";
 	public final ItemBlock itemBlock;
 
 	public BlockNexus()
@@ -62,11 +62,19 @@ public class BlockNexus extends BlockContainer
 		if ((item != /*BlocksAndItems.itemProbe*/ModItems.PROBE) && ((!Config.DEBUG) || (item != /*BlocksAndItems.itemDebugWand*/ModItems.DEBUG_WAND)))
 		{
 			TileEntityNexus tileEntityNexus = (TileEntityNexus)worldIn.getTileEntity(pos);
+
+				System.out.println(mod_Invasion.instance().toString());
+				System.out.println(mod_Invasion.instance.toString());
+				// System.out.println(worldIn.toString());	
+				// System.out.println(pos.toString());
+
+				
 			if (tileEntityNexus != null)
 			{
-				playerIn.openGui(mod_Invasion.instance(), Config.NEXUS_GUI_ID, worldIn, pos.getX(), pos.getY(), pos.getZ());
+				playerIn.openGui(mod_Invasion.instance, Config.NEXUS_GUI_ID, worldIn, pos.getX(), pos.getY(), pos.getZ());
 			}
 			return true;
+			
 		}
 
 		return false;

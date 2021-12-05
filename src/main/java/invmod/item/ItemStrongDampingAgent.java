@@ -6,7 +6,7 @@ import net.minecraft.item.Item;
 public class ItemStrongDampingAgent extends Item
 {
 
-	private final String name = "strongDampingAgent";
+	private final String name = "strongdampingagent";
 
 	public ItemStrongDampingAgent()
 	{

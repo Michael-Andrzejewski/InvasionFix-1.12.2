@@ -22,7 +22,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 @ObjectHolder(Reference.MODID)
 public class ModBlocks {
 
-	@ObjectHolder("blockNexus")
+	@ObjectHolder("blocknexus")
 	public static final BlockNexus NEXUS_BLOCK = Null();
 	
 	
@@ -34,7 +34,7 @@ public class ModBlocks {
 		@SubscribeEvent(priority = EventPriority.HIGH)
 		public static void registerBlocks(RegistryEvent.Register<Block> event) {
 			final Block[] blocks = { 
-					setBlockName(new BlockNexus(), "blockNexus")
+					setBlockName(new BlockNexus(), "blocknexus")
 					};
 
 			IForgeRegistry<Block> registry = event.getRegistry();

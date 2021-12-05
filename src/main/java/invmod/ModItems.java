@@ -40,49 +40,49 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class ModItems {
 
 	//TRAPS
-	@ObjectHolder("emptyTrap")
+	@ObjectHolder("emptytrap")
 	public static final Item TRAP_EMPTY = Null();
-	@ObjectHolder("flameTrap")
+	@ObjectHolder("flametrap")
 	public static final Item TRAP_FLAME = Null();
-	@ObjectHolder("poisonTrap")
+	@ObjectHolder("poisontrap")
 	public static final Item TRAP_POISON = Null();
-	@ObjectHolder("riftTrap")
+	@ObjectHolder("rifttrap")
 	public static final Item TRAP_RIFT = Null();
 	
 	//Crafting shit
-	@ObjectHolder("catalystMixture")
+	@ObjectHolder("catalystmixture")
 	public static final Item CATALYST_MIXTURE = Null();
-	@ObjectHolder("dampingAgent")
+	@ObjectHolder("dampingagent")
 	public static final Item DAMPING_AGENT = Null();
-	@ObjectHolder("debugWand")
+	@ObjectHolder("debugwand")
 	public static final Item DEBUG_WAND = Null();
-	@ObjectHolder("engyHammer")
+	@ObjectHolder("engyhammer")
 	public static final Item ENGY_HAMMER = Null();
-	@ObjectHolder("infusedSword")
+	@ObjectHolder("infusedsword")
 	public static final Item INFUSED_SWORD = Null();
-	@ObjectHolder("nexusCatalyst")
+	@ObjectHolder("nexuscatalyst")
 	public static final Item NEXUS_CATALYST = Null();
-	@ObjectHolder("phaseCrystal")
+	@ObjectHolder("phasecrystal")
 	public static final Item PHASE_CRYSTAL = Null();
 	@ObjectHolder("probe")
 	public static final Item PROBE = Null();
-	@ObjectHolder("riftFlux")
+	@ObjectHolder("riftflux")
 	public static final Item RIFT_FLUX = Null();
-	@ObjectHolder("searingBow")
+	@ObjectHolder("searingbow")
 	public static final Item SEARING_BOW = Null();
-	@ObjectHolder("smallRemnants")
+	@ObjectHolder("smallremnants")
 	public static final Item SMALL_REMNANTS = Null();
-	@ObjectHolder("stableCatalystMixture")
+	@ObjectHolder("stablecatalystmixture")
 	public static final Item STABLE_CATALYST_MIXTURE = Null();
-	@ObjectHolder("stableNexusCatalyst")
+	@ObjectHolder("stablenexuscatalyst")
 	public static final Item STABLE_NEXUS_CATALYST = Null();
-	@ObjectHolder("strangeBone")
+	@ObjectHolder("strangebone")
 	public static final Item STRANGE_BONE = Null();
-	@ObjectHolder("strongCatalyst")
+	@ObjectHolder("strongcatalyst")
 	public static final Item STRONG_CATALYST = Null();
-	@ObjectHolder("strongCatalystMixture")
+	@ObjectHolder("strongcatalystmixture")
 	public static final Item STRONG_CATALYST_MIXTURE = Null();
-	@ObjectHolder("strongDampingAgent")
+	@ObjectHolder("strongdampingagent")
 	public static final Item STRONG_DAMPING_AGENT = Null();
 	
 	@EventBusSubscriber(modid = Reference.MODID)
@@ -94,28 +94,28 @@ public class ModItems {
 		public static void registerItems(RegistryEvent.Register<Item> event) {
 			final Item[] items = {
 					//setItemName(new ItemDagger(ModMaterials.ToolMaterials.TOOL_IRON_DAGGER, 25), "dagger_iron"),
-					setItemName(new ItemEmptyTrap(), "emptyTrap"),
-					setItemName(new ItemFlameTrap(), "flameTrap"),
-					setItemName(new ItemPoisonTrap(), "poisonTrap"),
-					setItemName(new ItemRiftTrap(), "riftTrap"),
+					setItemName(new ItemEmptyTrap(), "emptytrap"),
+					setItemName(new ItemFlameTrap(), "flametrap"),
+					setItemName(new ItemPoisonTrap(), "poisontrap"),
+					setItemName(new ItemRiftTrap(), "rifttrap"),
 					
-					setItemName(new ItemCatalystMixture(), "catalystMixture"),
-					setItemName(new ItemDampingAgent(), "dampingAgent"),
-					setItemName(new ItemDebugWand(), "debugWand"),
-					setItemName(new ItemEngyHammer(), "engyHammer"),
-					setItemName(new ItemInfusedSword(), "infusedSword"),
-					setItemName(new ItemNexusCatalyst(), "nexusCatalyst"),
-					setItemName(new ItemPhaseCrystal(), "phaseCrystal"),
+					setItemName(new ItemCatalystMixture(), "catalystmixture"),
+					setItemName(new ItemDampingAgent(), "dampingagent"),
+					setItemName(new ItemDebugWand(), "debugwand"),
+					setItemName(new ItemEngyHammer(), "engyhammer"),
+					setItemName(new ItemInfusedSword(), "infusedsword"),
+					setItemName(new ItemNexusCatalyst(), "nexuscatalyst"),
+					setItemName(new ItemPhaseCrystal(), "phasecrystal"),
 					setItemName(new ItemProbe(), "probe"),
-					setItemName(new ItemRiftFlux(), "riftFlux"),
-					setItemName(new ItemSearingBow(), "searingBow"),
-					setItemName(new ItemSmallRemnants(), "smallRemnants"),
-					setItemName(new ItemStableCatalystMixture(), "stableCatalystMixture"),
-					setItemName(new ItemStableNexusCatalyst(), "stableNexusCatalyst"),
-					setItemName(new ItemStrangeBone(), "strangeBone"),
-					setItemName(new ItemStrongCatalyst(), "strongCatalyst"),
-					setItemName(new ItemStrongCatalystMixture(), "strongCatalystMixture"),
-					setItemName(new ItemStrongDampingAgent(), "strongDampingAgent")
+					setItemName(new ItemRiftFlux(), "riftflux"),
+					setItemName(new ItemSearingBow(), "searingbow"),
+					setItemName(new ItemSmallRemnants(), "smallremnants"),
+					setItemName(new ItemStableCatalystMixture(), "stablecatalystmixture"),
+					setItemName(new ItemStableNexusCatalyst(), "stablenexuscatalyst"),
+					setItemName(new ItemStrangeBone(), "strangebone"),
+					setItemName(new ItemStrongCatalyst(), "strongcatalyst"),
+					setItemName(new ItemStrongCatalystMixture(), "strongcatalystmixture"),
+					setItemName(new ItemStrongDampingAgent(), "strongdampingagent")
 					
 			};
 

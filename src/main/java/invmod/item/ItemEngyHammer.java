@@ -6,7 +6,7 @@ import net.minecraft.item.Item;
 public class ItemEngyHammer extends Item
 {
 
-	private final String name = "engyHammer";
+	private final String name = "engyhammer";
 
 	public ItemEngyHammer()
 	{
