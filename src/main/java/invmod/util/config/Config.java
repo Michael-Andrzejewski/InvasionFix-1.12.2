@@ -11,7 +11,6 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-
 public class Config
 {
 	// Main settings
@@ -83,6 +82,7 @@ public class Config
 	@SubscribeEvent
 	public void onConfigChanged(OnConfigChangedEvent event)
 	{
+
 		if (event.getModID().equals(Reference.MODID))
 		{
 			ModLogger.logInfo("Updating config...");

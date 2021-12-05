@@ -92,6 +92,7 @@ public class mod_Invasion
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
+		Config.load(event);
 		this.nightSpawnConfig();
 		this.loadHealthConfig();
 		//this.loadCreativeTabs();
@@ -128,7 +129,7 @@ public class mod_Invasion
 			}
 			EntityRegistry.addSpawn(EntityIMSpawnProxy.class, Config.NIGHTSPAWNS_MOB_SPAWNCHANCE, 1, 1, EnumCreatureType.MONSTER, allBiomes);
 		}
-
+		/*
 		if (Config.MOB_LIMIT_OVERRIDE != 70)
 		{
 			try
@@ -145,7 +146,7 @@ public class mod_Invasion
 				ModLogger.logFatal(e.getMessage());
 			}
 		}
-
+		*/
 	}
 
 	@EventHandler
