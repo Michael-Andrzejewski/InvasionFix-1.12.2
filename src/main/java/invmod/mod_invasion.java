@@ -115,6 +115,8 @@ public class mod_invasion
 		Config.load(event);
 		this.nightSpawnConfig();
 		this.loadHealthConfig();
+		this.loadEntities();
+		proxy.registerEntityRenderers();
 		//this.loadCreativeTabs();
 		//BlocksAndItems.loadBlocks();
 		//BlocksAndItems.loadItems();
@@ -132,8 +134,6 @@ public class mod_invasion
 		MinecraftForge.EVENT_BUS.register(new PlayerEvents());
 		FMLInterModComms.sendMessage("Waila", "register", "invmod.common.util.IMWailaProvider.callbackRegister");
 		//BlocksAndItems.registerItems(event);
-		proxy.registerEntityRenderers();
-		this.loadEntities();
 		CraftingAndSmelting.addRecipes();
 
 		if (Config.NIGHTSPAWNS_ENABLED)
