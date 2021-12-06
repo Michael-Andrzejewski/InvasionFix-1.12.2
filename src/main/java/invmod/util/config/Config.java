@@ -114,7 +114,12 @@ public class Config
 
 			// Nightspawns config
 			NIGHTSPAWNS_ENABLED = config.getBoolean("nightspawns enabled", nightSpawns.getName(), false, "Invasion mod mobs spawn at night without the presence of an active nexus.");
-
+			MOB_LIMIT_OVERRIDE = config.getInt("mob limit override", nightSpawns.getName(), 100, 0, Integer.MAX_VALUE, "description");
+			NIGHTSPAWNS_MOB_SIGHTRANGE = config.getInt("mob sight range", nightSpawns.getName(), 20, 0, Integer.MAX_VALUE, "description");
+			NIGHTSPAWNS_MOB_SENSERANGE = config.getInt("mob sense range", nightSpawns.getName(), 12, 0, Integer.MAX_VALUE, "description");
+			NIGHTSPAWNS_MOB_SPAWNCHANCE = config.getInt("mob spawnchance", nightSpawns.getName(), 30, 0, 100, "description");
+			NIGHTSPAWNS_MOB_MAX_GROUPSIZE = config.getInt("mob max groupsize", nightSpawns.getName(), 3, 0, Integer.MAX_VALUE, "description");
+			NIGHTSPAWNS_MOB_BURN_DURING_DAY = config.getBoolean("mob sunscreen", nightSpawns.getName(), true, "description");
 
 			ModLogger.logInfo("Loaded configuration file!");
 		}

@@ -65,8 +65,24 @@ public class mod_invasion
 
 	// Change this before releasing
 	public static final String[] DEFAULT_NIGHT_MOB_PATTERN_1_SLOTS = {
-		"zombie_t1_any", "zombie_t2_any_basic", "zombie_t2_plain", "zombie_t2_tar",
-		"zombie_t2_pigman", "zombie_t3_any", "zombiePigman_t1_any", "zombiePigman_t2_any", "zombiePigman_t3_any", "spider_t1_any", "spider_t2_any", "pigengy_t1_any", "skeleton_t1_any", "thrower_t1", "thrower_t2", "creeper_t1_basic", "imp_t1" };
+		"zombie_t1_any",
+		"zombie_t2_any_basic",
+		"zombie_t2_plain",
+		"zombie_t2_tar",
+		"zombie_t2_pigman",
+		"zombie_t3_any",
+		"zombiePigman_t1_any",
+		"zombiePigman_t2_any",
+		"zombiePigman_t3_any",
+		"spider_t1_any",
+		"spider_t2_any",
+		"pigengy_t1_any",
+		"skeleton_t1_any",
+		"thrower_t1",
+		"thrower_t2",
+		"creeper_t1_basic",
+		"imp_t1"
+	};
 	public static final float[] DEFAULT_NIGHT_MOB_PATTERN_1_SLOT_WEIGHTS = {
 		1.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.5F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F };
 
@@ -292,6 +308,8 @@ public class mod_invasion
 	{
 		String[] pool1Patterns = new String[DEFAULT_NIGHT_MOB_PATTERN_1_SLOTS.length];
 		float[] pool1Weights = new float[DEFAULT_NIGHT_MOB_PATTERN_1_SLOT_WEIGHTS.length];
+		// TODO: load 
+
 		RandomSelectionPool mobPool = new RandomSelectionPool();
 		nightSpawnPool1 = mobPool;
 		if (DEFAULT_NIGHT_MOB_PATTERN_1_SLOTS.length == DEFAULT_NIGHT_MOB_PATTERN_1_SLOT_WEIGHTS.length)
