@@ -45,7 +45,7 @@ public class ModBlocks {
 		}
 
 		private static Block setBlockName(Block block, String name) {
-			return setBlockNameAndTab(block, name, mod_Invasion.tabInvmod);
+			return setBlockNameAndTab(block, name, mod_invasion.tabInvmod);
 		}
 
 		private static Block setBlockNameAndTab(Block block, String name, @Nullable CreativeTabs tab) {
@@ -80,7 +80,7 @@ public class ModBlocks {
 			
 			retItem.setUnlocalizedName(block.getUnlocalizedName());
 			retItem.setRegistryName(block.getRegistryName());
-			retItem.setCreativeTab(mod_Invasion.tabInvmod);
+			retItem.setCreativeTab(mod_invasion.tabInvmod);
 			
 			return retItem;
 		}

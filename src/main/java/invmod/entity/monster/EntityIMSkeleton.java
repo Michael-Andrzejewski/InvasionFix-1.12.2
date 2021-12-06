@@ -2,7 +2,7 @@ package invmod.entity.monster;
 
 import javax.annotation.Nullable;
 
-import invmod.mod_Invasion;
+import invmod.mod_invasion;
 import invmod.entity.ai.EntityAIAttackNexus;
 import invmod.entity.ai.EntityAIAttackRangedBowIM;
 import invmod.entity.ai.EntityAIGoToNexus;
@@ -82,7 +82,7 @@ public class EntityIMSkeleton extends EntityIMMob implements IRangedAttackMob
 		this.tier = 1;
 		//setBurnsInDay(true);
 
-		this.setMaxHealthAndHealth(mod_Invasion.getMobHealth(this));
+		this.setMaxHealthAndHealth(mod_invasion.getMobHealth(this));
 		this.setName("Skeleton");
 		this.setGender(0);
 		this.setBaseMoveSpeedStat(0.21F);

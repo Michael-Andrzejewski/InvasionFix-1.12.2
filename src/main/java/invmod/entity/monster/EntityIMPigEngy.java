@@ -4,7 +4,7 @@ import invmod.IBlockAccessExtended;
 import invmod.INotifyTask;
 import invmod.ModBlocks;
 import invmod.ModItems;
-import invmod.mod_Invasion;
+import invmod.mod_invasion;
 import invmod.entity.EntityIMLiving;
 import invmod.entity.Goal;
 import invmod.entity.ICanBuild;
@@ -105,7 +105,7 @@ public class EntityIMPigEngy extends EntityIMMob implements ICanDig, ICanBuild
 
 		this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(Items.IRON_PICKAXE));
 
-		this.setMaxHealthAndHealth(mod_Invasion.getMobHealth(this));
+		this.setMaxHealthAndHealth(mod_invasion.getMobHealth(this));
 		this.setName("Pigman Engineer");
 		this.setGender(1);
 		this.setDestructiveness(2);

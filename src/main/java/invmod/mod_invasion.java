@@ -36,6 +36,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
@@ -49,7 +50,7 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 
 @Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION)
-public class mod_Invasion
+public class mod_invasion
 {
 
 	@SidedProxy(clientSide = Reference.CLIENTPROXY, serverSide = Reference.COMMONPROXY)
@@ -80,9 +81,10 @@ public class mod_Invasion
 		}
 	};
 
-	public static mod_Invasion instance;
+	@Instance("mod_invasion")
+	public static mod_invasion instance;
 
-	public mod_Invasion()
+	public mod_invasion()
 	{
 		instance = this;
 		guiHandler = new GuiHandler();
@@ -95,18 +97,18 @@ public class mod_Invasion
 		Config.load(event);
 		this.nightSpawnConfig();
 		this.loadHealthConfig();
+		proxy.registerEntityRenderers();
 		//this.loadCreativeTabs();
 		//BlocksAndItems.loadBlocks();
 		//BlocksAndItems.loadItems();
 		SoundHandler.init();
-		proxy.registerEntityRenderers();
+		
+		NetworkRegistry.INSTANCE.registerGuiHandler(instance, guiHandler);
 	}
 
 	@EventHandler
 	public void load(FMLInitializationEvent event)
 	{
-		NetworkRegistry.INSTANCE.registerGuiHandler(instance, guiHandler);
-
 		// Register to receive subscribed events
 		//FMLCommonHandler.instance().bus().register(this);
 		MinecraftForge.EVENT_BUS.register(this);
@@ -357,7 +359,7 @@ public class mod_Invasion
 		return new ItemStack(ModItems.ENGY_HAMMER, 1);
 	}
 
-	public static mod_Invasion instance()
+	public static mod_invasion instance()
 	{
 		return instance;
 	}

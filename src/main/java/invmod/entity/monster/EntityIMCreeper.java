@@ -4,7 +4,7 @@ import com.google.common.base.Predicate;
 
 import invmod.INotifyTask;
 import invmod.ModBlocks;
-import invmod.mod_Invasion;
+import invmod.mod_invasion;
 import invmod.entity.ai.EntityAIAttackNexus;
 import invmod.entity.ai.EntityAICreeperIMSwell;
 import invmod.entity.ai.EntityAIGoToNexus;
@@ -67,7 +67,7 @@ public class EntityIMCreeper extends EntityIMMob
 		this.setName("Creeper");
 		this.setGender(0);
 		this.setBaseMoveSpeedStat(0.21F);
-		this.setMaxHealthAndHealth(mod_Invasion.getMobHealth(this));
+		this.setMaxHealthAndHealth(mod_invasion.getMobHealth(this));
 		this.initEntityAI();
 	}
 

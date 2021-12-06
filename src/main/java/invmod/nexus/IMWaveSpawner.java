@@ -3,7 +3,7 @@ package invmod.nexus;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import invmod.mod_Invasion;
+import invmod.mod_invasion;
 import invmod.entity.EntityIMLiving;
 import invmod.entity.monster.EntityIMZombie;
 import invmod.tileentity.TileEntityNexus;
@@ -204,7 +204,7 @@ public class IMWaveSpawner implements ISpawnerAccess
 		{
 			ModLogger.logDebug(message);
 		}
-		mod_Invasion.sendMessageToPlayers(this.nexus.getBoundPlayers(), message);
+		mod_invasion.sendMessageToPlayers(this.nexus.getBoundPlayers(), message);
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 package invmod.entity.monster;
 
 import invmod.SoundHandler;
-import invmod.mod_Invasion;
+import invmod.mod_invasion;
 import invmod.entity.ai.EntityAIBirdFight;
 import invmod.entity.ai.EntityAIBoP;
 import invmod.entity.ai.EntityAICircleTarget;
@@ -51,7 +51,7 @@ public class EntityIMGiantBird extends EntityIMBird
 		this.setThrustComponentRatioMin(0.0F);
 		this.setThrustComponentRatioMax(0.5F);
 		this.setMaxTurnForce(this.getGravity() * 8.0F);
-		this.setMaxHealthAndHealth(mod_Invasion.getMobHealth(this));
+		this.setMaxHealthAndHealth(mod_invasion.getMobHealth(this));
 		this.setBaseMoveSpeedStat(0.4F);
 		this.setAI();
 		this.setDebugMode(1);

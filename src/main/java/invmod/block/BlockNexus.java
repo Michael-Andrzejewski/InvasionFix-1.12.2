@@ -4,7 +4,7 @@ import java.util.Random;
 
 import invmod.ModBlocks;
 import invmod.ModItems;
-import invmod.mod_Invasion;
+import invmod.mod_invasion;
 import invmod.tileentity.TileEntityNexus;
 import invmod.util.config.Config;
 import net.minecraft.block.BlockContainer;
@@ -22,6 +22,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -54,6 +56,7 @@ public class BlockNexus extends BlockContainer
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		Item item = null;
+		System.out.println("onBlockActivated()");
 		ItemStack heldItem = playerIn.getHeldItem(hand);
 		if (heldItem != null) item = heldItem.getItem();
 
@@ -61,17 +64,14 @@ public class BlockNexus extends BlockContainer
 
 		if ((item != /*BlocksAndItems.itemProbe*/ModItems.PROBE) && ((!Config.DEBUG) || (item != /*BlocksAndItems.itemDebugWand*/ModItems.DEBUG_WAND)))
 		{
-			TileEntityNexus tileEntityNexus = (TileEntityNexus)worldIn.getTileEntity(pos);
-
-				System.out.println(mod_Invasion.instance().toString());
-				System.out.println(mod_Invasion.instance.toString());
-				// System.out.println(worldIn.toString());	
-				// System.out.println(pos.toString());
-
-				
+			TileEntityNexus tileEntityNexus = (TileEntityNexus)worldIn.getTileEntity(pos);				
 			if (tileEntityNexus != null)
 			{
-				playerIn.openGui(mod_Invasion.instance, Config.NEXUS_GUI_ID, worldIn, pos.getX(), pos.getY(), pos.getZ());
+				System.out.println(playerIn);
+				System.out.println(mod_invasion.instance.toString());
+				ModContainer mc = FMLCommonHandler.instance().findContainerFor(mod_invasion.instance);
+				System.out.println(mc);
+				playerIn.openGui(mod_invasion.instance, Config.NEXUS_GUI_ID, worldIn, pos.getX(), pos.getY(), pos.getZ());
 			}
 			return true;
 			
@@ -125,6 +125,11 @@ public class BlockNexus extends BlockContainer
 			world.spawnParticle(EnumParticleTypes.PORTAL, x1, y1, z1, x2, y2, z2);*/
 		}
 	}
+	
+	@Override
+	  public boolean hasTileEntity(IBlockState state) {
+	    return true;
+	  }
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int metadata)

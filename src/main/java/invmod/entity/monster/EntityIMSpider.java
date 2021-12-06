@@ -1,6 +1,6 @@
 package invmod.entity.monster;
 
-import invmod.mod_Invasion;
+import invmod.mod_invasion;
 import invmod.client.render.animation.util.IMMoveHelper;
 import invmod.client.render.animation.util.IMMoveHelperSpider;
 import invmod.entity.ISpawnsOffspring;
@@ -341,7 +341,7 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring
 			Entity[] offSpring = new Entity[6];
 			for (int i = 0; i < offSpring.length; i++)
 			{
-				offSpring[i] = mod_Invasion.getMobBuilder().createMobFromConstruct(template, this.world, this.getNexus());
+				offSpring[i] = mod_invasion.getMobBuilder().createMobFromConstruct(template, this.world, this.getNexus());
 			}
 			return offSpring;
 		}
@@ -453,7 +453,7 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring
 				this.maxDestructiveness = 0;
 				this.setDestructiveness(0);
 				this.setAggroRange(10);
-				this.setMaxHealthAndHealth(mod_Invasion.getMobHealth(this));
+				this.setMaxHealthAndHealth(mod_invasion.getMobHealth(this));
 			}
 			else if (flavour == 1)
 			{
@@ -466,7 +466,7 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring
 				this.maxDestructiveness = 0;
 				this.setDestructiveness(0);
 				this.setAggroRange(10);
-				this.setMaxHealthAndHealth(mod_Invasion.getMobHealth(this));
+				this.setMaxHealthAndHealth(mod_invasion.getMobHealth(this));
 			}
 		}
 		else if (tier == 2)
@@ -483,7 +483,7 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring
 				this.setAggroRange(18);
 				this.setGravity(0.043F);
 
-				this.setMaxHealthAndHealth(mod_Invasion.getMobHealth(this));
+				this.setMaxHealthAndHealth(mod_invasion.getMobHealth(this));
 			}
 			else if (flavour == 1)
 			{
@@ -497,7 +497,7 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring
 				this.maxDestructiveness = 0;
 				this.setDestructiveness(0);
 				this.setAggroRange(18);
-				this.setMaxHealthAndHealth(mod_Invasion.getMobHealth(this));
+				this.setMaxHealthAndHealth(mod_invasion.getMobHealth(this));
 			}
 			else if (flavour == 2)
 			{

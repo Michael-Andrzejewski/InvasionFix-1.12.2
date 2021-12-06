@@ -3,7 +3,7 @@ package invmod.entity.monster;
 import invmod.INotifyTask;
 import invmod.ModBlocks;
 import invmod.ModItems;
-import invmod.mod_Invasion;
+import invmod.mod_invasion;
 import invmod.entity.ai.EntityAIAttackNexus;
 import invmod.entity.ai.EntityAIGoToNexus;
 import invmod.entity.ai.EntityAIRandomBoulder;
@@ -58,7 +58,7 @@ public class EntityIMThrower extends EntityIMMob
 		this.maxSelfDamage = 0;
 		this.experienceValue = 20;
 		this.clearingPoint = false;
-		this.setMaxHealthAndHealth(mod_Invasion.getMobHealth(this));
+		this.setMaxHealthAndHealth(mod_invasion.getMobHealth(this));
 		this.setName("Thrower");
 		this.setDestructiveness(2);
 		this.setSize(1.8F, 1.95F);
@@ -152,7 +152,7 @@ public class EntityIMThrower extends EntityIMMob
 		this.selfDamage = 0;
 		this.maxSelfDamage = 0;
 		this.clearingPoint = false;
-		this.setMaxHealthAndHealth(mod_Invasion.getMobHealth(this));
+		this.setMaxHealthAndHealth(mod_invasion.getMobHealth(this));
 
 		if (tier == 1)
 		{

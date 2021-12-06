@@ -7,7 +7,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import invmod.Reference;
-import invmod.mod_Invasion;
+import invmod.mod_invasion;
 import invmod.util.config.Config;
 import net.minecraft.entity.player.EntityPlayerMP;
 
@@ -30,10 +30,10 @@ public class VersionChecker
 					if (Version.get(latestVersionNumber)
 						.comparedState(Reference.versionNumber) == 1)
 					{
-						mod_Invasion
+						mod_invasion
 							.sendMessageToPlayer(entityplayer,
 								"Invasion mod outdated, consider updating to the latest version");
-						mod_Invasion.sendMessageToPlayer(
+						mod_invasion.sendMessageToPlayer(
 							entityplayer,
 							"Changes in v"
 								+ latestVersionNumber

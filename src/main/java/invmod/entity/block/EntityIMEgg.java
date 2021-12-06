@@ -1,7 +1,7 @@
 package invmod.entity.block;
 
 import invmod.SoundHandler;
-import invmod.mod_Invasion;
+import invmod.mod_invasion;
 import invmod.entity.monster.EntityIMMob;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -40,7 +40,7 @@ public class EntityIMEgg extends EntityIMMob
 
 		this.getDataManager().register(META_HATCHED, Byte.valueOf((byte)0));
 
-		this.setMaxHealthAndHealth(mod_Invasion.getMobHealth(this));
+		this.setMaxHealthAndHealth(mod_invasion.getMobHealth(this));
 		this.setName("Spider Egg");
 		this.setGender(0);
 		this.setPosition(parent.posX, parent.posY, parent.posZ);

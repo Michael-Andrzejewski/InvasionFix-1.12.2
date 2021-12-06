@@ -1,7 +1,7 @@
 package invmod.command;
 
 import java.lang.reflect.Constructor;
-import invmod.mod_Invasion;
+import invmod.mod_invasion;
 import invmod.entity.EntityIMLiving;
 import invmod.entity.ally.EntityIMWolf;
 import invmod.tileentity.TileEntityNexus;
@@ -86,7 +86,7 @@ public class InvasionCommand extends CommandBase
 				if (focusNexus != null)
 				{
 					focusNexus.emergencyStop();
-					mod_Invasion.broadcastToAll(username + " ended invasion");
+					mod_invasion.broadcastToAll(username + " ended invasion");
 				}
 				else
 				{

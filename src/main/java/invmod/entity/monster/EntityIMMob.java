@@ -3,7 +3,7 @@ package invmod.entity.monster;
 import invmod.IBlockAccessExtended;
 import invmod.ModItems;
 import invmod.SparrowAPI;
-import invmod.mod_Invasion;
+import invmod.mod_invasion;
 import invmod.entity.EntityIMLiving;
 import invmod.entity.Goal;
 import invmod.entity.ai.navigator.PathAction;
@@ -115,7 +115,7 @@ public abstract class EntityIMMob extends EntityIMLiving implements IMob, Sparro
 		super(world, nexus);
 		this.debugMode = Config.DEBUG ? 1 : 0;
 		this.shouldRenderLabel = Config.DEBUG;
-		this.setMaxHealthAndHealth(mod_Invasion.getMobHealth(this));
+		this.setMaxHealthAndHealth(mod_invasion.getMobHealth(this));
 		this.isImmuneToFire = false;
 		this.experienceValue = 5;
 		this.nexusBound = nexus != null;

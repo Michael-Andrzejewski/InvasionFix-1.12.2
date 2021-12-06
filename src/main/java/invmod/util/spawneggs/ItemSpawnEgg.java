@@ -2,7 +2,7 @@ package invmod.util.spawneggs;
 
 import java.util.List;
 import java.util.Set;
-import invmod.mod_Invasion;
+import invmod.mod_invasion;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.resources.I18n;
@@ -35,7 +35,7 @@ public class ItemSpawnEgg extends Item
 	{
 		super();
 		this.setHasSubtypes(true);
-		this.setCreativeTab(mod_Invasion.tabInvmod);
+		this.setCreativeTab(mod_invasion.tabInvmod);
 		this.setUnlocalizedName(this.name);
 		this.setRegistryName(this.name);
 		//GameRegistry.register(this);

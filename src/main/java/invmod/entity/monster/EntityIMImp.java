@@ -1,6 +1,6 @@
 package invmod.entity.monster;
 
-import invmod.mod_Invasion;
+import invmod.mod_invasion;
 import invmod.entity.ai.EntityAIAttackNexus;
 import invmod.entity.ai.EntityAIGoToNexus;
 import invmod.entity.ai.EntityAIKillEntity;
@@ -30,7 +30,7 @@ public class EntityIMImp extends EntityIMMob
 		super(world, nexus);
 		this.setBaseMoveSpeedStat(0.3F);
 		this.attackStrength = 3;
-		this.setMaxHealthAndHealth(mod_Invasion.getMobHealth(this));
+		this.setMaxHealthAndHealth(mod_invasion.getMobHealth(this));
 		this.setName("Imp");
 		this.setGender(1);
 		this.setJumpHeight(1);

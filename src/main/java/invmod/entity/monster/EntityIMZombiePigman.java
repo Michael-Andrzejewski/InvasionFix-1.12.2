@@ -4,7 +4,7 @@ import invmod.IBlockAccessExtended;
 import invmod.INotifyTask;
 import invmod.ModBlocks;
 import invmod.SoundHandler;
-import invmod.mod_Invasion;
+import invmod.mod_invasion;
 import invmod.entity.ICanDig;
 import invmod.entity.ITerrainDig;
 import invmod.entity.TerrainDigger;
@@ -536,7 +536,7 @@ public class EntityIMZombiePigman extends EntityIMMob implements ICanDig
 
 	private void setAttributes(int tier, int flavour)
 	{
-		this.setMaxHealthAndHealth(mod_Invasion.getMobHealth(this));
+		this.setMaxHealthAndHealth(mod_invasion.getMobHealth(this));
 		this.setDestructiveness(2);
 		this.isImmuneToFire = true;
 		this.maxDestructiveness = 2;

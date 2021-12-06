@@ -1,6 +1,6 @@
 package invmod.entity.monster;
 
-import invmod.mod_Invasion;
+import invmod.mod_invasion;
 import invmod.client.render.AnimationRegistry;
 import invmod.client.render.animation.AnimationAction;
 import invmod.client.render.animation.AnimationState;
@@ -59,7 +59,7 @@ public class EntityIMBird extends EntityIMFlying
 		this.setGender(2);
 		this.setBaseMoveSpeedStat(1.0F);
 		this.attackStrength = 1;
-		this.setMaxHealthAndHealth(mod_Invasion.getMobHealth(this));
+		this.setMaxHealthAndHealth(mod_invasion.getMobHealth(this));
 		this.animationFlags = 0;
 		this.carriedEntityYawOffset = 0.0F;
 		this.setGravity(0.025F);

@@ -1,7 +1,7 @@
 package invmod.event;
 
 import java.util.Map;
-import invmod.mod_Invasion;
+import invmod.mod_invasion;
 import invmod.util.ModLogger;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
@@ -19,7 +19,7 @@ public class PlayerEvents
 	{
 		ModLogger.logDebug("Player logged in.");
 
-		for (Map.Entry entry : mod_Invasion.deathList.entrySet())
+		for (Map.Entry entry : mod_invasion.deathList.entrySet())
 		{
 			for (World world : DimensionManager.getWorlds())
 			{
@@ -29,8 +29,8 @@ public class PlayerEvents
 				{
 					player.attackEntityFrom(DamageSource.MAGIC, 500.0F);
 					player.setDead();
-					mod_Invasion.deathList.remove(player.getDisplayName());
-					mod_Invasion.broadcastToAll("Nexus energies caught up to "
+					mod_invasion.deathList.remove(player.getDisplayName());
+					mod_invasion.broadcastToAll("Nexus energies caught up to "
 						+ player.getDisplayName());
 				}
 			}

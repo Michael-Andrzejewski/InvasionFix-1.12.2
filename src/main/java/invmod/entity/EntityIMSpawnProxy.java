@@ -1,6 +1,6 @@
 package invmod.entity;
 
-import invmod.mod_Invasion;
+import invmod.mod_invasion;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,7 +23,7 @@ public class EntityIMSpawnProxy extends EntityLiving
 	{
 		if (this.world != null)
 		{
-			Entity[] entities = mod_Invasion.getNightMobSpawns1(this.world);
+			Entity[] entities = mod_invasion.getNightMobSpawns1(this.world);
 			for (Entity entity : entities)
 			{
 				entity.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);

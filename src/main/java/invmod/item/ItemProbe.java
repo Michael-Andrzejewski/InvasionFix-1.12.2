@@ -1,7 +1,7 @@
 package invmod.item;
 
 import invmod.ModBlocks;
-import invmod.mod_Invasion;
+import invmod.mod_invasion;
 import invmod.entity.monster.EntityIMMob;
 import invmod.tileentity.TileEntityNexus;
 import net.minecraft.block.Block;
@@ -61,7 +61,7 @@ public class ItemProbe extends ModItem
 			if (newRange < 32) newRange = 128;
 			if (newRange > 128) newRange = 32;
 			nexus.setSpawnRadius(newRange);
-			mod_Invasion.sendMessageToPlayer(player, "Nexus range changed to: " + nexus.getSpawnRadius());
+			mod_invasion.sendMessageToPlayer(player, "Nexus range changed to: " + nexus.getSpawnRadius());
 			return EnumActionResult.SUCCESS;
 		}
 
@@ -69,7 +69,7 @@ public class ItemProbe extends ModItem
 		if (itemstack.getItemDamage() == 1)
 		{
 			float blockStrength = EntityIMMob.getBlockStrength(pos, block, world);
-			mod_Invasion.sendMessageToPlayer(player, "Block strength: " + (int)((blockStrength + 0.005D) * 100.0D) / 100.0D);
+			mod_invasion.sendMessageToPlayer(player, "Block strength: " + (int)((blockStrength + 0.005D) * 100.0D) / 100.0D);
 			return EnumActionResult.SUCCESS;
 		}
 		return EnumActionResult.FAIL;

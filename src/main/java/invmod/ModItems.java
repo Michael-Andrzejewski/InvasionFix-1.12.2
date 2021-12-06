@@ -128,7 +128,7 @@ public class ModItems {
 		}
 
 		private static Item setItemName(Item item, String name) {
-			return setItemNameAndTab(item, name, mod_Invasion.tabInvmod);
+			return setItemNameAndTab(item, name, mod_invasion.tabInvmod);
 		}
 
 		private static Item setItemNameAndTab(Item item, String name, @Nullable CreativeTabs tab) {
