@@ -7,6 +7,8 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import invmod.Reference;
 import invmod.client.render.AnimationRegistry;
 import invmod.client.render.RenderB;
 import invmod.client.render.RenderBolt;
@@ -52,13 +54,16 @@ import invmod.entity.monster.EntityIMZombie;
 import invmod.entity.monster.EntityIMZombiePigman;
 import invmod.entity.projectile.EntityIMBolt;
 import invmod.entity.projectile.EntityIMBoulder;
+import invmod.tileentity.TileEntityNexus;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 
 public class ProxyClient extends ProxyCommon
@@ -71,7 +76,9 @@ public class ProxyClient extends ProxyCommon
 
 	@Override
 	public void registerEntityRenderers()
-	{
+	{	
+		GameRegistry.registerTileEntity(TileEntityNexus.class, new ResourceLocation(Reference.MODID, "nexus"));
+		
 		registerEntityRenderer(EntityIMZombie.class, RenderIMZombie.class);
 		registerEntityRenderer(EntityIMZombiePigman.class, RenderIMZombiePigman.class);
 		registerEntityRenderer(EntityIMSkeleton.class, RenderIMSkeleton.class);
