@@ -20,10 +20,8 @@ public class Config
 
 	// Sections
 	public static final Section general = new Section("general", "general");
-	public static final Section continiousMode = new Section("continiousMode",
-		"continiousMode");
-	public static final Section nightSpawns = new Section("nightspawns",
-		"nightspawns");
+	public static final Section continiousMode = new Section("continiousMode", "continiousMode");
+	// public static final Section nightSpawns = new Section("nightspawns", "nightspawns");
 
 
 	// General config
@@ -95,32 +93,24 @@ public class Config
 		try
 		{
 			// General config
-			UPDATE_MESSAGES = config
-				.getBoolean(
-					"update messages",
-					general.getName(),
-					true,
-					"Check if you are running the latest version of the invasion mod each time you start the game.");
-			DROP_DESTRUCTED_BLOCKS = config
-				.getBoolean("drop destructed blocks", general.getName(),
-					true,
-					"Drop the blocks which are destroyed by invasion mod monsters.");
-			DEBUG = config.getBoolean("debug-enabled", general.getName(), true,
-				"Enable debug mode, for testers and developers.");
+			UPDATE_MESSAGES = config.getBoolean("update messages", general.getName(), true, "Check if you are running the latest version of the invasion mod each time you start the game.");
+			DROP_DESTRUCTED_BLOCKS = config.getBoolean("drop destructed blocks", general.getName(), true, "Drop the blocks which are destroyed by invasion mod monsters.");
+			DEBUG = config.getBoolean("debug-enabled", general.getName(), true, "Enable debug mode, for testers and developers.");
 
 			// ContiniousMode config
 			MIN_DAYS_BETWEEN_ATTACKS_CONTINIOUS_MODE = config.getInt("min days between attacks", continiousMode.getName(), 2, 0, Integer.MAX_VALUE, "The minimum amount of days between attacks in continious mode.");
 			MAX_DAYS_BETWEEN_ATTACKS_CONTINIOUS_MODE = config.getInt("max days between attacks", continiousMode.getName(), 3, 0, Integer.MAX_VALUE, "The maximum amount of days between attacks in continious mode.");
 
 			// Nightspawns config
+			/*
 			NIGHTSPAWNS_ENABLED = config.getBoolean("nightspawns enabled", nightSpawns.getName(), false, "Invasion mod mobs spawn at night without the presence of an active nexus.");
-			MOB_LIMIT_OVERRIDE = config.getInt("mob limit override", nightSpawns.getName(), 100, 0, Integer.MAX_VALUE, "description");
+			MOB_LIMIT_OVERRIDE = config.getInt("mob limit override", nightSpawns.getName(), 70, 0, Integer.MAX_VALUE, "description");
 			NIGHTSPAWNS_MOB_SIGHTRANGE = config.getInt("mob sight range", nightSpawns.getName(), 20, 0, Integer.MAX_VALUE, "description");
 			NIGHTSPAWNS_MOB_SENSERANGE = config.getInt("mob sense range", nightSpawns.getName(), 12, 0, Integer.MAX_VALUE, "description");
 			NIGHTSPAWNS_MOB_SPAWNCHANCE = config.getInt("mob spawnchance", nightSpawns.getName(), 30, 0, 100, "description");
 			NIGHTSPAWNS_MOB_MAX_GROUPSIZE = config.getInt("mob max groupsize", nightSpawns.getName(), 3, 0, Integer.MAX_VALUE, "description");
 			NIGHTSPAWNS_MOB_BURN_DURING_DAY = config.getBoolean("mob sunscreen", nightSpawns.getName(), true, "description");
-
+			*/
 			ModLogger.logInfo("Loaded configuration file!");
 		}
 		catch (Exception e)
