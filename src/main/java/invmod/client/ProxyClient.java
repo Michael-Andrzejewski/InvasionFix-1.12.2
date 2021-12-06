@@ -135,6 +135,7 @@ public class ProxyClient extends ProxyCommon
 	@Override
 	public void loadAnimations()
 	{
+		System.out.println("ProxyClient, loadAnimation()");
 		EnumMap allKeyFrames = new EnumMap(BonesBirdLegs.class);
 		List animationPhases = new ArrayList(2);
 		int x = 17;

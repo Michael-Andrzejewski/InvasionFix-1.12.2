@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import invmod.client.ProxyClient;
 import invmod.command.InvasionCommand;
 import invmod.common.ProxyCommon;
 import invmod.entity.EntityIMSpawnProxy;
@@ -56,7 +57,7 @@ public class mod_invasion
 {
 
 	@SidedProxy(clientSide = Reference.CLIENTPROXY, serverSide = Reference.COMMONPROXY)
-	public static ProxyCommon proxy;
+	public static ProxyClient proxy;
 	private static GuiHandler guiHandler = new GuiHandler();;
 	public static HashMap<String, Long> deathList = new HashMap();
 	private static MobBuilder defaultMobBuilder = new MobBuilder();
@@ -114,7 +115,6 @@ public class mod_invasion
 		Config.load(event);
 		this.nightSpawnConfig();
 		this.loadHealthConfig();
-		proxy.registerEntityRenderers();
 		//this.loadCreativeTabs();
 		//BlocksAndItems.loadBlocks();
 		//BlocksAndItems.loadItems();
@@ -132,6 +132,7 @@ public class mod_invasion
 		MinecraftForge.EVENT_BUS.register(new PlayerEvents());
 		FMLInterModComms.sendMessage("Waila", "register", "invmod.common.util.IMWailaProvider.callbackRegister");
 		//BlocksAndItems.registerItems(event);
+		proxy.registerEntityRenderers();
 		this.loadEntities();
 		CraftingAndSmelting.addRecipes();
 
