@@ -35,8 +35,6 @@ public class ContainerNexus extends Container
 		this.powerLevel = 0;
 		this.cookTime = 0;
 		this.nexus = tileEntityNexus;
-		this.addSlotToContainer(new Slot(tileEntityNexus, 0, 32, 33));
-		this.addSlotToContainer(new SlotOutput(tileEntityNexus, 1, 102, 33));
 		for (int i = 0; i < 3; i++)
 		{
 			for (int k = 0; k < 9; k++)
@@ -161,7 +159,7 @@ public class ContainerNexus extends Container
 	@Override
 	public boolean canInteractWith(EntityPlayer entityplayer)
 	{
-		return this.nexus.isUsableByPlayer(entityplayer);
+		return true;
 	}
 
 	@Override
@@ -177,30 +175,30 @@ public class ContainerNexus extends Container
 			{
 				if (!this.mergeItemStack(itemstack1, 2, 38, true))
 				{
-					return null;
+					return ItemStack.EMPTY;
 				}
 			}
 			else if ((i >= 2) && (i < 29))
 			{
 				if (!this.mergeItemStack(itemstack1, 29, 38, false))
 				{
-					return null;
+					return ItemStack.EMPTY;
 				}
 			}
 			else if ((i >= 29) && (i < 38))
 			{
 				if (!this.mergeItemStack(itemstack1, 2, 29, false))
 				{
-					return null;
+					return ItemStack.EMPTY;
 				}
 			}
 			else if (!this.mergeItemStack(itemstack1, 2, 38, false))
 			{
-				return null;
+				return ItemStack.EMPTY;
 			}
 			if (itemstack1.isEmpty())
 			{
-				slot.putStack(null);
+				slot.putStack(ItemStack.EMPTY);
 			}
 			else
 			{
@@ -212,7 +210,7 @@ public class ContainerNexus extends Container
 			}
 			else
 			{
-				return null;
+				return ItemStack.EMPTY;
 			}
 		}
 		return itemstack;

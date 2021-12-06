@@ -4,6 +4,7 @@ import invmod.client.gui.GuiNexus;
 import invmod.inventory.container.ContainerNexus;
 import invmod.tileentity.TileEntityNexus;
 import invmod.util.config.Config;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -18,9 +19,9 @@ public class GuiHandler implements IGuiHandler
 		System.out.println("getClientGuiElement()");
 		if (id == Config.NEXUS_GUI_ID)
 		{
-			System.out.println(player.inventory);
 			TileEntityNexus nexus = (TileEntityNexus)world.getTileEntity(new BlockPos(x, y, z));
 			System.out.println(nexus);
+			//IBlockState iblockstate = world.getBlockState(new BlockPos(x,y,z));
 			if (nexus != null) {
 				System.out.println("return guinexus");
 				return new GuiNexus(player.inventory, nexus);

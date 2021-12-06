@@ -7,6 +7,7 @@ import invmod.ModItems;
 import invmod.mod_invasion;
 import invmod.tileentity.TileEntityNexus;
 import invmod.util.config.Config;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -28,7 +29,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 
-public class BlockNexus extends BlockContainer
+public class BlockNexus extends Block
 {
 
 	public final String name = "blocknexus";
@@ -42,7 +43,7 @@ public class BlockNexus extends BlockContainer
 		this.setResistance(6000000.0F);
 		this.setHardness(3.0F);
 		//this.setStepSound(Blocks.glass.stepSound);
-		this.setSoundType(Blocks.GLASS.getSoundType());
+		//this.setSoundType(Blocks.GLASS.getSoundType());
 		this.itemBlock = new ItemBlock(this);
 		this.itemBlock.setRegistryName(this.name);
 		//GameRegistry.register(this);
@@ -132,7 +133,8 @@ public class BlockNexus extends BlockContainer
 	  }
 
 	@Override
-	public TileEntity createNewTileEntity(World world, int metadata)
+	//public TileEntity createTileEntity(World world, int metadata)
+	public TileEntity createTileEntity(World world, IBlockState state)
 	{
 		return new TileEntityNexus(world);
 	}

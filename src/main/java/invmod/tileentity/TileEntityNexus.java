@@ -25,7 +25,6 @@ import invmod.util.config.Config;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -39,9 +38,10 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.items.IItemHandler;
 
 
-public class TileEntityNexus extends TileEntity implements INexusAccess, IInventory, ITickable
+public class TileEntityNexus extends TileEntity implements INexusAccess, IItemHandler, ITickable
 {
 
 	//private static final long BIND_EXPIRE_TIME = 300000L;
@@ -97,7 +97,10 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 		this.spawnRadius = 52;
 		this.waveSpawner = new IMWaveSpawner(this, this.spawnRadius);
 		this.waveBuilder = new IMWaveBuilder();
-		this.nexusItemStacks = new ItemStack[2];
+		this.nexusItemStacks = new ItemStack[this.getSlots()];
+		for(int slot = 0; slot < this.getSlots(); slot++) {
+			this.insertItem(slot, ItemStack.EMPTY, false);
+	    }
 		//this.boundingBoxToRadius = new AxisAlignedBB(this.pos.getX(), this.pos.getY(), this.pos.getZ(), this.pos.getX(), this.pos.getY(), this.pos.getZ());
 		this.boundingBoxToRadius = new AxisAlignedBB(
 			this.pos.getX() - (this.spawnRadius + 10), this.pos.getY() - (this.spawnRadius + 40), this.pos.getZ() - (this.spawnRadius + 10),
@@ -396,66 +399,10 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 	}
 
 	@Override
-	public int getSizeInventory()
-	{
-		return this.nexusItemStacks.length;
-	}
-
-	@Override
-	public int getInventoryStackLimit()
-	{
-		return 64;
-	}
-
-	@Override
-	public boolean isItemValidForSlot(int i, ItemStack itemstack)
-	{
-		return true;
-	}
-
-	@Override
-	public void setInventorySlotContents(int i, ItemStack itemstack)
-	{
-		this.nexusItemStacks[i] = itemstack;
-		if ((itemstack != null)
-			&& (itemstack.getCount() > this.getInventoryStackLimit()))
-		{
-			itemstack.setCount(this.getInventoryStackLimit());
-		}
-	}
-
-	@Override
 	public ItemStack getStackInSlot(int i)
 	{
+		//TODO: check out of bounce
 		return this.nexusItemStacks[i];
-	}
-
-	@Override
-	public ItemStack decrStackSize(int i, int j)
-	{
-		if (this.nexusItemStacks[i] != null)
-		{
-			if (this.nexusItemStacks[i].getCount() <= j)
-			{
-				ItemStack itemstack = this.nexusItemStacks[i];
-				this.nexusItemStacks[i] = null;
-				return itemstack;
-			}
-			ItemStack itemstack1 = this.nexusItemStacks[i].splitStack(j);
-			if (this.nexusItemStacks[i].isEmpty())
-			{
-				this.nexusItemStacks[i] = null;
-			}
-			return itemstack1;
-		}
-
-		return null;
-	}
-
-	@Override
-	public boolean isUsableByPlayer(EntityPlayer entityplayer)
-	{
-		return true;
 	}
 
 	/*@Override
@@ -470,7 +417,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 		super.readFromNBT(nbttagcompound);
 		// added 0 to gettaglist, because it asked an int
 		NBTTagList nbttaglist = nbttagcompound.getTagList("Items", 0);
-		this.nexusItemStacks = new ItemStack[this.getSizeInventory()];
+		this.nexusItemStacks = new ItemStack[this.getSlots()];
 		for (int i = 0; i < nbttaglist.tagCount(); i++)
 		{
 			NBTTagCompound nbttagcompound1 = nbttaglist
@@ -1275,29 +1222,6 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 		this.attackerAI.update();
 	}
 
-	@Override
-	public String getName()
-	{
-		return "Nexus";
-	}
-
-	@Override
-	public boolean hasCustomName()
-	{
-		return false;
-	}
-
-	@Override
-	public void openInventory(EntityPlayer player)
-	{
-	}
-
-	@Override
-	public void closeInventory(EntityPlayer player)
-	{
-
-	}
-
 	public ArrayList<String> getBoundPlayers()
 	{
 		return this.boundPlayers;
@@ -1355,43 +1279,23 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IInvent
 	}
 
 	@Override
-	public int getField(int id)
-	{
-		// DONE Auto-generated method stub
-		return 0;
+	public int getSlots() {
+		return 24;
 	}
 
 	@Override
-	public void setField(int id, int value)
-	{
-		// DONE Auto-generated method stub
-
+	public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+		this.nexusItemStacks[slot] = ItemStack.EMPTY;
+		return this.nexusItemStacks[slot];
 	}
 
 	@Override
-	public int getFieldCount()
-	{
-		// DONE Auto-generated method stub
-		return 0;
+	public ItemStack extractItem(int slot, int amount, boolean simulate) {
+		return this.nexusItemStacks[slot];
 	}
 
 	@Override
-	public void clear()
-	{
-		// DONE Auto-generated method stub
-
-	}
-
-	@Override
-	public ItemStack removeStackFromSlot(int index)
-	{
-		// DONE Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+	public int getSlotLimit(int slot) {
+		return this.nexusItemStacks[slot].getMaxStackSize();
 	}
 }

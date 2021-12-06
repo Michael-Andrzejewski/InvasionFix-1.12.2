@@ -14,6 +14,7 @@ import invmod.event.PlayerEvents;
 import invmod.nexus.IEntityIMPattern;
 import invmod.nexus.IMWaveBuilder;
 import invmod.nexus.MobBuilder;
+import invmod.tileentity.TileEntityNexus;
 import invmod.util.ISelect;
 import invmod.util.ModLogger;
 import invmod.util.RandomSelectionPool;
@@ -47,6 +48,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 
 @Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION)
@@ -55,7 +57,7 @@ public class mod_invasion
 
 	@SidedProxy(clientSide = Reference.CLIENTPROXY, serverSide = Reference.COMMONPROXY)
 	public static ProxyCommon proxy;
-	public static GuiHandler guiHandler;
+	private static GuiHandler guiHandler = new GuiHandler();;
 	public static HashMap<String, Long> deathList = new HashMap();
 	private static MobBuilder defaultMobBuilder = new MobBuilder();
 	private static ISelect<IEntityIMPattern> nightSpawnPool1;
@@ -87,7 +89,6 @@ public class mod_invasion
 	public mod_invasion()
 	{
 		instance = this;
-		guiHandler = new GuiHandler();
 	}
 
 
