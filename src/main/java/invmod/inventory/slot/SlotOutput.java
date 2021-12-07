@@ -1,13 +1,15 @@
 package invmod.inventory.slot;
 
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import javax.annotation.Nonnull;
+
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
 
 
-public class SlotOutput extends Slot
+public class SlotOutput extends SlotItemHandler
 {
-	public SlotOutput(IInventory iinventory, int i, int j, int k)
+	public SlotOutput(IItemHandler iinventory, int i, int j, int k)
 	{
 		super(iinventory, i, j, k);
 	}
@@ -16,5 +18,10 @@ public class SlotOutput extends Slot
 	public boolean isItemValid(ItemStack itemstack)
 	{
 		return false;
+	}
+	
+	@Override
+    public void putStack (@Nonnull ItemStack stack) {
+		
 	}
 }

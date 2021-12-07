@@ -2,11 +2,16 @@ package invmod.inventory.container;
 
 import invmod.inventory.slot.SlotOutput;
 import invmod.tileentity.TileEntityNexus;
+import invmod.util.ModLogger;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
 
 
 public class ContainerNexus extends Container
@@ -22,6 +27,8 @@ public class ContainerNexus extends Container
 	private int powerLevel;
 	private int cookTime;
 	private int mode;
+	
+	private IItemHandler handler;
 
 	public ContainerNexus(InventoryPlayer inventoryplayer, TileEntityNexus tileEntityNexus)
 	{
@@ -35,6 +42,13 @@ public class ContainerNexus extends Container
 		this.powerLevel = 0;
 		this.cookTime = 0;
 		this.nexus = tileEntityNexus;
+		this.handler = nexus.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+		this.addSlotToContainer(new SlotItemHandler(tileEntityNexus, 0, 32, 33));
+		this.addSlotToContainer(new SlotItemHandler(tileEntityNexus, 1, 102, 33) {
+			public boolean isItemValid (ItemStack stack) {
+				return false;
+			}
+		});
 		for (int i = 0; i < 3; i++)
 		{
 			for (int k = 0; k < 9; k++)
@@ -42,7 +56,6 @@ public class ContainerNexus extends Container
 				this.addSlotToContainer(new Slot(inventoryplayer, k + i * 9 + 9, 8 + k * 18, 84 + i * 18));
 			}
 		}
-
 		for (int j = 0; j < 9; j++)
 		{
 			this.addSlotToContainer(new Slot(inventoryplayer, j, 8 + j * 18, 142));
@@ -171,20 +184,48 @@ public class ContainerNexus extends Container
 		{
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
-			if ((i >= 0) && (i < 27)) {
-				if (!this.mergeItemStack(itemstack1, 27, 36, false))
+			if (i == 1)
+			{
+				if (!this.mergeItemStack(itemstack1, 2, 38, true))
 				{
-					return ItemStack.EMPTY;
-				}
-			} else if ((i >= 27) && (i < 36)) {
-				if (!this.mergeItemStack(itemstack1, 0, 26, false))
-				{
-					return ItemStack.EMPTY;
-				} else {
 					return ItemStack.EMPTY;
 				}
 			}
-		
+			else if ((i >= 2) && (i < 29))
+			{
+				if (!this.mergeItemStack(itemstack1, 29, 38, false))
+				{
+					return ItemStack.EMPTY;
+				}
+			}
+			else if ((i >= 29) && (i < 38))
+			{
+				if (!this.mergeItemStack(itemstack1, 2, 29, false))
+				{
+					return ItemStack.EMPTY;
+				}
+			}
+			else if (!this.mergeItemStack(itemstack1, 2, 38, false))
+			{
+				return ItemStack.EMPTY;
+			}
+			if (itemstack1.getCount() == 0)
+			{
+				ModLogger.logInfo("TODO");
+				slot.putStack(null);
+			}
+			else
+			{
+				slot.onSlotChanged();
+			}
+			if (itemstack1.getCount() != itemstack.getCount())
+			{
+				slot.onTake(player, itemstack1);
+			}
+			else
+			{
+				return ItemStack.EMPTY;
+			}
 		}
 		return itemstack;
 	}
