@@ -113,7 +113,7 @@ public class mod_invasion
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		Config.load(event);
-		this.nightSpawnConfig();
+		// this.nightSpawnConfig();
 		this.loadHealthConfig();
 		this.loadEntities();
 		proxy.registerEntityRenderers();
@@ -217,6 +217,7 @@ public class mod_invasion
 		mobHealthInvasion.put("IMZombiePigman-T3-invasionSpawn-health", 65);
 
 		//Nightspawns
+		/*
 		mobHealthNightspawn.put("IMCreeper-T1-nightSpawn-health", 20);
 		mobHealthNightspawn.put("IMVulture-T1-nightSpawn-health", 20);
 		mobHealthNightspawn.put("IMImp-T1-nightSpawn-health", 20);
@@ -234,6 +235,7 @@ public class mod_invasion
 		mobHealthNightspawn.put("IMZombiePigman-T1-nightSpawn-health", 20);
 		mobHealthNightspawn.put("IMZombiePigman-T2-nightSpawn-health", 30);
 		mobHealthNightspawn.put("IMZombiePigman-T3-nightSpawn-health", 65);
+		*/
 
 	}
 
@@ -304,8 +306,10 @@ public class mod_invasion
 
 	}
 
+	@Deprecated
 	protected void nightSpawnConfig()
 	{
+		/*
 		String[] pool1Patterns = new String[DEFAULT_NIGHT_MOB_PATTERN_1_SLOTS.length];
 		float[] pool1Weights = new float[DEFAULT_NIGHT_MOB_PATTERN_1_SLOT_WEIGHTS.length];
 		// TODO: load 
@@ -332,6 +336,7 @@ public class mod_invasion
 		{
 			ModLogger.logFatal("Mob pattern table element mismatch. Ensure each slot has a probability weight");
 		}
+		*/
 	}
 
 	public static void addToDeathList(String username, long timeStamp)
@@ -368,6 +373,7 @@ public class mod_invasion
 		return defaultMobBuilder;
 	}
 
+	@Deprecated
 	public static ISelect<IEntityIMPattern> getMobSpawnPool()
 	{
 		return nightSpawnPool1;
@@ -466,14 +472,16 @@ public class mod_invasion
 		}
 		else
 		{
+			/*
 			if (mobHealthNightspawn.get(mob.toString() + "-nightSpawn-health") != null)
 			{
 				health = mobHealthNightspawn.get(mob.toString() + "-nightSpawn-health");
 			}
 			else
 			{
+			*/
 				return 20;
-			}
+			// }
 		}
 		return health;
 	}
