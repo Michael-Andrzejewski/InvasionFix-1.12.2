@@ -165,53 +165,26 @@ public class ContainerNexus extends Container
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int i)
 	{
-		ItemStack itemstack = null;
+		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = (Slot)this.inventorySlots.get(i);
 		if ((slot != null) && (slot.getHasStack()))
 		{
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
-			if (i == 1)
-			{
-				if (!this.mergeItemStack(itemstack1, 2, 38, true))
+			if ((i >= 0) && (i < 27)) {
+				if (!this.mergeItemStack(itemstack1, 27, 36, false))
 				{
 					return ItemStack.EMPTY;
 				}
-			}
-			else if ((i >= 2) && (i < 29))
-			{
-				if (!this.mergeItemStack(itemstack1, 29, 38, false))
+			} else if ((i >= 27) && (i < 36)) {
+				if (!this.mergeItemStack(itemstack1, 0, 26, false))
 				{
+					return ItemStack.EMPTY;
+				} else {
 					return ItemStack.EMPTY;
 				}
 			}
-			else if ((i >= 29) && (i < 38))
-			{
-				if (!this.mergeItemStack(itemstack1, 2, 29, false))
-				{
-					return ItemStack.EMPTY;
-				}
-			}
-			else if (!this.mergeItemStack(itemstack1, 2, 38, false))
-			{
-				return ItemStack.EMPTY;
-			}
-			if (itemstack1.isEmpty())
-			{
-				slot.putStack(ItemStack.EMPTY);
-			}
-			else
-			{
-				slot.onSlotChanged();
-			}
-			if (itemstack1.getCount() != itemstack.getCount())
-			{
-				slot.onTake(player, itemstack1);
-			}
-			else
-			{
-				return ItemStack.EMPTY;
-			}
+		
 		}
 		return itemstack;
 	}
