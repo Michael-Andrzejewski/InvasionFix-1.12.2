@@ -501,7 +501,7 @@ public class IMWaveBuilder
 				RandomSelectionPool wave11BurstPool = new RandomSelectionPool();
 				wave11BurstPool.addEntry(getPattern("pigengy_t1_any"), 1.0F);
 				wave11BurstPool.addEntry(getPattern("zombiePigman_t1_any"), 2.0F);
-				wave11BurstPool.addEntry(getPattern("zombie_t2_any"), 3.0F);
+				wave11BurstPool.addEntry(getPattern("zombie_t2_any_basic"), 3.0F);
 				wave11BurstPool.addEntry(getPattern("zombie_t1_any"), 1.0F);
 				wave11BurstPool.addEntry(getPattern("skeleton_t1_any"), 1.0F);
 				wave11BurstPool.addEntry(getPattern("thrower_t1"), 0.8F);
