@@ -6,6 +6,7 @@ import invmod.tileentity.TileEntityNexus;
 import invmod.util.config.Config;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
@@ -16,17 +17,10 @@ public class GuiHandler implements IGuiHandler
 	@Override
 	public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z)
 	{
-		System.out.println("getClientGuiElement()");
+
 		if (id == Config.NEXUS_GUI_ID)
-		{
-			TileEntityNexus nexus = (TileEntityNexus)world.getTileEntity(new BlockPos(x, y, z));
-			System.out.println(nexus);
-			//IBlockState iblockstate = world.getBlockState(new BlockPos(x,y,z));
-			if (nexus != null) {
-				System.out.println("return guinexus");
-				return new GuiNexus(player.inventory, nexus);
-			}
-		}
+			return new GuiNexus(player.inventory, (TileEntityNexus)world.getTileEntity(new BlockPos(x, y, z)));
+
 		return null;
 	}
 
@@ -34,10 +28,8 @@ public class GuiHandler implements IGuiHandler
 	public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z)
 	{
 		if (id == Config.NEXUS_GUI_ID)
-		{
-			TileEntityNexus nexus = (TileEntityNexus)world.getTileEntity(new BlockPos(x, y, z));
-			if (nexus != null) return new ContainerNexus(player.inventory, nexus);
-		}
+			return new ContainerNexus(player.inventory, (TileEntityNexus)world.getTileEntity(new BlockPos(x, y, z)));
+
 		return null;
 	}
 }

@@ -3,19 +3,18 @@ package invmod.block;
 import java.util.Random;
 
 import invmod.ModBlocks;
-import invmod.ModItems;
+
 import invmod.mod_invasion;
 import invmod.tileentity.TileEntityNexus;
 import invmod.util.config.Config;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
+
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
+
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -23,8 +22,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.ModContainer;
+
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -56,29 +54,13 @@ public class BlockNexus extends Block
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		Item item = null;
-		System.out.println("onBlockActivated()");
-		ItemStack heldItem = playerIn.getHeldItem(hand);
-		if (heldItem != null) item = heldItem.getItem();
 
-		if (worldIn.isRemote) return true;
 
-		if ((item != /*BlocksAndItems.itemProbe*/ModItems.PROBE) && ((!Config.DEBUG) || (item != /*BlocksAndItems.itemDebugWand*/ModItems.DEBUG_WAND)))
+		if(!worldIn.isRemote)
 		{
-			TileEntityNexus tileEntityNexus = (TileEntityNexus)worldIn.getTileEntity(pos);				
-			if (tileEntityNexus != null)
-			{
-				System.out.println(playerIn);
-				System.out.println(mod_invasion.instance.toString());
-				ModContainer mc = FMLCommonHandler.instance().findContainerFor(mod_invasion.instance);
-				System.out.println(mc);
-				playerIn.openGui(mod_invasion.instance, Config.NEXUS_GUI_ID, worldIn, pos.getX(), pos.getY(), pos.getZ());
-			}
-			return true;
-			
+		playerIn.openGui(mod_invasion.instance, Config.NEXUS_GUI_ID, worldIn, pos.getX(), pos.getY(), pos.getZ());
 		}
-
-		return false;
+		return true;
 	}
 
 	@SideOnly(Side.CLIENT)
