@@ -40,9 +40,10 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
 
 
-public class TileEntityNexus extends TileEntity implements INexusAccess, IItemHandler, ITickable
+public class TileEntityNexus extends TileEntity implements INexusAccess, ITickable, IItemHandlerModifiable
 {
 
 	//private static final long BIND_EXPIRE_TIME = 300000L;
@@ -1001,8 +1002,12 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IItemHa
 	private void generateFlux(int increment)
 	{
 		this.generation += increment;
+		if (this.generation % 10 == 0) {
+			ModLogger.logDebug("TileEntityNexus: trying to generate Flux...");
+		}
 		if (this.generation >= 3000)
 		{
+
 			if (this.nexusItemStacks[1] == ItemStack.EMPTY)
 			{
 				this.nexusItemStacks[1] = new ItemStack(
@@ -1286,8 +1291,9 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IItemHa
 
 	@Override
 	public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-		 this.nexusItemStacks[slot] = stack;
-		 return stack;
+		ModLogger.logDebug("TileEntityNexus: trying to put " + stack.toString() + " into slot " + slot);
+		this.nexusItemStacks[slot] = stack;
+		return stack;
 	}
 
     public boolean canExtractFromSlot(int slot)
@@ -1346,4 +1352,10 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, IItemHa
 	public int getSlotLimit(int slot) {
 		return this.nexusItemStacks[slot].getMaxStackSize();
 	}
+	
+	 @Override
+	  public void setStackInSlot(int slot, ItemStack stack) {
+	    // super.setStackInSlot(slot, stack);
+		 ModLogger.logDebug("TileEntityNexus: setStackInSlot called, i guess it's time to implement this function now ...");
+	  }
 }
