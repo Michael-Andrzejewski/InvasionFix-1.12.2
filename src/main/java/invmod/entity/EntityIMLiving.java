@@ -48,8 +48,8 @@ public abstract class EntityIMLiving extends EntityCreature implements IHasNexus
 	private BlockPos currentTargetPos = BlockPos.ORIGIN;
 	private int rallyCooldown;
 	private float turnRate = 30.0F;
-	private float moveSpeedBase = 0.2f;
-	private float moveSpeed = 0.2f;
+	private float moveSpeedBase = 0.5f;
+	private float moveSpeed = 0.5f;
 	private MoveState moveState;
 	private IMMoveHelper moveHelperIM = new IMMoveHelper(this);
 	protected TileEntityNexus targetNexus;

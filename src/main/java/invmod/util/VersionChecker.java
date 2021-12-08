@@ -15,6 +15,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 public class VersionChecker
 {
 
+	@Deprecated
 	public static boolean checkForUpdates(EntityPlayerMP entityplayer)
 	{
 		String latestVersionNumber = getLatestVersion();
@@ -50,6 +51,7 @@ public class VersionChecker
 	}
 
 	// Get and return latest version
+	@Deprecated
 	public static String getLatestVersion()
 	{
 		String[] text = merge(
@@ -62,6 +64,7 @@ public class VersionChecker
 	}
 
 	// Get and return recent News
+	@Deprecated
 	public static String getLatestNews()
 	{
 		String[] text = merge(

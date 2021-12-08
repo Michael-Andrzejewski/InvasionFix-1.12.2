@@ -446,7 +446,7 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring
 			if (flavour == 0)
 			{
 				this.setName("Spider");
-				this.setBaseMoveSpeedStat(0.29F);
+				// this.setBaseMoveSpeedStat(0.29F);
 				this.attackStrength = 3;
 				this.pounceTime = 0;
 				this.pounceAbility = 0;
@@ -459,7 +459,7 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring
 			{
 				this.setName("Baby-Spider");
 				this.setSize(0.42F, 0.3F);
-				this.setBaseMoveSpeedStat(0.34F);
+				// this.setBaseMoveSpeedStat(0.34F);
 				this.attackStrength = 1;
 				this.pounceTime = 0;
 				this.pounceAbility = 1;
@@ -474,7 +474,7 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring
 			if (flavour == 0)
 			{
 				this.setName("Jumping-Spider");
-				this.setBaseMoveSpeedStat(0.3F);
+				// this.setBaseMoveSpeedStat(0.3F);
 				this.attackStrength = 5;
 				this.pounceTime = 0;
 				this.pounceAbility = 1;
@@ -490,7 +490,7 @@ public class EntityIMSpider extends EntityIMMob implements ISpawnsOffspring
 				this.setName("Mother-Spider");
 				this.setGender(2);
 				this.setSize(2.8F, 1.8F);
-				this.setBaseMoveSpeedStat(0.22F);
+				// this.setBaseMoveSpeedStat(0.22F);
 				this.attackStrength = 4;
 				this.pounceTime = 0;
 				this.pounceAbility = 0;

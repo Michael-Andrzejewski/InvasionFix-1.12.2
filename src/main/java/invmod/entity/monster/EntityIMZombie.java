@@ -555,7 +555,7 @@ public class EntityIMZombie extends EntityIMMob implements ICanDig
 		{
 			//this.tier = 1;
 			this.setName("Zombie");
-			this.setBaseMoveSpeedStat(0.19F);
+			// this.setBaseMoveSpeedStat(0.19F);
 			this.selfDamage = 3;
 			this.maxSelfDamage = 6;
 			this.flammability = 3;
@@ -582,7 +582,7 @@ public class EntityIMZombie extends EntityIMMob implements ICanDig
 			if (flavour == 0)
 			{
 				this.setName("Zombie");
-				this.setBaseMoveSpeedStat(0.19F);
+				// this.setBaseMoveSpeedStat(0.19F);
 				this.attackStrength = 7;
 				this.selfDamage = 4;
 				this.maxSelfDamage = 12;
@@ -596,7 +596,7 @@ public class EntityIMZombie extends EntityIMMob implements ICanDig
 			else if (flavour == 1)
 			{
 				this.setName("Zombie Marauder");
-				this.setBaseMoveSpeedStat(0.19F);
+				// this.setBaseMoveSpeedStat(0.19F);
 				this.attackStrength = 10;
 				this.selfDamage = 3;
 				this.maxSelfDamage = 9;
@@ -612,7 +612,7 @@ public class EntityIMZombie extends EntityIMMob implements ICanDig
 			else if (flavour == 2)
 			{
 				this.setName("Tar Zombie");
-				this.setBaseMoveSpeedStat(0.19F);
+				// this.setBaseMoveSpeedStat(0.19F);
 				this.attackStrength = 5;
 				this.selfDamage = 3;
 				this.maxSelfDamage = 9;
@@ -624,7 +624,7 @@ public class EntityIMZombie extends EntityIMMob implements ICanDig
 			else if (flavour == 3)
 			{
 				this.setName("Zombie Pigman");
-				this.setBaseMoveSpeedStat(0.25F);
+				// this.setBaseMoveSpeedStat(0.25F);
 				this.attackStrength = 8;
 				this.maxDestructiveness = 2;
 				this.isImmuneToFire = true;
@@ -639,7 +639,7 @@ public class EntityIMZombie extends EntityIMMob implements ICanDig
 			if (flavour == 0)
 			{
 				this.setName("Zombie Brute");
-				this.setBaseMoveSpeedStat(0.17F);
+				// this.setBaseMoveSpeedStat(0.17F);
 				this.attackStrength = 18;
 				this.selfDamage = 4;
 				this.maxSelfDamage = 20;
