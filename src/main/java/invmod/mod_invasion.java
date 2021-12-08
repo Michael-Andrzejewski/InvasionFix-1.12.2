@@ -185,6 +185,7 @@ public class mod_invasion
 	@SubscribeEvent
 	public void PlayerLoggedInEvent(PlayerLoggedInEvent event)
 	{
+		/*
 		try
 		{
 			if (Config.UPDATE_MESSAGES) VersionChecker.checkForUpdates((EntityPlayerMP)event.player);
@@ -192,6 +193,7 @@ public class mod_invasion
 		catch (Exception e)
 		{
 		}
+		*/
 	}
 
 	//load mobhealth config
