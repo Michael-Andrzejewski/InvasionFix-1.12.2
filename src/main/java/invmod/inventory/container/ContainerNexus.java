@@ -43,7 +43,11 @@ public class ContainerNexus extends Container
 		this.cookTime = 0;
 		this.nexus = tileEntityNexus;
 		this.handler = nexus.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-		this.addSlotToContainer(new SlotItemHandler(tileEntityNexus, 0, 32, 33));
+		this.addSlotToContainer(new SlotItemHandler(tileEntityNexus, 0, 32, 33) {
+			public boolean isItemValid (ItemStack stack) {
+				return true;
+			}
+		});
 		this.addSlotToContainer(new SlotItemHandler(tileEntityNexus, 1, 102, 33) {
 			public boolean isItemValid (ItemStack stack) {
 				return false;

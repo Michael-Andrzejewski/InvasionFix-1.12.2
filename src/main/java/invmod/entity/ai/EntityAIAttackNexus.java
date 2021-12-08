@@ -133,7 +133,7 @@ public class EntityAIAttackNexus extends EntityAIBase
 
 	private boolean isCorrectNexus(int x, int y, int z)
 	{
-		INexusAccess nexus = (TileEntityNexus)this.theEntity.world.getTileEntity(new BlockPos(x, y, z));
+		TileEntityNexus nexus = (TileEntityNexus)this.theEntity.world.getTileEntity(new BlockPos(x, y, z));
 		if ((nexus != null) && (nexus == this.theEntity.getNexus()))
 		{
 			return true;

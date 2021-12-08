@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import invmod.ModBlocks;
 import invmod.ModItems;
 import invmod.SoundHandler;
@@ -24,6 +26,7 @@ import invmod.util.ModLogger;
 import invmod.util.config.Config;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -39,21 +42,24 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.ItemStackHandler;
 
 
-public class TileEntityNexus extends TileEntity implements INexusAccess, ITickable, IItemHandlerModifiable
+public class TileEntityNexus extends TileEntity implements ITickable, IItemHandlerModifiable
 {
 
 	//private static final long BIND_EXPIRE_TIME = 300000L;
 	private IMWaveSpawner waveSpawner;
 	private IMWaveBuilder waveBuilder;
-	private ItemStack[] nexusItemStacks;
+	//private ItemStack[] nexusItemStacks;
+	public final static int MAX_COOK_TIME = 1200, MAX_GENERATION_TIME = 3000, MAX_ACTIVATION_TIME = 400;
+	private NexusItemHandler nexusItemStacks = new NexusItemHandler(this.getSlots());
 	private AxisAlignedBB boundingBoxToRadius;
 	private final ArrayList<String> boundPlayers;
 	private List<EntityIMLiving> mobList;
 	private AttackerAI attackerAI;
+	private int fluxGeneration;
 	private int activationTimer;
 	private int currentWave;
 	private int spawnRadius;
@@ -99,10 +105,10 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, ITickab
 		this.spawnRadius = 52;
 		this.waveSpawner = new IMWaveSpawner(this, this.spawnRadius);
 		this.waveBuilder = new IMWaveBuilder();
-		this.nexusItemStacks = new ItemStack[this.getSlots()];
-		for(int slot = 0; slot < this.getSlots(); slot++) {
-			this.nexusItemStacks[slot] = ItemStack.EMPTY;
-	    }
+		//this.nexusItemStacks = new ItemStack[this.getSlots()];
+		//for(int slot = 0; slot < this.getSlots(); slot++) {
+		//	this.nexusItemStacks[slot] = ItemStack.EMPTY;
+	    //}
 		//this.boundingBoxToRadius = new AxisAlignedBB(this.pos.getX(), this.pos.getY(), this.pos.getZ(), this.pos.getX(), this.pos.getY(), this.pos.getZ());
 		this.boundingBoxToRadius = new AxisAlignedBB(
 			this.pos.getX() - (this.spawnRadius + 10), this.pos.getY() - (this.spawnRadius + 40), this.pos.getZ() - (this.spawnRadius + 10),
@@ -404,7 +410,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, ITickab
 	public ItemStack getStackInSlot(int i)
 	{
 		//TODO: check out of bounce
-		return this.nexusItemStacks[i];
+		return this.nexusItemStacks.getStackInSlot(i);
 	}
 
 	/*@Override
@@ -419,15 +425,15 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, ITickab
 		super.readFromNBT(nbttagcompound);
 		// added 0 to gettaglist, because it asked an int
 		NBTTagList nbttaglist = nbttagcompound.getTagList("Items", 0);
-		this.nexusItemStacks = new ItemStack[this.getSlots()];
+		this.nexusItemStacks = new NexusItemHandler(this.getSlots());
 		for (int i = 0; i < nbttaglist.tagCount(); i++)
 		{
 			NBTTagCompound nbttagcompound1 = nbttaglist
 				.getCompoundTagAt(i);
 			byte byte0 = nbttagcompound1.getByte("Slot");
-			if ((byte0 >= 0) && (byte0 < this.nexusItemStacks.length))
+			if ((byte0 >= 0) && (byte0 < this.nexusItemStacks.toNonNullList().size()))
 			{
-				this.nexusItemStacks[byte0] = new ItemStack(nbttagcompound1);
+				this.nexusItemStacks.setStackInSlot(byte0, new ItemStack(nbttagcompound1));
 			}
 
 		}
@@ -438,7 +444,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, ITickab
 			this.boundPlayers.add(nbttaglist.getCompoundTagAt(i).getString("name"));
 			ModLogger.logDebug("Added bound player: " + nbttaglist.getCompoundTagAt(i).getString("name"));
 		}
-
+		this.fluxGeneration = nbttagcompound.getInteger("flux");
 		this.activationTimer = nbttagcompound.getShort("activationTimer");
 		this.mode = nbttagcompound.getInteger("mode");
 		this.currentWave = nbttagcompound.getShort("currentWave");
@@ -491,6 +497,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, ITickab
 	public NBTTagCompound writeToNBT(NBTTagCompound nbttagcompound)
 	{
 		super.writeToNBT(nbttagcompound);
+		nbttagcompound.setInteger("flux", fluxGeneration);
 		nbttagcompound.setShort("activationTimer", (short)this.activationTimer);
 		nbttagcompound.setShort("currentWave", (short)this.currentWave);
 		nbttagcompound.setShort("spawnRadius", (short)this.spawnRadius);
@@ -508,13 +515,13 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, ITickab
 		nbttagcompound.setBoolean("activated", this.activated);
 
 		NBTTagList nbttaglist = new NBTTagList();
-		for (int i = 0; i < this.nexusItemStacks.length; i++)
+		for (int i = 0; i < this.nexusItemStacks.toNonNullList().size(); i++)
 		{
-			if (this.nexusItemStacks[i] != ItemStack.EMPTY)
+			if (this.nexusItemStacks.getStackInSlot(i) != ItemStack.EMPTY)
 			{
 				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
 				nbttagcompound1.setByte("Slot", (byte)i);
-				this.nexusItemStacks[i].writeToNBT(nbttagcompound1);
+				this.nexusItemStacks.getStackInSlot(i).writeToNBT(nbttagcompound1);
 				nbttaglist.appendTag(nbttagcompound1);
 			}
 		}
@@ -749,15 +756,15 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, ITickab
 		{
 			this.powerLevelTimer -= 2200;
 			this.generateFlux(5 + (int)(5 * this.powerLevel / 1550.0F));
-			if ((this.nexusItemStacks[0] == ItemStack.EMPTY)
-				|| (this.nexusItemStacks[0].getItem() != /*BlocksAndItems.itemDampingAgent*/ModItems.DAMPING_AGENT))
+			if ((this.nexusItemStacks.getStackInSlot(0) == ItemStack.EMPTY)
+				|| (this.nexusItemStacks.getStackInSlot(0).getItem() != /*BlocksAndItems.itemDampingAgent*/ModItems.DAMPING_AGENT))
 			{
 				this.powerLevel += 1;
 			}
 		}
 
-		if ((this.nexusItemStacks[0] != ItemStack.EMPTY)
-			&& (this.nexusItemStacks[0].getItem() == /*BlocksAndItems.itemStrongDampingAgent*/ModItems.STRONG_DAMPING_AGENT))
+		if ((this.nexusItemStacks.getStackInSlot(0) != ItemStack.EMPTY)
+			&& (this.nexusItemStacks.getStackInSlot(0).getItem() == /*BlocksAndItems.itemStrongDampingAgent*/ModItems.STRONG_DAMPING_AGENT))
 		{
 			if ((this.powerLevel >= 0) && (!this.continuousAttack))
 			{
@@ -875,9 +882,9 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, ITickab
 	{
 		this.immuneTicks--;
 		if (this.immuneTicks < 0) this.immuneTicks = 0;
-		if (this.nexusItemStacks[0] != ItemStack.EMPTY)
+		if (this.nexusItemStacks.getStackInSlot(0) != ItemStack.EMPTY)
 		{
-			if ((this.nexusItemStacks[0].getItem() == /*BlocksAndItems.itemEmptyTrap*/ModItems.TRAP_EMPTY))
+			if ((this.nexusItemStacks.getStackInSlot(0).getItem() == /*BlocksAndItems.itemEmptyTrap*/ModItems.TRAP_EMPTY))
 			{
 				if (this.cookTime < 1200)
 				{
@@ -890,33 +897,34 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, ITickab
 				}
 				if (this.cookTime >= 1200)
 				{
-					if (this.nexusItemStacks[1] == ItemStack.EMPTY)
+					if (this.nexusItemStacks.getStackInSlot(1) == ItemStack.EMPTY)
 					{
-						this.nexusItemStacks[1] = new ItemStack(
-							/*BlocksAndItems.itemRiftTrap*/ModItems.TRAP_RIFT, 1);
-						if ((this.nexusItemStacks[0].getCount() -1) <= 0)
-							this.nexusItemStacks[0] = ItemStack.EMPTY;
+						this.nexusItemStacks.setStackInSlot(1, new ItemStack(
+								/*BlocksAndItems.itemRiftTrap*/ModItems.TRAP_RIFT, 1));
+						if ((this.nexusItemStacks.getStackInSlot(0).getCount() -1) <= 0)
+							this.nexusItemStacks.setStackInSlot(0, ItemStack.EMPTY);
 						this.cookTime = 0;
 					}
-					else if ((this.nexusItemStacks[1].getItem() == /*BlocksAndItems.itemRiftTrap*/ModItems.TRAP_RIFT))
+					else if ((this.nexusItemStacks.getStackInSlot(1).getItem() == /*BlocksAndItems.itemRiftTrap*/ModItems.TRAP_RIFT))
 					{
-						this.nexusItemStacks[1].grow(1);
-						if ((this.nexusItemStacks[0].getCount() -1) <= 0)
-							this.nexusItemStacks[0] = ItemStack.EMPTY;
+						this.nexusItemStacks.insertItem(1, new ItemStack(ModItems.RIFT_FLUX), false);
+						//this.nexusItemStacks[1].grow(1);
+						if ((this.nexusItemStacks.getStackInSlot(0).getCount() -1) <= 0)
+							this.nexusItemStacks.setStackInSlot(0, ItemStack.EMPTY);
 						this.cookTime = 0;
 					}
 				}
 			}
-			else if ((this.nexusItemStacks[0].getItem() == /*BlocksAndItems.itemRiftFlux*/ModItems.RIFT_FLUX) && (this.nexusItemStacks[0].getItemDamage() == 1))
+			else if ((this.nexusItemStacks.getStackInSlot(0).getItem() == /*BlocksAndItems.itemRiftFlux*/ModItems.RIFT_FLUX) && (this.nexusItemStacks.getStackInSlot(0).getItemDamage() == 1))
 			{
 				if ((this.cookTime < 1200) && (this.nexusLevel >= 10)) this.cookTime += 5;
 
 				if (this.cookTime >= 1200)
 				{
-					if (this.nexusItemStacks[1] == ItemStack.EMPTY)
+					if (this.nexusItemStacks.getStackInSlot(1) == ItemStack.EMPTY)
 					{
-						this.nexusItemStacks[1] = new ItemStack(/*BlocksAndItems.itemStrongCatalyst*/ModItems.STRONG_CATALYST, 1);
-						if ((this.nexusItemStacks[0].getCount() -1) <= 0) this.nexusItemStacks[0] = ItemStack.EMPTY;
+						this.nexusItemStacks.setStackInSlot(1, new ItemStack(/*BlocksAndItems.itemStrongCatalyst*/ModItems.STRONG_CATALYST, 1));
+						if ((this.nexusItemStacks.getStackInSlot(0).getCount() -1) <= 0) this.nexusItemStacks.setStackInSlot(0, ItemStack.EMPTY);
 						this.cookTime = 0;
 					}
 				}
@@ -930,31 +938,31 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, ITickab
 		if (this.activationTimer >= 400)
 		{
 			this.activationTimer = 0;
-			if (this.nexusItemStacks[0] != ItemStack.EMPTY)
+			if (this.nexusItemStacks.getStackInSlot(0) != ItemStack.EMPTY)
 			{
 
-				if (this.nexusItemStacks[0].getItem() == /*BlocksAndItems.itemNexusCatalyst*/ModItems.NEXUS_CATALYST)
+				if (this.nexusItemStacks.getStackInSlot(0).getItem() == /*BlocksAndItems.itemNexusCatalyst*/ModItems.NEXUS_CATALYST)
 				{
-					this.nexusItemStacks[0].shrink(1);
-					if (this.nexusItemStacks[0].isEmpty()) this.nexusItemStacks[0] = ItemStack.EMPTY;
+					this.nexusItemStacks.setStackInSlot(0, this.nexusItemStacks.decrStackSize(0, 1));
+					if (this.nexusItemStacks.getStackInSlot(0).isEmpty()) this.nexusItemStacks.setStackInSlot(0, ItemStack.EMPTY);
 					this.activated = true;
 					BlockNexus.setBlockView(true, this.getWorld(), this.getPos());
 					this.startInvasion(1);
 
 				}
-				else if (this.nexusItemStacks[0].getItem() == /*BlocksAndItems.itemStrongCatalyst*/ModItems.STRONG_CATALYST)
+				else if (this.nexusItemStacks.getStackInSlot(0).getItem() == /*BlocksAndItems.itemStrongCatalyst*/ModItems.STRONG_CATALYST)
 				{
-					this.nexusItemStacks[0].shrink(1);
-					if (this.nexusItemStacks[0].isEmpty()) this.nexusItemStacks[0] = ItemStack.EMPTY;
+					this.nexusItemStacks.getStackInSlot(0).shrink(1);
+					if (this.nexusItemStacks.getStackInSlot(0).isEmpty()) this.nexusItemStacks.setStackInSlot(0, ItemStack.EMPTY);
 					this.activated = true;
 					BlockNexus.setBlockView(true, this.getWorld(), this.getPos());
 					this.startInvasion(10);
 
 				}
-				else if (this.nexusItemStacks[0].getItem() == /*BlocksAndItems.itemStableNexusCatalyst*/ModItems.STABLE_NEXUS_CATALYST)
+				else if (this.nexusItemStacks.getStackInSlot(0).getItem() == /*BlocksAndItems.itemStableNexusCatalyst*/ModItems.STABLE_NEXUS_CATALYST)
 				{
-					this.nexusItemStacks[0].shrink(1);
-					if (this.nexusItemStacks[0].isEmpty()) this.nexusItemStacks[0] = ItemStack.EMPTY;
+					this.nexusItemStacks.setStackInSlot(0, this.nexusItemStacks.decrStackSize(0, 1));
+					if (this.nexusItemStacks.getStackInSlot(0).isEmpty()) this.nexusItemStacks.setStackInSlot(0, ItemStack.EMPTY);
 					this.activated = true;
 					BlockNexus.setBlockView(true, this.getWorld(), this.getPos());
 					this.startContinuousPlay();
@@ -965,15 +973,15 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, ITickab
 		}
 		else if ((this.mode == 0) || (this.mode == 4))
 		{
-			if (this.nexusItemStacks[0] != ItemStack.EMPTY)
+			if (this.nexusItemStacks.getStackInSlot(0) != ItemStack.EMPTY)
 			{
-				if ((this.nexusItemStacks[0].getItem() == /*BlocksAndItems.itemNexusCatalyst*/ModItems.NEXUS_CATALYST)
-					|| (this.nexusItemStacks[0].getItem() == /*BlocksAndItems.itemStrongCatalyst*/ModItems.STRONG_CATALYST))
+				if ((this.nexusItemStacks.getStackInSlot(0).getItem() == /*BlocksAndItems.itemNexusCatalyst*/ModItems.NEXUS_CATALYST)
+					|| (this.nexusItemStacks.getStackInSlot(0).getItem() == /*BlocksAndItems.itemStrongCatalyst*/ModItems.STRONG_CATALYST))
 				{
 					this.activationTimer += 1;
 					this.mode = 0;
 				}
-				else if (this.nexusItemStacks[0].getItem() == /*BlocksAndItems.itemStableNexusCatalyst*/ModItems.STABLE_NEXUS_CATALYST)
+				else if (this.nexusItemStacks.getStackInSlot(0).getItem() == /*BlocksAndItems.itemStableNexusCatalyst*/ModItems.STABLE_NEXUS_CATALYST)
 				{
 					this.activationTimer += 1;
 					this.mode = 4;
@@ -986,10 +994,10 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, ITickab
 		}
 		else if (this.mode == 2)
 		{
-			if (this.nexusItemStacks[0] != ItemStack.EMPTY)
+			if (this.nexusItemStacks.getStackInSlot(0) != ItemStack.EMPTY)
 			{
-				if ((this.nexusItemStacks[0].getItem() == /*BlocksAndItems.itemNexusCatalyst*/ModItems.NEXUS_CATALYST)
-					|| (this.nexusItemStacks[0].getItem() == /*BlocksAndItems.itemStrongCatalyst*/ModItems.STRONG_CATALYST))
+				if ((this.nexusItemStacks.getStackInSlot(0).getItem() == /*BlocksAndItems.itemNexusCatalyst*/ModItems.NEXUS_CATALYST)
+					|| (this.nexusItemStacks.getStackInSlot(0).getItem() == /*BlocksAndItems.itemStrongCatalyst*/ModItems.STRONG_CATALYST))
 				{
 					this.activationTimer += 1;
 				}
@@ -1001,24 +1009,27 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, ITickab
 
 	private void generateFlux(int increment)
 	{
-		this.generation += increment;
+		this.fluxGeneration  += increment;
 		if (this.generation % 10 == 0) {
 			ModLogger.logDebug("TileEntityNexus: trying to generate Flux...");
 		}
-		if (this.generation >= 3000)
+		if (this.fluxGeneration  >= 3000)
 		{
 
-			if (this.nexusItemStacks[1] == ItemStack.EMPTY)
+			/*if (this.nexusItemStacks.getStackInSlot(1) == ItemStack.EMPTY)
 			{
-				this.nexusItemStacks[1] = new ItemStack(
-					/*BlocksAndItems.itemRiftFlux*/ModItems.RIFT_FLUX, 1);
+				this.nexusItemStacks.setStackInSlot(1, new ItemStack(
+						/*BlocksAndItems.itemRiftFlu/ModItems.RIFT_FLUX, 1));
 				this.generation -= 3000;
 			}
-			else if (this.nexusItemStacks[1].getItem() == /*BlocksAndItems.itemRiftFlux*/ModItems.RIFT_FLUX)
+			else if (this.nexusItemStacks.getStackInSlot(1).getItem() == /*BlocksAndItems.itemRiftFluxModItems.RIFT_FLUX)
 			{
-				this.nexusItemStacks[1].grow(1);
+				this.nexusItemStacks.setStackInSlot(1, this.nexusItemStacks.getStackInSlot(1).grow(1));
 				this.generation -= 3000;
-			}
+			}*/
+			nexusItemStacks.insertItem(1, new ItemStack(ModItems.RIFT_FLUX), false);
+            fluxGeneration -= MAX_GENERATION_TIME;
+            markDirty();
 		}
 	}
 
@@ -1108,7 +1119,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, ITickab
 		{
 			entity.acquiredByNexus(this);
 		}
-		ModLogger.logDebug("Acquired " + entities.size() + " entities after state restore");
+		ModLogger.logInfo("Acquired " + entities.size() + " entities after state restore");
 		return entities.size();
 	}
 
@@ -1291,8 +1302,10 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, ITickab
 
 	@Override
 	public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-		ModLogger.logDebug("TileEntityNexus: trying to put " + stack.toString() + " into slot " + slot);
-		this.nexusItemStacks[slot] = stack;
+		ModLogger.logInfo("TileEntityNexus: trying to put " + stack.toString() + " into slot " + slot);
+		if (!simulate) {
+			this.nexusItemStacks.setStackInSlot(slot, stack);
+		}
 		return stack;
 	}
 
@@ -1308,7 +1321,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, ITickab
             return ItemStack.EMPTY;
         }
 
-        ItemStack existingStack = this.nexusItemStacks[slot];
+        ItemStack existingStack = this.nexusItemStacks.getStackInSlot(slot);
 
         if (existingStack.isEmpty())
         {
@@ -1331,7 +1344,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, ITickab
             if (amount == existingStack.getCount())
             {
                 stack = existingStack;
-                this.nexusItemStacks[slot] = ItemStack.EMPTY;
+                this.nexusItemStacks.setStackInSlot(slot,  ItemStack.EMPTY);
             }
             else
             {
@@ -1339,7 +1352,7 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, ITickab
 
                 if (existingStack.getCount() <= 0)
                 {
-                	this.nexusItemStacks[slot] = ItemStack.EMPTY;
+                	 this.nexusItemStacks.setStackInSlot(slot,  ItemStack.EMPTY);
                 }
             }
         //}
@@ -1350,12 +1363,91 @@ public class TileEntityNexus extends TileEntity implements INexusAccess, ITickab
 
 	@Override
 	public int getSlotLimit(int slot) {
-		return this.nexusItemStacks[slot].getMaxStackSize();
+		return this.nexusItemStacks.getStackInSlot(slot).getMaxStackSize();
 	}
 	
-	 @Override
+	@Override
+	public void setStackInSlot(int slot, ItemStack stack) {
+		//throw new NullPointerException();
+		ModLogger.logInfo(stack.toString());
+		this.nexusItemStacks.setStackInSlot(slot, stack);
+	}
+	
+	
+	 /*@Override
 	  public void setStackInSlot(int slot, ItemStack stack) {
+		 super(slot, stack);
+		 //this.nexusItemStacks.set(slot, stack);
 	    // super.setStackInSlot(slot, stack);
-		 ModLogger.logDebug("TileEntityNexus: setStackInSlot called, i guess it's time to implement this function now ...");
-	  }
+		 /*NexusItemHandler a;
+		 if(slot == 0) {
+			 a = new NexusItemHandler(this.getSlots(), stack, this.nexusItemStacks.getStackInSlot(1));
+		 } else {
+			 a = new NexusItemHandler(this.getSlots(), this.nexusItemStacks.getStackInSlot(0), stack);
+		 }
+		 this.nexusItemStacks = a;
+		 //a.set(slot, stack);
+		 //this.nexusItemStacks.setNonNullList(a);
+		 //this.nexusItemStacks.   onContentsChanged(slot);
+		 //ModLogger.logInfo("TileEntityNexus: setStackInSlot called, i guess it's time to implement this function now ...");
+	  }*/
+	 public static class NexusItemHandler extends ItemStackHandler {
+
+	        public NexusItemHandler(int size, ItemStack... stacks) {
+	            super(size);
+
+	            for (int index = 0; index < stacks.length; index++) {
+	                this.stacks.set(index, stacks[index]);
+	            }
+	        }
+
+	        public void clear() {
+	            for (int index = 0; index < this.getSlots(); index++) {
+	                this.stacks.set(index, ItemStack.EMPTY);
+	                this.onContentsChanged(index);
+	            }
+	        }
+
+	        public boolean isEmpty() {
+	            for (ItemStack stack : this.stacks) {
+	                if (stack.isEmpty() || stack.getItem() == Items.AIR) {
+	                    return true;
+	                }
+	            }
+	            return false;
+	        }
+
+	        public ItemStack decrStackSize(int index, int count) {
+	            ItemStack stack = getStackInSlot(index);
+	            stack.shrink(count);
+	            this.onContentsChanged(index);
+	            return stack;
+	        }
+
+	        public void removeStackFromSlot(int index) {
+	            this.stacks.set(index, ItemStack.EMPTY);
+	            this.onContentsChanged(index);
+	        }
+
+	        public NonNullList<ItemStack> toNonNullList() {
+	            NonNullList<ItemStack> items = NonNullList.create();
+	            items.addAll(this.stacks);
+	            return items;
+	        }
+
+	        public void setNonNullList(NonNullList<ItemStack> items) {
+	            if (items.size() == 0)
+	                return;
+	            if (items.size() != this.getSlots())
+	                throw new IndexOutOfBoundsException("NonNullList must be same size as ItemStackHandler!");
+	            for (int index = 0; index < items.size(); index++) {
+	                this.stacks.set(index, items.get(index));
+	            }
+	        }
+
+	        @Override
+	        public String toString() {
+	            return this.stacks.toString();
+	        }
+	    }
 }
