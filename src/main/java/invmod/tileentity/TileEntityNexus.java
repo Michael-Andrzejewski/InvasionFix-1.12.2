@@ -93,6 +93,8 @@ public class TileEntityNexus extends TileEntity implements ITickable, IItemHandl
 	private boolean mobsSorted;
 	private boolean resumedFromNBT;
 	private boolean activated;
+	
+	public final static int TOTAL_ACTIVATION_TIME = 200; // was 400
 
 	public TileEntityNexus()
 	{
@@ -308,7 +310,7 @@ public class TileEntityNexus extends TileEntity implements ITickable, IItemHandl
 
 	public boolean isActivating()
 	{
-		return (this.activationTimer > 0) && (this.activationTimer < 400);
+		return (this.activationTimer > 0) && (this.activationTimer < TOTAL_ACTIVATION_TIME);
 	}
 
 	public int getMode()
@@ -383,7 +385,7 @@ public class TileEntityNexus extends TileEntity implements ITickable, IItemHandl
 
 	public int getActivationProgressScaled(int i)
 	{
-		return this.activationTimer * i / 400;
+		return this.activationTimer * i / TOTAL_ACTIVATION_TIME;
 	}
 
 	public int getGenerationProgressScaled(int i)
