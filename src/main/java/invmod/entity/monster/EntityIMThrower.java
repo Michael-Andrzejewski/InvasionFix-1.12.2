@@ -52,7 +52,7 @@ public class EntityIMThrower extends EntityIMMob
 	public EntityIMThrower(World world, TileEntityNexus nexus)
 	{
 		super(world, nexus);
-		this.setBaseMoveSpeedStat(0.13F);
+		// this.setBaseMoveSpeedStat(0.13F);
 		this.attackStrength = 10;
 		this.selfDamage = 0;
 		this.maxSelfDamage = 0;
@@ -156,7 +156,7 @@ public class EntityIMThrower extends EntityIMMob
 
 		if (tier == 1)
 		{
-			this.setBaseMoveSpeedStat(0.13F);
+			// this.setBaseMoveSpeedStat(0.13F);
 			this.attackStrength = 10;
 			this.experienceValue = 20;
 			this.setName("Thrower");
@@ -165,7 +165,7 @@ public class EntityIMThrower extends EntityIMMob
 		}
 		else if (tier == 2)
 		{
-			this.setBaseMoveSpeedStat(0.23F);
+			// this.setBaseMoveSpeedStat(0.23F);
 			this.attackStrength = 15;
 			this.experienceValue = 25;
 			this.setName("Big Thrower");

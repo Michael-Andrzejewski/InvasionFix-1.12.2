@@ -544,7 +544,7 @@ public class EntityIMZombiePigman extends EntityIMMob implements ICanDig
 		if (tier == 1)
 		{
 			this.setName("Zombie Pigman");
-			this.setBaseMoveSpeedStat(0.25F);
+			// this.setBaseMoveSpeedStat(0.25F);
 			this.attackStrength = 8;
 			//this.defaultHeldItem = new ItemStack(Items.GOLDEN_SWORD, 1);
 			this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(Items.GOLDEN_SWORD));
@@ -552,7 +552,7 @@ public class EntityIMZombiePigman extends EntityIMMob implements ICanDig
 		else if (tier == 2)
 		{
 			this.setName("Zombie Pigman");
-			this.setBaseMoveSpeedStat(0.35F);
+			// this.setBaseMoveSpeedStat(0.35F);
 			this.attackStrength = 12;
 
 			if (this.rand.nextInt(5) == 1)
@@ -578,7 +578,7 @@ public class EntityIMZombiePigman extends EntityIMMob implements ICanDig
 		else if (tier == 3)
 		{
 			this.setName("Zombie Pigman Brute");
-			this.setBaseMoveSpeedStat(0.20F);
+			// this.setBaseMoveSpeedStat(0.20F);
 			this.attackStrength = 18;
 		}
 	}
