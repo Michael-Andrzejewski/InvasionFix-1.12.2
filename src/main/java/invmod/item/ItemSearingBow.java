@@ -25,14 +25,14 @@ public class ItemSearingBow extends ItemBow
 
 	public ItemSearingBow()
 	{
-		//super();
+		super();
 		//this.setRegistryName(this.name);
 		//GameRegistry.register(this);
 		//this.setUnlocalizedName(this.name);
 		//this.setCreativeTab(mod_Invasion.tabInvmod);
 	}
 
-	@Override
+	/*@Override
 	public void onPlayerStoppedUsing(ItemStack stackIn, World worldIn, EntityLivingBase wielder, int timeLeft)
 	{
 		int var6 = this.getMaxItemUseDuration(stackIn) - timeLeft;
@@ -161,7 +161,7 @@ public class ItemSearingBow extends ItemBow
 	return itemStack;
 	}*/
 
-	public String getName()
+	/*public String getName()
 	{
 		return this.name;
 	}
@@ -186,6 +186,6 @@ public class ItemSearingBow extends ItemBow
 
 			return null;
 		}
-	}
+	}*/
 
 }
