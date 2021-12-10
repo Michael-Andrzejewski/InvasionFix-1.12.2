@@ -1,7 +1,6 @@
 package invmod.inventory.container;
 
 import invmod.tileentity.TileEntityNexus;
-import invmod.util.ModLogger;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -20,8 +19,6 @@ public class ContainerNexus extends Container {
 	private int nexusKills;
 	private int spawnRadius;
 	private int generation;
-	private int powerLevel;
-	private int cookTime;
 	private int mode;
 
 	private IItemHandler handler;
@@ -34,8 +31,6 @@ public class ContainerNexus extends Container {
 		this.nexusKills = 0;
 		this.spawnRadius = 0;
 		this.generation = 0;
-		this.powerLevel = 0;
-		this.cookTime = 0;
 		this.nexus = tileEntityNexus;
 		this.handler = nexus.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
@@ -65,43 +60,32 @@ public class ContainerNexus extends Container {
 	@Override
 	public void detectAndSendChanges() {
 		super.detectAndSendChanges();
-		// for (int i = 0; i < this.crafters.size(); i++) {
 		for (int i = 0; i < this.listeners.size(); i++) {
-			// ICrafting icrafting = (ICrafting) this.crafters.get(i);
 			if (this.activationTimer != this.nexus.getActivationTimer()) {
-				// icrafting.sendProgressBarUpdate(this, 0, this.nexus.getActivationTimer());
 				this.listeners.get(i).sendWindowProperty(this, 0, this.nexus.getActivationTimer());
 			}
 			if (this.mode != this.nexus.getMode()) {
-				// icrafting.sendProgressBarUpdate(this, 1, this.nexus.getMode());
 				this.listeners.get(i).sendWindowProperty(this, 1, this.nexus.getMode());
 			}
 			if (this.currentWave != this.nexus.getCurrentWave()) {
-				// icrafting.sendProgressBarUpdate(this, 2, this.nexus.getCurrentWave());
 				this.listeners.get(i).sendWindowProperty(this, 2, this.nexus.getCurrentWave());
 			}
 			if (this.nexusLevel != this.nexus.getNexusLevel()) {
-				// icrafting.sendProgressBarUpdate(this, 3, this.nexus.getNexusLevel());
 				this.listeners.get(i).sendWindowProperty(this, 3, this.nexus.getNexusLevel());
 			}
 			if (this.nexusKills != this.nexus.getNexusKills()) {
-				// icrafting.sendProgressBarUpdate(this, 4, this.nexus.getNexusKills());
 				this.listeners.get(i).sendWindowProperty(this, 4, this.nexus.getNexusKills());
 			}
 			if (this.spawnRadius != this.nexus.getSpawnRadius()) {
-				// icrafting.sendProgressBarUpdate(this, 5, this.nexus.getSpawnRadius());
 				this.listeners.get(i).sendWindowProperty(this, 4, this.nexus.getSpawnRadius());
 			}
 			if (this.generation != this.nexus.getGeneration()) {
-				// icrafting.sendProgressBarUpdate(this, 6, this.nexus.getGeneration());
 				this.listeners.get(i).sendWindowProperty(this, 4, this.nexus.getGeneration());
 			}
 			if (this.generation != this.nexus.getNexusPowerLevel()) {
-				// icrafting.sendProgressBarUpdate(this, 7, this.nexus.getNexusPowerLevel());
 				this.listeners.get(i).sendWindowProperty(this, 4, this.nexus.getPowerLevel());
 			}
 			if (this.generation != this.nexus.getCookTime()) {
-				// icrafting.sendProgressBarUpdate(this, 9, this.nexus.getCookTime());
 				this.listeners.get(i).sendWindowProperty(this, 4, this.nexus.getCookTime());
 			}
 		}
@@ -113,8 +97,6 @@ public class ContainerNexus extends Container {
 		this.nexusKills = this.nexus.getNexusKills();
 		this.spawnRadius = this.nexus.getSpawnRadius();
 		this.generation = this.nexus.getGeneration();
-		this.powerLevel = this.nexus.getNexusPowerLevel();
-		this.cookTime = this.nexus.getCookTime();
 	}
 
 	@Override
@@ -149,12 +131,12 @@ public class ContainerNexus extends Container {
 	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) 	{
 		ItemStack stack = ItemStack.EMPTY;
 		Slot slot = (Slot)this.inventorySlots.get(index);
-		
+
 		if(slot != null && slot.getHasStack())
 		{
 			ItemStack stack1 = slot.getStack();
 			stack = stack1.copy();
-			
+
 			if(index >= 0 && index < 27)
 			{
 				if(!this.mergeItemStack(stack1, 27, 36, false)) return ItemStack.EMPTY;
@@ -167,14 +149,14 @@ public class ContainerNexus extends Container {
 			{
 				return ItemStack.EMPTY;
 			}
-			
+
 			if(stack1.isEmpty()) slot.putStack(ItemStack.EMPTY);
 			else slot.onSlotChanged();
-			
+
 			if(stack1.getCount() == stack.getCount()) return ItemStack.EMPTY;
 			slot.onTake(playerIn, stack1);
 		}
-		
+
 		return stack;
 	}	
 }

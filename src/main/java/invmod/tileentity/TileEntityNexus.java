@@ -1,9 +1,9 @@
 package invmod.tileentity;
 
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import invmod.ModBlocks;
 import invmod.ModItems;
 import invmod.SoundHandler;
@@ -76,12 +76,10 @@ public class TileEntityNexus extends TileEntity implements ITickable {
 	private int daysToAttack;
 	private long lastWorldTime;
 	private int zapTimer;
-	private int errorState;
 	private int tickCount;
 	private int cleanupTimer;
 	private int immuneTicks = 0; // DarthXenon: Cooldown between attacks
 	private long spawnerElapsedRestore;
-	private long timer;
 	private long waveDelayTimer;
 	private long waveDelay;
 	private boolean continuousAttack;
@@ -114,7 +112,7 @@ public class TileEntityNexus extends TileEntity implements ITickable {
 				this.pos.getX() + (this.spawnRadius + 10), this.pos.getY() + (this.spawnRadius + 40),
 				this.pos.getZ() + (this.spawnRadius + 10));
 		this.boundPlayers = new ArrayList<>();
-		this.mobList = new ArrayList();
+		this.mobList = new ArrayList<EntityIMLiving>();
 		this.attackerAI = new AttackerAI(this);
 		this.activationTimer = 0;
 		this.cookTime = 0;
@@ -131,9 +129,7 @@ public class TileEntityNexus extends TileEntity implements ITickable {
 		this.nextAttackTime = 0;
 		this.daysToAttack = 0;
 		this.lastWorldTime = 0L;
-		this.errorState = 0;
-		this.tickCount = 0;
-		this.timer = 0L;
+		this.tickCount = 0;;
 		this.zapTimer = 0;
 		this.cleanupTimer = 0;
 		this.waveDelayTimer = -1L;
@@ -526,7 +522,6 @@ public class TileEntityNexus extends TileEntity implements ITickable {
 					this.hp = this.maxHp;
 					this.lastHp = this.maxHp;
 					this.waveDelayTimer = -1L;
-					this.timer = System.currentTimeMillis();
 					String s = "Bound player(s): ";
 					for (int i = 0; i < this.getBoundPlayers().size(); i++)
 						s = s + this.getBoundPlayers().get(i) + ", ";
@@ -868,7 +863,6 @@ public class TileEntityNexus extends TileEntity implements ITickable {
 		this.waveSpawner.stop();
 		this.activationTimer = 0;
 		this.currentWave = 0;
-		this.errorState = 0;
 		this.activated = false;
 		BlockNexus.setBlockView(this.activated, this.getWorld(), this.getPos());
 		this.boundPlayers.clear();
@@ -880,7 +874,6 @@ public class TileEntityNexus extends TileEntity implements ITickable {
 	private void bindPlayers() {
 		List<EntityPlayer> players = this.world.getEntitiesWithinAABB(EntityPlayer.class, this.boundingBoxToRadius);
 		for (EntityPlayer entityPlayer : players) {
-			long time = System.currentTimeMillis();
 			String playerName = entityPlayer.getDisplayName().getUnformattedText();
 			boolean endsWithS = playerName.toLowerCase().endsWith("s");
 			if (!this.boundPlayers.contains(playerName)) {
@@ -901,24 +894,6 @@ public class TileEntityNexus extends TileEntity implements ITickable {
 
 	public void setMode(int i) {
 		this.mode = i;
-		this.setActive(this.mode != 0);
-	}
-
-	private void setActive(boolean flag) {
-// TODO: Fix this
-//		if (this.world != null) {
-//			int meta = this.world.getBlockMetadata(this.pos.getX(), this.pos.getY(),
-//					this.pos.getZ());
-//			if (flag) {
-//				this.world.setBlockMetadataWithNotify(this.pos.getX(),
-//						this.pos.getY(), this.pos.getZ(), (meta & 0x4) == 0 ? meta + 4
-//								: meta, 3);
-//			} else {
-//				this.world.setBlockMetadataWithNotify(this.pos.getX(),
-//						this.pos.getY(), this.pos.getZ(), (meta & 0x4) == 4 ? meta - 4
-//								: meta, 3);
-//			}
-//		}
 	}
 
 	private int acquireEntities() {
@@ -936,7 +911,6 @@ public class TileEntityNexus extends TileEntity implements ITickable {
 		if (!this.world.isRemote) {
 			mod_invasion.sendMessageToPlayers(this.getBoundPlayers(), "The nexus is destroyed!");
 			// this.stop();
-			long time = System.currentTimeMillis();
 			for (int i = 0; i < this.getBoundPlayers().size(); i++) {
 				EntityPlayer player = this.world.getPlayerEntityByName(this.getBoundPlayers().get(i));
 				if (player != null) {
@@ -1006,7 +980,6 @@ public class TileEntityNexus extends TileEntity implements ITickable {
 					- this.waveSpawner.resumeFromState(wave, this.spawnerElapsedRestore, this.spawnRadius));
 			return true;
 		} catch (WaveSpawnerException e) {
-			float tierLevel;
 			ModLogger.logFatal("Error resuming spawner:" + e.getMessage());
 			this.waveSpawner.stop();
 			return false;
@@ -1080,9 +1053,20 @@ public class TileEntityNexus extends TileEntity implements ITickable {
 
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-			return (T) this.handler;
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+			
+			try {
+				@SuppressWarnings("unchecked")
+				T cast = (T) this.handler;
+				return cast;
+			} catch(ClassCastException e) {
+				ModLogger.logFatal(e.getMessage());
+			}
+
+			
+		}
 		return super.getCapability(capability, facing);
+
 	}
 
 }
