@@ -146,39 +146,35 @@ public class ContainerNexus extends Container {
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(EntityPlayer player, int i) {
-		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = (Slot) this.inventorySlots.get(i);
-		if ((slot != null) && (slot.getHasStack())) {
-			ItemStack itemstack1 = slot.getStack();
-			itemstack = itemstack1.copy();
-			if (i == 1) {
-				if (!this.mergeItemStack(itemstack1, 2, 38, true)) {
-					return ItemStack.EMPTY;
-				}
-			} else if ((i >= 2) && (i < 29)) {
-				if (!this.mergeItemStack(itemstack1, 29, 38, false)) {
-					return ItemStack.EMPTY;
-				}
-			} else if ((i >= 29) && (i < 38)) {
-				if (!this.mergeItemStack(itemstack1, 2, 29, false)) {
-					return ItemStack.EMPTY;
-				}
-			} else if (!this.mergeItemStack(itemstack1, 2, 38, false)) {
+	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) 	{
+		ItemStack stack = ItemStack.EMPTY;
+		Slot slot = (Slot)this.inventorySlots.get(index);
+		
+		if(slot != null && slot.getHasStack())
+		{
+			ItemStack stack1 = slot.getStack();
+			stack = stack1.copy();
+			
+			if(index >= 0 && index < 27)
+			{
+				if(!this.mergeItemStack(stack1, 27, 36, false)) return ItemStack.EMPTY;
+			}
+			else if(index >= 27 && index < 36)
+			{
+				if(!this.mergeItemStack(stack1, 0, 27, false)) return ItemStack.EMPTY;
+			}
+			else if(!this.mergeItemStack(stack1, 0, 36, false))
+			{
 				return ItemStack.EMPTY;
 			}
-			if (itemstack1.getCount() == 0) {
-				ModLogger.logInfo("TODO");
-				slot.putStack(null);
-			} else {
-				slot.onSlotChanged();
-			}
-			if (itemstack1.getCount() != itemstack.getCount()) {
-				slot.onTake(player, itemstack1);
-			} else {
-				return ItemStack.EMPTY;
-			}
+			
+			if(stack1.isEmpty()) slot.putStack(ItemStack.EMPTY);
+			else slot.onSlotChanged();
+			
+			if(stack1.getCount() == stack.getCount()) return ItemStack.EMPTY;
+			slot.onTake(playerIn, stack1);
 		}
-		return itemstack;
-	}
+		
+		return stack;
+	}	
 }

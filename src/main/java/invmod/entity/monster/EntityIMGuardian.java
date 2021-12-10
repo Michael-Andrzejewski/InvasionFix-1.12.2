@@ -7,7 +7,7 @@ import com.google.common.base.Predicate;
 import invmod.entity.ICanDig;
 import invmod.entity.TerrainDigger;
 import invmod.entity.TerrainModifier;
-import invmod.nexus.INexusAccess;
+import invmod.tileentity.TileEntityNexus;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -55,7 +55,7 @@ public class EntityIMGuardian extends EntityIMMob implements ICanDig {
 	private TerrainModifier terrainModifier;
 	private TerrainDigger terrainDigger;
 
-	public EntityIMGuardian(World worldIn, INexusAccess nexus) {
+	public EntityIMGuardian(World worldIn, TileEntityNexus nexus) {
 		super(worldIn);
 		this.experienceValue = 30;
 		this.setSize(0.85F, 0.85F);
