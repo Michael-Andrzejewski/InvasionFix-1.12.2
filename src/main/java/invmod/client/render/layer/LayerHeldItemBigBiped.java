@@ -14,39 +14,33 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 
-
-public class LayerHeldItemBigBiped implements LayerRenderer<EntityLivingBase>
-{
+public class LayerHeldItemBigBiped implements LayerRenderer<EntityLivingBase> {
 
 	private final RenderLivingBase renderLivingEntity;
 
-	public LayerHeldItemBigBiped(RenderLivingBase renderLivingEntity)
-	{
+	public LayerHeldItemBigBiped(RenderLivingBase renderLivingEntity) {
 		this.renderLivingEntity = renderLivingEntity;
 	}
 
 	@Override
-	public void doRenderLayer(EntityLivingBase entityLiving, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
-	{
-		ItemStack itemstack = entityLiving.getActiveItemStack(); //.getHeldItem();
+	public void doRenderLayer(EntityLivingBase entityLiving, float limbSwing, float limbSwingAmount, float partialTicks,
+			float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+		ItemStack itemstack = entityLiving.getActiveItemStack(); // .getHeldItem();
 
-		if (itemstack != null && this.renderLivingEntity.getMainModel() instanceof ModelBigBiped)
-		{
+		if (itemstack != null && this.renderLivingEntity.getMainModel() instanceof ModelBigBiped) {
 			GlStateManager.pushMatrix();
 
-			if (this.renderLivingEntity.getMainModel().isChild)
-			{
+			if (this.renderLivingEntity.getMainModel().isChild) {
 				float f7 = 0.5F;
 				GlStateManager.translate(0.0F, 0.625F, 0.0F);
 				GlStateManager.rotate(-20.0F, -1.0F, 0.0F, 0.0F);
 				GlStateManager.scale(f7, f7, f7);
 			}
 
-			((ModelBigBiped)this.renderLivingEntity.getMainModel()).itemArmPostRender(1.0F);
+			((ModelBigBiped) this.renderLivingEntity.getMainModel()).itemArmPostRender(1.0F);
 			GlStateManager.translate(-0.0625F, 0.4375F, 0.0625F);
 
-			if (entityLiving instanceof EntityPlayer && ((EntityPlayer)entityLiving).fishEntity != null)
-			{
+			if (entityLiving instanceof EntityPlayer && ((EntityPlayer) entityLiving).fishEntity != null) {
 				itemstack = new ItemStack(Items.FISHING_ROD, 0);
 			}
 
@@ -63,20 +57,19 @@ public class LayerHeldItemBigBiped implements LayerRenderer<EntityLivingBase>
 			}
 			float f9 = 0.5F;
 			GlStateManager.scale(f9, f9, f9);
-			//GlStateManager.translate(-0.25F, 0.15F, 0.0625F);
+			// GlStateManager.translate(-0.25F, 0.15F, 0.0625F);
 			GlStateManager.translate(0.0F, -0.425F, -0.2F);
-			if (item instanceof ItemBow)
-			{
+			if (item instanceof ItemBow) {
 				GlStateManager.translate(-0.15F, -0.025F, 0.0F);
 			}
-			minecraft.getItemRenderer().renderItem(entityLiving, itemstack, ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND);
+			minecraft.getItemRenderer().renderItem(entityLiving, itemstack,
+					ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND);
 			GlStateManager.popMatrix();
 		}
 	}
 
 	@Override
-	public boolean shouldCombineTextures()
-	{
+	public boolean shouldCombineTextures() {
 		return false;
 	}
 

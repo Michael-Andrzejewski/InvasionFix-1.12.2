@@ -1,6 +1,5 @@
 package invmod.nexus;
 
-public abstract interface IWaveSource
-{
+public abstract interface IWaveSource {
 	public abstract Wave getWave();
 }

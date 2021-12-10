@@ -1,29 +1,23 @@
 package invmod.util;
 
-public class SingleSelection<T>
-	implements ISelect<T>
-{
+public class SingleSelection<T> implements ISelect<T> {
 	private T object;
 
-	public SingleSelection(T object)
-	{
+	public SingleSelection(T object) {
 		this.object = object;
 	}
 
 	@Override
-	public T selectNext()
-	{
+	public T selectNext() {
 		return this.object;
 	}
 
 	@Override
-	public void reset()
-	{
+	public void reset() {
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return this.object.toString();
 	}
 }

@@ -5,14 +5,11 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-
-public class ModelBurrower extends ModelBase
-{
+public class ModelBurrower extends ModelBase {
 	ModelRenderer head;
 	ModelRenderer[] segments;
 
-	public ModelBurrower(int numberOfSegments)
-	{
+	public ModelBurrower(int numberOfSegments) {
 		this.textureWidth = 64;
 		this.textureHeight = 32;
 
@@ -23,14 +20,12 @@ public class ModelBurrower extends ModelBase
 		this.head.mirror = true;
 		this.setRotation(this.head, 0.0F, 0.0F, 0.0F);
 		this.segments = new ModelRenderer[numberOfSegments];
-		for (int i = 0; i < numberOfSegments; i++)
-		{
+		for (int i = 0; i < numberOfSegments; i++) {
 			this.segments[i] = new ModelRenderer(this, 0, 0);
 
 			if (i % 2 == 0)
 				this.segments[i].addBox(-0.5F, -3.5F, -3.5F, 2, 7, 7);
-			else
-			{
+			else {
 				this.segments[i].addBox(-0.5F, -2.5F, -2.5F, 2, 5, 5);
 			}
 			this.segments[i].setRotationPoint(-4.0F, 0.0F, 0.0F);
@@ -40,23 +35,21 @@ public class ModelBurrower extends ModelBase
 		}
 	}
 
-	public void render(Entity entity, float partialTick, PosRotate3D[] pos, float modelScale)
-	{
+	public void render(Entity entity, float partialTick, PosRotate3D[] pos, float modelScale) {
 		super.render(entity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, modelScale);
 
-		this.head.setRotationPoint((float)pos[0].getPosX(), (float)pos[0].getPosY(), (float)pos[0].getPosZ());
+		this.head.setRotationPoint((float) pos[0].getPosX(), (float) pos[0].getPosY(), (float) pos[0].getPosZ());
 		this.setRotation(this.head, pos[0].getRotX(), pos[0].getRotY(), pos[0].getRotZ());
-		for (int i = 0; i < this.segments.length; i++)
-		{
-			this.segments[i].setRotationPoint((float)pos[(i + 1)].getPosX(), (float)pos[(i + 1)].getPosY(), (float)pos[(i + 1)].getPosZ());
+		for (int i = 0; i < this.segments.length; i++) {
+			this.segments[i].setRotationPoint((float) pos[(i + 1)].getPosX(), (float) pos[(i + 1)].getPosY(),
+					(float) pos[(i + 1)].getPosZ());
 			this.setRotation(this.segments[i], pos[(i + 1)].getRotX(), pos[(i + 1)].getRotY(), pos[(i + 1)].getRotZ());
 			this.segments[i].render(modelScale);
 		}
 		this.head.render(modelScale);
 	}
 
-	private void setRotation(ModelRenderer model, float x, float y, float z)
-	{
+	private void setRotation(ModelRenderer model, float x, float y, float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;

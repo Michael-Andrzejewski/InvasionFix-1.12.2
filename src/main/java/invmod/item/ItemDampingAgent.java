@@ -1,10 +1,8 @@
 package invmod.item;
 
-public class ItemDampingAgent extends ModItem
-{
+public class ItemDampingAgent extends ModItem {
 
-	public ItemDampingAgent()
-	{
+	public ItemDampingAgent() {
 		super("dampingAgent");
 		this.setMaxStackSize(1);
 	}

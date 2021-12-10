@@ -9,9 +9,7 @@ import invmod.entity.monster.EntityIMFlying;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 
-
-public class EntityAIBoP extends EntityAIBase
-{
+public class EntityAIBoP extends EntityAIBase {
 	private static final int PATIENCE = 500;
 	private EntityIMFlying theEntity;
 	private int timeWithGoal;
@@ -21,8 +19,7 @@ public class EntityAIBoP extends EntityAIBase
 	private Goal lastGoal;
 	private EntityLivingBase lastTarget;
 
-	public EntityAIBoP(EntityIMFlying entity)
-	{
+	public EntityAIBoP(EntityIMFlying entity) {
 		this.theEntity = entity;
 		this.timeWithGoal = 0;
 		this.patienceTime = 0;
@@ -32,77 +29,59 @@ public class EntityAIBoP extends EntityAIBase
 	}
 
 	@Override
-	public boolean shouldExecute()
-	{
+	public boolean shouldExecute() {
 		return true;
 	}
 
 	@Override
-	public void startExecuting()
-	{
+	public void startExecuting() {
 		this.timeWithGoal = 0;
 		this.patienceTime = 0;
 	}
 
 	@Override
-	public void updateTask()
-	{
+	public void updateTask() {
 		this.timeWithGoal += 1;
-		if (this.theEntity.getAIGoal() != this.lastGoal)
-		{
+		if (this.theEntity.getAIGoal() != this.lastGoal) {
 			this.lastGoal = this.theEntity.getAIGoal();
 			this.timeWithGoal = 0;
 		}
 
 		this.timeWithTarget += 1;
-		if (this.theEntity.getAttackTarget() != this.lastTarget)
-		{
+		if (this.theEntity.getAttackTarget() != this.lastTarget) {
 			this.lastTarget = this.theEntity.getAttackTarget();
 			this.timeWithTarget = 0;
 		}
 
-		if (this.theEntity.getAttackTarget() == null)
-		{
-			if (this.theEntity.getNexus() != null)
-			{
-				if (this.theEntity.getAIGoal() != Goal.BREAK_NEXUS)
-				{
+		if (this.theEntity.getAttackTarget() == null) {
+			if (this.theEntity.getNexus() != null) {
+				if (this.theEntity.getAIGoal() != Goal.BREAK_NEXUS) {
 					this.theEntity.transitionAIGoal(Goal.BREAK_NEXUS);
 				}
 
-			}
-			else if (this.theEntity.getAIGoal() != Goal.CHILL)
-			{
+			} else if (this.theEntity.getAIGoal() != Goal.CHILL) {
 				this.theEntity.transitionAIGoal(Goal.CHILL);
 				this.theEntity.getNavigatorNew().clearPath();
 				this.theEntity.getNavigatorNew().setMovementType(INavigationFlying.MoveType.PREFER_WALKING);
 				this.theEntity.getNavigatorNew().setLandingPath();
 			}
 
-		}
-		else if ((this.theEntity.getAIGoal() == Goal.CHILL) || (this.theEntity.getAIGoal() == Goal.NONE))
-		{
+		} else if ((this.theEntity.getAIGoal() == Goal.CHILL) || (this.theEntity.getAIGoal() == Goal.NONE)) {
 			this.chooseTargetAction(this.theEntity.getAttackTarget());
 		}
 
-		if (this.theEntity.getAIGoal() != Goal.STAY_AT_RANGE)
-		{
-			if (this.theEntity.getAIGoal() == Goal.MELEE_TARGET)
-			{
-				if (this.timeWithGoal > 600)
-				{
+		if (this.theEntity.getAIGoal() != Goal.STAY_AT_RANGE) {
+			if (this.theEntity.getAIGoal() == Goal.MELEE_TARGET) {
+				if (this.timeWithGoal > 600) {
 					this.theEntity.transitionAIGoal(Goal.STAY_AT_RANGE);
 				}
 			}
 		}
 	}
 
-	protected void chooseTargetAction(EntityLivingBase target)
-	{
-		if (this.theEntity.getMoveState() != MoveState.FLYING)
-		{
-			if ((this.theEntity.getDistance(target) < 10.0F) && (this.theEntity.world.rand.nextFloat() > 0.3F))
-			{
+	protected void chooseTargetAction(EntityLivingBase target) {
+		if (this.theEntity.getMoveState() != MoveState.FLYING) {
+			if ((this.theEntity.getDistance(target) < 10.0F) && (this.theEntity.world.rand.nextFloat() > 0.3F)) {
 				this.theEntity.transitionAIGoal(Goal.MELEE_TARGET);
 				return;
 			}

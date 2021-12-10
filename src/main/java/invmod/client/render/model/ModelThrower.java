@@ -5,9 +5,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
-
-public class ModelThrower extends ModelBase
-{
+public class ModelThrower extends ModelBase {
 	public ModelRenderer bipedHead;
 	public ModelRenderer bipedBody;
 	public ModelRenderer bipedBody2;
@@ -19,18 +17,15 @@ public class ModelThrower extends ModelBase
 	public boolean heldItemRight;
 	public boolean isSneak;
 
-	public ModelThrower()
-	{
+	public ModelThrower() {
 		this(0.0F);
 	}
 
-	public ModelThrower(float f)
-	{
+	public ModelThrower(float f) {
 		this(f, 0.0F);
 	}
 
-	public ModelThrower(float f, float f1)
-	{
+	public ModelThrower(float f, float f1) {
 		this.heldItemLeft = false;
 		this.heldItemRight = false;
 		this.isSneak = false;
@@ -87,8 +82,7 @@ public class ModelThrower extends ModelBase
 	}
 
 	@Override
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
-	{
+	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		this.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 		this.bipedHead.render(f5);
 		this.bipedBody.render(f5);
@@ -100,8 +94,7 @@ public class ModelThrower extends ModelBase
 	}
 
 	@Override
-	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
-	{
+	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
 		this.bipedHead.rotateAngleY = (f3 / 57.29578F);
 		this.bipedHead.rotateAngleX = (f4 / 57.29578F);
 		this.bipedRightArm.rotateAngleX = (MathHelper.cos(f * 0.6662F + 3.141593F) * 2.0F * f1 * 0.5F);
@@ -112,8 +105,7 @@ public class ModelThrower extends ModelBase
 		this.bipedLeftLeg.rotateAngleX = (MathHelper.cos(f * 0.6662F + 3.141593F) * 1.4F * f1);
 		this.bipedRightLeg.rotateAngleY = 0.0F;
 		this.bipedLeftLeg.rotateAngleY = 0.0F;
-		if (this.isRiding)
-		{
+		if (this.isRiding) {
 			this.bipedRightArm.rotateAngleX += -0.6283185F;
 			this.bipedLeftArm.rotateAngleX += -0.6283185F;
 			this.bipedRightLeg.rotateAngleX = -1.256637F;
@@ -121,12 +113,10 @@ public class ModelThrower extends ModelBase
 			this.bipedRightLeg.rotateAngleY = 0.314159F;
 			this.bipedLeftLeg.rotateAngleY = -0.314159F;
 		}
-		if (this.heldItemLeft)
-		{
+		if (this.heldItemLeft) {
 			this.bipedLeftArm.rotateAngleX = (this.bipedLeftArm.rotateAngleX * 0.5F - 0.314159F);
 		}
-		if (this.heldItemRight)
-		{
+		if (this.heldItemRight) {
 			this.bipedRightArm.rotateAngleX = (this.bipedRightArm.rotateAngleX * 0.5F - 0.314159F);
 		}
 		this.bipedRightArm.rotateAngleY = 0.0F;

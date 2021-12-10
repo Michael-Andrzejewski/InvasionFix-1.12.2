@@ -2,24 +2,20 @@ package invmod.item;
 
 import net.minecraft.item.Item;
 
-
-public class ItemEngyHammer extends Item
-{
+public class ItemEngyHammer extends Item {
 
 	private final String name = "engyhammer";
 
-	public ItemEngyHammer()
-	{
-		//this.setRegistryName(this.name);
-		//GameRegistry.register(this);
-		//this.setCreativeTab(null);
-		//this.setUnlocalizedName(Reference.MODID + "_" + this.name);
+	public ItemEngyHammer() {
+		// this.setRegistryName(this.name);
+		// GameRegistry.register(this);
+		// this.setCreativeTab(null);
+		// this.setUnlocalizedName(Reference.MODID + "_" + this.name);
 		this.setFull3D();
 		this.setMaxStackSize(1);
 	}
 
-	public String getName()
-	{
+	public String getName() {
 		return this.name;
 	}
 }

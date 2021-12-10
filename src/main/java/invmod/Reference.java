@@ -2,9 +2,7 @@ package invmod;
 
 import invmod.util.Version;
 
-
-public class Reference
-{
+public class Reference {
 
 	public static final String NAME = "Invasion";
 	public static final String MODID = "mod_invasion";

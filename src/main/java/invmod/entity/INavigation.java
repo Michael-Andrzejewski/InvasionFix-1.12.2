@@ -5,9 +5,7 @@ import invmod.entity.ai.navigator.Path;
 import invmod.entity.ai.navigator.PathAction;
 import net.minecraft.entity.Entity;
 
-
-public interface INavigation extends INotifyTask
-{
+public interface INavigation extends INotifyTask {
 
 	public PathAction getCurrentWorkingAction();
 
@@ -15,11 +13,13 @@ public interface INavigation extends INotifyTask
 
 	public Path getPathToXYZ(double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat);
 
-	public boolean tryMoveToXYZ(double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat1, float paramFloat2);
+	public boolean tryMoveToXYZ(double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat1,
+			float paramFloat2);
 
 	public Path getPathTowardsXZ(double paramDouble1, double paramDouble2, int paramInt1, int paramInt2, int paramInt3);
 
-	public boolean tryMoveTowardsXZ(double paramDouble1, double paramDouble2, int paramInt1, int paramInt2, int paramInt3, float paramFloat);
+	public boolean tryMoveTowardsXZ(double paramDouble1, double paramDouble2, int paramInt1, int paramInt2,
+			int paramInt3, float paramFloat);
 
 	public Path getPathToEntity(Entity paramEntity, float paramFloat);
 

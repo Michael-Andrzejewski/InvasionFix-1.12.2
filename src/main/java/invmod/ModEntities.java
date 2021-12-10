@@ -31,10 +31,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
 @ObjectHolder(Reference.MODID)
 public class ModEntities {
-	
+
 	private static int entityID = 0;
 
-	//No Egg
+	// No Egg
 	@ObjectHolder("IMEgg")
 	public static final EntityEntry IM_EGG = Null();
 	@ObjectHolder("IMBoulder")
@@ -45,8 +45,8 @@ public class ModEntities {
 	public static final EntityEntry IM_TRAP = Null();
 	@ObjectHolder("IMPrimedTNT")
 	public static final EntityEntry IM_PRIMED_TNT = Null();
-	
-	//Egg
+
+	// Egg
 	@ObjectHolder("IMZombie")
 	public static final EntityEntry IM_ZOMBIE = Null();
 	@ObjectHolder("IMSkeleton")
@@ -69,22 +69,22 @@ public class ModEntities {
 	public static final EntityEntry IM_BIRD = Null();
 	@ObjectHolder("IMGiantBird")
 	public static final EntityEntry IM_GIANT_BIRD = Null();
-	
-	
+
 	@EventBusSubscriber(modid = Reference.MODID)
 	public static class EntityRegistrationHandler {
 
 		@SubscribeEvent
 		public static void registerTileEntities(RegistryEvent.Register<EntityEntry> event) {
 			final EntityEntry[] entityEntries = {
-					//createEntityEntryWithoutEgg(EntitySlimePart.class, "slime_part", 64, 1, true)
+					// createEntityEntryWithoutEgg(EntitySlimePart.class, "slime_part", 64, 1, true)
 					createEntityEntryWithoutEgg(EntityIMEgg.class, "IMEgg", 128, 1, true),
 					createEntityEntryWithoutEgg(EntityIMBoulder.class, "IMBoulder", 36, 1, true),
 					createEntityEntryWithoutEgg(EntityIMBolt.class, "IMBolt", 36, 1, false),
 					createEntityEntryWithoutEgg(EntityIMTrap.class, "IMTrap", 36, 1, false),
 					createEntityEntryWithoutEgg(EntityIMPrimedTNT.class, "IMPrimedTNT", 36, 1, true),
-					
-					//createEntityEntry(EntityCQRDummy.class, "dummy", 64, 1, true, 0xC29D62, 0x67502C)
+
+					// createEntityEntry(EntityCQRDummy.class, "dummy", 64, 1, true, 0xC29D62,
+					// 0x67502C)
 					createEntityEntry(EntityIMZombie.class, "IMZombie", 128, 1, true, 0x6B753F, 0x281B0A),
 					createEntityEntry(EntityIMSkeleton.class, "IMSkeleton", 128, 1, true, 0x9B9B9B, 0x797979),
 					createEntityEntry(EntityIMSpider.class, "IMSpider", 128, 1, true, 0x504A3E, 0xA4121C),
@@ -94,11 +94,13 @@ public class ModEntities {
 					createEntityEntry(EntityIMImp.class, "IMImp", 128, 1, true, 0xB40113, 0xFF0000),
 					createEntityEntry(EntityIMZombiePigman.class, "IMZombiePigman", 128, 1, true, 0xEB8E91, 0x49652F),
 					createEntityEntry(EntityIMThrower.class, "IMThrower", 128, 1, true, 0x5303814, 0x632808),
-					//EntityRegistry.registerModEntity(EntityIMBird.class, "IMBird", 15, this, 128, 1, true);
+					// EntityRegistry.registerModEntity(EntityIMBird.class, "IMBird", 15, this, 128,
+					// 1, true);
 					createEntityEntry(EntityIMBird.class, "IMBird", 128, 1, true, 0x2B2B2B, 0xEA7EDC),
-					//EntityRegistry.registerModEntity(EntityIMGiantBird.class, "IMGiantBird", 16, this, 128, 1, true, 0x2B2B2B, 0xEA7EDC);
+					// EntityRegistry.registerModEntity(EntityIMGiantBird.class, "IMGiantBird", 16,
+					// this, 128, 1, true, 0x2B2B2B, 0xEA7EDC);
 					createEntityEntry(EntityIMGiantBird.class, "IMGiantBird", 128, 1, true, 0x2B2B2B, 0xEA7EDC)
-					
+
 			};
 
 			event.getRegistry().registerAll(entityEntries);

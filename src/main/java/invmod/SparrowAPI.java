@@ -2,9 +2,7 @@ package invmod;
 
 import net.minecraft.entity.Entity;
 
-
-public interface SparrowAPI
-{
+public interface SparrowAPI {
 
 	public boolean isStupidToAttack();
 

@@ -39,7 +39,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 @ObjectHolder(Reference.MODID)
 public class ModItems {
 
-	//TRAPS
+	// TRAPS
 	@ObjectHolder("emptytrap")
 	public static final Item TRAP_EMPTY = Null();
 	@ObjectHolder("flametrap")
@@ -48,8 +48,8 @@ public class ModItems {
 	public static final Item TRAP_POISON = Null();
 	@ObjectHolder("rifttrap")
 	public static final Item TRAP_RIFT = Null();
-	
-	//Crafting shit
+
+	// Crafting shit
 	@ObjectHolder("catalystmixture")
 	public static final Item CATALYST_MIXTURE = Null();
 	@ObjectHolder("dampingagent")
@@ -84,7 +84,7 @@ public class ModItems {
 	public static final Item STRONG_CATALYST_MIXTURE = Null();
 	@ObjectHolder("strongdampingagent")
 	public static final Item STRONG_DAMPING_AGENT = Null();
-	
+
 	@EventBusSubscriber(modid = Reference.MODID)
 	public static class ItemRegistrationHandler {
 
@@ -93,22 +93,18 @@ public class ModItems {
 		@SubscribeEvent
 		public static void registerItems(RegistryEvent.Register<Item> event) {
 			final Item[] items = {
-					//setItemName(new ItemDagger(ModMaterials.ToolMaterials.TOOL_IRON_DAGGER, 25), "dagger_iron"),
-					setItemName(new ItemEmptyTrap(), "emptytrap"),
-					setItemName(new ItemFlameTrap(), "flametrap"),
-					setItemName(new ItemPoisonTrap(), "poisontrap"),
-					setItemName(new ItemRiftTrap(), "rifttrap"),
-					
+					// setItemName(new ItemDagger(ModMaterials.ToolMaterials.TOOL_IRON_DAGGER, 25),
+					// "dagger_iron"),
+					setItemName(new ItemEmptyTrap(), "emptytrap"), setItemName(new ItemFlameTrap(), "flametrap"),
+					setItemName(new ItemPoisonTrap(), "poisontrap"), setItemName(new ItemRiftTrap(), "rifttrap"),
+
 					setItemName(new ItemCatalystMixture(), "catalystmixture"),
-					setItemName(new ItemDampingAgent(), "dampingagent"),
-					setItemName(new ItemDebugWand(), "debugwand"),
+					setItemName(new ItemDampingAgent(), "dampingagent"), setItemName(new ItemDebugWand(), "debugwand"),
 					setItemName(new ItemEngyHammer(), "engyhammer"),
 					setItemName(new ItemInfusedSword(), "infusedsword"),
 					setItemName(new ItemNexusCatalyst(), "nexuscatalyst"),
-					setItemName(new ItemPhaseCrystal(), "phasecrystal"),
-					setItemName(new ItemProbe(), "probe"),
-					setItemName(new ItemRiftFlux(), "riftflux"),
-					setItemName(new ItemSearingBow(), "searingbow"),
+					setItemName(new ItemPhaseCrystal(), "phasecrystal"), setItemName(new ItemProbe(), "probe"),
+					setItemName(new ItemRiftFlux(), "riftflux"), setItemName(new ItemSearingBow(), "searingbow"),
 					setItemName(new ItemSmallRemnants(), "smallremnants"),
 					setItemName(new ItemStableCatalystMixture(), "stablecatalystmixture"),
 					setItemName(new ItemStableNexusCatalyst(), "stablenexuscatalyst"),
@@ -116,7 +112,7 @@ public class ModItems {
 					setItemName(new ItemStrongCatalyst(), "strongcatalyst"),
 					setItemName(new ItemStrongCatalystMixture(), "strongcatalystmixture"),
 					setItemName(new ItemStrongDampingAgent(), "strongdampingagent")
-					
+
 			};
 
 			IForgeRegistry<Item> registry = event.getRegistry();

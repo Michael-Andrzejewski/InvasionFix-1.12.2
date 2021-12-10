@@ -22,35 +22,33 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-
-public class ItemDebugWand extends Item
-{
+public class ItemDebugWand extends Item {
 	private TileEntityNexus nexus;
 
 	private final String name = "debugWand";
 
-	public ItemDebugWand()
-	{
-		//this.setRegistryName(this.name);
-		//GameRegistry.register(this);
+	public ItemDebugWand() {
+		// this.setRegistryName(this.name);
+		// GameRegistry.register(this);
 		this.setMaxDamage(0);
-		//this.setUnlocalizedName(Reference.MODID + "_" + this.name);
+		// this.setUnlocalizedName(Reference.MODID + "_" + this.name);
 		this.setMaxStackSize(1);
-		//this.setCreativeTab(mod_Invasion.tabInvmod);
+		// this.setCreativeTab(mod_Invasion.tabInvmod);
 	}
 
-	/*@Override
-	public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos,
-		EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
-	{*/
+	/*
+	 * @Override public EnumActionResult onItemUseFirst(ItemStack stack,
+	 * EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float
+	 * hitX, float hitY, float hitZ, EnumHand hand) {
+	 */
 	@Override
 	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX,
 			float hitY, float hitZ, EnumHand hand) {
-		if (world.isRemote) return EnumActionResult.FAIL;
+		if (world.isRemote)
+			return EnumActionResult.FAIL;
 		Block block = world.getBlockState(pos).getBlock();
-		if (block == /*BlocksAndItems.blockNexus*/ModBlocks.NEXUS_BLOCK)
-		{
-			this.nexus = ((TileEntityNexus)world.getTileEntity(pos));
+		if (block == /* BlocksAndItems.blockNexus */ModBlocks.NEXUS_BLOCK) {
+			this.nexus = ((TileEntityNexus) world.getTileEntity(pos));
 			return EnumActionResult.SUCCESS;
 		}
 		BlockPos onePosAbove = new BlockPos(pos).add(0, 1, 0);
@@ -73,8 +71,7 @@ public class ItemDebugWand extends Item
 		zombie.setTier(1);
 		zombie.setPosition(onePosAbove.getX(), onePosAbove.getY(), onePosAbove.getZ());
 
-		if (this.nexus != null)
-		{
+		if (this.nexus != null) {
 			Entity entity = new EntityIMPigEngy(world, this.nexus);
 			entity.setPosition(onePosAbove.getX(), onePosAbove.getY(), onePosAbove.getZ());
 
@@ -116,22 +113,18 @@ public class ItemDebugWand extends Item
 		return EnumActionResult.SUCCESS;
 	}
 
-	//DarthXenon: Unused.
-	/*public boolean hitEntity(ItemStack itemstack, EntityPlayer player, EntityLivingBase targetEntity) {
-		if ((targetEntity instanceof EntityWolf)) {
-			EntityWolf wolf = (EntityWolf) targetEntity;
-	
-			if (player != null) {
-				wolf.func_152115_b(player.getDisplayName().toString());
-				
-			}
-			return true;
-		}
-		return false;
-	}*/
+	// DarthXenon: Unused.
+	/*
+	 * public boolean hitEntity(ItemStack itemstack, EntityPlayer player,
+	 * EntityLivingBase targetEntity) { if ((targetEntity instanceof EntityWolf)) {
+	 * EntityWolf wolf = (EntityWolf) targetEntity;
+	 * 
+	 * if (player != null) { wolf.func_152115_b(player.getDisplayName().toString());
+	 * 
+	 * } return true; } return false; }
+	 */
 
-	public String getName()
-	{
+	public String getName() {
 		return this.name;
 	}
 }

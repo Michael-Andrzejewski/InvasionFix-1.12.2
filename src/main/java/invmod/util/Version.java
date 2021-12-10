@@ -1,72 +1,47 @@
 package invmod.util;
 
-public class Version
-{
+public class Version {
 	public int major;
 	public int minor;
 	public int build;
 
-
-	public Version(int majorNum, int minorNum, int buildNum)
-	{
+	public Version(int majorNum, int minorNum, int buildNum) {
 		this.major = majorNum;
 		this.minor = minorNum;
 		this.build = buildNum;
 	}
 
-	public byte comparedState(Version version)
-	{
-		if (version.major > this.major)
-		{
+	public byte comparedState(Version version) {
+		if (version.major > this.major) {
 			return -1;
-		}
-		else if (version.major == this.major)
-		{
-			if (version.minor > this.minor)
-			{
+		} else if (version.major == this.major) {
+			if (version.minor > this.minor) {
 				return -1;
-			}
-			else if (version.minor == this.minor)
-			{
-				if (version.build > this.build)
-				{
+			} else if (version.minor == this.minor) {
+				if (version.build > this.build) {
 					return -1;
-				}
-				else if (version.build == this.build)
-				{
+				} else if (version.build == this.build) {
 					return 0;
-				}
-				else
-				{
+				} else {
 					return 1;
 				}
-			}
-			else
-			{
+			} else {
 				return 1;
 			}
-		}
-		else
-		{
+		} else {
 			return 1;
 		}
 	}
 
-
-	public static Version get(String s)
-	{
+	public static Version get(String s) {
 		String[] parts = s.split("\\.");
-		if (parts.length != 3)
-		{
+		if (parts.length != 3) {
 			return null;
 		}
 
-		for (String i : parts)
-		{
-			for (Character c : i.toCharArray())
-			{
-				if (!Character.isDigit(c))
-				{
+		for (String i : parts) {
+			for (Character c : i.toCharArray()) {
+				if (!Character.isDigit(c)) {
 					return null;
 				}
 			}
@@ -74,8 +49,7 @@ public class Version
 
 		int[] digits = new int[3];
 
-		for (int i = 0; i < 3; i++)
-		{
+		for (int i = 0; i < 3; i++) {
 			digits[i] = Integer.parseInt(parts[i]);
 		}
 
@@ -83,8 +57,7 @@ public class Version
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return this.major + "." + this.minor + "." + this.build;
 	}
 }

@@ -1,9 +1,7 @@
 package invmod.nexus;
 
-public class WaveSpawnerException extends Exception
-{
-	public WaveSpawnerException(String message)
-	{
+public class WaveSpawnerException extends Exception {
+	public WaveSpawnerException(String message) {
 		super(message);
 	}
 }

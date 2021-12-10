@@ -6,22 +6,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-
-public class SlotOutput extends SlotItemHandler
-{
-	public SlotOutput(IItemHandler iinventory, int i, int j, int k)
-	{
+public class SlotOutput extends SlotItemHandler {
+	public SlotOutput(IItemHandler iinventory, int i, int j, int k) {
 		super(iinventory, i, j, k);
 	}
 
 	@Override
-	public boolean isItemValid(ItemStack itemstack)
-	{
+	public boolean isItemValid(ItemStack itemstack) {
 		return false;
 	}
-	
+
 	@Override
-    public void putStack (@Nonnull ItemStack stack) {
-		
+	public void putStack(@Nonnull ItemStack stack) {
+
 	}
 }

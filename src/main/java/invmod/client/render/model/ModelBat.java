@@ -7,10 +7,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-
 @SideOnly(Side.CLIENT)
-public class ModelBat extends ModelBase
-{
+public class ModelBat extends ModelBase {
 
 	private ModelRenderer batHead;
 	private ModelRenderer batBody;
@@ -19,8 +17,7 @@ public class ModelBat extends ModelBase
 	private ModelRenderer batOuterRightWing;
 	private ModelRenderer batOuterLeftWing;
 
-	public ModelBat()
-	{
+	public ModelBat() {
 		this.textureWidth = 64;
 		this.textureHeight = 64;
 		this.batHead = new ModelRenderer(this, 0, 0);
@@ -53,14 +50,12 @@ public class ModelBat extends ModelBase
 		this.batLeftWing.addChild(this.batOuterLeftWing);
 	}
 
-	public int getBatSize()
-	{
+	public int getBatSize() {
 		return 36;
 	}
 
 	@Override
-	public void render(Entity par1Entity, float par2, float par3, float par4, float par5, float par6, float par7)
-	{
+	public void render(Entity par1Entity, float par2, float par3, float par4, float par5, float par6, float par7) {
 		this.batHead.rotateAngleX = (par6 / 57.295776F);
 		this.batHead.rotateAngleY = (par5 / 57.295776F);
 		this.batHead.rotateAngleZ = 0.0F;

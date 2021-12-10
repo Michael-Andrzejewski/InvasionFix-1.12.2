@@ -65,20 +65,16 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
+public class ProxyClient extends ProxyCommon {
 
-public class ProxyClient extends ProxyCommon
-{
-
-	public void printGuiMessage(ITextComponent message)
-	{
+	public void printGuiMessage(ITextComponent message) {
 		FMLClientHandler.instance().getClient().ingameGUI.getChatGUI().printChatMessage(message);
 	}
 
 	@Override
-	public void registerEntityRenderers()
-	{	
+	public void registerEntityRenderers() {
 		GameRegistry.registerTileEntity(TileEntityNexus.class, new ResourceLocation(Reference.MODID, "nexus"));
-		
+
 		registerEntityRenderer(EntityIMZombie.class, RenderIMZombie.class);
 		registerEntityRenderer(EntityIMZombiePigman.class, RenderIMZombiePigman.class);
 		registerEntityRenderer(EntityIMSkeleton.class, RenderIMSkeleton.class);
@@ -99,38 +95,30 @@ public class ProxyClient extends ProxyCommon
 		registerEntityRenderer(EntityIMGiantBird.class, RenderGiantBird.class);
 	}
 
-	private static void registerEntityRenderer(Class<? extends Entity> entityClass, final Class<? extends Render<? extends Entity>> rendererClass, final Object... additionalArgs)
-	{
-		RenderingRegistry.registerEntityRenderingHandler(entityClass, new IRenderFactory()
-		{
+	private static void registerEntityRenderer(Class<? extends Entity> entityClass,
+			final Class<? extends Render<? extends Entity>> rendererClass, final Object... additionalArgs) {
+		RenderingRegistry.registerEntityRenderingHandler(entityClass, new IRenderFactory() {
 			@Override
-			public Render createRenderFor(RenderManager renderManager)
-			{
+			public Render createRenderFor(RenderManager renderManager) {
 				Render renderer;
 
 				Object[] initArgs = new Object[additionalArgs.length + 1];
 				initArgs[0] = renderManager;
-				if (additionalArgs.length != 0)
-				{
-					for (int i = 0; i < additionalArgs.length; i++)
-					{
+				if (additionalArgs.length != 0) {
+					for (int i = 0; i < additionalArgs.length; i++) {
 						initArgs[i + 1] = additionalArgs[i];
 					}
 				}
 
 				Class<?>[] initClasses = new Class[initArgs.length];
-				for (int i = 0; i < initArgs.length; i++)
-				{
+				for (int i = 0; i < initArgs.length; i++) {
 					initClasses[i] = initArgs[i].getClass();
 				}
 
-				try
-				{
+				try {
 					Constructor c = rendererClass.getConstructor(initClasses);
-					renderer = (Render)c.newInstance(initArgs);
-				}
-				catch (Exception e)
-				{
+					renderer = (Render) c.newInstance(initArgs);
+				} catch (Exception e) {
 					e.printStackTrace();
 					renderer = null;
 				}
@@ -140,8 +128,7 @@ public class ProxyClient extends ProxyCommon
 	}
 
 	@Override
-	public void loadAnimations()
-	{
+	public void loadAnimations() {
 		System.out.println("ProxyClient, loadAnimation()");
 		EnumMap allKeyFrames = new EnumMap(BonesBirdLegs.class);
 		List animationPhases = new ArrayList(2);
@@ -151,45 +138,61 @@ public class ProxyClient extends ProxyCommon
 		Map transitions = new HashMap(1);
 		Transition defaultTransition = new Transition(AnimationAction.STAND, 1.0F / totalFrames, 0.0F);
 		transitions.put(AnimationAction.STAND, defaultTransition);
-		transitions.put(AnimationAction.STAND_TO_RUN, new Transition(AnimationAction.STAND_TO_RUN, 1.0F / totalFrames, 1.0F / totalFrames));
-		transitions.put(AnimationAction.LEGS_RETRACT, new Transition(AnimationAction.LEGS_RETRACT, 1.0F / totalFrames, (211.0F + x) / totalFrames));
-		transitions.put(AnimationAction.LEGS_CLAW_ATTACK_P1, new Transition(AnimationAction.LEGS_CLAW_ATTACK_P1, 1.0F / totalFrames, (171.0F + x) / totalFrames));
-		animationPhases.add(new AnimationPhaseInfo(AnimationAction.STAND, 0.0F, 1.0F / totalFrames, defaultTransition, transitions));
+		transitions.put(AnimationAction.STAND_TO_RUN,
+				new Transition(AnimationAction.STAND_TO_RUN, 1.0F / totalFrames, 1.0F / totalFrames));
+		transitions.put(AnimationAction.LEGS_RETRACT,
+				new Transition(AnimationAction.LEGS_RETRACT, 1.0F / totalFrames, (211.0F + x) / totalFrames));
+		transitions.put(AnimationAction.LEGS_CLAW_ATTACK_P1,
+				new Transition(AnimationAction.LEGS_CLAW_ATTACK_P1, 1.0F / totalFrames, (171.0F + x) / totalFrames));
+		animationPhases.add(new AnimationPhaseInfo(AnimationAction.STAND, 0.0F, 1.0F / totalFrames, defaultTransition,
+				transitions));
 
 		transitions = new HashMap(1);
 		defaultTransition = new Transition(AnimationAction.RUN, 38.0F / totalFrames, 38.0F / totalFrames);
 		transitions.put(AnimationAction.RUN, defaultTransition);
-		animationPhases.add(new AnimationPhaseInfo(AnimationAction.STAND_TO_RUN, 1.0F / totalFrames, 38.0F / totalFrames, defaultTransition, transitions));
+		animationPhases.add(new AnimationPhaseInfo(AnimationAction.STAND_TO_RUN, 1.0F / totalFrames,
+				38.0F / totalFrames, defaultTransition, transitions));
 
 		transitions = new HashMap(1);
 		defaultTransition = new Transition(AnimationAction.RUN, (170.0F + x) / totalFrames, 38.0F / totalFrames);
 		transitions.put(AnimationAction.RUN, defaultTransition);
 		transitions.put(AnimationAction.STAND, new Transition(AnimationAction.STAND, (170.0F + x) / totalFrames, 0.0F));
-		animationPhases.add(new AnimationPhaseInfo(AnimationAction.RUN, 38.0F / totalFrames, (170.0F + x) / totalFrames, defaultTransition, transitions));
+		animationPhases.add(new AnimationPhaseInfo(AnimationAction.RUN, 38.0F / totalFrames, (170.0F + x) / totalFrames,
+				defaultTransition, transitions));
 
 		transitions = new HashMap(1);
-		defaultTransition = new Transition(AnimationAction.LEGS_UNRETRACT, (251.0F + x) / totalFrames, (251.0F + x) / totalFrames);
+		defaultTransition = new Transition(AnimationAction.LEGS_UNRETRACT, (251.0F + x) / totalFrames,
+				(251.0F + x) / totalFrames);
 		transitions.put(AnimationAction.LEGS_UNRETRACT, defaultTransition);
-		animationPhases.add(new AnimationPhaseInfo(AnimationAction.LEGS_RETRACT, (211.0F + x) / totalFrames, (251.0F + x) / totalFrames, defaultTransition, transitions));
+		animationPhases.add(new AnimationPhaseInfo(AnimationAction.LEGS_RETRACT, (211.0F + x) / totalFrames,
+				(251.0F + x) / totalFrames, defaultTransition, transitions));
 
 		transitions = new HashMap(1);
 		defaultTransition = new Transition(AnimationAction.STAND, (291.0F + x) / totalFrames, 0.0F);
 		transitions.put(AnimationAction.STAND, defaultTransition);
-		transitions.put(AnimationAction.LEGS_RETRACT, new Transition(AnimationAction.LEGS_RETRACT, (291.0F + x) / totalFrames, (211.0F + x) / totalFrames));
-		transitions.put(AnimationAction.LEGS_CLAW_ATTACK_P1, new Transition(AnimationAction.LEGS_CLAW_ATTACK_P1, (291.0F + x) / totalFrames, (291.0F + x) / totalFrames));
-		animationPhases.add(new AnimationPhaseInfo(AnimationAction.LEGS_UNRETRACT, (251.0F + x) / totalFrames, (291.0F + x) / totalFrames, defaultTransition, transitions));
+		transitions.put(AnimationAction.LEGS_RETRACT,
+				new Transition(AnimationAction.LEGS_RETRACT, (291.0F + x) / totalFrames, (211.0F + x) / totalFrames));
+		transitions.put(AnimationAction.LEGS_CLAW_ATTACK_P1, new Transition(AnimationAction.LEGS_CLAW_ATTACK_P1,
+				(291.0F + x) / totalFrames, (291.0F + x) / totalFrames));
+		animationPhases.add(new AnimationPhaseInfo(AnimationAction.LEGS_UNRETRACT, (251.0F + x) / totalFrames,
+				(291.0F + x) / totalFrames, defaultTransition, transitions));
 
 		transitions = new HashMap(1);
-		defaultTransition = new Transition(AnimationAction.LEGS_CLAW_ATTACK_P2, (331.0F + x) / totalFrames, (171.0F + x) / totalFrames);
+		defaultTransition = new Transition(AnimationAction.LEGS_CLAW_ATTACK_P2, (331.0F + x) / totalFrames,
+				(171.0F + x) / totalFrames);
 		transitions.put(AnimationAction.LEGS_CLAW_ATTACK_P2, defaultTransition);
-		animationPhases.add(new AnimationPhaseInfo(AnimationAction.LEGS_CLAW_ATTACK_P1, (291.0F + x) / totalFrames, (331.0F + x) / totalFrames, defaultTransition, transitions));
+		animationPhases.add(new AnimationPhaseInfo(AnimationAction.LEGS_CLAW_ATTACK_P1, (291.0F + x) / totalFrames,
+				(331.0F + x) / totalFrames, defaultTransition, transitions));
 
 		transitions = new HashMap(1);
 		defaultTransition = new Transition(AnimationAction.STAND, (211.0F + x) / totalFrames, 0.0F);
 		transitions.put(AnimationAction.STAND, defaultTransition);
-		transitions.put(AnimationAction.LEGS_RETRACT, new Transition(AnimationAction.LEGS_RETRACT, (211.0F + x) / totalFrames, (211.0F + x) / totalFrames));
-		transitions.put(AnimationAction.LEGS_CLAW_ATTACK_P1, new Transition(AnimationAction.LEGS_CLAW_ATTACK_P1, (211.0F + x) / totalFrames, (291.0F + x) / totalFrames));
-		animationPhases.add(new AnimationPhaseInfo(AnimationAction.LEGS_CLAW_ATTACK_P2, (171.0F + x) / totalFrames, (211.0F + x) / totalFrames, defaultTransition, transitions));
+		transitions.put(AnimationAction.LEGS_RETRACT,
+				new Transition(AnimationAction.LEGS_RETRACT, (211.0F + x) / totalFrames, (211.0F + x) / totalFrames));
+		transitions.put(AnimationAction.LEGS_CLAW_ATTACK_P1, new Transition(AnimationAction.LEGS_CLAW_ATTACK_P1,
+				(211.0F + x) / totalFrames, (291.0F + x) / totalFrames));
+		animationPhases.add(new AnimationPhaseInfo(AnimationAction.LEGS_CLAW_ATTACK_P2, (171.0F + x) / totalFrames,
+				(211.0F + x) / totalFrames, defaultTransition, transitions));
 
 		float frameUnit = 1.0F / totalFrames;
 		float runBegin = 38.0F * frameUnit;
@@ -241,7 +244,6 @@ public class ProxyClient extends ProxyCommon
 		leftLegFrames.add(new KeyFrame(25.0F * frameUnit, -44.200001F, 0.0F, 0.0F, InterpType.LINEAR));
 		leftLegFrames.add(new KeyFrame(35.0F * frameUnit, -5.6F, 0.0F, 0.0F, InterpType.LINEAR));
 		KeyFrame.toRadians(leftLegFrames);
-
 
 		List leftLegRunCycle = new ArrayList(16);
 		leftLegRunCycle.add(new KeyFrame(38.0F * frameUnit, 6.6F, 0.0F, 0.0F, InterpType.LINEAR));
@@ -361,26 +363,30 @@ public class ProxyClient extends ProxyCommon
 		transitions.put(AnimationAction.WINGFLAP, defaultTransition);
 		transitions.put(AnimationAction.WINGTUCK, new Transition(AnimationAction.WINGTUCK, 0.06787331F, 0.2760181F));
 		transitions.put(AnimationAction.WINGGLIDE, new Transition(AnimationAction.WINGGLIDE, 0.06787331F, 0.8190045F));
-		animationPhases.add(new AnimationPhaseInfo(AnimationAction.WINGFLAP, 0.0F, 0.2714932F, defaultTransition, transitions));
+		animationPhases.add(
+				new AnimationPhaseInfo(AnimationAction.WINGFLAP, 0.0F, 0.2714932F, defaultTransition, transitions));
 
 		transitions = new HashMap(1);
 		defaultTransition = new Transition(AnimationAction.WINGSPREAD, 0.5429865F, 0.5475113F);
 		transitions.put(AnimationAction.WINGSPREAD, defaultTransition);
-		animationPhases.add(new AnimationPhaseInfo(AnimationAction.WINGTUCK, 0.2760181F, 0.5429865F, defaultTransition, transitions));
+		animationPhases.add(new AnimationPhaseInfo(AnimationAction.WINGTUCK, 0.2760181F, 0.5429865F, defaultTransition,
+				transitions));
 
 		transitions = new HashMap(1);
 		defaultTransition = new Transition(AnimationAction.WINGTUCK, 0.8190045F, 0.2760181F);
 		transitions.put(AnimationAction.WINGTUCK, defaultTransition);
 		transitions.put(AnimationAction.WINGFLAP, new Transition(AnimationAction.WINGFLAP, 0.8190045F, 0.06787331F));
 		transitions.put(AnimationAction.WINGGLIDE, new Transition(AnimationAction.WINGGLIDE, 0.8190045F, 0.8190045F));
-		animationPhases.add(new AnimationPhaseInfo(AnimationAction.WINGSPREAD, 0.5475113F, 0.8190045F, defaultTransition, transitions));
+		animationPhases.add(new AnimationPhaseInfo(AnimationAction.WINGSPREAD, 0.5475113F, 0.8190045F,
+				defaultTransition, transitions));
 
 		transitions = new HashMap(1);
 		defaultTransition = new Transition(AnimationAction.WINGGLIDE, 1.0F, 0.8190045F);
 		transitions.put(AnimationAction.WINGGLIDE, defaultTransition);
 		transitions.put(AnimationAction.WINGFLAP, new Transition(AnimationAction.WINGFLAP, 1.0F, 0.06787331F));
 		transitions.put(AnimationAction.WINGTUCK, new Transition(AnimationAction.WINGTUCK, 1.0F, 0.2760181F));
-		animationPhases.add(new AnimationPhaseInfo(AnimationAction.WINGGLIDE, 0.8190045F, 1.0F, defaultTransition, transitions));
+		animationPhases.add(
+				new AnimationPhaseInfo(AnimationAction.WINGGLIDE, 0.8190045F, 1.0F, defaultTransition, transitions));
 
 		frameUnit = 0.004524887F;
 		List rightInnerWingFrames = new ArrayList(12);
@@ -397,9 +403,12 @@ public class ProxyClient extends ProxyCommon
 		rightInnerWingFrames.add(new KeyFrame(50.0F * frameUnit, -3.0F, -38.0F, 0.0F, InterpType.LINEAR));
 		rightInnerWingFrames.add(new KeyFrame(55.0F * frameUnit, -1.0F, -48.0F, 0.0F, InterpType.LINEAR));
 		rightInnerWingFrames.add(new KeyFrame(60.0F * frameUnit, 2.0F, -48.0F, 0.0F, InterpType.LINEAR));
-		rightInnerWingFrames.add(new KeyFrame(61.0F * frameUnit, 5.5F, -7.0F, 0.0F, 7.0F, -8.0F, 6.0F, InterpType.LINEAR));
-		rightInnerWingFrames.add(new KeyFrame(121.0F * frameUnit, 0.71F, 88.599998F, 0.0F, 11.0F, -8.0F, 9.0F, InterpType.LINEAR));
-		rightInnerWingFrames.add(new KeyFrame(181.0F * frameUnit, 5.5F, -7.0F, 0.0F, 7.0F, -8.0F, 6.0F, InterpType.LINEAR));
+		rightInnerWingFrames
+				.add(new KeyFrame(61.0F * frameUnit, 5.5F, -7.0F, 0.0F, 7.0F, -8.0F, 6.0F, InterpType.LINEAR));
+		rightInnerWingFrames
+				.add(new KeyFrame(121.0F * frameUnit, 0.71F, 88.599998F, 0.0F, 11.0F, -8.0F, 9.0F, InterpType.LINEAR));
+		rightInnerWingFrames
+				.add(new KeyFrame(181.0F * frameUnit, 5.5F, -7.0F, 0.0F, 7.0F, -8.0F, 6.0F, InterpType.LINEAR));
 		rightInnerWingFrames.add(new KeyFrame(209.0F * frameUnit, 5.5F, -5.0F, 0.0F, InterpType.LINEAR));
 		rightInnerWingFrames.add(new KeyFrame(221.0F * frameUnit, 5.5F, -7.0F, 0.0F, InterpType.LINEAR));
 
@@ -424,13 +433,20 @@ public class ProxyClient extends ProxyCommon
 		rightOuterWingFrames.add(new KeyFrame(55.0F * frameUnit, -3.5F, 65.5F, 22.0F, InterpType.LINEAR));
 		rightOuterWingFrames.add(new KeyFrame(58.0F * frameUnit, 0.0F, 52.0F, 8.0F, InterpType.LINEAR));
 		rightOuterWingFrames.add(new KeyFrame(60.0F * frameUnit, 2.0F, 34.5F, 0.0F, InterpType.LINEAR));
-		rightOuterWingFrames.add(new KeyFrame(61.0F * frameUnit, -5.0F, -2.5F, -10.0F, 23.0F, 1.0F, 0.0F, InterpType.LINEAR));
-		rightOuterWingFrames.add(new KeyFrame(76.0F * frameUnit, 0.0F, 0.0F, 15.0F, 22.0F, 1.0F, 0.0F, InterpType.LINEAR));
-		rightOuterWingFrames.add(new KeyFrame(101.0F * frameUnit, 0.0F, 0.0F, 83.0F, 20.33F, 1.0F, 0.0F, InterpType.LINEAR));
-		rightOuterWingFrames.add(new KeyFrame(121.0F * frameUnit, 0.0F, 0.0F, 90.0F, 19.0F, 1.0F, 0.0F, InterpType.LINEAR));
-		rightOuterWingFrames.add(new KeyFrame(141.0F * frameUnit, 0.0F, 0.0F, 83.0F, 20.33F, 1.0F, 0.0F, InterpType.LINEAR));
-		rightOuterWingFrames.add(new KeyFrame(166.0F * frameUnit, 0.0F, 0.0F, 15.0F, 22.0F, 1.0F, 0.0F, InterpType.LINEAR));
-		rightOuterWingFrames.add(new KeyFrame(181.0F * frameUnit, -5.0F, -2.5F, -10.0F, 23.0F, 1.0F, 0.0F, InterpType.LINEAR));
+		rightOuterWingFrames
+				.add(new KeyFrame(61.0F * frameUnit, -5.0F, -2.5F, -10.0F, 23.0F, 1.0F, 0.0F, InterpType.LINEAR));
+		rightOuterWingFrames
+				.add(new KeyFrame(76.0F * frameUnit, 0.0F, 0.0F, 15.0F, 22.0F, 1.0F, 0.0F, InterpType.LINEAR));
+		rightOuterWingFrames
+				.add(new KeyFrame(101.0F * frameUnit, 0.0F, 0.0F, 83.0F, 20.33F, 1.0F, 0.0F, InterpType.LINEAR));
+		rightOuterWingFrames
+				.add(new KeyFrame(121.0F * frameUnit, 0.0F, 0.0F, 90.0F, 19.0F, 1.0F, 0.0F, InterpType.LINEAR));
+		rightOuterWingFrames
+				.add(new KeyFrame(141.0F * frameUnit, 0.0F, 0.0F, 83.0F, 20.33F, 1.0F, 0.0F, InterpType.LINEAR));
+		rightOuterWingFrames
+				.add(new KeyFrame(166.0F * frameUnit, 0.0F, 0.0F, 15.0F, 22.0F, 1.0F, 0.0F, InterpType.LINEAR));
+		rightOuterWingFrames
+				.add(new KeyFrame(181.0F * frameUnit, -5.0F, -2.5F, -10.0F, 23.0F, 1.0F, 0.0F, InterpType.LINEAR));
 		rightOuterWingFrames.add(new KeyFrame(209.0F * frameUnit, -5.0F, -1.3F, -10.0F, InterpType.LINEAR));
 		rightOuterWingFrames.add(new KeyFrame(221.0F * frameUnit, -5.0F, -2.5F, -10.0F, InterpType.LINEAR));
 		KeyFrame.toRadians(rightOuterWingFrames);
@@ -448,12 +464,14 @@ public class ProxyClient extends ProxyCommon
 		transitions = new HashMap(1);
 		defaultTransition = new Transition(AnimationAction.MOUTH_CLOSE, 0.5F, 0.5083333F);
 		transitions.put(AnimationAction.MOUTH_CLOSE, defaultTransition);
-		animationPhases.add(new AnimationPhaseInfo(AnimationAction.MOUTH_OPEN, 0.0F, 0.5F, defaultTransition, transitions));
+		animationPhases
+				.add(new AnimationPhaseInfo(AnimationAction.MOUTH_OPEN, 0.0F, 0.5F, defaultTransition, transitions));
 
 		transitions = new HashMap(1);
 		defaultTransition = new Transition(AnimationAction.MOUTH_OPEN, 1.0F, 0.0F);
 		transitions.put(AnimationAction.MOUTH_OPEN, defaultTransition);
-		animationPhases.add(new AnimationPhaseInfo(AnimationAction.MOUTH_CLOSE, 0.5F, 1.0F, defaultTransition, transitions));
+		animationPhases
+				.add(new AnimationPhaseInfo(AnimationAction.MOUTH_CLOSE, 0.5F, 1.0F, defaultTransition, transitions));
 
 		frameUnit = 0.008333334F;
 		List upperBeakFrames = new ArrayList(3);
@@ -475,8 +493,7 @@ public class ProxyClient extends ProxyCommon
 	}
 
 	@Override
-	public File getFile(String fileName)
-	{
+	public File getFile(String fileName) {
 		return new File(FMLClientHandler.instance().getClient().mcDataDir.getPath() + fileName);
 	}
 }

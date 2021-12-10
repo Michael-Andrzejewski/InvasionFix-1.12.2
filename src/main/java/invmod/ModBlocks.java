@@ -24,8 +24,7 @@ public class ModBlocks {
 
 	@ObjectHolder("blocknexus")
 	public static final BlockNexus NEXUS_BLOCK = Null();
-	
-	
+
 	@EventBusSubscriber(modid = Reference.MODID)
 	public static class BlockRegistrationHandler {
 
@@ -33,9 +32,7 @@ public class ModBlocks {
 
 		@SubscribeEvent(priority = EventPriority.HIGH)
 		public static void registerBlocks(RegistryEvent.Register<Block> event) {
-			final Block[] blocks = { 
-					setBlockName(new BlockNexus(), "blocknexus")
-					};
+			final Block[] blocks = { setBlockName(new BlockNexus(), "blocknexus") };
 
 			IForgeRegistry<Block> registry = event.getRegistry();
 
@@ -55,9 +52,7 @@ public class ModBlocks {
 
 		@SubscribeEvent
 		public static void registerItemBlocks(RegistryEvent.Register<Item> event) {
-			final ItemBlock[] itemBlocks = {
-					createItemBlock(NEXUS_BLOCK)
-				};
+			final ItemBlock[] itemBlocks = { createItemBlock(NEXUS_BLOCK) };
 
 			IForgeRegistry<Item> registry = event.getRegistry();
 
@@ -68,20 +63,21 @@ public class ModBlocks {
 		}
 
 		private static ItemBlock createItemBlock(Block block) {
-			//return (ItemBlock) new ItemBlock(block).setUnlocalizedName(block.getLocalizedName())
-					//.setRegistryName(block.getRegistryName());
+			// return (ItemBlock) new
+			// ItemBlock(block).setUnlocalizedName(block.getLocalizedName())
+			// .setRegistryName(block.getRegistryName());
 			ItemBlock retItem = new ItemBlock(block);
-			
-			/*if(block == null) {
-				System.out.println("BLOCK IS NULL");
-			}*/
-			
-			//Cause of error: The block is null ?!?!?
-			
+
+			/*
+			 * if(block == null) { System.out.println("BLOCK IS NULL"); }
+			 */
+
+			// Cause of error: The block is null ?!?!?
+
 			retItem.setUnlocalizedName(block.getUnlocalizedName());
 			retItem.setRegistryName(block.getRegistryName());
 			retItem.setCreativeTab(mod_invasion.tabInvmod);
-			
+
 			return retItem;
 		}
 

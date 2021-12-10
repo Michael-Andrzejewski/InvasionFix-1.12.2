@@ -5,32 +5,26 @@ import invmod.entity.INavigationFlying;
 import invmod.entity.monster.EntityIMFlying;
 import net.minecraft.entity.ai.EntityAIBase;
 
-
-public class EntityAIStabiliseFlying extends EntityAIBase
-{
+public class EntityAIStabiliseFlying extends EntityAIBase {
 	private static int INITIAL_STABILISE_TIME = 50;
 	private EntityIMFlying theEntity;
 	private int time;
 	private int stabiliseTime;
 
-	public EntityAIStabiliseFlying(EntityIMFlying entity, int stabiliseTime)
-	{
+	public EntityAIStabiliseFlying(EntityIMFlying entity, int stabiliseTime) {
 		this.theEntity = entity;
 		this.time = 0;
 		this.stabiliseTime = stabiliseTime;
 	}
 
 	@Override
-	public boolean shouldExecute()
-	{
+	public boolean shouldExecute() {
 		return this.theEntity.getAIGoal() == Goal.STABILISE;
 	}
 
 	@Override
-	public boolean shouldContinueExecuting()
-	{
-		if (this.time >= this.stabiliseTime)
-		{
+	public boolean shouldContinueExecuting() {
+		if (this.time >= this.stabiliseTime) {
 			this.theEntity.transitionAIGoal(Goal.NONE);
 			this.theEntity.getNavigatorNew().setPitchBias(0.0F, 0.0F);
 			return false;
@@ -39,8 +33,7 @@ public class EntityAIStabiliseFlying extends EntityAIBase
 	}
 
 	@Override
-	public void startExecuting()
-	{
+	public void startExecuting() {
 		this.time = 0;
 		INavigationFlying nav = this.theEntity.getNavigatorNew();
 		nav.clearPath();
@@ -49,11 +42,9 @@ public class EntityAIStabiliseFlying extends EntityAIBase
 	}
 
 	@Override
-	public void updateTask()
-	{
+	public void updateTask() {
 		this.time += 1;
-		if (this.time == INITIAL_STABILISE_TIME)
-		{
+		if (this.time == INITIAL_STABILISE_TIME) {
 			this.theEntity.getNavigatorNew().setPitchBias(0.0F, 0.0F);
 		}
 	}

@@ -15,79 +15,73 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-
-public class ItemProbe extends ModItem
-{
+public class ItemProbe extends ModItem {
 
 	public static final String[] probeNames = { "nexusadjuster", "materialprobe" };
 
-	public ItemProbe()
-	{
+	public ItemProbe() {
 		super("probe");
 		this.setHasSubtypes(true);
 		this.setMaxDamage(1);
 		this.setMaxStackSize(1);
-		//this.setCreativeTab(mod_Invasion.tabInvmod);
+		// this.setCreativeTab(mod_Invasion.tabInvmod);
 	}
 
 	@Override
-	public boolean isFull3D()
-	{
+	public boolean isFull3D() {
 		return true;
 	}
 
-	/*@Override
-	public EnumActionResult onItemUseFirst(ItemStack itemstack,
-		EntityPlayer player, World world, BlockPos blockPos,
-		EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
-	{*/
+	/*
+	 * @Override public EnumActionResult onItemUseFirst(ItemStack itemstack,
+	 * EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float
+	 * hitX, float hitY, float hitZ, EnumHand hand) {
+	 */
 	@Override
 	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX,
 			float hitY, float hitZ, EnumHand hand) {
 
 		ItemStack itemstack = player.getHeldItem(hand);
-		//if (world.isRemote) return EnumActionResult.FAIL;
+		// if (world.isRemote) return EnumActionResult.FAIL;
 		Block block = world.getBlockState(pos).getBlock();
 
-		//Change Nexus spawn range
-		if (block == /*BlocksAndItems.blockNexus*/ModBlocks.NEXUS_BLOCK)
-		{
-			TileEntityNexus nexus = (TileEntityNexus)world.getTileEntity(pos);
+		// Change Nexus spawn range
+		if (block == /* BlocksAndItems.blockNexus */ModBlocks.NEXUS_BLOCK) {
+			TileEntityNexus nexus = (TileEntityNexus) world.getTileEntity(pos);
 			int newRange = nexus.getSpawnRadius();
 
 			// check if the player wants to increase or decrease the range
 			newRange += player.isSneaking() ? -8 : 8;
 
-			if (newRange < 32) newRange = 128;
-			if (newRange > 128) newRange = 32;
+			if (newRange < 32)
+				newRange = 128;
+			if (newRange > 128)
+				newRange = 32;
 			nexus.setSpawnRadius(newRange);
 			mod_invasion.sendMessageToPlayer(player, "Nexus range changed to: " + nexus.getSpawnRadius());
 			return EnumActionResult.SUCCESS;
 		}
 
-		//Display block strength; material probe only
-		if (itemstack.getItemDamage() == 1)
-		{
+		// Display block strength; material probe only
+		if (itemstack.getItemDamage() == 1) {
 			float blockStrength = EntityIMMob.getBlockStrength(pos, block, world);
-			mod_invasion.sendMessageToPlayer(player, "Block strength: " + (int)((blockStrength + 0.005D) * 100.0D) / 100.0D);
+			mod_invasion.sendMessageToPlayer(player,
+					"Block strength: " + (int) ((blockStrength + 0.005D) * 100.0D) / 100.0D);
 			return EnumActionResult.SUCCESS;
 		}
 		return EnumActionResult.FAIL;
 	}
 
 	@Override
-	public String getUnlocalizedName(ItemStack itemstack)
-	{
-		if (itemstack.getItemDamage() < probeNames.length)
-		{
+	public String getUnlocalizedName(ItemStack itemstack) {
+		if (itemstack.getItemDamage() < probeNames.length) {
 			return super.getUnlocalizedName() + "." + probeNames[itemstack.getItemDamage()];
 		}
 		return super.getUnlocalizedName();
 	}
 
 	@Override
-	public int getItemEnchantability()
-	{
+	public int getItemEnchantability() {
 		return 14;
 	}
 

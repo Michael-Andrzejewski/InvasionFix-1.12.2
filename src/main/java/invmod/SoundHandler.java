@@ -4,9 +4,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
-
-public class SoundHandler
-{
+public class SoundHandler {
 
 	public static SoundEvent bigzombie1;
 	public static SoundEvent chime1;
@@ -33,8 +31,7 @@ public class SoundHandler
 
 	private static int size = 0;
 
-	public static void init()
-	{
+	public static void init() {
 		bigzombie1 = registerSound("bigzombie1");
 		chime1 = registerSound("chime1");
 		egghatch1 = registerSound("egghatch1");
@@ -59,17 +56,14 @@ public class SoundHandler
 		zap3 = registerSound("zap3");
 	}
 
-	/*public static SoundEvent register(String soundLocation)
-	{
-		ResourceLocation resource = new ResourceLocation(Reference.MODID + ":" + soundLocation);
-		SoundEvent snd = new SoundEvent(resource);
-		SoundEvent.REGISTRY.register(size, resource, snd);
-		size++;
-		return snd;
-	}*/
-	
-	private static SoundEvent registerSound(String name)
-	{
+	/*
+	 * public static SoundEvent register(String soundLocation) { ResourceLocation
+	 * resource = new ResourceLocation(Reference.MODID + ":" + soundLocation);
+	 * SoundEvent snd = new SoundEvent(resource); SoundEvent.REGISTRY.register(size,
+	 * resource, snd); size++; return snd; }
+	 */
+
+	private static SoundEvent registerSound(String name) {
 		ResourceLocation location = new ResourceLocation(Reference.MODID, name);
 		SoundEvent event = new SoundEvent(location);
 		event.setRegistryName(name);

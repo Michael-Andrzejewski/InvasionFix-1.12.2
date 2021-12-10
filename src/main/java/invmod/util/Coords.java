@@ -1,7 +1,6 @@
 package invmod.util;
 
-public class Coords
-{
+public class Coords {
 
 	public static final int[] offsetAdjX = { 1, -1, 0, 0 };
 	public static final int[] offsetAdjZ = { 0, 0, 1, -1 };

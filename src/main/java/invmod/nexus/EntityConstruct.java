@@ -1,7 +1,6 @@
 package invmod.nexus;
 
-public class EntityConstruct
-{
+public class EntityConstruct {
 	private IMEntityType entityType;
 	private int texture;
 	private int tier;
@@ -10,8 +9,8 @@ public class EntityConstruct
 	private int maxAngle;
 	private float scaling;
 
-	public EntityConstruct(IMEntityType mobType, int tier, int texture, int flavour, float scaling, int minAngle, int maxAngle)
-	{
+	public EntityConstruct(IMEntityType mobType, int tier, int texture, int flavour, float scaling, int minAngle,
+			int maxAngle) {
 		this.entityType = mobType;
 		this.texture = texture;
 		this.tier = tier;
@@ -21,38 +20,31 @@ public class EntityConstruct
 		this.maxAngle = maxAngle;
 	}
 
-	public IMEntityType getMobType()
-	{
+	public IMEntityType getMobType() {
 		return this.entityType;
 	}
 
-	public int getTexture()
-	{
+	public int getTexture() {
 		return this.texture;
 	}
 
-	public int getTier()
-	{
+	public int getTier() {
 		return this.tier;
 	}
 
-	public int getFlavour()
-	{
+	public int getFlavour() {
 		return this.flavour;
 	}
 
-	public float getScaling()
-	{
+	public float getScaling() {
 		return this.scaling;
 	}
 
-	public int getMinAngle()
-	{
+	public int getMinAngle() {
 		return this.minAngle;
 	}
 
-	public int getMaxAngle()
-	{
+	public int getMaxAngle() {
 		return this.maxAngle;
 	}
 }

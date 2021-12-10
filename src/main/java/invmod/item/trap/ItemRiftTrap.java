@@ -10,38 +10,32 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+public class ItemRiftTrap extends ModItem {
 
-public class ItemRiftTrap extends ModItem
-{
-
-	public ItemRiftTrap()
-	{
+	public ItemRiftTrap() {
 		super("riftTrap");
 		this.setMaxStackSize(64);
 	}
 
-	//@Override
-	//public EnumActionResult onItemUseFirst(ItemStack itemstack,
-		//EntityPlayer entityplayer, World world, BlockPos blockPos,
-		//EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
-	//{
+	// @Override
+	// public EnumActionResult onItemUseFirst(ItemStack itemstack,
+	// EntityPlayer entityplayer, World world, BlockPos blockPos,
+	// EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
+	// {
 	@Override
 	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX,
 			float hitY, float hitZ, EnumHand hand) {
-		if (world.isRemote) return EnumActionResult.FAIL;
-		if (side == EnumFacing.UP)
-		{
+		if (world.isRemote)
+			return EnumActionResult.FAIL;
+		if (side == EnumFacing.UP) {
 			EntityIMTrap trap = new EntityIMTrap(world, pos.getX() + 0.5D, pos.getY() + 1.0D, pos.getZ() + 0.5D, 1);
 
 			if ((trap.isValidPlacement())
-				&& (world.getEntitiesWithinAABB(EntityIMTrap.class,
-					trap.getEntityBoundingBox()).size() == 0))
-			{
+					&& (world.getEntitiesWithinAABB(EntityIMTrap.class, trap.getEntityBoundingBox()).size() == 0)) {
 				world.spawnEntity(trap);
 
 				// players in creative mode won't lose the item
-				if (!player.capabilities.isCreativeMode)
-				{
+				if (!player.capabilities.isCreativeMode) {
 					ItemStack stack = player.getHeldItem(hand);
 					stack.shrink(1);
 				}

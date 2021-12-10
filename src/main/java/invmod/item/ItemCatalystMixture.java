@@ -1,16 +1,13 @@
 package invmod.item;
 
-public class ItemCatalystMixture extends ModItem
-{
+public class ItemCatalystMixture extends ModItem {
 
-	public ItemCatalystMixture()
-	{
+	public ItemCatalystMixture() {
 		super("catalystMixture");
 		this.setMaxStackSize(1);
 	}
 
-	public String getName()
-	{
+	public String getName() {
 		return this.name;
 	}
 }

@@ -2,6 +2,7 @@ package invmod.client.render.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import invmod.client.render.animation.InterpType;
 import invmod.client.render.animation.KeyFrame;
 import invmod.client.render.animation.ModelAnimator;
@@ -10,9 +11,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
-
-public class ModelBird extends ModelBase
-{
+public class ModelBird extends ModelBase {
 	private ModelAnimator animationWingFlap;
 	private ModelRenderer body;
 	private ModelRenderer rightwing1;
@@ -33,8 +32,7 @@ public class ModelBird extends ModelBase
 	private ModelRenderer rtoeL;
 	private ModelRenderer thighL;
 
-	public ModelBird()
-	{
+	public ModelBird() {
 		this.textureWidth = 64;
 		this.textureHeight = 32;
 
@@ -208,15 +206,13 @@ public class ModelBird extends ModelBase
 	}
 
 	@Override
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
-	{
+	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		this.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 		this.body.render(f5);
 	}
 
-	public void setFlyingAnimations(float flapProgress, float legSweepProgress, float roll)
-	{
+	public void setFlyingAnimations(float flapProgress, float legSweepProgress, float roll) {
 		this.animationWingFlap.updateAnimation(flapProgress);
 
 		this.body.rotateAngleY = (this.body.rotateAngleX = 0.0F);
@@ -235,23 +231,26 @@ public class ModelBird extends ModelBase
 
 		this.body.rotationPointY = (7.0F + MathHelper.cos(flapProgress * 3.141593F * 2.0F) * 1.4F);
 		ModelRenderer tmp190_187 = this.thighR;
-		tmp190_187.rotateAngleX = ((float)(tmp190_187.rotateAngleX + MathHelper.cos(flapProgress * 3.141593F * 2.0F) * 0.08726646324990228D));
+		tmp190_187.rotateAngleX = ((float) (tmp190_187.rotateAngleX
+				+ MathHelper.cos(flapProgress * 3.141593F * 2.0F) * 0.08726646324990228D));
 		ModelRenderer tmp218_215 = this.thighL;
-		tmp218_215.rotateAngleX = ((float)(tmp218_215.rotateAngleX + MathHelper.cos(flapProgress * 3.141593F * 2.0F) * 0.08726646324990228D));
-		this.tail.rotateAngleX = ((float)(0.2617993956013792D + MathHelper.cos(flapProgress * 3.141593F * 2.0F) * 0.03490658588512815D));
-		this.head.rotateAngleX = ((float)(-0.3141592700403172D - MathHelper.cos(flapProgress * 3.141593F * 2.0F) * 0.03490658588512815D));
+		tmp218_215.rotateAngleX = ((float) (tmp218_215.rotateAngleX
+				+ MathHelper.cos(flapProgress * 3.141593F * 2.0F) * 0.08726646324990228D));
+		this.tail.rotateAngleX = ((float) (0.2617993956013792D
+				+ MathHelper.cos(flapProgress * 3.141593F * 2.0F) * 0.03490658588512815D));
+		this.head.rotateAngleX = ((float) (-0.3141592700403172D
+				- MathHelper.cos(flapProgress * 3.141593F * 2.0F) * 0.03490658588512815D));
 	}
 
-	private void setRotation(ModelRenderer model, float x, float y, float z)
-	{
+	private void setRotation(ModelRenderer model, float x, float y, float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
 
 	@Override
-	public void setRotationAngles(float limbPeriod, float limbMaxMovement, float ticksExisted, float headYaw, float entityPitch, float unitScale, Entity entity)
-	{
+	public void setRotationAngles(float limbPeriod, float limbMaxMovement, float ticksExisted, float headYaw,
+			float entityPitch, float unitScale, Entity entity) {
 		super.setRotationAngles(limbPeriod, limbMaxMovement, ticksExisted, headYaw, entityPitch, unitScale, entity);
 		this.body.rotateAngleX = (1.570796F - entityPitch / 180.0F * 3.141593F);
 	}

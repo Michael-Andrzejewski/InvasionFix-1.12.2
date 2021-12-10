@@ -5,9 +5,7 @@ import invmod.client.render.animation.AnimationState;
 import invmod.entity.MoveState;
 import invmod.entity.monster.EntityIMBird;
 
-
-public class WingController
-{
+public class WingController {
 	private EntityIMBird theEntity;
 	private AnimationState animationFlap;
 	private int timeAttacking;
@@ -15,8 +13,7 @@ public class WingController
 	private float[] flapEffortSamples;
 	private int sampleIndex;
 
-	public WingController(EntityIMBird entity, AnimationState stateObject)
-	{
+	public WingController(EntityIMBird entity, AnimationState stateObject) {
 		this.theEntity = entity;
 		this.animationFlap = stateObject;
 		this.timeAttacking = 0;
@@ -25,21 +22,17 @@ public class WingController
 		this.sampleIndex = 0;
 	}
 
-	public void update()
-	{
+	public void update() {
 		AnimationAction currAnimation = this.animationFlap.getCurrentAction();
 		AnimationAction nextAnimation = this.animationFlap.getNextSetAction();
 		boolean wingAttack = this.theEntity.isAttackingWithWings();
 		if (!wingAttack)
 			this.timeAttacking = 0;
-		else
-		{
+		else {
 			this.timeAttacking += 1;
 		}
-		if (this.theEntity.ticksExisted % 5 == 0)
-		{
-			if (++this.sampleIndex >= this.flapEffortSamples.length)
-			{
+		if (this.theEntity.ticksExisted % 5 == 0) {
+			if (++this.sampleIndex >= this.flapEffortSamples.length) {
 				this.sampleIndex = 0;
 			}
 			float sample = this.theEntity.getThrustEffort();
@@ -48,65 +41,48 @@ public class WingController
 			this.flapEffortSamples[this.sampleIndex] = sample;
 		}
 
-		if (this.theEntity.getFlyState() != FlyState.GROUNDED)
-		{
-			if (currAnimation == AnimationAction.WINGTUCK)
-			{
+		if (this.theEntity.getFlyState() != FlyState.GROUNDED) {
+			if (currAnimation == AnimationAction.WINGTUCK) {
 				this.ensureAnimation(this.animationFlap, AnimationAction.WINGSPREAD, 2.2F, true);
-			}
-			else if (this.theEntity.isThrustOn())
-			{
+			} else if (this.theEntity.isThrustOn()) {
 				this.ensureAnimation(this.animationFlap, AnimationAction.WINGFLAP, 2.0F * this.flapEffort, false);
-			}
-			else
-			{
+			} else {
 				this.ensureAnimation(this.animationFlap, AnimationAction.WINGGLIDE, 0.7F, false);
 			}
 
-		}
-		else
-		{
+		} else {
 			boolean wingsActive = false;
-			if (this.theEntity.getMoveState() == MoveState.RUNNING)
-			{
-				if (currAnimation == AnimationAction.WINGTUCK)
-				{
+			if (this.theEntity.getMoveState() == MoveState.RUNNING) {
+				if (currAnimation == AnimationAction.WINGTUCK) {
 					this.ensureAnimation(this.animationFlap, AnimationAction.WINGSPREAD, 2.2F, true);
-				}
-				else
-				{
+				} else {
 					this.ensureAnimation(this.animationFlap, AnimationAction.WINGFLAP, 1.0F, false);
-					if ((!wingAttack) && (currAnimation == AnimationAction.WINGSPREAD) && (this.animationFlap.getCurrentAnimationPercent() >= 0.65F))
-					{
+					if ((!wingAttack) && (currAnimation == AnimationAction.WINGSPREAD)
+							&& (this.animationFlap.getCurrentAnimationPercent() >= 0.65F)) {
 						this.animationFlap.setPaused(true);
 					}
 				}
 				wingsActive = true;
 			}
 
-			if (wingAttack)
-			{
-				float speed = (float)(1.0D / Math.min(this.timeAttacking / 40 * 0.6D + 0.4D, 1.0D));
+			if (wingAttack) {
+				float speed = (float) (1.0D / Math.min(this.timeAttacking / 40 * 0.6D + 0.4D, 1.0D));
 				this.ensureAnimation(this.animationFlap, AnimationAction.WINGFLAP, speed, false);
 				wingsActive = true;
 			}
 
-			if (!wingsActive)
-			{
+			if (!wingsActive) {
 				this.ensureAnimation(this.animationFlap, AnimationAction.WINGTUCK, 1.8F, true);
 			}
 		}
 		this.animationFlap.update();
 	}
 
-	private void ensureAnimation(AnimationState state, AnimationAction action, float animationSpeed, boolean pauseAfterAction)
-	{
-		if (state.getNextSetAction() != action)
-		{
+	private void ensureAnimation(AnimationState state, AnimationAction action, float animationSpeed,
+			boolean pauseAfterAction) {
+		if (state.getNextSetAction() != action) {
 			state.setNewAction(action, animationSpeed, pauseAfterAction);
-		}
-		else
-		{
+		} else {
 			state.setAnimationSpeed(animationSpeed);
 			state.setPauseAfterSetAction(pauseAfterAction);
 			state.setPaused(false);

@@ -20,10 +20,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-
 //NOOB HAUS: This one is done I think...
-public class EntityIMBurrower extends EntityIMMob implements ICanDig
-{
+public class EntityIMBurrower extends EntityIMMob implements ICanDig {
 
 	public static final int NUMBER_OF_SEGMENTS = 16;
 	private final NavigatorBurrower bo;
@@ -40,13 +38,11 @@ public class EntityIMBurrower extends EntityIMMob implements ICanDig
 	protected float prevRotY;
 	protected float prevRotZ;
 
-	public EntityIMBurrower(World world)
-	{
+	public EntityIMBurrower(World world) {
 		this(world, null);
 	}
 
-	public EntityIMBurrower(World world, TileEntityNexus nexus)
-	{
+	public EntityIMBurrower(World world, TileEntityNexus nexus) {
 		super(world, nexus);
 
 		IPathSource pathSource = this.getPathSource();
@@ -71,139 +67,126 @@ public class EntityIMBurrower extends EntityIMMob implements ICanDig
 		this.segments3DLastTick = new PosRotate3D[16];
 
 		PosRotate3D zero = new PosRotate3D();
-		for (int i = 0; i < 16; i++)
-		{
+		for (int i = 0; i < 16; i++) {
 			this.segments3D[i] = zero;
 			this.segments3DLastTick[i] = zero;
 		}
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "EntityIMBurrower#u-u-u";
 	}
 
 	@Override
-	public IBlockAccess getTerrain()
-	{
+	public IBlockAccess getTerrain() {
 		return this.world;
 	}
 
-	public float getBlockPathCost(PathPoint prevNode, PathPoint node, IBlockAccess worldMap)
-	{
+	public float getBlockPathCost(PathPoint prevNode, PathPoint node, IBlockAccess worldMap) {
 		Block block = worldMap.getBlockState(new BlockPos(node.x, node.y, node.z)).getBlock();
 
 		float penalty = 0.0F;
 		int enclosedLevelSide = 0;
-		if (!this.world.getBlockState(new BlockPos(node.x, node.y - 1, node.z)).isNormalCube()) penalty += 0.3F;
-		if (!this.world.getBlockState(new BlockPos(node.x, node.y + 1, node.z)).isNormalCube()) penalty += 2.0F;
-		if (!this.world.getBlockState(new BlockPos(node.x + 1, node.y, node.z)).isNormalCube()) enclosedLevelSide++;
-		if (!this.world.getBlockState(new BlockPos(node.x - 1, node.y, node.z)).isNormalCube()) enclosedLevelSide++;
-		if (!this.world.getBlockState(new BlockPos(node.x, node.y, node.z + 1)).isNormalCube()) enclosedLevelSide++;
-		if (!this.world.getBlockState(new BlockPos(node.x, node.y, node.z - 1)).isNormalCube()) enclosedLevelSide++;
+		if (!this.world.getBlockState(new BlockPos(node.x, node.y - 1, node.z)).isNormalCube())
+			penalty += 0.3F;
+		if (!this.world.getBlockState(new BlockPos(node.x, node.y + 1, node.z)).isNormalCube())
+			penalty += 2.0F;
+		if (!this.world.getBlockState(new BlockPos(node.x + 1, node.y, node.z)).isNormalCube())
+			enclosedLevelSide++;
+		if (!this.world.getBlockState(new BlockPos(node.x - 1, node.y, node.z)).isNormalCube())
+			enclosedLevelSide++;
+		if (!this.world.getBlockState(new BlockPos(node.x, node.y, node.z + 1)).isNormalCube())
+			enclosedLevelSide++;
+		if (!this.world.getBlockState(new BlockPos(node.x, node.y, node.z - 1)).isNormalCube())
+			enclosedLevelSide++;
 
-		if (enclosedLevelSide > 2) enclosedLevelSide = 2;
+		if (enclosedLevelSide > 2)
+			enclosedLevelSide = 2;
 		penalty += enclosedLevelSide * 0.5F;
 
-		if (block == Blocks.AIR) return prevNode.distanceTo(node) * 1.0F * penalty;
+		if (block == Blocks.AIR)
+			return prevNode.distanceTo(node) * 1.0F * penalty;
 		return prevNode.distanceTo(node) * 1.0F * block.getExplosionResistance(null) * penalty;
 	}
 
 	@Override
-	public float getBlockRemovalCost(BlockPos pos)
-	{
+	public float getBlockRemovalCost(BlockPos pos) {
 		return this.getBlockStrength(pos) * 20.0F;
 	}
 
 	@Override
-	public boolean canClearBlock(BlockPos pos)
-	{
+	public boolean canClearBlock(BlockPos pos) {
 		IBlockState blockState = this.world.getBlockState(pos);
 		return (blockState.getBlock() == Blocks.AIR) || (this.isBlockDestructible(this.world, pos, blockState));
 	}
 
 	@Override
-	public String getSpecies()
-	{
+	public String getSpecies() {
 		return "";
 	}
 
 	@Override
-	public int getTier()
-	{
+	public int getTier() {
 		return 3;
 	}
 
 	@Override
-	public PathNavigateAdapter getNavigator()
-	{
+	public PathNavigateAdapter getNavigator() {
 		return this.oldNavAdapter;
 	}
 
 	@Override
-	public INavigation getNavigatorNew()
-	{
+	public INavigation getNavigatorNew() {
 		return this.bo;
 	}
 
-	protected boolean onPathBlocked(BlockPos pos, INotifyTask notifee)
-	{
-		if (this.terrainDigger.askClearPosition(pos, notifee, 1.0F)) return true;
+	protected boolean onPathBlocked(BlockPos pos, INotifyTask notifee) {
+		if (this.terrainDigger.askClearPosition(pos, notifee, 1.0F))
+			return true;
 		return false;
 	}
 
-	public float getRotX()
-	{
+	public float getRotX() {
 		return this.rotX;
 	}
 
-	public float getRotY()
-	{
+	public float getRotY() {
 		return this.rotY;
 	}
 
-	public float getRotZ()
-	{
+	public float getRotZ() {
 		return this.rotZ;
 	}
 
-	public float getPrevRotX()
-	{
+	public float getPrevRotX() {
 		return this.prevRotX;
 	}
 
-	public float getPrevRotY()
-	{
+	public float getPrevRotY() {
 		return this.prevRotY;
 	}
 
-	public float getPrevRotZ()
-	{
+	public float getPrevRotZ() {
 		return this.prevRotZ;
 	}
 
-	public PosRotate3D[] getSegments3D()
-	{
+	public PosRotate3D[] getSegments3D() {
 		return this.segments3D;
 	}
 
-	public PosRotate3D[] getSegments3DLastTick()
-	{
+	public PosRotate3D[] getSegments3DLastTick() {
 		return this.segments3DLastTick;
 	}
 
-	public void setSegment(int index, PosRotate3D pos)
-	{
-		if (index < this.segments3D.length)
-		{
+	public void setSegment(int index, PosRotate3D pos) {
+		if (index < this.segments3D.length) {
 			this.segments3DLastTick[index] = this.segments3D[index];
 			this.segments3D[index] = pos;
 		}
 	}
 
-	public void setHeadRotation(PosRotate3D pos)
-	{
+	public void setHeadRotation(PosRotate3D pos) {
 		this.prevRotX = this.rotX;
 		this.prevRotY = this.rotY;
 		this.prevRotZ = this.rotZ;
@@ -212,13 +195,12 @@ public class EntityIMBurrower extends EntityIMMob implements ICanDig
 		this.rotZ = pos.getRotZ();
 	}
 
-	/*@Override
-	public void moveEntityWithHeading(float x, float z)
-	{*/
+	/*
+	 * @Override public void moveEntityWithHeading(float x, float z) {
+	 */
 	@Override
 	public void moveRelative(float x, float up, float z, float friction) {
-		if (this.isInWater())
-		{
+		if (this.isInWater()) {
 			double y = this.posY;
 			this.moveFlying(x, z, 0.02F);
 			this.setVelocity(this.motionX, this.motionY, this.motionZ);
@@ -226,10 +208,10 @@ public class EntityIMBurrower extends EntityIMMob implements ICanDig
 			this.motionY *= 0.8D;
 			this.motionZ *= 0.8D;
 			this.motionY -= 0.02D;
-			if ((this.collidedHorizontally) && (this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6D - this.posY + y, this.motionZ))) this.motionY = 0.3D;
-		}
-		else if (this.isInLava())
-		{
+			if ((this.collidedHorizontally)
+					&& (this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6D - this.posY + y, this.motionZ)))
+				this.motionY = 0.3D;
+		} else if (this.isInLava()) {
 			double y = this.posY;
 			this.moveFlying(x, z, 0.02F);
 			this.setVelocity(this.motionX, this.motionY, this.motionZ);
@@ -237,29 +219,22 @@ public class EntityIMBurrower extends EntityIMMob implements ICanDig
 			this.motionY *= 0.5D;
 			this.motionZ *= 0.5D;
 			this.motionY -= 0.02D;
-			if ((this.collidedHorizontally) && (this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6D - this.posY + y, this.motionZ))) this.motionY = 0.3D;
-		}
-		else
-		{
+			if ((this.collidedHorizontally)
+					&& (this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6D - this.posY + y, this.motionZ)))
+				this.motionY = 0.3D;
+		} else {
 			float groundFriction = 1.0F;
-			if (this.onGround)
-			{
+			if (this.onGround) {
 				groundFriction = 0.546F;
 				Block block = this.world
-					.getBlockState(
-						new BlockPos(
-							MathHelper.floor(this.posX),
-							MathHelper.floor(this
-								.getEntityBoundingBox().minY) - 1,
-							MathHelper.floor(this.posZ)))
-					.getBlock();
-				if (block != Blocks.AIR)
-				{
+						.getBlockState(new BlockPos(MathHelper.floor(this.posX),
+								MathHelper.floor(this.getEntityBoundingBox().minY) - 1, MathHelper.floor(this.posZ)))
+						.getBlock();
+				if (block != Blocks.AIR) {
 					groundFriction = block.slipperiness * 0.91F;
 				}
 			}
-			if (this.isOnLadder())
-			{
+			if (this.isOnLadder()) {
 				float maxLadderXZSpeed = 0.15F;
 				if (this.motionX < -maxLadderXZSpeed)
 					this.motionX = (-maxLadderXZSpeed);
@@ -267,23 +242,19 @@ public class EntityIMBurrower extends EntityIMMob implements ICanDig
 					this.motionX = maxLadderXZSpeed;
 				if (this.motionZ < -maxLadderXZSpeed)
 					this.motionZ = (-maxLadderXZSpeed);
-				if (this.motionZ > maxLadderXZSpeed)
-				{
+				if (this.motionZ > maxLadderXZSpeed) {
 					this.motionZ = maxLadderXZSpeed;
 				}
 				this.fallDistance = 0.0F;
-				if (this.motionY < -0.15D)
-				{
+				if (this.motionY < -0.15D) {
 					this.motionY = -0.15D;
 				}
-				if ((this.isSneaking()) && (this.motionY < 0.0D))
-				{
+				if ((this.isSneaking()) && (this.motionY < 0.0D)) {
 					this.motionY = 0.0D;
 				}
 			}
 			this.setVelocity(this.motionX, this.motionY, this.motionZ);
-			if ((this.collidedHorizontally) && (this.isOnLadder()))
-			{
+			if ((this.collidedHorizontally) && (this.isOnLadder())) {
 				this.motionY = 0.2D;
 			}
 			float airResistance = 0.98F;
@@ -299,8 +270,7 @@ public class EntityIMBurrower extends EntityIMMob implements ICanDig
 		double dZ = this.posZ - this.prevPosZ;
 		float f4 = MathHelper.sqrt(dX * dX + dZ * dZ) * 4.0F;
 
-		if (f4 > 1.0F)
-		{
+		if (f4 > 1.0F) {
 			f4 = 1.0F;
 		}
 
@@ -309,21 +279,18 @@ public class EntityIMBurrower extends EntityIMMob implements ICanDig
 	}
 
 	@Override
-	protected void updateAITasks()
-	{
+	protected void updateAITasks() {
 		super.updateAITasks();
 		this.terrainModifier.onUpdate();
 	}
 
 	@Override
-	public void updateAITick()
-	{
+	public void updateAITick() {
 		super.updateAITick();
 	}
 
 	@Override
-	public void onBlockRemoved(BlockPos pos, IBlockState state)
-	{
+	public void onBlockRemoved(BlockPos pos, IBlockState state) {
 		// TODO Auto-generated method stub
 
 	}

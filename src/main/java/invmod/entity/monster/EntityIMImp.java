@@ -21,12 +21,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
 
+public class EntityIMImp extends EntityIMMob {
 
-public class EntityIMImp extends EntityIMMob
-{
-
-	public EntityIMImp(World world, TileEntityNexus nexus)
-	{
+	public EntityIMImp(World world, TileEntityNexus nexus) {
 		super(world, nexus);
 		this.setBaseMoveSpeedStat(0.3F);
 		this.attackStrength = 3;
@@ -37,21 +34,18 @@ public class EntityIMImp extends EntityIMMob
 		this.setCanClimb(true);
 	}
 
-	public EntityIMImp(World world)
-	{
+	public EntityIMImp(World world) {
 		this(world, null);
 	}
 
 	@Override
-	public String getSpecies()
-	{
+	public String getSpecies() {
 		return "Imp";
 	}
 
 	@Override
-	protected void initEntityAI()
-	{
-		//added entityaiswimming and increased all other tasksordernumers with 1
+	protected void initEntityAI() {
+		// added entityaiswimming and increased all other tasksordernumers with 1
 		this.tasksIM = new EntityAITasks(this.world.profiler);
 		this.tasksIM.addTask(0, new EntityAISwimming(this));
 		this.tasksIM.addTask(1, new EntityAIKillEntity(this, EntityPlayer.class, 40));
@@ -75,15 +69,13 @@ public class EntityIMImp extends EntityIMMob
 	}
 
 	@Override
-	public boolean attackEntityAsMob(Entity entity)
-	{
+	public boolean attackEntityAsMob(Entity entity) {
 		entity.setFire(3);
 		return super.attackEntityAsMob(entity);
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "IMImp-T" + this.getTier();
 	}
 }
