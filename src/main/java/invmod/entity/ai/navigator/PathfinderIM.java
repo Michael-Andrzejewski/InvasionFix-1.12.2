@@ -1,6 +1,7 @@
 package invmod.entity.ai.navigator;
 
 import invmod.IPathfindable;
+import invmod.util.ModLogger;
 import net.minecraft.util.IntHashMap;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
@@ -116,8 +117,17 @@ public class PathfinderIM {
 
 	public void addNode(Vec3d pos, PathAction action) {
 		PathNode node = this.openPoint(pos, action);
-		if ((node != null) && (!node.isFirst) && (node.distanceTo(this.finalTarget) < this.searchRange))
-			this.pathOptions[(this.pathsIndex++)] = node;
+		if ((node != null) && (!node.isFirst) && (node.distanceTo(this.finalTarget) < this.searchRange)) {
+			
+			if (this.pathsIndex > this.pathOptions.length) {
+				ModLogger.logDebug("Pathfinder.addNode: trying to access index" + (this.pathsIndex + 1) + " of " + this.pathOptions.length);
+			} else {
+				this.pathOptions[(this.pathsIndex++)] = node;
+			}
+			
+			
+		}
+			
 	}
 
 	private double estimateDistance(PathNode start, PathNode target) {
