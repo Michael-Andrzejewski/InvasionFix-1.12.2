@@ -1,3 +1,29 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents an AI behavior for sprinting entities in a Minecraft mod.
+//  * It is designed to be used with entities that extend the EntityIMMob class.
+//  *
+//  * Methods:
+//  * - EntityAISprint(EntityIMMob entity): Constructor that initializes the AI with the given entity.
+//  * - shouldExecute(): Determines if the AI should start executing, based on visibility of the target or if already sprinting.
+//  * - startExecuting(): Sets up the AI for execution, initializing timers and flags.
+//  * - updateTask(): Updates the AI behavior each tick, managing sprinting logic and transitions between states.
+//  * - startSprint(): Prepares the entity to start sprinting towards its target if conditions are met.
+//  * - sprint(): Activates the sprint, increasing the entity's speed and setting sprinting state.
+//  * - endSprint(): Deactivates the sprint, resetting the entity's speed and turning rate to normal.
+//  * - crash(): Handles the entity's behavior when it crashes, applying stun and damage, and ending the sprint.
+//  *
+//  * The AI manages a sprinting state, including wind-up before sprinting, maintaining the sprint, and handling what happens
+//  * if the entity loses its target or crashes. It uses timers to manage state transitions and checks angles and distances
+//  * to determine if the entity should continue sprinting or not.
+//  */
+// package invmod.entity.ai;
+// 
+// // ... (rest of the code)
+// ```
+// `^`^`^`
+
 package invmod.entity.ai;
 
 import invmod.entity.monster.EntityIMMob;

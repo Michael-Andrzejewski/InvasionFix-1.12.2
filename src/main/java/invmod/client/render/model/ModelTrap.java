@@ -1,3 +1,29 @@
+// `^`^`^`
+// ```java
+// /**
+//  * ModelTrap is a custom model class for rendering a trap entity in Minecraft.
+//  * It extends the ModelBase class from Minecraft's net.minecraft.client.model package.
+//  *
+//  * The model includes various parts that can be individually rendered:
+//  * - coreRift: Represents a rift core component of the trap.
+//  * - CoreFire: Represents a fire core component of the trap.
+//  * - CorePoison: Represents a poison core component of the trap.
+//  * - Clasp1a, Clasp1b, Clasp2a, Clasp2b, Clasp3a, Clasp3b, Clasp4a, Clasp4b: Clasp components of the trap.
+//  * - Base, BaseS1, BaseS2: Base components of the trap.
+//  *
+//  * The constructor initializes the model parts, setting their texture sizes and initial positions.
+//  *
+//  * The render method is overloaded:
+//  * - The primary render method takes additional parameters to control the rendering of the core components based on the trap type and whether the trap is empty.
+//  * - The secondary render method is a simpler version that calls the primary method with default values.
+//  *
+//  * The setRotation method is a helper for setting the rotation angles of model parts, but it is not used in the current implementation.
+//  *
+//  * The setRotationAngles method is overridden to define the rotation angles of the model parts when the entity is animated, but it currently just calls the superclass method without additional functionality.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render.model;
 
 import net.minecraft.client.model.ModelBase;

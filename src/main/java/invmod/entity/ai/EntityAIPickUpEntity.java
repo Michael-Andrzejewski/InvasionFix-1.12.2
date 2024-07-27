@@ -1,3 +1,37 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents an AI behavior for the EntityIMBird entity to pick up other entities.
+//  * It is designed to be used within the Minecraft mod 'invmod'.
+//  *
+//  * Constructor:
+//  * EntityAIPickUpEntity(EntityIMBird entity, float pickupPointX, float pickupPointY, float pickupPointZ,
+//  *                      float pickupRangeY, float pickupRangeXZ, int abortTime, float abortAngleYaw,
+//  *                      float abortAnglePitch)
+//  * - Initializes the AI with the bird entity, pickup coordinates, ranges, abort time, and abort angles.
+//  *
+//  * Methods:
+//  * shouldExecute()
+//  * - Determines if the AI should start executing, based on whether the bird has a target to pick up or is already holding an entity.
+//  *
+//  * startExecuting()
+//  * - Sets up the AI to start executing, initializing the holding state and time counter.
+//  *
+//  * shouldContinueExecuting()
+//  * - Checks if the AI should continue executing, based on the target's status and alignment. If conditions are not met, it aborts the task.
+//  *
+//  * updateTask()
+//  * - Updates the AI task, handling the logic for picking up the target entity when aligned and releasing it after a set duration.
+//  *
+//  * isLinedUp(Entity target)
+//  * - Helper method to determine if the bird is aligned with the target entity based on yaw and pitch angles.
+//  *
+//  * The AI uses a combination of time counters, spatial calculations, and angle checks to manage the behavior of picking up and holding entities.
+//  * It integrates with the entity's navigation system to modify movement behavior during the task.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.ai;
 
 import invmod.entity.Goal;

@@ -1,3 +1,38 @@
+// `^`^`^`
+// ```java
+// /**
+//  * NavigatorBurrower is a specialized navigator for the EntityIMBurrower entity, which is likely a burrowing creature.
+//  * It extends the NavigatorParametric class, providing specific implementations for path-following behavior.
+//  *
+//  * Methods:
+//  * - NavigatorBurrower(EntityIMBurrower, IPathSource, int, int): Constructor initializing the navigator with segments and offsets.
+//  * - entityPositionAtParam(int): Calculates the entity's position at a given time parameter.
+//  * - positionAtTime(int, PathNode, PathNode, PathNode): Determines the position of the entity at a specific tick within the path segment.
+//  * - isReadyForNextNode(int): Checks if the entity is ready to move to the next node based on the time parameter.
+//  * - pathFollow(int): Follows the path by updating the current, previous, and next nodes as the entity moves.
+//  * - doSegmentFollowTo(int, int): Manages the movement of individual segments of the burrower to create a smooth animation.
+//  * - doMovementTo(int): Handles the actual movement of the entity, including velocity setting and head rotation.
+//  * - noPath(): Checks if the navigator currently has no path to follow.
+//  * - setPath(Path, float): Sets a new path for the navigator to follow, with speed adjustment.
+//  * - calcAbsolutePositionAndRotation(float, PathNode, PathNode, PathNode): Calculates the absolute position and rotation of the entity.
+//  * - calcPositionAndRotation(float, PathNode, PathNode, PathNode): Computes the position and rotation for a given time and path nodes.
+//  *
+//  * The navigator manages the complex movement of a segmented burrowing entity, ensuring smooth transitions between path nodes and segments.
+//  */
+// ```
+// ```plaintext
+// This code appears to be part of a larger system responsible for calculating and manipulating 3D positions and rotations, likely for a simulation or a game. The code includes methods for computing the position and orientation of an object over time, as well as for extending a path by concatenating segments.
+// 
+// 1. calcCurve(float time, PathNode start, PathNode control, PathNode end, int gX, int gY, float vX, float vY, float vZ): This method calculates the position and rotation of an object following a curved path based on a given time, start and end points, control point for the curve, gravity direction, and velocity components. The rotations are initially calculated in degrees and then converted to radians.
+// 
+// 2. calcStraight(float time, PathNode start, PathNode end): This method computes the position of an object moving in a straight line between two points over a given time. It linearly interpolates the position based on the start and end points and the elapsed time.
+// 
+// 3. extendPath(Path path1, Path path2, int lowerBoundP1, int upperBoundP1): This method extends a given path by appending another path to it. It takes a segment of the first path from a specified lower to upper bound and concatenates it with the second path, creating a new continuous path.
+// 
+// Each method is designed to handle specific types of motion, with 'calcCurve' handling curved trajectories influenced by gravity and velocity, 'calcStraight' handling linear motion, and 'extendPath' combining path segments to form longer paths. The code is structured to support complex path calculations for objects moving in a 3D space.
+// ```
+// `^`^`^`
+
 package invmod.entity.ai.navigator;
 
 import invmod.entity.IPathSource;

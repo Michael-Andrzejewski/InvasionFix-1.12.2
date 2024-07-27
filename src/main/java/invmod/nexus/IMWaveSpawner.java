@@ -1,3 +1,53 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This code defines the IMWaveSpawner class, which is responsible for managing the spawning of waves of entities
+//  * (specifically monsters like zombies) around a central nexus point in a game. The class is part of the 'invmod' package,
+//  * which suggests it is for a mod, likely for Minecraft given the context and naming conventions.
+//  *
+//  * Class IMWaveSpawner:
+//  * - Manages the spawning of entities in waves, with various parameters such as spawn radius and wave number.
+//  * - Contains methods to start waves, spawn entities, resume from a saved state, and stop spawning.
+//  * - Utilizes a SpawnPointContainer to manage potential spawn locations.
+//  * - Provides debug logging capabilities to track spawning events and issues.
+//  *
+//  * Key Methods:
+//  * - IMWaveSpawner(TileEntityNexus, int): Constructor initializing the spawner with a nexus and spawn radius.
+//  * - beginNextWave(int/Wave): Starts the next wave either by wave number or by a Wave object.
+//  * - spawn(int): Spawns entities based on elapsed time since the last spawn.
+//  * - resumeFromState(Wave/Int, long, int): Resumes spawning from a saved state, with a specified wave, elapsed time, and radius.
+//  * - stop(): Stops the spawning process.
+//  * - isActive(), isReady(), isWaveComplete(): Return the status of the spawner.
+//  * - getWaveDuration(), getWaveRestTime(), getSuccessfulSpawnsThisWave(), getTotalDefinedMobsThisWave(): Provide information about the current wave.
+//  * - askForRespawn(EntityIMLiving): Requests a respawn for an entity at a random spawn point.
+//  * - sendSpawnAlert(String): Sends a message to players about spawning events.
+//  * - attemptSpawn(EntityConstruct, int, int): Attempts to spawn an entity within a specified angle range.
+//  * - generateSpawnPoints(): Generates potential spawn points around the nexus.
+//  * - addValidSpawn(EntityIMLiving, List<SpawnPoint>, int, int, int): Adds a valid spawn point to the list if the entity can spawn there.
+//  *
+//  * Exceptions:
+//  * - WaveSpawnerException: Custom exception thrown when there are issues with wave spawning.
+//  */
+// ```
+// ```plaintext
+// This code appears to be part of a larger system, likely a game or simulation, that manages the spawning of entities within a virtual environment. The code snippet provided seems to focus on the process of determining valid spawn points for entities, specifically for what is labeled as "HUMANOID" type entities.
+// 
+// Key components of the code:
+// 
+// 1. The code checks if an entity can spawn at a given location using `entity.getCanSpawnHere()`. This suggests there is a set of conditions that must be met for a location to be considered a valid spawn point.
+// 
+// 2. It calculates the angle between the entity's potential spawn location and a reference point called `nexus` using the `Math.atan2` function, which returns the angle in radians and converts it to degrees. This angle might be used to orient the entity in a specific direction upon spawning.
+// 
+// 3. If the location is valid, the code adds a new spawn point to `spawnPointContainer` with the calculated angle and the coordinates (x, y, z), indicating where and how the entity should spawn.
+// 
+// 4. The `SpawnPoint` class is used to create an object that holds the spawn location and orientation data, and `SpawnType.HUMANOID` indicates the type of entity to be spawned.
+// 
+// Overall, the code is responsible for managing the placement and orientation of humanoid entities in the game world by adding valid spawn points to a container that presumably will be used later to actually instantiate the entities in the game environment.
+// ```
+// 
+// Please note that the code snippet provided is incomplete and lacks context, which may affect the accuracy of the summary. The actual functionality might differ when considering the entire codebase.
+// `^`^`^`
+
 package invmod.nexus;
 
 import java.util.ArrayList;

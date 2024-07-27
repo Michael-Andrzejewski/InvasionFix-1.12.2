@@ -1,3 +1,50 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This code defines the EntityIMSpider class, which is a custom entity class for a modded Minecraft game. The class extends EntityIMMob and implements ISpawnsOffspring, indicating that this entity can spawn offspring.
+//  *
+//  * EntityIMSpider(World world): Constructor that initializes a spider entity in the given world without a nexus reference.
+//  * EntityIMSpider(World world, TileEntityNexus nexus): Overloaded constructor that initializes a spider entity with a nexus reference.
+//  * initEntityAI(): Initializes the entity's AI tasks, including swimming, attacking players and the nexus, wandering, and targeting.
+//  * onUpdate(): Called every tick to update the entity's state, including syncing metadata changes from the server to the client.
+//  * moveRelative(float x, float up, float z, float friction): Handles the entity's movement logic, including swimming, climbing, and flying.
+//  * getMoveHelper(): Returns the IMMoveHelper instance associated with this entity, which aids in movement.
+//  * jump(): Causes the entity to jump, setting the motionY to give an upward velocity.
+//  * setTier(int tier): Sets the tier of the spider and updates its attributes based on the tier.
+//  * setFlavour(int flavour): Sets the flavor of the spider, which can affect its appearance and abilities.
+//  * toString(): Provides a string representation of the entity, including its tier and name.
+//  * getMountedYOffset(): Returns the Y-offset for mounting this entity.
+//  * writeEntityToNBT(NBTTagCompound nbttagcompound): Writes the entity's data to NBT for saving.
+//  * readEntityFromNBT(NBTTagCompound nbttagcompound): Reads the entity's data from NBT.
+//  * avoidsBlock(int id): Determines if the spider should avoid certain blocks.
+//  * spiderScaleAmount(): Returns the scale factor for the spider's size based on its tier and flavor.
+//  * getOffspring(Entity partner): Returns an array of Entity objects representing the offspring of this spider when paired with a partner.
+//  *
+//  * The class also includes several static DataParameter objects for tracking metadata changes and various private fields related to the spider's behavior and attributes.
+//  */
+// ```
+// ```plaintext
+// This code appears to be part of a larger class that defines the behavior and attributes of a spider entity within a game, likely a mod for Minecraft given the context and naming conventions. The class includes methods for creating spider entities, managing their sounds, handling their movement and interactions with the environment, and defining their attributes based on different types (or "flavours") of spiders.
+// 
+// - The constructor `EntityConstruct` initializes a new spider entity with specified parameters such as type, tier, and flavor.
+// - The method `getAirborneTime` returns the time the spider has been airborne.
+// - The method `canBePushed` determines if the spider can be pushed, based on whether it is on a ladder.
+// - The method `getCreatureAttribute` returns the creature attribute, which is ARTHROPOD for spiders.
+// - The method `checkForAdjacentClimbBlock` checks if there is a block adjacent that the spider can climb.
+// - The method `getSpecies` returns the species name of the entity, which is "Spider".
+// - The method `setAirborneTime` sets the time the spider has been airborne.
+// - The method `canTriggerWalking` determines if walking should be triggered, which is false for spiders.
+// - The method `getLivingSound` returns the sound made by the spider when it is alive.
+// - The method `getHurtSound` returns the sound made by the spider when it is hurt.
+// - The method `getDeathSound` returns the sound made by the spider when it dies.
+// - The method `fall` handles the spider's behavior when falling, including playing sounds based on the block it lands on.
+// - The method `dropFewItems` controls the items dropped by the spider upon death.
+// - The private method `setAttributes` sets various attributes of the spider, such as size, health, and attack strength, based on its tier and flavor.
+// 
+// Overall, this code is responsible for defining the behavior and characteristics of spider entities in the game, providing a more immersive and dynamic experience for players.
+// ```
+// `^`^`^`
+
 package invmod.entity.monster;
 
 import invmod.mod_invasion;

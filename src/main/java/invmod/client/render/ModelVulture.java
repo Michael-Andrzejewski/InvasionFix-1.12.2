@@ -1,3 +1,61 @@
+// `^`^`^`
+// ```java
+// /**
+//  * ModelVulture is a 3D model class designed for rendering a vulture entity in Minecraft.
+//  * It extends ModelBase, a standard class for entity models in Minecraft's rendering system.
+//  *
+//  * The class defines various body parts of the vulture as ModelRenderer objects, which include the body,
+//  * thighs, legs, ankles, toes, claws, neck sections, head, beak, wings, and tail. Each part is initialized
+//  * with texture coordinates and dimensions, and some parts are parented to others to create a hierarchical
+//  * structure that allows for complex animations.
+//  *
+//  * The constructor ModelVulture(float par1) initializes the model by creating and positioning the various
+//  * ModelRenderer components. It also mirrors some parts to create symmetry between the left and right sides
+//  * of the model.
+//  *
+//  * The class is designed to work with the ModelAnimator class, which handles the animation of the model's
+//  * parts. Three ModelAnimator instances are declared (animationFlap, animationRun, animationBeak) to
+//  * represent different animations that the vulture can perform, such as flapping its wings, running, and
+//  * moving its beak.
+//  *
+//  * The addChild method is used to parent certain ModelRenderer objects to others, ensuring that transformations
+//  * applied to the parent are also applied to the child. This is particularly useful for animating connected
+//  * parts of the model, such as the toes and claws.
+//  *
+//  * Overall, ModelVulture provides a detailed and animatable model of a vulture for use in Minecraft's
+//  * rendering system, with a focus on realism and flexibility in animation.
+//  */
+// ```
+// ```java
+// /**
+//  * This code represents a model for animating a bird entity, including its legs, wings, and beak. It is structured to
+//  * define the hierarchical relationships between different parts of the bird's body and to animate these parts using
+//  * predefined animations. The code is likely part of a larger system for rendering and animating entities in a game or
+//  * simulation environment.
+//  *
+//  * Key components and methods:
+//  * - addChild: Establishes parent-child relationships between body parts, ensuring that transformations applied to a
+//  *   parent part (e.g., rotation, translation) also affect its children.
+//  * - EnumMap legMap, wingMap, beakMap: Maps specific body parts to their corresponding enums for easy reference and
+//  *   manipulation during animations.
+//  * - ModelAnimator instances (animationRun, animationFlap, animationBeak): Handles the animation logic for running,
+//  *   flapping wings, and beak movement, respectively.
+//  * - setRotation: Helper method to set the rotation angles (pitch, yaw, roll) for a given body part.
+//  * - render: Renders the bird's body, which implicitly renders all attached child parts due to the hierarchical
+//  *   structure.
+//  * - setFlyingAnimations: Updates the bird's body parts based on the current state of animations for flying, including
+//  *   wing flapping and leg movement.
+//  * - setRotationAngles: Adjusts the bird's body rotation based on entity pitch, affecting how the bird is oriented in
+//  *   space.
+//  * - resetSkeleton: Resets all body parts to their default positions and rotations, likely used when initializing the
+//  *   model or resetting animations.
+//  *
+//  * The code is organized to first define the structure of the bird model and then provide methods for animating and
+//  * rendering the model based on the state of various animations.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render;
 
 import java.util.EnumMap;

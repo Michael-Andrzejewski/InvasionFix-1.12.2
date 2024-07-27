@@ -1,3 +1,67 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class defines the behavior and properties of the Pigman Engineer entity in the Invasion Mod.
+//  * The Pigman Engineer is a specialized mob that can build, dig, and navigate terrain to reach and attack a Nexus.
+//  *
+//  * Key Behaviors:
+//  * - EntityIMPigEngy: Constructor initializes the entity, setting up its pathfinding, terrain modification abilities, and base stats.
+//  * - entityInit: Registers data parameters for the entity, such as whether it is swinging its arm.
+//  * - initEntityAI: Sets up the AI tasks for the entity, including swimming, attacking the player or Nexus, wandering, and targeting.
+//  * - updateAITasks: Updates the terrain modifier, which handles block removal and placement.
+//  * - updateAITick: Manages the building rate and requests for scaffolding to reach higher positions.
+//  * - onLivingUpdate: Updates the entity's animation state.
+//  * - onPathSet: Called when a new path is set, canceling any ongoing terrain modification tasks.
+//  * - getNavigatorNew: Returns the custom navigator used by the entity for pathfinding.
+//  * - getTerrain: Provides access to the world's terrain data.
+//  * - onPathBlocked: Handles situations where the entity's path is blocked, potentially clearing the obstruction.
+//  * - getTerrainBuildEngy: Returns the terrain builder instance for this entity.
+//  * - getTerrainDig: Returns the terrain digger instance for this entity.
+//  * - setTier: Sets the tier of the entity, adjusting its digging and building capabilities.
+//  * - getAmbientSound, getHurtSound, getDeathSound: Define the sounds for the entity's ambient noise, hurt, and death events.
+//  * - getSpecies: Returns the species name of the entity.
+//  * - getBlockRemovalCost: Calculates the cost to remove a block based on its strength.
+//  * - canClearBlock: Determines if the entity can clear a specific block.
+//  * - avoidsBlock: Checks if the entity should avoid certain blocks.
+//  * - supportForTick: Temporarily increases the entity's support for a single tick.
+//  * - canBePushed: Indicates whether the entity can be pushed by other entities.
+//  * - getBlockPathCost: Calculates the path cost for moving through blocks, considering destructibility.
+//  *
+//  * The entity uses a combination of AI tasks and custom navigation to intelligently interact with the world,
+//  * such as building ladders, digging through obstacles, and avoiding hazards while pursuing its goal.
+//  */
+// ```
+// ```java
+// /**
+//  * This code appears to be part of an AI system for a modded Minecraft entity, specifically an "IMPigManEngineer" with pathfinding capabilities. The entity seems to be designed to navigate complex terrain, build structures like bridges and ladders, and interact with blocks in the game world. Below is a summary of the key methods within the code:
+// 
+//  * getBlockPathCost: Calculates the cost of moving from one path node to another, taking into account the action required (e.g., building a bridge or climbing a ladder) and the type of material present. It adjusts the cost based on terrain features and mob density.
+// 
+//  * getPathOptionsFromNode: Explores possible path options from the current node, considering the entity's ability to build bridges if it has enough planks.
+// 
+//  * calcPathOptionsVertical: Determines vertical path options from the current node, allowing the entity to build ladders or scaffold upwards if the path is blocked and it has the necessary resources.
+// 
+//  * addAnyLadderPoint: Adds a ladder climbing point to the pathfinder if there is a solid block adjacent to the current node.
+// 
+//  * continueLadder: Continues building a ladder in the direction indicated by the current node's action if there is a solid block to attach it to.
+// 
+//  * dropFewItems: Determines which items the entity drops upon death, with different items based on whether the entity is on fire.
+// 
+//  * updateAnimation: Manages the entity's swinging animation when it is performing an action, such as mining or using a hammer.
+// 
+//  * isSwinging, setSwinging, getSwingSpeed: Getter and setter methods for the entity's swinging state and the speed of the swing animation.
+// 
+//  * canPlaceLadderAt: Checks if the entity can place a ladder at a given position, considering the presence of indestructible blocks and adjacent solid blocks.
+// 
+//  * onBlockRemoved: Placeholder method for handling block removal, which is not implemented in the provided code snippet.
+// 
+//  * toString: Overrides the default toString method to provide a string representation of the entity, including its type and tier.
+// 
+// Overall, the code is designed to enhance the pathfinding and environmental interaction capabilities of a Minecraft entity, allowing it to navigate the world and modify it by building structures as needed.
+// **/
+// ```
+// `^`^`^`
+
 package invmod.entity.monster;
 
 import invmod.IBlockAccessExtended;

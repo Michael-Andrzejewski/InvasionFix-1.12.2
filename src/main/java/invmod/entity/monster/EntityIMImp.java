@@ -1,3 +1,40 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents the EntityIMImp, a custom mob entity for the mod 'Invasion Mod'.
+//  * The EntityIMImp is a specialized monster with AI behaviors targeting the Nexus and players.
+//  *
+//  * Constructors:
+//  * - EntityIMImp(World world, TileEntityNexus nexus): Initializes the imp with a reference to the world and a Nexus.
+//  * - EntityIMImp(World world): Overloaded constructor that initializes the imp without a Nexus reference.
+//  *
+//  * Core Methods:
+//  * - getSpecies(): Returns the species name of the imp, "Imp".
+//  * - initEntityAI(): Sets up the AI tasks for the imp, including swimming, attacking players and the Nexus, waiting for engineers, wandering, and watching.
+//  * - attackEntityAsMob(Entity entity): Defines the attack behavior of the imp, which includes setting the target entity on fire.
+//  * - toString(): Provides a string representation of the imp, including its tier.
+//  *
+//  * AI Tasks:
+//  * - EntityAISwimming: Allows the imp to swim in water.
+//  * - EntityAIKillEntity: Targets specific entity classes (players and living entities) for attack.
+//  * - EntityAIAttackNexus: Directs the imp to attack the Nexus.
+//  * - EntityAIWaitForEngy: Makes the imp wait for an engineer mob before proceeding.
+//  * - EntityAIGoToNexus: Guides the imp towards the Nexus.
+//  * - EntityAIWanderIM: Lets the imp wander around.
+//  * - EntityAIWatchClosest: Causes the imp to watch the closest player or a specific mob class.
+//  * - EntityAILookIdle: Gives the imp idle behavior when it has nothing else to do.
+//  *
+//  * Targeting Tasks:
+//  * - EntityAITargetRetaliate: Allows the imp to retaliate against attackers.
+//  * - EntityAISimpleTarget: Targets players within a certain range.
+//  * - EntityAIHurtByTarget: Causes the imp to target entities that have hurt it.
+//  * - EntityAITargetOnNoNexusPath: Targets engineer mobs when there is no path to the Nexus.
+//  *
+//  * The imp is characterized by its ability to climb, jump, and its increased base move speed. It also has a set attack strength and health.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.monster;
 
 import invmod.mod_invasion;

@@ -1,3 +1,23 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class, SpawnPointContainer, is designed to manage and organize spawn points within a Minecraft mod environment.
+//  * It categorizes spawn points by type and provides methods to add, retrieve, and manipulate these points.
+//  *
+//  * Public Methods:
+//  * - SpawnPointContainer(): Constructor that initializes the container with sorted status set to false, a new random number generator, a default angle, and an empty EnumMap for storing spawn points by type.
+//  * - addSpawnPointXZ(SpawnPoint spawnPoint): Adds a new spawn point to the container. If a spawn point with the same X and Z coordinates exists, it replaces the old one if the new Y coordinate is lower.
+//  * - getRandomSpawnPoint(SpawnType spawnType): Returns a random spawn point of the specified type, or null if no spawn points of that type exist.
+//  * - getRandomSpawnPoint(SpawnType spawnType, int minAngle, int maxAngle): Returns a random spawn point within a specified angle range of the specified type, or null if no such spawn points exist.
+//  * - getNumberOfSpawnPoints(SpawnType type): Returns the number of spawn points of a specified type.
+//  * - getNumberOfSpawnPoints(SpawnType spawnType, int minAngle, int maxAngle): Returns the number of spawn points within a specified angle range of the specified type.
+//  * - pointDisplayTest(Block block, World world): A test method that sets a specified block at the location of each humanoid spawn point in the world for visualization purposes.
+//  *
+//  * The class uses an EnumMap to store ArrayLists of SpawnPoint objects, categorized by SpawnType. It also includes a sorting mechanism to optimize angle-based queries.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.nexus;
 
 import java.util.ArrayList;

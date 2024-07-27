@@ -1,3 +1,34 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class defines the AI behavior for an EntityIMMob to lay eggs within the game.
+//  * It extends the EntityAIBase class from Minecraft, providing specific functionality
+//  * for egg-laying entities.
+//  *
+//  * Methods:
+//  * - EntityAILayEgg(EntityIMMob entity, int initialEggCount): Constructor that initializes the AI with the parent entity and initial egg count.
+//  * - addEggs(int eggs): Adds a specified number of eggs to the current egg count and logs the new total.
+//  * - shouldExecute(): Determines if the AI should start executing, based on cooldown, goal status, egg count, and visibility of the target.
+//  * - startExecuting(): Prepares the entity to start laying eggs by setting an initial delay and logging the start of the process.
+//  * - updateTask(): Manages the countdown for egg-laying, toggles the laying state, and calls layEgg() when it's time to lay an egg.
+//  * - layEgg(): Creates an egg entity, potentially with offspring inside, and spawns it into the world, then sets a cooldown until the next egg can be laid.
+//  *
+//  * Constants:
+//  * - EGG_LAY_TIME: The time it takes to lay an egg.
+//  * - INITIAL_EGG_DELAY: The initial delay before starting to lay eggs.
+//  * - NEXT_EGG_DELAY: The delay between laying eggs.
+//  * - EGG_HATCH_TIME: The time it takes for an egg to hatch.
+//  *
+//  * Fields:
+//  * - parentEntity: The entity that is laying the eggs.
+//  * - eggLayingTimer: A countdown timer for egg-laying events.
+//  * - isLaying: A flag indicating whether the entity is currently laying an egg.
+//  * - eggCount: The number of eggs the entity has left to lay.
+//  * - cooldownTimer: A timer to manage the cooldown period between laying eggs.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.ai;
 
 import invmod.entity.Goal;

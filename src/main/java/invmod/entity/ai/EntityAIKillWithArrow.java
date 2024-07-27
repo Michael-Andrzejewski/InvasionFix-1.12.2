@@ -1,3 +1,35 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class defines an AI behavior for an in-game mob to attack entities using arrows within Minecraft.
+//  * It extends the EntityAIKillEntity class, specifying the attack strategy for ranged combat.
+//  *
+//  * Class: EntityAIKillWithArrow
+//  * Package: invmod.entity.ai
+//  *
+//  * Methods:
+//  * - EntityAIKillWithArrow(EntityIMMob entity, Class<? extends T> targetClass, int attackDelay, float attackRange):
+//  *   Constructor that initializes the AI with the mob entity, target class, attack delay, and attack range.
+//  *
+//  * - updateTask():
+//  *   Overrides the updateTask method to halt the mob's navigation if the target is within a certain range and visible.
+//  *
+//  * - attackEntity(Entity target):
+//  *   Overrides the attackEntity method to perform a ranged attack on the target entity using an arrow. It calculates
+//  *   the trajectory and applies enchantment effects such as Power and Punch. It also handles the application of potion
+//  *   effects if the arrow is tipped and plays the appropriate sound effect upon shooting.
+//  *
+//  * - canAttackEntity(Entity target):
+//  *   Overrides the canAttackEntity method to check if the mob can currently attack the target based on the attack
+//  *   cooldown, distance to the target, and line of sight.
+//  *
+//  * Usage:
+//  * This AI is used to give a mob the ability to attack with arrows from a distance, similar to a skeleton's behavior.
+//  * It includes enhancements for enchantments and potion effects, making it a versatile component for custom mob behavior.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.ai;
 
 import invmod.entity.monster.EntityIMMob;

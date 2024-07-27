@@ -1,3 +1,26 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This code defines an item class named ItemProbe within the 'invmod' mod, which is designed to interact with the game environment in Minecraft.
+//  * The ItemProbe has two primary functions based on its subtype: adjusting the Nexus spawn range and displaying block strength.
+//  *
+//  * Class: ItemProbe
+//  * - Extends ModItem, a custom item class from the 'invmod' mod.
+//  * - Contains a static array of probe names for different subtypes.
+//  * - Constructor sets up the item with a name, subtype handling, damage, and stack size.
+//  * - Overrides isFull3D to ensure the item is rendered properly in 3D.
+//  * - Overrides onItemUseFirst to handle the item's interaction with blocks in the world:
+//  *   - When used on a Nexus block, it adjusts the Nexus's spawn radius by increments of 8, cycling between 32 and 128.
+//  *   - When used with the material probe subtype (damage value 1), it displays the strength of the block being interacted with.
+//  * - Overrides getUnlocalizedName to provide a unique name for each subtype based on the damage value.
+//  * - Overrides getItemEnchantability to set the enchantability level to 14.
+//  * - Overrides getSubItems to add both subtypes of the probe to the specified creative tab.
+//  *
+//  * Note: Some commented-out code and placeholders (e.g., /* BlocksAndItems.blockNexus */) suggest that parts of the code may be intended for future updates or require additional context from the mod's other components.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.item;
 
 import invmod.ModBlocks;

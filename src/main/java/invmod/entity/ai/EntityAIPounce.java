@@ -1,3 +1,36 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class defines the pouncing behavior for the EntityIMSpider in a Minecraft mod.
+//  * The EntityAIPounce class extends EntityAIBase to create a custom AI task that allows
+//  * the spider entity to pounce on its target.
+//  *
+//  * Constructor:
+//  * - EntityAIPounce(EntityIMSpider entity, float minPower, float maxPower, int cooldown):
+//  *   Initializes the AI with the spider entity, minimum and maximum pounce power, and cooldown period.
+//  *
+//  * Methods:
+//  * - shouldExecute(): Determines if the AI task should start, checking if the pounce cooldown has elapsed,
+//  *   if there is a target in sight, and if the spider is on the ground.
+//  *
+//  * - shouldContinueExecuting(): Checks if the spider should continue pouncing.
+//  *
+//  * - startExecuting(): Initiates the pounce if the target is in a valid position, setting the spider as
+//  *   airborne and halting its navigation for a tick.
+//  *
+//  * - updateTask(): Updates the task each tick, halting navigation and checking if the spider has landed
+//  *   to reset the pounce timer and clear the navigation path.
+//  *
+//  * - pounce(double x, double y, double z): Calculates the trajectory for the pounce based on the target's
+//  *   position and the spider's current position and gravity. It ensures the pounce power is within the
+//  *   specified range and sets the spider's motion accordingly.
+//  *
+//  * The AI task is designed to add a dynamic and challenging behavior to the EntityIMSpider, making it
+//  * more engaging in combat scenarios.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.ai;
 
 import invmod.entity.monster.EntityIMSpider;

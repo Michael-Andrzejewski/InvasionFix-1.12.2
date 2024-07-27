@@ -1,3 +1,107 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class, NavigatorIM, is part of the invmod package and is responsible for handling the navigation of EntityIMLiving entities within the game. It implements INotifyTask and INavigation interfaces to provide a framework for pathfinding and movement tasks.
+//  *
+//  * - NavigatorIM(EntityIMLiving entity, IPathSource pathSource): Constructor that initializes the navigator with the entity and path source.
+//  *
+//  * - getCurrentWorkingAction(): Returns the current action the entity is performing on its path.
+//  *
+//  * - isMaintainingPos(): Checks if the entity is maintaining its position while waiting.
+//  *
+//  * - setNoMaintainPos(): Disables position maintenance.
+//  *
+//  * - setMaintainPosOnWait(Vec3d pos): Sets the entity to maintain its position at the specified coordinates.
+//  *
+//  * - setSpeed(float par1): Sets the movement speed for the entity.
+//  *
+//  * - isAutoPathingToEntity(): Checks if the entity is set to automatically path to another entity.
+//  *
+//  * - getTargetEntity(): Returns the target entity the navigator is pathing towards.
+//  *
+//  * - getPathToXYZ(double x, double y, double z, float targetRadius): Creates a path to the specified coordinates.
+//  *
+//  * - tryMoveToXYZ(double x, double y, double z, float targetRadius, float speed): Attempts to move the entity to the specified coordinates.
+//  *
+//  * - getPathTowardsXZ(double x, double z, int min, int max, int verticalRange): Creates a path towards the specified X and Z coordinates within a vertical range.
+//  *
+//  * - tryMoveTowardsXZ(double x, double z, int min, int max, int verticalRange, float speed): Attempts to move the entity towards the specified X and Z coordinates.
+//  *
+//  * - getPathToEntity(Entity targetEntity, float targetRadius): Creates a path to the specified entity.
+//  *
+//  * - tryMoveToEntity(Entity targetEntity, float targetRadius, float speed): Attempts to move the entity to the specified entity.
+//  *
+//  * - autoPathToEntity(Entity target): Sets the navigator to automatically path to the specified entity.
+//  *
+//  * - setPath(Path newPath, float speed): Sets the current path for the entity and initializes path-following behavior.
+//  *
+//  * - getPath(): Returns the current path the entity is following.
+//  *
+//  * - isWaitingForTask(): Checks if the navigator is waiting for a task to be completed.
+//  *
+//  * - onUpdateNavigation(): Updates the navigation each tick, handling path-following and task execution.
+//  *
+//  * The class also includes private methods and fields that manage the internal state of the navigator, such as maintaining position, handling stuck entities, and managing automatic pathing to entities.
+//  */
+// ```
+// ```plaintext
+// This code is part of an entity's pathfinding system, specifically designed for a Minecraft mod. It manages the movement of custom entities along a path towards a target, handling navigation, obstacle avoidance, and action execution while moving.
+// 
+// Methods:
+// - doMoveAlongPath: Moves the entity along the current path, handling the transition between path points and adjusting the entity's position to avoid terrain obstacles.
+// - notifyTask: Updates the task status with the result of an action.
+// - getLastActionResult: Retrieves the result of the last action performed.
+// - noPath: Checks if the entity currently has no path or has finished its path.
+// - getStuckTime: Returns the amount of time the entity has been stuck.
+// - getLastPathDistanceToTarget: Calculates the distance from the last path point to the target.
+// - clearPath: Clears the current path and resets related status flags.
+// - haltForTick: Halts the entity's movement for a tick.
+// - getStatus: Provides a status string describing the current pathfinding state.
+// - createPath: Generates a new path towards a target entity or position.
+// - pathFollow: Optimizes the path-following process by skipping unnecessary path points.
+// - noPathFollow: Placeholder for handling behavior when there is no path.
+// - updateAutoPathToEntity: Updates the path to a target entity if necessary.
+// - getDistanceToActiveNode: Calculates the distance to the current active path node.
+// - handlePathAction: Executes actions required while following the path, can stop the entity if needed.
+// - setDoingTask: Sets the entity to perform a task and wait for notification.
+// - setDoingTaskAndHold: Sets the entity to perform a task, hold position, and wait for notification.
+// - setDoingTaskAndHoldOnPoint: Similar to setDoingTaskAndHold but holds the entity at a specific point.
+// - resetStatus: Resets the entity's status flags and position maintenance.
+// - getEntityPosition: Retrieves the entity's current position with adjustments for pathing.
+// - getEntity: Returns the entity associated with this pathfinder.
+// - getPathableYPos: Determines a Y position that the entity can path through, considering swimming capabilities.
+// 
+// The code is structured to be overridden and extended, allowing for custom behaviors in different entities. It includes methods for both high-level path management and low-level movement and action handling.
+// ```
+// ```java
+// /**
+//  * This code is part of an AI navigation system for entities within a Minecraft-like environment. It provides various methods to assist an entity in pathfinding by evaluating the terrain and determining safe and valid movement paths.
+//  *
+//  * - The unnamed method: Iteratively checks for water blocks above the entity's position until a non-water block is found or a maximum search height is reached. Returns the height of the first non-water block or the entity's bounding box minimum Y value if the maximum height is reached.
+//  *
+//  * - canNavigate(): Always returns true, indicating that the entity is capable of navigating the terrain.
+//  *
+//  * - isInLiquid(): Checks if the entity is currently in water or lava.
+//  *
+//  * - findValidPointNear(double x, double z, int min, int max, int verticalRange): Attempts to find a valid point near the specified coordinates within a given range, considering the entity's ability to stand at the location.
+//  *
+//  * - removeSunnyPath(): Shortens the entity's current path if a segment of the path is exposed to the sky, indicating potential danger from sunlight.
+//  *
+//  * - isDirectPathBetweenPoints(Vec3d pos1, Vec3d pos2, int xSize, int ySize, int zSize): Determines if there is a direct path between two points without obstructions, considering the entity's size.
+//  *
+//  * - isSafeToStandAt(int xOffset, int yOffset, int zOffset, int xSize, int ySize, int zSize, Vec3d entityPosition, double par8, double par10): Evaluates if a position is safe for the entity to stand on, checking for hazardous blocks and ensuring the material is solid.
+//  *
+//  * - isPositionClear(int xOffset, int yOffset, int zOffset, int xSize, int ySize, int zSize, Vec3d entityPosition, double vecX, double vecZ): Checks if a position is clear of non-passable blocks within a specified area.
+//  *
+//  * - isPositionClearFrom(BlockPos pos0, BlockPos pos1, EntityIMLiving entity): Determines if the entity can move from one block position to another without encountering non-passable blocks.
+//  *
+//  * - isPositionClear(int x, int y, int z, EntityIMLiving entity): Overloaded method to check if the entity's position is clear based on its collision size.
+//  *
+//  * - getChunkCache(BlockPos pos0, BlockPos pos1, float axisExpand): Retrieves a chunk cache for a specified area, expanded by a given axis value, to optimize pathfinding within that region.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.ai.navigator;
 
 import invmod.INotifyTask;

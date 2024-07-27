@@ -1,3 +1,32 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a custom item for a poison trap in a Minecraft mod.
+//  * The item can be used to place poison traps in the game world.
+//  *
+//  * Class: ItemPoisonTrap
+//  * Package: invmod.item.trap
+//  * Superclass: ModItem
+//  * Dependencies: Minecraft Forge, invmod
+//  *
+//  * Constructor:
+//  * - ItemPoisonTrap(): Sets the registry name of the item and the maximum stack size to 64.
+//  *
+//  * Methods:
+//  * - onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand):
+//  *   Called when a player uses the item. It checks if the action is performed on the server side and if the side of the block clicked is the top side.
+//  *   If conditions are met, it attempts to place a poison trap entity at the specified location. It ensures the placement is valid and that no other
+//  *   poison trap entities are present in the bounding box area. If the player is not in creative mode, it decreases the item stack by one.
+//  *   Returns an EnumActionResult indicating the success or failure of the action.
+//  *
+//  * Usage:
+//  * - Players can use this item to place poison traps on the top side of blocks in the game.
+//  * - The item is limited to non-creative modes for consumption upon use.
+//  * - It ensures that traps are placed without overlapping existing traps.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.item.trap;
 
 import invmod.entity.block.trap.EntityIMTrap;

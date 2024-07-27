@@ -1,3 +1,24 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class defines the AI behavior for an in-game entity to navigate towards a Nexus point.
+//  * The entity will attempt to find a path to the Nexus and move towards it, with mechanisms to handle pathfinding failures.
+//  *
+//  * Methods:
+//  * - EntityAIGoToNexus(EntityIMMob entity): Constructor that initializes the AI with the given entity.
+//  * - shouldExecute(): Checks if the AI should start executing, based on the entity's current goal and the presence of a Nexus.
+//  * - startExecuting(): Called when the AI begins execution; it sets the initial path to the Nexus.
+//  * - updateTask(): Regularly called to update the task; it handles path recalculation and wandering behavior if pathfinding fails.
+//  * - setPathToNexus(): Attempts to set a path to the Nexus; adjusts pathfinding based on distance and recalculates the path if necessary.
+//  * - pathTooShort(): Checks if the current path is too short, indicating the entity is close to the Nexus.
+//  * - wanderToNexus(): Causes the entity to wander towards the Nexus when direct pathfinding fails.
+//  *
+//  * The AI uses a combination of direct pathfinding and wandering to ensure the entity can reach the Nexus, even in complex environments.
+//  */
+// ```
+// 
+// `^`^`^`
+
 package invmod.entity.ai;
 
 //NOOB HAUS:Done

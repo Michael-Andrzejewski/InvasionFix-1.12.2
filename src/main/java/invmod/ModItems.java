@@ -1,3 +1,44 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This Java file is part of the invmod package and is responsible for defining and registering custom items for the mod.
+//  * The ModItems class contains static references to various items that will be used in the game, such as traps and crafting materials.
+//  * 
+//  * The items are categorized into traps and crafting materials, each with a corresponding ObjectHolder annotation to facilitate their retrieval.
+//  * 
+//  * The ItemRegistrationHandler is a nested static class that subscribes to the Forge event bus to handle item registration events.
+//  * It maintains a list of all custom items and registers them during the game's initialization phase.
+//  * 
+//  * Key methods in ItemRegistrationHandler:
+//  * - registerItems: Called by Forge during the item registration event. It initializes an array of custom items, sets their names and creative tabs, and registers them to the Forge registry.
+//  * - setItemName: Helper method to set the unlocalized name of an item.
+//  * - setItemNameAndTab: Helper method to set both the unlocalized name and the creative tab of an item.
+//  * 
+//  * The items are intended to be used within the mod's gameplay, providing players with new traps and crafting components that enhance the game's complexity and options.
+//  */
+// package invmod;
+// 
+// // Import statements...
+// 
+// @ObjectHolder(Reference.MODID)
+// public class ModItems {
+//     // Static item references with ObjectHolder annotations...
+//     
+//     @EventBusSubscriber(modid = Reference.MODID)
+//     public static class ItemRegistrationHandler {
+//         // Static list to hold custom items...
+//         
+//         @SubscribeEvent
+//         public static void registerItems(RegistryEvent.Register<Item> event) {
+//             // Item registration logic...
+//         }
+//         
+//         // Helper methods for item registration...
+//     }
+// }
+// ```
+// `^`^`^`
+
 package invmod;
 
 import static invmod.util.InjectionUtil.Null;

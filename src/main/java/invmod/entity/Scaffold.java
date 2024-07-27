@@ -1,3 +1,45 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a Scaffold structure used by entities for pathfinding and navigation in the game Minecraft.
+//  * It implements the IPathfindable interface, allowing entities to interact with the scaffold as part of their pathfinding logic.
+//  *
+//  * Constructors:
+//  * - Scaffold(TileEntityNexus nexus): Initializes a scaffold with a reference to a Nexus.
+//  * - Scaffold(double x, double y, double z, int height, TileEntityNexus nexus): Initializes a scaffold at a specific position with a target height.
+//  * - Scaffold(Vec3d vec, int height, TileEntityNexus nexus): Initializes a scaffold with a Vec3d position and target height.
+//  *
+//  * Public Methods:
+//  * - setPosition(Vec3d vec): Sets the position of the scaffold.
+//  * - setPosition(double x, double y, double z): Sets the position of the scaffold using individual coordinates.
+//  * - setInitialIntegrity(): Sets the initial integrity of the scaffold based on its current state.
+//  * - setOrientation(int i): Sets the orientation of the scaffold.
+//  * - getOrientation(): Returns the orientation of the scaffold.
+//  * - setHeight(int height): Sets the target height of the scaffold and recalculates platform positions.
+//  * - getTargetHeight(): Returns the target height of the scaffold.
+//  * - forceStatusUpdate(): Forces an update of the scaffold's integrity status.
+//  * - getPercentIntactCached(): Returns the cached percentage of the scaffold's integrity.
+//  * - getPercentCompletedCached(): Returns the cached percentage of the scaffold's completion.
+//  * - getPos(): Returns the position of the scaffold as a Vec3d.
+//  * - getNexus(): Returns the associated TileEntityNexus.
+//  * - setPathfindBase(IPathfindable base): Sets the base pathfinding behavior for the scaffold.
+//  * - isLayerPlatform(int height): Checks if a given height corresponds to a platform layer.
+//  * - readFromNBT(NBTTagCompound nbttagcompound): Reads the scaffold's data from NBT.
+//  * - writeToNBT(NBTTagCompound nbttagcompound): Writes the scaffold's data to NBT.
+//  *
+//  * Private Methods:
+//  * - calcPlatforms(): Calculates the positions of platforms within the scaffold.
+//  * - evaluateIntegrity(): Evaluates the current integrity of the scaffold based on its structure.
+//  *
+//  * Interface Implementation:
+//  * - getBlockPathCost(PathNode prevNode, PathNode node, IBlockAccess terrainMap): Calculates the path cost for a block.
+//  * - getPathOptionsFromNode(IBlockAccess terrainMap, PathNode currentNode, PathfinderIM pathFinder): Provides path options from a given node.
+//  *
+//  * The class also includes a private method to determine if a block should be avoided during pathfinding.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity;
 
 import java.util.List;

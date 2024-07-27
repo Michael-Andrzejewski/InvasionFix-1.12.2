@@ -1,3 +1,22 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class is responsible for checking if there is a newer version of the Invasion mod available and informing the player about updates.
+//  * It is marked as deprecated, indicating that it may no longer be the preferred method for version checking and could be removed in future releases.
+//  *
+//  * Methods:
+//  * - checkForUpdates(EntityPlayerMP entityplayer): Checks if there is a newer version of the mod and sends update messages to the player.
+//  * - getLatestVersion(): Retrieves the latest version number of the mod from a predefined URL.
+//  * - getLatestNews(): Fetches the latest news or change log associated with the mod from a predefined URL.
+//  * - getHTML(String urlToRead): Makes an HTTP GET request to the given URL and returns the content as a list of strings.
+//  * - merge(List<String> text): Concatenates a list of strings into a single string.
+//  *
+//  * Note: The methods use a hardcoded URL to fetch version information, which is not a recommended practice due to potential security risks and lack of flexibility.
+//  * Additionally, the exception handling is minimal, and there is no logging or user feedback provided in case of an error, except within the getHTML method.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.util;
 
 import java.io.BufferedReader;

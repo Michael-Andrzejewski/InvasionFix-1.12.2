@@ -1,3 +1,30 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents an AI behavior for a flying entity, specifically an EntityIMBird, to perform a swooping attack.
+//  * The behavior includes identifying a target, aligning for the attack, and executing a dive towards the target.
+//  *
+//  * Constructor:
+//  * - EntityAISwoop(EntityIMBird entity): Initializes the AI with the given EntityIMBird instance.
+//  *
+//  * Core Methods:
+//  * - shouldExecute(): Determines if the AI should begin executing, based on whether a suitable attack opportunity exists.
+//  * - shouldContinueExecuting(): Checks if the AI should continue executing, based on whether the attack conditions are still met.
+//  * - startExecuting(): Called when the AI begins execution, setting up initial conditions for the swoop.
+//  * - resetTask(): Resets the task, disabling any direct targeting and resetting AI goals if the swoop is finished or interrupted.
+//  * - updateTask(): Updates the task each tick, managing the swoop's execution and transitioning to a strike if conditions are met.
+//  *
+//  * Helper Methods:
+//  * - isSwoopPathClear(EntityLivingBase target, float diveAngle): Checks if the path for the swoop is clear of obstacles.
+//  * - isFinalRunLinedUp(): Determines if the entity is properly aligned with the target to begin the final attack run.
+//  * - isAcceptableDiveSpace(double entityPosY, double lowestCollideY, int hitCount): Checks if there is enough space to dive without hitting obstacles.
+//  *
+//  * The AI uses several parameters to control the swoop behavior, such as dive angle, strike distance, and minimum height requirements.
+//  * It also manages state variables to track the progress of the swoop and whether the entity is committed to the final attack run.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.ai;
 
 import invmod.entity.Goal;

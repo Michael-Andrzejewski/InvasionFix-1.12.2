@@ -1,3 +1,34 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a navigation path for entities within a Minecraft mod. It is designed to manage and track the progress of an entity along a series of PathNodes, which define the steps of the path.
+//  *
+//  * Constructors:
+//  * - Path(PathNode[]): Initializes the path with an array of PathNodes and sets the intended target as the last node in the array.
+//  * - Path(PathNode[], PathNode): Initializes the path with an array of PathNodes and a specific intended target node.
+//  *
+//  * Methods:
+//  * - getTotalPathCost(): Returns the total cost of the path, calculated from the last node's total path distance.
+//  * - incrementPathIndex(): Increments the current index of the path, advancing the entity's progress along the path.
+//  * - isFinished(): Checks if the path has been fully traversed by comparing the current path index with the length of the points array.
+//  * - getFinalPathPoint(): Retrieves the last PathNode in the path, if available.
+//  * - getPathPointFromIndex(int): Returns the PathNode at the specified index in the path.
+//  * - getCurrentPathLength(): Returns the current length of the path.
+//  * - setCurrentPathLength(int): Sets the current length of the path to the specified value.
+//  * - getCurrentPathIndex(): Retrieves the current index of the path.
+//  * - setCurrentPathIndex(int): Sets the current index of the path to the specified value.
+//  * - getIntendedTarget(): Returns the intended target PathNode of the path.
+//  * - getPositionAtIndex(Entity, int): Calculates and returns the Vec3d position of the PathNode at the given index, adjusted for the entity's width.
+//  * - getCurrentNodeVec3d(Entity): Retrieves the Vec3d position of the current PathNode based on the entity's position.
+//  * - destination(): Returns the Vec3d position of the final PathNode in the path.
+//  * - equalsPath(Path): Compares this path with another path to determine if they are equivalent.
+//  * - isDestinationSame(Vec3d): Checks if the Vec3d position provided matches the destination of the path.
+//  *
+//  * This class is essential for entity pathfinding, allowing entities to navigate complex environments by following predefined paths.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.ai.navigator;
 
 import net.minecraft.entity.Entity;

@@ -1,3 +1,30 @@
+// `^`^`^`
+// ```java
+// /**
+//  * The PathCreator class is part of the invmod.entity.ai.navigator package and is responsible for generating paths for entities within a Minecraft mod. It implements the IPathSource interface, providing a framework for pathfinding capabilities for entities that can navigate the game world.
+//  *
+//  * Constructors:
+//  * - PathCreator(): Initializes the object with default search depth and quick fail depth values.
+//  * - PathCreator(int searchDepth, int quickFailDepth): Allows customization of search depth and quick fail depth parameters.
+//  *
+//  * Methods:
+//  * - getSearchDepth(): Returns the current search depth used for pathfinding.
+//  * - getQuickFailDepth(): Returns the current quick fail depth to determine when to abort a path search early.
+//  * - setSearchDepth(int depth): Sets the search depth to the specified value.
+//  * - setQuickFailDepth(int depth): Sets the quick fail depth to the specified value.
+//  * - createPath(IPathfindable entity, Vec3d pos0, Vec3d pos1, float targetRadius, float maxSearchRange, IBlockAccess terrainMap): Creates a path from one vector position to another for a pathfindable entity.
+//  * - createPath(EntityIMLiving entity, Entity target, float targetRadius, float maxSearchRange, IBlockAccess terrainMap): Creates a path for an entity to a target entity.
+//  * - createPath(EntityIMLiving entity, Vec3d vec, float targetRadius, float maxSearchRange, IBlockAccess terrainMap): Creates a path for an entity to a vector position.
+//  * - createPath(IPathResult observer, IPathfindable entity, BlockPos pos0, BlockPos pos1, float maxSearchRange, IBlockAccess terrainMap): Placeholder method for future implementation.
+//  * - createPath(IPathResult observer, EntityIMLiving entity, Entity target, float maxSearchRange, IBlockAccess terrainMap): Placeholder method for future implementation.
+//  * - createPath(IPathResult observer, EntityIMLiving entity, BlockPos pos, float maxSearchRange, IBlockAccess terrainMap): Placeholder method for future implementation.
+//  * - canPathfindNice(IPathSource.PathPriority priority, float maxSearchRange, int searchDepth, int quickFailDepth): Determines if nice pathfinding can be performed based on given parameters.
+//  *
+//  * The class also maintains an internal array to track the time taken for pathfinding operations and provides methods to adjust pathfinding parameters dynamically.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.ai.navigator;
 
 import invmod.IPathfindable;

@@ -1,3 +1,98 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This code defines an abstract class EntityIMLiving, which extends EntityCreature and implements IHasNexus and IPathfindable interfaces.
+//  * It is part of a mod for Minecraft that introduces custom entities with advanced pathfinding capabilities.
+//  *
+//  * Class Summary:
+//  * - EntityIMLiving: An abstract class representing a living entity with advanced movement and navigation abilities.
+//  *
+//  * Key Data Parameters:
+//  * - IS_HOLDING_ONTO_LADDER: Boolean indicating if the entity is holding onto a ladder.
+//  * - MOVE_STATE: Integer representing the current movement state of the entity (e.g., standing, running).
+//  * - TIER: Integer representing the tier level of the entity, which may affect its abilities or stats.
+//  * - TEXTURE: Integer representing the texture ID used for rendering the entity.
+//  *
+//  * Key Components:
+//  * - pathSource: A PathCreator object used to generate paths for navigation.
+//  * - imNavigator: A NavigatorIM object that handles the entity's navigation.
+//  * - oldNavAdapter: A PathNavigateAdapter object for compatibility with older navigation systems.
+//  * - moveHelperIM: An IMMoveHelper object that assists with the entity's movement.
+//  * - targetNexus: A TileEntityNexus object representing the entity's target or home base.
+//  * - unDestructableBlocks: A list of blocks that the entity cannot destroy.
+//  *
+//  * Constructor(s):
+//  * - EntityIMLiving(World worldIn): Initializes the entity in the given world.
+//  * - EntityIMLiving(World worldIn, TileEntityNexus nexus): Initializes the entity with a reference to a Nexus.
+//  *
+//  * Key Methods:
+//  * - entityInit(): Registers data parameters and initializes the entity.
+//  * - onUpdate(): Updates the entity's state each tick, handling movement states.
+//  * - onFollowingEntity(Entity entity): Called when the entity is following another entity.
+//  * - onPathSet(): Called when a path has been set for the entity.
+//  * - onPathBlocked(Path path, INotifyTask asker): Called when the entity's path is blocked.
+//  * - rally(Entity leader): Sets the entity to rally mode, following a leader.
+//  * - readyToRally(): Checks if the entity is ready to rally.
+//  * - setTier(int tier): Sets the entity's tier level.
+//  * - getTier(): Retrieves the entity's tier level.
+//  * - setTexture(int textureId): Sets the entity's texture ID.
+//  * - getTextureId(): Retrieves the entity's texture ID.
+//  * - writeEntityToNBT(NBTTagCompound tag): Saves the entity's data to NBT.
+//  * - readEntityFromNBT(NBTTagCompound tag): Reads the entity's data from NBT.
+//  * - updateAITick(): Updates AI tasks each tick.
+//  * - setCurrentTargetPos(BlockPos pos): Sets the entity's current target position.
+//  * - canStandAt(IBlockAccess terrainMap, BlockPos pos): Checks if the entity can stand at a given position.
+//  * - setSize(float width, float height): Sets the size of the entity.
+//  * - setIsHoldingIntoLadder(boolean flag): Sets whether the entity is holding onto a ladder.
+//  * - canStandAtAndIsValid(IBlockAccess terrainMap, BlockPos pos): Checks if the entity can stand at and is valid at a given position.
+//  * - isAdjacentSolidBlock(IBlockAccess terrainMap, BlockPos pos): Checks for solid blocks adjacent to the given position.
+//  * - getCollide(IBlockAccess terrainMap, Vec3d vec): Checks for collisions at a given vector position.
+//  * - getCollide(IBlockAccess terrainMap, BlockPos pos): Checks for collisions at a given block position.
+//  * - avoidsBlock(Block block): Checks if the entity avoids a specific block.
+//  * - ignoresBlock(Block block): Checks if the entity ignores a specific block.
+//  *
+//  * This class is designed to be extended by specific entity types that will define their own behaviors and attributes.
+//  */
+// ```
+// This code appears to be part of an AI system for an entity within a Minecraft-like game, where entities interact with the game world and its rules. The code defines methods for determining the destructibility of blocks, managing movement speed and state, checking for ladders, and handling navigation.
+// 
+// - `isBlockDestructible`: Checks if a block at a given position is destructible, considering the game's mob griefing rules and whether the block is in a list of undestructible blocks or has a ladder attached.
+// 
+// - `blockHasLadder`: Determines if there is a ladder on any of the four sides of the given block position.
+// 
+// - `setBaseMoveSpeedStat` and `setMoveSpeedStat`: These methods set the base and current movement speed of the entity, respectively. The base speed is a reference speed, while the current speed can be adjusted dynamically.
+// 
+// - `resetMoveSpeed`: Resets the entity's movement speed to the base value.
+// 
+// - `setMoveState`: Sets the movement state of the entity (e.g., walking, idle) and synchronizes this state with the game's data manager if the game is not in a remote context.
+// 
+// - `setTurnRate`: Sets the rate at which the entity can turn.
+// 
+// - `isHoldingOntoLadder`: Checks if the entity is currently holding onto a ladder.
+// 
+// - `getNavigatorNew`: Retrieves the entity's navigation system.
+// 
+// - `getPathSource`: Provides access to the entity's pathfinding source.
+// 
+// - `getCollideSize`: Returns the size of the entity for collision purposes.
+// 
+// - `getBlockRemovalOrder`: Determines the order in which blocks should be removed when the entity is moving through them, based on its position and collision size.
+// 
+// - `getMoveSpeedStat` and `getBaseMoveSpeedStat`: Return the current and base movement speed of the entity.
+// 
+// - `getMoveHelper`: Provides access to the entity's movement helper, which likely assists in movement calculations.
+// 
+// - `getMoveState`: Retrieves the current movement state of the entity.
+// 
+// - `getCurrentTargetPos`: Gets the position of the entity's current target.
+// 
+// - `getTurnRate`: Returns the entity's turn rate.
+// 
+// - `getNexus`: Provides access to the entity's target nexus, which could be a specific goal or home base within the game world.
+// 
+// Overall, this code is designed to manage an entity's interactions with the environment, particularly its movement and interactions with blocks, and to maintain the state necessary for its AI to make decisions.
+// `^`^`^`
+
 package invmod.entity;
 
 import java.util.Arrays;

@@ -1,3 +1,46 @@
+// `^`^`^`
+// ```java
+// /**
+//  * ModelGiantBird Class Documentation
+//  *
+//  * Purpose:
+//  * This class represents the 3D model for a giant bird entity in a Minecraft mod. It extends the ModelBase class from Minecraft's rendering system and defines the shape, size, and rotation points for various parts of the bird's body, including the body, legs, ankles, toes, claws, neck, head, beak, feathers, wings, and tail. The model is used to render the giant bird entity with appropriate animations in the game.
+//  *
+//  * Class Components:
+//  * - ModelAnimator animationFlap: Handles the flap animation of the bird's wings.
+//  * - ModelAnimator animationRun: Handles the running animation of the bird's legs.
+//  * - ModelRenderer body, rightThigh, rightLeg, etc.: Each ModelRenderer represents a different part of the bird's body. They are initialized with specific texture coordinates, dimensions, and rotation points to build the 3D model.
+//  *
+//  * Constructor:
+//  * - ModelGiantBird(float par1): A constructor that initializes the model parts with a specified scale (par1). It sets up the texture size and the initial geometry for each part of the model.
+//  *
+//  * Methods:
+//  * - (No methods are defined in the provided code snippet, only the constructor and instance variables are present.)
+//  *
+//  * Usage:
+//  * This class is instantiated to create a 3D model of a giant bird within the game. The model parts are then manipulated by animation classes to create lifelike movements during the game's rendering process.
+//  */
+// ```
+// ```java
+// /**
+//  * This code defines a 3D model for an animated entity, presumably a bird, with a focus on the wings and legs.
+//  * It uses ModelRenderer instances to create and manipulate various parts of the model, such as wings, legs, toes, and beaks.
+//  * The model parts are hierarchically structured, with parent-child relationships to ensure proper movement and rotation.
+//  *
+//  * Key methods:
+//  * - setRotation(ModelRenderer model, float x, float y, float z): Sets the rotation angles for a model part.
+//  * - render(Entity par1Entity, float par2, float par3, float par4, float par5, float par6, float par7): Renders the body of the entity.
+//  * - setFlyingAnimations(AnimationState wingState, AnimationState legState, float roll, float headYaw, float headPitch, float parTick): Applies flying animations to the model based on the current state of wing and leg animations, as well as head and body orientation.
+//  * - setRotationAngles(float limbPeriod, float limbMaxMovement, float ticksExisted, float headYaw, float entityPitch, float unitScale, Entity entity): Sets the rotation angles for the entire model based on various parameters, such as limb movement and head orientation.
+//  * - resetSkeleton(): Resets the model's parts to their default positions and rotations.
+//  *
+//  * The code also initializes EnumMaps to associate specific model parts with corresponding bird anatomy, facilitating the animation process.
+//  * The model parts are initialized with texture and size information, and their positions in the model hierarchy are established.
+//  * The setRotation method is used to define the initial stance of the model parts.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render.model;
 
 import java.util.EnumMap;

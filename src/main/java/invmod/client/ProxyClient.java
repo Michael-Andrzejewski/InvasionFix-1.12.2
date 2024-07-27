@@ -1,3 +1,81 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This Java file is part of the invmod client package and is responsible for handling client-side proxy operations,
+//  * particularly the registration of entity renderers and the loading of animations for entities within the Invasion Mod.
+//  * The ProxyClient class extends ProxyCommon and overrides specific methods to perform client-side tasks.
+//  *
+//  * Methods:
+//  * - printGuiMessage(ITextComponent message): Displays a message in the Minecraft in-game chat GUI.
+//  * - registerEntityRenderers(): Registers entity renderers for various custom entities in the mod, such as zombies,
+//  *   skeletons, spiders, and more. It uses the GameRegistry to register a TileEntity and the RenderingRegistry to
+//  *   associate entities with their respective renderers.
+//  * - registerEntityRenderer(Class<? extends Entity> entityClass, Class<? extends Render<? extends Entity>> rendererClass,
+//  *   Object... additionalArgs): A helper method that registers a renderer for a specific entity class. It uses reflection
+//  *   to create an instance of the renderer with the appropriate constructor arguments.
+//  * - loadAnimations(): Loads and defines animations for entities. It sets up keyframes, transitions, and animation phases
+//  *   for different actions such as standing, running, attacking, etc. This method is crucial for adding dynamic and
+//  *   realistic movements to the mod's entities.
+//  *
+//  * The code also includes imports and declarations for various classes and interfaces required for rendering entities and
+//  * managing animations within the Minecraft game engine.
+//  */
+// package invmod.client;
+// 
+// // ... (imports and class definition)
+// public class ProxyClient extends ProxyCommon {
+//     // ... (method implementations)
+// }
+// ```
+// ```java
+// /**
+//  * This code is designed to create and manage keyframe animations for a bird's leg movements, specifically targeting the thigh, leg, and ankle joints. It defines the motion for both left and right sides, with separate sequences for standing and running cycles. The code utilizes a KeyFrame class to store the animation data and interpolation types for smooth transitions between frames.
+// 
+//  * Methods:
+//  * - KeyFrame.toRadians: Converts the angle values in the keyframes from degrees to radians, which is necessary for certain animation and rendering systems.
+//  * - KeyFrame.cloneFrames: Creates a deep copy of a list of keyframes to be reused or modified without affecting the original list.
+//  * - KeyFrame.mirrorFramesX: Mirrors the keyframe values along the X-axis, which is useful for creating symmetrical animations for the opposite side of the body.
+//  * - KeyFrame.offsetFramesCircular: Offsets the keyframes in a circular pattern between a specified begin and end point, allowing for continuous looping animations such as running.
+// 
+//  * The code constructs detailed keyframe sequences for the left thigh, left leg, and left ankle, including both a standing pose and a running cycle. It then clones these sequences for the right side and applies mirroring and offsetting to ensure proper coordination and symmetry. Finally, all keyframes are stored in a map with their corresponding bone identifiers, ready for use in animating a 3D bird model's leg movements.
+//  */
+// ```
+// ```plaintext
+// This code is designed to create and manage animations for a bird model with articulated legs, wings, and beak. It uses keyframes to define the movement of each part over time and interpolates between these keyframes to create smooth animations. The code is structured into several parts, each handling a different aspect of the bird's animation:
+// 
+// 1. Leg Animation: Defines keyframes for the bird's leg movements, including the thighs, metatarsophalangeal articulations (ankles), and back claws. It uses linear interpolation to transition between keyframes.
+// 
+// 2. Wing Animation: Sets up keyframes for the bird's wing movements, distinguishing between inner and outer wing sections. It includes detailed movements such as wing flaps, spreads, tucks, and glides, with transitions between these actions.
+// 
+// 3. Beak Animation: Establishes keyframes for the opening and closing of the bird's beak, using linear interpolation to animate the upper and lower parts of the beak.
+// 
+// Each section of the code includes methods for:
+// - Creating keyframes (`KeyFrame` class) with position and rotation data for different parts of the bird.
+// - Converting angles from degrees to radians for proper animation processing (`KeyFrame.toRadians`).
+// - Cloning frames for symmetrical parts of the bird (`KeyFrame.cloneFrames`).
+// - Mirroring frames for opposite sides (`KeyFrame.mirrorFramesX`).
+// 
+// Finally, the animations are registered into an `AnimationRegistry` for each action (running, wing flapping, beak movement), allowing for the animations to be retrieved and played by the animation system. The code uses `EnumMap` and `ArrayList` to organize keyframes and animation phases, and `HashMap` to manage transitions between different animation actions.
+// ```
+// ```plaintext
+// This code snippet appears to be part of an animation system for a bird's beak within a game or simulation, possibly using a Minecraft modding framework given the reference to FMLClientHandler. The code defines keyframes for the lower beak's animation and registers the animation with an animation registry.
+// 
+// KeyFrame Creation and Transformation:
+// - The code creates a list of KeyFrame objects for the lower beak of a bird, specifying the rotation at different times to animate the beak opening and closing.
+// - The keyframes are defined with a time value, three rotation values (presumably pitch, yaw, and roll), and an interpolation type (LINEAR).
+// - The `KeyFrame.toRadians` method is called to convert the rotation values from degrees to radians, which is a common requirement for rotation in computer graphics.
+// 
+// Animation Definition and Registration:
+// - An Animation object is created, specifying the bone class (BonesMouth), animation speed, transition speed between phases, the keyframes for the beak, and the phases of the animation.
+// - The animation is registered with a unique string identifier ("bird_beak") in the AnimationRegistry, making it accessible for use in the game or simulation.
+// 
+// File Access Method:
+// - The `getFile` method is an override that provides a way to access files from the game's data directory. It constructs a File object using a provided filename and the game's data directory path, which is retrieved from the FMLClientHandler instance.
+// 
+// Overall, this code is responsible for defining and registering a bird's beak animation and providing a method to access files relative to the game's data directory.
+// ```
+// `^`^`^`
+
 package invmod.client;
 
 import java.io.File;

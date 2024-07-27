@@ -1,3 +1,30 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a finite selection pool for generic items of type T. It allows for random selection of items
+//  * with a finite number of occurrences for each item. The pool can be regenerated to its original state and cloned.
+//  *
+//  * Public Methods:
+//  * - addEntry(T entry, int amount): Adds a single item with a specified number of occurrences to the pool.
+//  * - addEntry(ISelect<T> entry, int amount): Adds an item selection interface with a specified number of occurrences.
+//  * - selectNext(): Randomly selects and returns an item from the pool, decrementing its occurrence count.
+//  * - clone(): Creates a deep copy of the current FiniteSelectionPool with the original occurrence counts.
+//  * - reset(): Resets the pool to its original state with all initial occurrence counts.
+//  * - toString(): Provides a string representation of the pool with details about each entry and its amount.
+//  *
+//  * Private Method:
+//  * - regeneratePool(): Resets the occurrence counts of all items in the pool to their original numbers.
+//  *
+//  * The pool maintains a list of pairs, each containing an item selection interface and its occurrence count. It also
+//  * tracks the total number of items available for selection and the original total for regeneration purposes.
+//  */
+// package invmod.util;
+// 
+// // ... (rest of the code) ...
+// ```
+// 
+// `^`^`^`
+
 package invmod.util;
 
 import java.util.ArrayList;

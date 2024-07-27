@@ -1,3 +1,28 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class is part of a mod for Minecraft that provides custom movement behavior for spider-like entities.
+//  * It extends the IMMoveHelper class, adding the ability for the entities to climb solid blocks.
+//  *
+//  * Public Methods:
+//  * - IMMoveHelperSpider(EntityIMMob par1EntityLiving): Constructor that initializes the helper with a specific entity.
+//  *
+//  * Protected Methods:
+//  * - getClimbFace(BlockPos blockPos): Determines the direction an entity should climb based on its current path and the solidity of surrounding blocks.
+//  *
+//  * The getClimbFace method performs several key operations:
+//  * 1. It calculates the entity's position based on its width and the provided block position.
+//  * 2. It retrieves the entity's current path and determines the direction of the next path point relative to the current one.
+//  * 3. It iterates through adjacent block positions in a loop, checking for a solid block that the entity can climb.
+//  * 4. It returns the EnumFacing direction that corresponds to a solid block face or null if no climbable face is found.
+//  *
+//  * Note: The method contains a TODO comment indicating that a section of the code needs further attention or correction.
+//  */
+// ```
+// 
+// This summary provides an overview of the class's purpose, its constructor, and the key method it contains. It also highlights the main steps taken by the `getClimbFace` method to determine the climbable direction for the entity and notes where the code may require additional work.
+// `^`^`^`
+
 package invmod.client.render.animation.util;
 
 import invmod.entity.ai.navigator.Path;

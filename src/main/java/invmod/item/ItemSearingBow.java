@@ -1,3 +1,40 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a custom bow item within a Minecraft mod, named the Searing Bow.
+//  * It extends the base ItemBow class from Minecraft's net.minecraft.item package.
+//  *
+//  * Public Members:
+//  * - bowPullIconNameArray: An array of strings representing the icon names for the bow pulling animation.
+//  * - name: A string representing the internal name of the Searing Bow.
+//  *
+//  * Constructor:
+//  * - ItemSearingBow(): Initializes a new instance of the Searing Bow with default settings.
+//  *
+//  * Methods:
+//  * - The class includes several commented-out methods that are intended to override the base class behavior:
+//  *   - onPlayerStoppedUsing(): Handles the bow release action, calculating the arrow's flight and effects based on charge and enchantments.
+//  *   - onItemUseFinish(): Returns the ItemStack after the item has been used.
+//  *   - getMaxItemUseDuration(): Returns the maximum duration the bow can be used.
+//  *   - getItemUseAction(): Returns the action type of the item, which is EnumAction.BOW for a bow.
+//  *   - findAmmo(): Searches the player's inventory for usable ammunition.
+//  *
+//  * Note:
+//  * - The actual behavior of the bow (e.g., firing arrows, applying special effects) is not implemented in the provided code snippet.
+//  * - The commented-out code suggests that the bow may have special properties or effects when fully charged.
+//  * - The class includes a getName() method, which is also commented out, that would return the name of the bow.
+//  * - The code includes placeholders for registration and localization which are commented out and would need to be implemented for the item to appear in-game.
+//  */
+// package invmod.item;
+// 
+// import net.minecraft.item.ItemBow;
+// 
+// public class ItemSearingBow extends ItemBow {
+//     // Class content
+// }
+// ```
+// `^`^`^`
+
 package invmod.item;
 
 import net.minecraft.item.ItemBow;

@@ -1,3 +1,49 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a wave entry for a game, managing the spawning of entities within a specified time frame.
+//  * It handles the scheduling, spawning, and alerting mechanisms for entities during a wave event.
+//  *
+//  * Public Methods:
+//  * - WaveEntry(int timeBegin, int timeEnd, int amount, int granularity, ISelect<IEntityIMPattern> mobPool): 
+//  *   Constructs a wave entry with a specified time range, amount of entities, granularity, and a pool of entity patterns.
+//  * - WaveEntry(int timeBegin, int timeEnd, int amount, int granularity, ISelect<IEntityIMPattern> mobPool, 
+//  *   int angleRange, int minPointsInRange): 
+//  *   Constructs a wave entry with an additional angle range and minimum spawn points in range.
+//  * - WaveEntry(int timeBegin, int timeEnd, int amount, int granularity, ISelect<IEntityIMPattern> mobPool, 
+//  *   int minAngle, int maxAngle, int minPointsInRange): 
+//  *   Constructs a wave entry with specified minimum and maximum angles for spawning.
+//  * - int doNextSpawns(int elapsedMillis, ISpawnerAccess spawner): 
+//  *   Spawns entities based on elapsed time and updates the spawn list.
+//  * - void resetToBeginning(): 
+//  *   Resets the wave entry to its initial state.
+//  * - void setToTime(int millis): 
+//  *   Sets the elapsed time to a specific value.
+//  * - int getTimeBegin(): 
+//  *   Returns the start time of the wave.
+//  * - int getTimeEnd(): 
+//  *   Returns the end time of the wave.
+//  * - int getAmount(): 
+//  *   Returns the total amount of entities to spawn.
+//  * - int getGranularity(): 
+//  *   Returns the granularity of the spawn timing.
+//  * - void addAlert(String message, int timeElapsed): 
+//  *   Adds an alert message to be triggered at a specific elapsed time.
+//  * - String toString(): 
+//  *   Returns a string representation of the wave entry.
+//  *
+//  * Private Methods:
+//  * - void sendNextAlert(ISpawnerAccess spawner): 
+//  *   Sends the next alert message if the alert time has been reached.
+//  * - void reviseSpawnAngles(ISpawnerAccess spawner): 
+//  *   Revises the spawn angles if the current angles do not have enough spawn points.
+//  *
+//  * The class uses a combination of time tracking, angle calculations, and spawn point validation to manage the spawning
+//  * process effectively. It also includes alerting functionality to notify about specific events during the wave.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.nexus;
 
 import java.util.ArrayList;

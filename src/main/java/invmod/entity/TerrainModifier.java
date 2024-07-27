@@ -1,3 +1,29 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class, TerrainModifier, is part of the invmod package and is responsible for modifying the terrain in a Minecraft world.
+//  * It is designed to work with entities of type EntityIMLiving and performs tasks related to changing blocks in the world.
+//  *
+//  * Public Methods:
+//  * - TerrainModifier(EntityIMLiving entity, float defaultReach): Constructor that initializes the TerrainModifier with a specified entity and reach.
+//  * - onUpdate(): Called each update tick to process any pending terrain modification tasks.
+//  * - isReadyForTask(INotifyTask asker): Checks if the TerrainModifier is ready to accept a new task from the specified asker.
+//  * - cancelTask(): Cancels the current task, if any, and resets the TerrainModifier.
+//  * - isBusy(): Returns whether the TerrainModifier is currently busy with a task.
+//  * - requestTask(ModifyBlockEntry[] entries, INotifyTask onFinished, INotifyTask onBlockChange): Requests the TerrainModifier to perform a series of block modifications.
+//  * - getLastBlockModified(): Retrieves the last block entry that was modified.
+//  *
+//  * Private Methods:
+//  * - taskUpdate(): Internal method that handles the logic for updating the current task.
+//  * - endTask(): Ends the current task, clears the modification list, and notifies the task setter of completion.
+//  * - changeBlock(ModifyBlockEntry entry): Attempts to change a block in the world to a new state and handles block destruction and item drops.
+//  * - isTerrainIdentical(ModifyBlockEntry entry): Checks if the terrain at a specified block entry matches the desired new block state.
+//  *
+//  * The class maintains a list of block modifications to be performed and processes them sequentially. It also handles notifying other components when tasks are completed or when blocks are changed.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity;
 
 import java.util.ArrayList;

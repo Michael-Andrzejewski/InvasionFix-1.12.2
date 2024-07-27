@@ -1,3 +1,32 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a software version with major, minor, and build components.
+//  * It provides functionality to compare versions and parse version strings.
+//  *
+//  * - Version(int majorNum, int minorNum, int buildNum): Constructs a Version instance with specified major, minor, and build numbers.
+//  *
+//  * - byte comparedState(Version version): Compares this Version instance with another Version instance.
+//  *   Returns -1 if this version is older, 0 if they are the same, and 1 if this version is newer.
+//  *
+//  * - static Version get(String s): Parses a version string in the format "major.minor.build" and returns a new Version instance.
+//  *   If the string is not in the correct format or contains non-numeric characters, it returns null.
+//  *
+//  * - String toString(): Returns a string representation of the Version instance in the format "major.minor.build".
+//  */
+// package invmod.util;
+// 
+// public class Version {
+//     // Class fields representing the major, minor, and build components of the version.
+//     public int major;
+//     public int minor;
+//     public int build;
+// 
+//     // Constructor and methods as described above.
+// }
+// ```
+// `^`^`^`
+
 package invmod.util;
 
 public class Version {

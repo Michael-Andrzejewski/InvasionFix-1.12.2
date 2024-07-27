@@ -1,3 +1,19 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class is responsible for rendering the EntityIMBurrower entity in the game, which is a custom monster entity.
+//  * It extends the Render class from Minecraft's rendering framework and is part of the invmod.client.render package.
+//  *
+//  * Public Methods:
+//  * - RenderBurrower(RenderManager renderManager): Constructor that initializes the renderer with a RenderManager instance and sets up the model for the Burrower entity.
+//  * - doRender(EntityIMBurrower entityBurrower, double x, double y, double z, float yaw, float partialTick): Handles the actual rendering of the Burrower entity. It calculates the interpolated positions and rotations for smooth animation and applies transformations to the model before rendering it.
+//  * - getEntityTexture(EntityIMBurrower entity): Returns the ResourceLocation object that points to the texture used for the Burrower entity.
+//  *
+//  * The class uses OpenGL calls to manipulate the rendering state and applies transformations to render the entity correctly. It also handles the interpolation of the entity's segments for smooth movement between ticks.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render;
 
 import org.lwjgl.opengl.GL11;

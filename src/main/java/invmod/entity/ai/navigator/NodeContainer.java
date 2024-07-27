@@ -1,3 +1,29 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a container for managing path nodes in a navigation system, typically used for entity pathfinding.
+//  * It provides methods to add, retrieve, and manage the order of path nodes based on their distance to a target.
+//  *
+//  * Methods:
+//  * - NodeContainer(): Constructor that initializes the path points array and count.
+//  * - addPoint(PathNode pathpoint): Adds a new path node to the container, expanding the array if necessary, and sorts it into the correct position.
+//  * - clearPath(): Clears all path nodes from the container.
+//  * - dequeue(): Retrieves and removes the first path node from the container, re-sorting the remaining nodes.
+//  * - changeDistance(PathNode pathpoint, double d0): Updates the distance of a given path node and re-sorts the node in the container.
+//  * - sortBack(int i): A private method that sorts a node backwards in the array based on its distance to the target.
+//  * - sortForward(int i): A private method that sorts a node forwards in the array based on its distance to the target.
+//  * - isPathEmpty(): Checks if the container is empty.
+//  *
+//  * The class uses a binary heap structure to maintain an ordered list of path nodes, allowing efficient retrieval and updating of nodes.
+//  */
+// package invmod.entity.ai.navigator;
+// 
+// public class NodeContainer {
+//     // Class implementation...
+// }
+// ```
+// `^`^`^`
+
 package invmod.entity.ai.navigator;
 
 public class NodeContainer {

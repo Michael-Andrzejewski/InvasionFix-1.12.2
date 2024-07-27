@@ -1,3 +1,31 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a terrain manipulation system designed for entities in a Minecraft-like environment.
+//  * It allows entities to dig through terrain at a specified rate, removing blocks from the world.
+//  *
+//  * Public Methods:
+//  * - TerrainDigger(ICanDig digger, ITerrainModify modifier, float digRate): Constructor initializing the digger entity, terrain modifier, and dig rate.
+//  * - setDigRate(float digRate): Sets the rate at which the digger entity can dig through terrain.
+//  * - getDigRate(): Retrieves the current dig rate.
+//  * - askClearPosition(BlockPos pos, INotifyTask onFinished, float costMultiplier): Requests to clear a position by removing blocks in a specified order, considering cost and dig rate.
+//  * - askRemoveBlock(BlockPos pos, INotifyTask onFinished, float costMultiplier): Requests to remove a single block at a specified position, considering cost and dig rate.
+//  * - notifyTask(int result): Callback method that is invoked when a terrain modification task is completed.
+//  *
+//  * The TerrainDigger uses an ICanDig interface to determine the order of block removal and the cost associated with it.
+//  * It also uses an ITerrainModify interface to execute the actual block removal tasks. The dig rate affects the speed of the operation.
+//  * The class implements ITerrainDig for digging functionality and INotifyTask for receiving notifications upon task completions.
+//  */
+// package invmod.entity;
+// 
+// // ... (imports)
+// 
+// public class TerrainDigger implements ITerrainDig, INotifyTask {
+//     // ... (class implementation)
+// }
+// ```
+// `^`^`^`
+
 package invmod.entity;
 
 import invmod.INotifyTask;

@@ -1,3 +1,19 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class is responsible for rendering the trap entity in the game. It extends the Render class from Minecraft's rendering framework and is specific to the EntityIMTrap entity.
+//  *
+//  * Public Methods:
+//  * - RenderTrap(RenderManager renderManager): Constructs the renderer with a default ModelTrap.
+//  * - RenderTrap(RenderManager renderManager, ModelTrap model): Constructs the renderer with a specified ModelTrap.
+//  * - doRender(EntityIMTrap entityTrap, double d, double d1, double d2, float f, float f1): Handles the actual rendering of the trap entity. It sets up the OpenGL state, binds the entity's texture, and then renders the model at the appropriate location, orientation, and scale.
+//  * - getEntityTexture(EntityIMTrap entity): Returns the ResourceLocation object that points to the texture used for the trap entity.
+//  *
+//  * The class uses OpenGL calls to manipulate the rendering state and position the model in the world. It also uses a static ResourceLocation to reference the texture used for the trap's appearance.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render;
 
 import org.lwjgl.opengl.GL11;

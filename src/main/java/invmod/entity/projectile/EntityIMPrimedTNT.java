@@ -1,3 +1,53 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a custom primed TNT entity with projectile-like behavior in Minecraft.
+//  * It extends the EntityTNTPrimed class and is designed to be launched by entities, potentially causing damage on impact.
+//  *
+//  * Constructors:
+//  * - EntityIMPrimedTNT(World): Initializes the entity with default parameters in the specified world.
+//  * - EntityIMPrimedTNT(World, double, double, double): Initializes the entity at a specific location.
+//  * - EntityIMPrimedTNT(World, EntityLivingBase, float): Initializes the entity with a shooting entity and velocity.
+//  *
+//  * Methods:
+//  * - onCollideWithPlayer(EntityPlayer): Handles collision with a player, currently empty.
+//  * - writeEntityToNBT(NBTTagCompound): Saves the entity's data to NBT.
+//  * - entityInit(): Empty method, required by the superclass.
+//  * - setBoulderHeading(double, double, double, float, float): Sets the entity's heading with specified speed and variance.
+//  * - setVelocity(double, double, double): Sets the entity's velocity and updates its rotation based on the new velocity.
+//  * - onUpdate(): Called each tick to update the entity's state, handling movement, collision detection, and entity impact.
+//  *
+//  * The class also contains several fields to track the entity's state, such as position, whether it's in the ground,
+//  * the entity that shot it, and whether it was shot by a player. The entity has a limited lifespan and will set itself
+//  * as dead when its life reaches zero or when it impacts a block or another entity.
+//  */
+// ```
+// ```java
+// /**
+//  * This code appears to be part of a custom entity class for a projectile, possibly an arrow, in a modded Minecraft game.
+//  * The code manages the behavior of the projectile when it hits a target, interacts with blocks, and its physics while in flight.
+//  *
+//  * Key methods and their purposes:
+//  *
+//  * - The unnamed method (possibly an overridden method like 'onUpdate' or 'onImpact') handles the projectile's behavior upon collision.
+//  *   It sets the projectile as in the ground, checks if it hits a special block (NEXUS_BLOCK), and if so, triggers an attack on the Nexus.
+//  *   If it hits a block other than bedrock or a chest, it checks the 'mobGriefing' game rule and creates an explosion at the impact location.
+//  *   It also handles the spawning of critical hit particles if the arrow is critical.
+//  *
+//  * - 'readEntityFromNBT' is used to read the projectile's data from an NBTTagCompound, restoring its state from saved data.
+//  *   This includes its position, the block it's in, whether it's in the ground, and if it belongs to a player.
+//  *
+//  * - 'getFlightTime' returns the number of ticks the projectile has been in the air, which could be used for various calculations,
+//  *   such as drop-off or damage scaling.
+//  *
+//  * The code also includes physics calculations for the projectile's motion, adjusting its position, rotation, and velocity based on air resistance and gravity.
+//  * It handles the spawning of water bubble particles if the projectile is underwater, indicating it also accounts for different environments.
+//  *
+//  * Note: Some parts of the code are commented out, suggesting they may be placeholders or features that are disabled or in development.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.projectile;
 
 import java.util.List;

@@ -1,3 +1,24 @@
+// `^`^`^`
+// ```java
+// /**
+//  * ModelIMSkeleton is a custom model class extending the ModelSkeleton class, designed for rendering a skeleton entity in Minecraft.
+//  * It provides additional functionality and customization for the skeleton's animations and poses, particularly when wielding a bow.
+//  *
+//  * Constructors:
+//  * - ModelIMSkeleton(): A default constructor that initializes the model with default settings.
+//  * - ModelIMSkeleton(float scale, boolean par2): Initializes the model with a specified scale and a boolean parameter for additional options.
+//  *
+//  * Methods:
+//  * - setLivingAnimations(EntityLivingBase entityIn, float par2, float par3, float par4): Overrides the base method to set custom arm poses based on the entity's current action, such as holding a bow.
+//  * - setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn): Overrides the base method to apply custom rotation angles to the model's limbs and head, providing a more nuanced animation for actions like swinging arms and sneaking.
+//  * - setRotationAnglesModelBiped(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn): A helper method that sets rotation angles for the biped model, handling common animations such as walking and idle stances.
+//  * - setRotationAnglesModelSkeleton(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, EntityIMSkeleton entityIn): A helper method specific to the skeleton model that adjusts the arm rotations when the skeleton is swinging its arms without holding a bow.
+//  *
+//  * This model class is used to provide a more immersive visual experience by enhancing the default skeleton animations in Minecraft.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render.model;
 
 import invmod.entity.monster.EntityIMSkeleton;

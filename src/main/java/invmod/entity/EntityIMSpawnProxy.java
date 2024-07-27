@@ -1,3 +1,35 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a proxy entity for spawning night mobs in the game Minecraft, as part of the 'invmod' mod.
+//  * It extends EntityLiving, meaning it is a living entity within the game world.
+//  *
+//  * Constructor:
+//  * - EntityIMSpawnProxy(World world): Initializes the proxy entity with the provided world.
+//  *
+//  * Overridden Methods:
+//  * - onEntityUpdate(): Called each tick to update the entity's state. It spawns a set of night mobs at its location
+//  *   and then marks itself for removal.
+//  * - writeEntityToNBT(NBTTagCompound nbttagcompound): Intentionally left blank, as this proxy entity does not need
+//  *   to save any additional data.
+//  * - readEntityFromNBT(NBTTagCompound nbttagcompound): Intentionally left blank, as this proxy entity does not need
+//  *   to load any additional data.
+//  * - getCanSpawnHere(): Determines if the proxy entity can spawn based on darkness conditions and path weight.
+//  *
+//  * Methods:
+//  * - getBlockPathWeight(int i, int j, int k): Returns a weight based on the light brightness at the specified block
+//  *   position, influencing mob spawn rates.
+//  * - darkEnoughToSpawn(): Checks if the current conditions are dark enough for night mobs to spawn.
+//  *
+//  * This entity is used to control the spawning of night mobs, ensuring they only appear under the correct conditions
+//  * and in appropriate locations. It leverages the game's light level mechanics to make these determinations.
+//  */
+// package invmod.entity;
+// 
+// // ... (rest of the imports and class code)
+// ```
+// `^`^`^`
+
 package invmod.entity;
 
 import invmod.mod_invasion;

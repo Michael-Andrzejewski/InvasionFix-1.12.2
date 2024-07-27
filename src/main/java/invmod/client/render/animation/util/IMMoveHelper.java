@@ -1,3 +1,29 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class extends the EntityMoveHelper from Minecraft and is designed to control the movement of custom entities
+//  * (EntityIMLiving) within the game. It provides enhanced movement capabilities such as climbing ladders, jumping, and
+//  * swimming, as well as handling movement on the ground.
+//  *
+//  * Methods:
+//  * - IMMoveHelper(EntityIMLiving): Constructor that initializes the move helper with the given entity.
+//  * - isUpdating(): Returns whether the entity needs to update its movement.
+//  * - setMoveSpeed(float): Sets the speed for the entity's movement.
+//  * - setMoveTo(BlockPos, float): Sets the target position and speed for the entity to move to.
+//  * - setMoveTo(double, double, double, double): Overridden method to set the target position and speed for the entity.
+//  * - onUpdateMoveHelper(): Overridden method that updates the entity's movement each tick.
+//  * - getMoveForward(): Returns the forward movement amount.
+//  * - getMoveStrafe(): Returns the strafe movement amount.
+//  * - doGroundMovement(): Handles the entity's ground movement logic, including climbing and jumping.
+//  * - correctRotation(float, float, float): Corrects the entity's rotation towards a target yaw within a given turn speed.
+//  * - getClimbFace(BlockPos): Determines if the block at the given position is a ladder and returns the facing of the ladder.
+//  *
+//  * The class manages the entity's movement state based on the terrain and obstacles, adjusting its path and movement
+//  * speed accordingly. It also calculates the correct orientation for the entity as it moves towards its target.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render.animation.util;
 
 import invmod.entity.EntityIMLiving;

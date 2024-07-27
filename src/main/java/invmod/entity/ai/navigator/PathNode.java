@@ -1,3 +1,34 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a node in a pathfinding algorithm for entities in Minecraft.
+//  * It encapsulates the position of the node, the action required to reach this node,
+//  * and various metrics used for pathfinding such as distances and previous node reference.
+//  *
+//  * Methods:
+//  * - PathNode(int, int, int): Constructs a node with integer coordinates and default action.
+//  * - PathNode(int, int, int, PathAction): Constructs a node with integer coordinates and specified action.
+//  * - PathNode(double, double, double): Constructs a node with double coordinates and default action.
+//  * - PathNode(double, double, double, PathAction): Constructs a node with double coordinates and specified action.
+//  * - PathNode(Vec3d, PathAction): Constructs a node with a Vec3d position and specified action.
+//  * - makeHash(Vec3d, PathAction): Generates a unique hash code for the node based on its position and action.
+//  * - distanceTo(PathNode): Calculates the Euclidean distance to another node.
+//  * - distanceTo(double, double, double): Calculates the Euclidean distance to specified coordinates.
+//  * - equals(Object): Checks if another object is equal to this node based on position and action.
+//  * - equals(double, double, double): Checks if the node's position matches the given coordinates.
+//  * - equals(Vec3d): Checks if the node's position matches the given Vec3d.
+//  * - hashCode(): Returns the hash code of the node.
+//  * - isAssigned(): Checks if the node has been assigned an index in a path.
+//  * - toString(): Returns a string representation of the node's position and action.
+//  * - getPrevious(): Retrieves the previous node in the path.
+//  * - setPrevious(PathNode): Sets the previous node in the path.
+//  *
+//  * The class provides essential functionality for pathfinding, such as node comparison,
+//  * distance calculation, and hash code generation for efficient storage and retrieval.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.ai.navigator;
 
 import net.minecraft.util.math.MathHelper;

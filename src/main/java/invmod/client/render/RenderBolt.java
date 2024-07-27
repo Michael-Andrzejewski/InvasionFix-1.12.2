@@ -1,3 +1,28 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class is responsible for rendering the EntityIMBolt entity in Minecraft.
+//  * EntityIMBolt is a custom projectile entity, and this class extends the base Render class
+//  * to provide the necessary rendering functionality.
+//  *
+//  * Public Methods:
+//  * - RenderBolt(RenderManager renderManager): Constructor that initializes the renderer with the render manager.
+//  * - doRender(EntityIMBolt entityBolt, double d, double d1, double d2, float f, float f1): Handles the actual rendering of the EntityIMBolt. It sets up the OpenGL state, applies transformations to position and orient the bolt, scales it, and then calls renderFromVertices to draw the bolt.
+//  * - renderFromVertices(EntityIMBolt entityBolt, Tessellator tessellator): Renders the bolt using vertex data. It disables textures and lighting, enables blending, and sets the blend function. It then iterates over the vertices of the bolt, setting up the geometry and color before drawing the vertices using the Tessellator.
+//  * - getEntityTexture(EntityIMBolt entity): Returns null as this entity does not use a texture.
+//  *
+//  * The rendering process involves OpenGL calls for translating, rotating, and scaling the bolt entity, as well as setting up the rendering state for a semi-transparent effect. The actual geometry is defined by the vertices provided by the EntityIMBolt instance.
+//  */
+// package invmod.client.render;
+// 
+// // ... (imports)
+// 
+// public class RenderBolt extends Render<EntityIMBolt> {
+//     // ... (class code)
+// }
+// ```
+// `^`^`^`
+
 package invmod.client.render;
 
 import org.lwjgl.opengl.GL11;

@@ -1,3 +1,43 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents the EntityIMBurrower, a specialized mob entity that can navigate through and modify terrain by digging.
+//  * It extends EntityIMMob and implements the ICanDig interface, allowing it to interact with blocks in a unique way.
+//  *
+//  * Key Components:
+//  * - NavigatorBurrower: A custom navigator that allows the burrower to navigate through the terrain by digging.
+//  * - TerrainModifier: Manages the modification of blocks around the burrower.
+//  * - TerrainDigger: Handles the actual digging process, determining which blocks to remove and at what speed.
+//  * - EntityAITasks: A collection of AI tasks that dictate the burrower's behavior.
+//  * - PosRotate3D: An array of positions and rotations representing the segments of the burrower's body.
+//  *
+//  * Constructor:
+//  * - EntityIMBurrower(World world): Initializes the burrower in the given world.
+//  * - EntityIMBurrower(World world, TileEntityNexus nexus): Additionally associates the burrower with a Nexus.
+//  *
+//  * Methods:
+//  * - toString(): Provides a string representation of the burrower.
+//  * - getTerrain(): Returns the world as an IBlockAccess for terrain analysis.
+//  * - getBlockPathCost(): Calculates the cost of moving through a block, considering its resistance and penalties.
+//  * - getBlockRemovalCost(): Determines the cost to remove a block based on its strength.
+//  * - canClearBlock(): Checks if the burrower can clear a block at a given position.
+//  * - getSpecies(), getTier(): Return information about the burrower's species and tier.
+//  * - getNavigator(), getNavigatorNew(): Return the old and new navigators for pathfinding.
+//  * - onPathBlocked(): Handles the event when the burrower's path is blocked.
+//  * - getRotX(), getRotY(), getRotZ(), getPrevRotX(), getPrevRotY(), getPrevRotZ(): Accessors for rotation values.
+//  * - getSegments3D(), getSegments3DLastTick(): Accessors for the burrower's body segments.
+//  * - setSegment(): Sets the position and rotation for a specific body segment.
+//  * - setHeadRotation(): Updates the head rotation to a new position.
+//  * - moveRelative(): Custom movement logic to handle water, lava, and ladder interactions.
+//  * - updateAITasks(): Updates the AI tasks, including terrain modification.
+//  * - updateAITick(): Additional AI update logic.
+//  * - onBlockRemoved(): Placeholder for handling block removal events.
+//  *
+//  * This class is central to the behavior of the burrower entity, allowing it to navigate and interact with the world in a unique way.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.monster;
 
 import invmod.INotifyTask;

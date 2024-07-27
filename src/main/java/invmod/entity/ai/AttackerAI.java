@@ -1,3 +1,39 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This Java class, AttackerAI, is part of a package designed to manage the artificial intelligence of attackers in a game, specifically those targeting a Nexus entity. The class is responsible for pathfinding, scaffold generation, and entity density management to facilitate strategic movement and construction activities of AI entities.
+// 
+//  * Key methods include:
+//  * - update(): Manages timers for scaffold generation and entity density updates.
+//  * - wrapEntityData(IBlockAccess terrainMap): Wraps terrain data with entity density information.
+//  * - getMinDistanceBetweenScaffolds(): Retrieves the minimum distance allowed between scaffolds.
+//  * - getScaffolds(): Returns a list of current scaffolds.
+//  * - askGenerateScaffolds(EntityIMMob entity): Determines if new scaffolds should be generated based on conditions.
+//  * - findMinScaffolds(IPathfindable pather, BlockPos pos): Finds the minimum scaffolds required for a path.
+//  * - addScaffoldDataTo(IBlockAccessExtended terrainMap): Adds scaffold data to the terrain map.
+//  * - getScaffoldAt(BlockPos pos): Retrieves a scaffold at a specific position.
+//  * - onResume(): Forces a status update on all scaffolds.
+//  * - readFromNBT(NBTTagCompound nbttagcompound): Reads scaffold data from a saved state.
+//  * - writeToNBT(NBTTagCompound nbttagcompound): Writes scaffold data to a saved state.
+// 
+//  * The class also contains private methods for path creation and chunk caching, which are used internally to manage pathfinding and terrain analysis.
+//  */
+// ```
+// ```plaintext
+// This code is part of a system designed to manage and update scaffolding structures within a simulated environment, likely a game or simulation software. The code includes several methods that interact with scaffold objects and possibly other entities within the environment.
+// 
+// 1. `determineScaffoldOrientation`: This method calculates the optimal orientation for a given scaffold based on the surrounding environment. It checks adjacent blocks at a certain height and determines the direction with the most supporting blocks, setting the scaffold's orientation accordingly.
+// 
+// 2. `addNewScaffolds`: This method integrates new scaffolds into the existing scaffold collection. It compares the positions of new and existing scaffolds, updating the height and position of existing scaffolds if the new ones overlap or extend beyond them in the vertical space.
+// 
+// 3. `updateScaffolds`: This method iterates through the current scaffolds, spawning a visual effect (particle) at their location and forcing a status update on each scaffold. It also removes scaffolds from the collection if their integrity falls below a certain threshold relative to their completion status.
+// 
+// 4. `updateDensityData`: This method updates a map that tracks the density of living entities (mobs) around the scaffolds. It records the number of entities at each location, ensuring that the density does not exceed a specified limit.
+// 
+// Overall, the code is responsible for maintaining the structural integrity and proper placement of scaffolds in relation to the environment and other entities, ensuring that they are correctly oriented, do not overlap in undesirable ways, and are removed when they are no longer structurally sound.
+// ```
+// `^`^`^`
+
 package invmod.entity.ai;
 
 import java.util.ArrayList;

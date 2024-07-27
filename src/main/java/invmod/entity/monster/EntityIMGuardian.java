@@ -1,3 +1,68 @@
+// `^`^`^`
+// This code defines a custom entity class `EntityIMGuardian` for a Minecraft mod, which extends the capabilities of a standard mob entity with additional features, including the ability to dig through terrain. The class is part of the `invmod.entity.monster` package and utilizes various imports from the Minecraft and Forge APIs.
+// 
+// **Class Overview:**
+// - `EntityIMGuardian` represents a guardian-like monster entity associated with a `TileEntityNexus`.
+// - It implements the `ICanDig` interface, allowing it to interact with and modify the game world's terrain.
+// - The class contains methods for entity AI, attributes, data management, and sound events, as well as specialized elder guardian states.
+// 
+// **Key Methods:**
+// - `EntityIMGuardian(World worldIn, TileEntityNexus nexus)`: Constructor initializing the entity with world and nexus references, setting its size, movement helper, and terrain modification tools.
+// - `initEntityAI()`: Sets up the entity's AI tasks, including movement, attacking, and idle behaviors.
+// - `applyEntityAttributes()`: Defines the entity's base attributes such as health, attack damage, and movement speed.
+// - `readEntityFromNBT(NBTTagCompound compound)` and `writeEntityToNBT(NBTTagCompound compound)`: Methods for reading and writing the entity's data to and from NBT (used for saving and loading).
+// - `getNewNavigator(World worldIn)`: Returns a new navigator for the entity, allowing it to swim.
+// - `entityInit()`: Initializes the entity's data parameters.
+// - `isElder()`, `setElder(boolean elder)`, and `setElder()`: Methods to check and set whether the guardian is an elder variant.
+// - `getAmbientSound()`, `getHurtSound(DamageSource damageSourceIn)`, and `getDeathSound()`: Methods defining the sounds the entity makes in various situations.
+// 
+// **ICanDig Interface Implementation:**
+// - `getSpecies()`: Returns the species name of the entity.
+// - `getBlockRemovalCost(BlockPos pos)`: Calculates the cost to remove a block at the specified position.
+// - `canClearBlock(BlockPos pos)`: Determines if the entity can clear a block at the specified position.
+// - `onBlockRemoved(BlockPos pos, IBlockState state)`: Called when a block is removed by the entity.
+// - `getTerrain()`: Provides access to the terrain the entity is interacting with.
+// 
+// The code also includes private methods and fields for managing the entity's state and animations, particularly for elder guardians. The class is designed to be extended and used within the context of a Minecraft mod, providing a new type of monster with unique behaviors and interactions with the game world.
+// ```java
+// /**
+//  * This code is part of an entity class for a guardian mob, likely within a game such as Minecraft. The guardian has various behaviors and states, particularly when interacting with water and players.
+//  *
+//  * - getDeathSound(): Returns different sounds depending on whether the guardian is on land or in water.
+//  * - canTriggerWalking(): Prevents the entity from triggering block effects when walking over them.
+//  * - getEyeHeight(): Returns the eye height of the entity as half its height.
+//  * - getBlockPathWeight(BlockPos pos): Determines the pathfinding weight, favoring water paths.
+//  * - onLivingUpdate(): Handles the entity's updates each tick, including movement animations, attacking logic, and particle effects.
+//  * - getTailAnimation(float p_175471_1_): Calculates the tail animation state for rendering.
+//  * - getSpikesAnimation(float p_175469_1_): Calculates the spike animation state for rendering.
+//  * - getAttackAnimationScale(float p_175477_1_): Determines the scale of the attack animation.
+//  * - updateAITasks(): Updates AI tasks, applying effects to nearby players if the guardian is an elder.
+//  * - getLootTable(): Returns the appropriate loot table based on whether the guardian is an elder.
+//  * - isValidLightLevel(): Always returns true, indicating light level does not affect spawning.
+//  * - isNotColliding(): Checks for entity collisions.
+//  * - getCanSpawnHere(): Determines if the current location is a valid spawn point.
+//  * - attackEntityFrom(DamageSource source, float amount): Handles the entity being attacked and retaliates if not moving.
+//  * - getVerticalFaceSpeed(): Returns the speed at which the entity can change pitch.
+//  * - moveRelative(float strafe, float up, float forward, float friction): Controls the entity's movement in water and on land.
+//  * - AIGuardianAttack: An AI task that manages the guardian's attacking behavior.
+//  *
+//  * The guardian entity has specialized behaviors for movement, attacking, and interaction with the environment, with additional considerations for elder guardians.
+//  */
+// ```
+// ```plaintext
+// This code appears to be part of an AI system for a custom entity in a Minecraft-like game, specifically an entity called EntityIMGuardian. The code defines behavior for attacking, moving, and selecting targets.
+// 
+// 1. eTask() - This method manages the attack behavior of the EntityIMGuardian. It clears the entity's navigation path, sets its gaze on the target, and checks for line of sight. If the target is visible, it increments a tick counter to time the attack. When the counter reaches a certain value, the entity performs an attack that deals damage based on difficulty and whether the entity is an elder. After attacking, it resets the target.
+// 
+// 2. GuardianMoveHelper - This subclass extends EntityMoveHelper and is responsible for the movement of the EntityIMGuardian. It overrides the onUpdateMoveHelper() method to handle the entity's navigation towards a target position. It calculates the direction and sets the entity's motion, including adjustments for the entity's rotation and movement speed. It also manages the entity's look direction and toggles its moving state.
+// 
+// 3. GuardianTargetSelector - This subclass implements Predicate<EntityLivingBase> to define the conditions for selecting attack targets. It overrides the apply() method to determine if a potential target is either a player or a squid and is within a certain distance from the EntityIMGuardian.
+// 
+// Overall, the code is designed to give the EntityIMGuardian entity intelligent behavior for targeting and attacking players or squids within its range, and for moving towards its targets in a game environment.
+// ```
+// 
+// `^`^`^`
+
 package invmod.entity.monster;
 
 import javax.annotation.Nullable;

@@ -1,3 +1,51 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This code defines the EntityIMBoulder class, which is a custom projectile entity in a Minecraft mod.
+//  * The class extends the base Entity class and represents a boulder that can be thrown or launched in the game.
+//  *
+//  * Constructors:
+//  * - EntityIMBoulder(World world): Initializes a new boulder entity with default parameters in the specified world.
+//  * - EntityIMBoulder(World world, double x, double y, double z): Initializes a new boulder entity at the given coordinates.
+//  * - EntityIMBoulder(World world, EntityLivingBase shooter, float velocity): Initializes a new boulder entity with a specified shooter and velocity.
+//  *
+//  * Methods:
+//  * - entityInit(): Empty method from the base class, typically used for initializing entity data parameters.
+//  * - setBoulderHeading(double x, double y, double z, float speed, float variance): Sets the boulder's trajectory with the given direction, speed, and variance.
+//  * - setVelocity(double x, double y, double z): Sets the boulder's velocity and updates its rotation based on the new velocity vector.
+//  * - onUpdate(): Called each tick to update the boulder's position, handle collisions, and check for impacts with blocks or entities.
+//  *
+//  * The boulder has properties such as position, inTile (the block it's currently in), inGround (whether it's stuck in the ground), life (ticks until it despawns),
+//  * and arrowCritical (whether it will deal critical damage). The boulder can collide with entities, deal damage, and interact with specific blocks like the Nexus block.
+//  */
+// package invmod.entity.projectile;
+// 
+// // ... (imports)
+// 
+// public class EntityIMBoulder extends Entity {
+//     // ... (class members and methods)
+// }
+// ```
+// This summary provides an overview of the EntityIMBoulder class, its constructors, methods, and functionality within the context of a Minecraft mod. It describes the purpose of the entity as a projectile boulder and outlines its interactions with the game world, including collision handling and entity impact.
+// ```java
+// /**
+//  * This code represents the behavior and state management of an arrow entity within a game, likely a Minecraft-like environment. It includes methods for handling arrow physics, interactions, and serialization.
+//  *
+//  * - The code checks the 'mobGriefing' game rule to determine if the arrow can cause an explosion that alters the environment.
+//  * - It handles the arrow's critical effect, spawning critical hit particles if the arrow is critical.
+//  * - The arrow's position and rotation are updated based on its motion, with adjustments for yaw and pitch to ensure smooth transitions.
+//  * - Water interaction is simulated, reducing the arrow's speed and spawning water bubble particles.
+//  * - Air resistance and gravity are applied to the arrow's motion.
+//  * - The arrow's position is updated based on its motion.
+//  * - Serialization methods `writeEntityToNBT` and `readEntityFromNBT` are provided to save and load the arrow's state to and from NBT (Named Binary Tag) format, which is commonly used in Minecraft for storing entity and block data.
+//  * - The `onCollideWithPlayer` method is stubbed out, indicating a placeholder for future player collision handling.
+//  * - The `getFlightTime` method returns the duration the arrow has been in the air.
+//  *
+//  * The commented-out code suggests previous versions of the code handled block destruction and item dropping, which have been replaced by an explosion mechanic. The `getShadowSize` method is also commented out, indicating that the arrow may not cast a shadow in this version of the code.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.projectile;
 
 import java.util.List;

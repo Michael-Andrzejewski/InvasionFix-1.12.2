@@ -1,3 +1,27 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This abstract class, NavigatorParametric, extends the NavigatorIM class and is part of the invmod.entity.ai.navigator package. It provides a framework for parametric navigation for entities within the Invasion Mod, specifically for the EntityIMMob class.
+//  *
+//  * The class is designed to handle navigation updates, path following, and movement execution based on a parametric time value. It includes methods to update navigation, follow a path, and move the entity to a calculated position.
+//  *
+//  * Key methods:
+//  * - onUpdateNavigation(int paramElapsed): Updates the navigation process by incrementing the total ticks, checking path status, following the path, and handling movement and path actions.
+//  * - onUpdateNavigation(): Overridden method that calls onUpdateNavigation with a default parameter of 1.
+//  * - doMovementTo(int param): Moves the entity to a position determined by the parametric time value and updates the time parameter based on the entity's proximity to the target position.
+//  * - entityPositionAtParam(int paramInt): An abstract method that must be implemented to calculate the entity's position at a given parametric time value.
+//  * - isReadyForNextNode(int paramInt): An abstract method that must be implemented to determine if the entity is ready to move to the next node in the path.
+//  * - pathFollow(int param): Manages the transition to the next node in the path if the entity is ready, based on the parametric time value.
+//  * - pathFollow(): Overridden method that calls pathFollow with a default parameter of 0.
+//  *
+//  * The class also maintains a minimum move tolerance squared (minMoveToleranceSq) to determine when the entity is close enough to the target position, and a time parameter (timeParam) to track the parametric time.
+//  */
+// package invmod.entity.ai.navigator;
+// 
+// // Class imports and package declaration omitted for brevity
+// ```
+// `^`^`^`
+
 package invmod.entity.ai.navigator;
 
 import invmod.entity.IPathSource;

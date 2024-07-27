@@ -1,3 +1,29 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a custom item within a Minecraft mod, specifically a "Debug Wand" used for debugging purposes.
+//  * The item is designed to interact with various entities and a special block called the Nexus Block from the mod.
+//  *
+//  * Class: ItemDebugWand
+//  * Package: invmod.item
+//  * Dependencies: invmod.*, net.minecraft.*
+//  *
+//  * Public Methods:
+//  * - ItemDebugWand(): Constructor that initializes the item with specific properties such as max stack size and damage.
+//  * - onItemUseFirst(EntityPlayer, World, BlockPos, EnumFacing, float, float, float, EnumHand): 
+//  *   Handles the item's functionality when used on a block or in the air. It performs different actions such as:
+//  *   - Linking with a Nexus Block if used on one, storing it in the 'nexus' field.
+//  *   - Spawning various custom entities (e.g., EntityIMZombie, EntityIMCreeper, EntityIMSpider) at the location above the block where the item is used.
+//  *   - Setting properties for the spawned entities, such as texture, flavor, and tier.
+//  *   - Spawning a vanilla EntityWolf and EntityZombie for comparison or additional debugging.
+//  *   - The method returns an EnumActionResult indicating the success or failure of the action.
+//  * - getName(): Returns the name of the item, which is "debugWand".
+//  *
+//  * Note: There is an unused method 'hitEntity' commented out, which suggests a previous or alternative use for the item to interact with EntityWolf.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.item;
 
 import invmod.ModBlocks;

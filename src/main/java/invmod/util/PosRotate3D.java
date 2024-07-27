@@ -1,3 +1,34 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a 3D position with rotation, designed for use within a Minecraft mod.
+//  * It encapsulates the coordinates (X, Y, Z) and rotation angles (rotX, rotY, rotZ) for an object in 3D space.
+//  *
+//  * Methods:
+//  * - PosRotate3D(): Default constructor initializing position and rotation to zero.
+//  * - PosRotate3D(double posX, double posY, double posZ, float rotX, float rotY, float rotZ): Overloaded constructor for setting initial position and rotation.
+//  * - getPos(): Returns a Vec3d object representing the current position.
+//  * - getPosX(): Returns the X coordinate of the position.
+//  * - getPosY(): Returns the Y coordinate of the position.
+//  * - getPosZ(): Returns the Z coordinate of the position.
+//  * - getRotX(): Returns the rotation angle around the X-axis.
+//  * - getRotY(): Returns the rotation angle around the Y-axis.
+//  * - getRotZ(): Returns the rotation angle around the Z-axis.
+//  * - setPosX(double pos): Sets the X coordinate of the position.
+//  * - setPosY(double pos): Sets the Y coordinate of the position.
+//  * - setPosZ(double pos): Sets the Z coordinate of the position.
+//  * - setRotX(float rot): Sets the rotation angle around the X-axis.
+//  * - setRotY(float rot): Sets the rotation angle around the Y-axis.
+//  * - setRotZ(float rot): Sets the rotation angle around the Z-axis.
+//  *
+//  * This class is useful for managing the position and orientation of objects in a Minecraft world.
+//  */
+// package invmod.util;
+// 
+// // Class definition and imports omitted for brevity
+// ```
+// `^`^`^`
+
 package invmod.util;
 
 import net.minecraft.util.math.Vec3d;

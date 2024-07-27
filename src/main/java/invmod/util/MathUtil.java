@@ -1,3 +1,43 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class provides utility methods for mathematical operations, particularly for angle manipulation,
+//  * floating-point comparison, and binary packing/unpacking of numerical values.
+//  *
+//  * Methods:
+//  * - floatEquals(float f1, float f2, float tolerance): Compares two floating-point numbers within a specified tolerance.
+//  * - boundAnglePiRad(double angle): Normalizes an angle in radians to the range [-π, π].
+//  * - boundAngle180Deg(double angle): Normalizes an angle in degrees to the range [-180, 180].
+//  * - interpRotationRad(float rot1, float rot2, float t): Interpolates between two angles in radians.
+//  * - interpRotationDeg(float rot1, float rot2, float t): Interpolates between two angles in degrees.
+//  * - interpWrapped(float val1, float val2, float t, float min, float max): Interpolates between two wrapped values.
+//  * - unpackFloat(int i): Converts an integer bit representation back into a floating-point number.
+//  * - packFloat(float f): Converts a floating-point number into its integer bit representation.
+//  * - packAnglesDeg(float a1, float a2, float a3, float a4): Packs four angles in degrees into a single integer.
+//  * - unpackAnglesDeg_1(int i): Unpacks the first angle from a packed integer.
+//  * - unpackAnglesDeg_2(int i): Unpacks the second angle from a packed integer.
+//  * - unpackAnglesDeg_3(int i): Unpacks the third angle from a packed integer.
+//  * - unpackAnglesDeg_4(int i): Unpacks the fourth angle from a packed integer.
+//  * - packBytes(int i1, int i2, int i3, int i4): Packs four bytes into a single integer.
+//  * - unpackBytes_1(int i): Unpacks the first byte from a packed integer.
+//  * - unpackBytes_2(int i): Unpacks the second byte from a packed integer.
+//  * - unpackBytes_3(int i): Unpacks the third byte from a packed integer.
+//  * - unpackBytes_4(int i): Unpacks the fourth byte from a packed integer.
+//  * - packShorts(int i1, int i2): Packs two shorts into a single integer.
+//  * - unpackShorts_1(int i): Unpacks the first short from a packed integer.
+//  * - unpackShorts_2(int i): Unpacks the second short from a packed integer.
+//  *
+//  * These methods are useful for game development, simulations, and other applications where angle calculations
+//  * and efficient data packing are commonly required.
+//  */
+// package invmod.util;
+// 
+// public class MathUtil {
+//     // ... (methods implementation)
+// }
+// ```
+// `^`^`^`
+
 package invmod.util;
 
 public class MathUtil {

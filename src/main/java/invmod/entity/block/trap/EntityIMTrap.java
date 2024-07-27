@@ -1,3 +1,45 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This code defines the EntityIMTrap class, which represents a custom trap entity in a Minecraft mod.
+//  * The trap entity interacts with players and other entities, causing various effects based on its type.
+//  *
+//  * Constructors:
+//  * - EntityIMTrap(World world): Initializes a default trap in the given world.
+//  * - EntityIMTrap(World world, double x, double y, double z, int trapType): Initializes a trap at the specified coordinates with a given type.
+//  *
+//  * Methods:
+//  * - onUpdate(): Called each tick to update the trap's state, handle particle effects, and check for entities to trigger the trap.
+//  * - trapEffect(EntityLivingBase triggerEntity): Applies the effect of the trap to the entity that triggered it, which varies based on the trap type.
+//  * - onCollideWithPlayer(EntityPlayer entityPlayer): Handles player collision, allowing players to pick up empty traps.
+//  * - processInitialInteract(EntityPlayer player, EnumHand hand): Allows players to interact with the trap, potentially disarming it with a specific item.
+//  * - isEmpty(): Returns whether the trap is empty.
+//  * - getTrapType(): Returns the type of the trap.
+//  * - isValidPlacement(): Checks if the trap is placed in a valid location.
+//  * - canBeCollidedWith(): Indicates that the trap can be collided with.
+//  * - entityInit(): Empty method, typically used for initializing data parameters.
+//  * - readEntityFromNBT(NBTTagCompound nbttagcompound): Reads the trap's data from NBT, restoring its state.
+//  * - writeEntityToNBT(NBTTagCompound nbttagcompound): Writes the trap's data to NBT for saving.
+//  * - getYOffset(): Returns the Y offset for rendering the trap.
+//  * - setEmpty(): Marks the trap as empty and resets its tick counter.
+//  * - doFireball(float size, int initialDamage): Creates a fireball effect, setting blocks on fire and damaging nearby entities.
+//  *
+//  * The class also includes several private fields for managing trap state, such as type, ticks, and whether it is empty.
+//  */
+// ```
+// ```java
+// /**
+//  * This code appears to be part of a larger entity class, possibly within a game or simulation that involves entities interacting with a world environment. The code is designed to manage specific behaviors of an entity related to taking fire damage and visual effects associated with a 'rift' or portal.
+// 
+//  * igniteEntityOnFire(float initialDamage): This method is responsible for setting the entity on fire and applying an initial amount of fire damage to it. The method takes a single parameter, 'initialDamage', which specifies the amount of damage the entity should receive when the method is called. The entity is set on fire by calling the 'setFire' method with a hardcoded duration of 8 seconds. It then receives damage through the 'attackEntityFrom' method, with the damage source specified as being on fire.
+// 
+//  * doRiftParticles(): This method is designed to create a visual effect around the entity, simulating particles emanating from a rift or portal. It generates a large number of particles (300 in total) in random positions around the entity. The particles are of the type 'PORTAL', and their movement is determined by random offsets in the x and z directions, with a consistent upward motion in the y direction. This method does not take any parameters and relies on the entity's current position to determine where the particles should spawn.
+// 
+//  * Overall, the code is focused on adding immersive details to the entity's behavior, enhancing the gameplay experience by providing visual cues for events like taking fire damage and interacting with a rift or portal.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.block.trap;
 
 import java.util.List;

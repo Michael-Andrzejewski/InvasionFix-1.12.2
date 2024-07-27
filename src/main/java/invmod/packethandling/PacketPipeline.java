@@ -1,3 +1,42 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This code establishes a packet handling system for a Minecraft mod, allowing for the structured and efficient
+//  * communication between the client and server. It uses the Netty networking library and Forge Mod Loader (FML)
+//  * for handling custom packet data within the Minecraft modding context.
+//  *
+//  * PacketPipeline Class:
+//  * - Extends MessageToMessageCodec to encode and decode packet data.
+//  * - Manages an EnumMap of channels for different network sides (CLIENT/SERVER).
+//  * - Maintains a list of registered packet classes and ensures a limit of 256 packets.
+//  * - Provides methods to initialize and post-initialize the packet pipeline, sorting packets for consistency.
+//  * - Contains methods to send packets to various targets: all players, a specific player, around a point, within a dimension, and to the server.
+//  *
+//  * Methods:
+//  * - registerPacket(Class<? extends AbstractPacket> clazz): Registers packet classes with automatic discriminators.
+//  * - encode(ChannelHandlerContext ctx, AbstractPacket msg, List<Object> out): Encodes packets, setting discriminators and converting to FMLProxyPacket.
+//  * - decode(ChannelHandlerContext ctx, FMLProxyPacket msg, List<Object> out): Decodes FMLProxyPacket into AbstractPacket and handles it based on the network side.
+//  * - initialise(): Initializes channels for network communication.
+//  * - postInitialise(): Sorts registered packets and finalizes initialization.
+//  * - getClientPlayer(): [Client-side] Retrieves the current player on the client side.
+//  * - sendToAll(AbstractPacket message): Sends a packet to all players on the server.
+//  * - sendTo(AbstractPacket message, EntityPlayerMP player): Sends a packet to a specific player.
+//  * - sendToAllAround(AbstractPacket message, NetworkRegistry.TargetPoint point): Sends a packet to all players around a specific point.
+//  * - sendToDimension(AbstractPacket message, int dimensionId): Sends a packet to all players within a specific dimension.
+//  * - sendToServer(AbstractPacket message): Sends a packet from the client to the server.
+//  *
+//  * Usage:
+//  * - Call initialise() during FMLInitializationEvent.
+//  * - Call postInitialise() after all packets have been registered, during FMLPostInitializationEvent.
+//  * - Use the sendTo* methods to dispatch packets to players or the server as needed.
+//  *
+//  * Note:
+//  * - This code is designed to work with Minecraft Forge for Minecraft version 1.7.10.
+//  * - The AbstractPacket class is assumed to be a part of the mod's packet handling system and must be implemented elsewhere.
+//  */
+// ```
+// `^`^`^`
+
 //package invmod.packethandling;
 //
 //import java.util.*;

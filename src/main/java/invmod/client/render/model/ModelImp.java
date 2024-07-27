@@ -1,3 +1,32 @@
+// `^`^`^`
+// ```java
+// /**
+//  * ModelImp is a custom model class for rendering an Imp entity in Minecraft.
+//  * It extends the ModelBase class from Minecraft's rendering framework and defines the shape and behavior of the Imp's body parts.
+//  *
+//  * Constructors:
+//  * - ModelImp(): The default constructor initializes the model with default scaling.
+//  * - ModelImp(float f): Allows setting a custom scale for the model.
+//  * - ModelImp(float f, float f1): Allows setting custom scales for the model and an unused second parameter.
+//  *
+//  * Body Parts:
+//  * The model includes various body parts such as head, body, arms, legs, shin parts, feet, horns, mid-body, neck, chest, and tail segments.
+//  * Each body part is represented by a ModelRenderer object, which defines its shape and position.
+//  *
+//  * Initialization:
+//  * In the constructors, each body part is initialized with its shape (addBox) and position (setRotationPoint), along with initial rotation angles.
+//  *
+//  * Rendering:
+//  * - render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5): This method is called to render the model. It sets the rotation angles for the model parts based on the entity's current actions and then renders each part.
+//  *
+//  * Animation:
+//  * - setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity): This method is responsible for updating the rotation angles of the model's parts based on the entity's movements, providing animation to the model when the entity is walking, running, or performing other actions.
+//  *
+//  * The model is designed to be used with Minecraft's entity system and can be attached to an Imp entity to provide it with a visual representation in the game.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render.model;
 
 import net.minecraft.client.model.ModelBase;

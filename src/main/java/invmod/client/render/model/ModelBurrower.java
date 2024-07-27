@@ -1,3 +1,30 @@
+// `^`^`^`
+// ```java
+// /**
+//  * ModelBurrower is a custom model class extending ModelBase designed for rendering a burrower entity in Minecraft.
+//  * The model consists of a head and a variable number of body segments, allowing for dynamic size adjustments.
+//  *
+//  * Constructor:
+//  * - ModelBurrower(int numberOfSegments): Initializes the model with a specified number of body segments. It sets up
+//  *   the texture dimensions, creates the head model, and iteratively creates each body segment with alternating sizes.
+//  *
+//  * Methods:
+//  * - render(Entity entity, float partialTick, PosRotate3D[] pos, float modelScale): Renders the model by setting the
+//  *   position and rotation for the head and each body segment based on the provided PosRotate3D array. It scales the
+//  *   model according to the given modelScale. The method ensures that the model is rendered with the correct orientation
+//  *   and position in the game world.
+//  *
+//  * - setRotation(ModelRenderer model, float x, float y, float z): A private helper method that sets the rotation angles
+//  *   for a given ModelRenderer instance. This method is used internally to apply the rotation to the head and body
+//  *   segments during rendering.
+//  *
+//  * The class utilizes the ModelRenderer class from the net.minecraft.client.model package to define the shape and
+//  * rotation of the model's components. The model is designed to be used within the Minecraft modding context, where
+//  * custom entity models can be created and rendered.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render.model;
 
 import invmod.util.PosRotate3D;

@@ -1,3 +1,34 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This code is part of the invmod package and is responsible for registering custom entities within a Minecraft mod.
+//  * It utilizes the Forge modding API to create and register entities with unique characteristics and behaviors.
+//  * 
+//  * Classes:
+//  * - ModEntities: Holds static references to EntityEntry objects representing different custom entities in the mod.
+//  *   It contains inner class EntityRegistrationHandler which subscribes to the Forge event system to handle entity registration.
+//  * 
+//  * Methods:
+//  * - EntityRegistrationHandler.registerTileEntities(RegistryEvent.Register<EntityEntry> event):
+//  *   This method is called during the Forge registry event for entities. It creates and registers a list of EntityEntry
+//  *   objects representing the custom entities such as IMEgg, IMBoulder, IMBolt, etc. Some entities are registered with
+//  *   spawn eggs (visual items that can spawn the entity), while others are registered without.
+//  * 
+//  * - createEntityEntry(Class<? extends Entity> entityClass, String name, int trackerRange, int trackerUpdateFrequency,
+//  *   boolean sendVelocityUpdates, int eggColor1, int eggColor2):
+//  *   Helper method to create an EntityEntry with a spawn egg, defining its appearance and tracking parameters.
+//  * 
+//  * - createEntityEntryWithoutEgg(Class<? extends Entity> entityClass, String name, int trackerRange,
+//  *   int trackerUpdateFrequency, boolean sendVelocityUpdates):
+//  *   Helper method to create an EntityEntry without a spawn egg, defining its tracking parameters.
+//  * 
+//  * Usage:
+//  * - This code is used to define how custom entities are registered and tracked within the game. It is not responsible
+//  *   for the behavior of the entities themselves, but rather how they are integrated into the game's entity system.
+//  */
+// ```
+// `^`^`^`
+
 package invmod;
 
 import static invmod.util.InjectionUtil.Null;

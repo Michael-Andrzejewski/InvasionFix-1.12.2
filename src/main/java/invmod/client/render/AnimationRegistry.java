@@ -1,3 +1,22 @@
+// `^`^`^`
+// ```java
+// /**
+//  * AnimationRegistry is a singleton class responsible for managing and storing animations within the invmod client rendering system. It provides a centralized registry for animations, allowing for easy retrieval and management of animation data throughout the application.
+//  *
+//  * Methods:
+//  * - AnimationRegistry(): A private constructor that initializes the animation registry with a default empty animation.
+//  * - registerAnimation(String name, Animation animation): Registers a new animation with a unique name into the registry. If the name already exists, it logs a fatal error.
+//  * - getAnimation(String name): Retrieves an animation by its name. If the animation does not exist, it logs a fatal error and returns a default empty animation.
+//  * - instance(): Provides access to the singleton instance of the AnimationRegistry.
+//  *
+//  * The class uses a HashMap to store animations keyed by their names for quick access. It also defines an empty animation as a fallback to prevent null pointer exceptions when requesting non-existent animations. The class ensures that each animation has a unique name and provides error logging through ModLogger in case of duplicate names or missing animations.
+//  */
+// package invmod.client.render;
+// 
+// // ... (rest of the imports and class code)
+// ```
+// `^`^`^`
+
 package invmod.client.render;
 
 import java.util.ArrayList;

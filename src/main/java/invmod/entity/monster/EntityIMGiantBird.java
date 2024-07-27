@@ -1,3 +1,31 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a custom giant bird entity for a Minecraft mod, which extends the capabilities of a standard bird entity.
+//  * The EntityIMGiantBird class is part of the 'invmod' package, which likely stands for "Invasion Mod," suggesting that this entity
+//  * is part of a mod that adds invasion-like scenarios to the game.
+//  *
+//  * Key Components:
+//  * - EntityIMGiantBird(World world): Constructor that initializes the bird entity in the game world.
+//  * - EntityIMGiantBird(World world, TileEntityNexus nexus): Overloaded constructor that also associates the bird with a Nexus tile entity.
+//  * - onUpdate(): Method called each tick to update the entity's state. It includes debug functionality to display AI goals and navigation status.
+//  * - canDespawn(): Indicates that the giant bird entity should not despawn naturally.
+//  * - updateRiderPosition(): Adjusts the position of any entity riding the giant bird, accounting for its rotation and position.
+//  * - shouldRiderSit(): Returns false, indicating that riders should not use the sitting animation.
+//  * - getMountedYOffset(): Provides the vertical offset for entities riding the bird.
+//  * - doScreech(), doMeleeSound(), doHurtSound(), doDeathSound(): Methods to handle various sounds the bird makes in different situations.
+//  * - onDebugChange(): Updates the debug state, potentially toggling the rendering of debug labels.
+//  * - doSquawk(): A private method to handle the squawk sound.
+//  * - getNavString(): Retrieves a string representing the navigation status of the bird.
+//  * - setAI(): Initializes the AI tasks for the bird, such as swooping, picking up entities, and targeting.
+//  * - getTier(): Returns the tier of the giant bird, which may affect its stats or behavior.
+//  * - toString(): Provides a string representation of the entity, including its tier.
+//  *
+//  * The class also defines several constants for offsets and triggers, and it manages the bird's AI and sound effects.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.monster;
 
 import invmod.SoundHandler;

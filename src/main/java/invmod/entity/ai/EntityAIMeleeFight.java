@@ -1,3 +1,29 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents an AI module for melee combat behavior in entities, specifically for the EntityIMMob class.
+//  * It extends the EntityAIMeleeAttack class and provides additional functionality for retreat and disengagement based on health.
+//  *
+//  * Constructor:
+//  * - EntityAIMeleeFight(EntityIMMob entity, Class<? extends T> targetClass, int attackDelay, float retreatHealthLossPercent):
+//  *   Initializes the AI with the entity, target class, attack delay, and the percentage of health loss at which the entity should retreat.
+//  *
+//  * Methods:
+//  * - shouldExecute(): Determines if the AI should start executing, based on whether the entity has a melee target.
+//  * - shouldContinueExecuting(): Checks if the AI should continue executing, considering if the entity is waiting for a transition or still has a target.
+//  * - startExecuting(): Resets internal counters and records the entity's starting health when the AI begins execution.
+//  * - updateTask(): Updates the disengagement logic and pathfinding, and increments time if the entity has dealt or received damage.
+//  * - updatePath(): Updates the entity's path to the current target if necessary.
+//  * - updateDisengage(): Checks if the entity should disengage from melee combat and transitions the AI goal if needed.
+//  * - isWaitingForTransition(): Checks if the entity is waiting to transition from a melee target goal to leaving melee.
+//  * - attackEntity(EntityLivingBase target): Performs an attack on the target and updates damage dealt and invulnerability count.
+//  * - shouldLeaveMelee(): Determines if the entity should leave melee combat based on time, damage received, damage dealt, and invulnerability count.
+//  *
+//  * The AI uses health-based logic to decide when to disengage from combat, providing a more dynamic and realistic combat experience.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.ai;
 
 import invmod.entity.Goal;

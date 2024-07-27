@@ -1,3 +1,32 @@
+// `^`^`^`
+// ```java
+// /**
+//  * ModelBigBiped is a custom model class extending ModelBase for rendering a large bipedal entity in Minecraft.
+//  * It defines the structure and animation behavior for the entity's head, body, arms, and legs.
+//  *
+//  * Public Methods:
+//  * - ModelBigBiped(): Constructor that initializes the model's parts and sets their dimensions and initial positions.
+//  * - render(Entity, float, float, float, float, float, float): Renders the model parts with the given animation parameters.
+//  * - setSneaking(boolean): Updates the model's sneaking state which affects the rendering posture.
+//  * - itemArmPostRender(float): Performs post-rendering actions for the model's arm, typically used for attaching items.
+//  *
+//  * Private Methods:
+//  * - setRotation(ModelRenderer, float, float, float): Helper method to set the rotation angles for a model part.
+//  * - setRotationAngles(float, float, float, float, float, float, Entity): Sets the rotation angles for all parts of the model based on the entity's actions and movements.
+//  *
+//  * Fields:
+//  * - ModelRenderer head, body, rightArm, leftArm, rightLeg, leftLeg, headwear: Represent the different parts of the model.
+//  * - int heldItemLeft, heldItemRight: Indicate whether the entity is holding an item in either hand and affects arm positioning.
+//  * - boolean isSneaking: Indicates whether the entity is sneaking, which changes the stance of the model.
+//  * - boolean aimedBow: Indicates whether the entity is aiming with a bow, which adjusts the arm positions accordingly.
+//  *
+//  * The model's parts are initialized in the constructor with their respective textures and initial positions. The render method
+//  * is responsible for drawing the model parts, and the setRotationAngles method updates the parts' rotations to reflect the entity's
+//  * current actions, such as walking, sneaking, riding, or aiming with a bow.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render.model;
 
 import net.minecraft.client.model.ModelBase;

@@ -1,3 +1,30 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a weighted random selection pool for entities of type EntityIMLiving.
+//  * It allows for the addition of entities with associated weights and provides a method to randomly select an entity based on the defined weights.
+//  *
+//  * Public Methods:
+//  * - RandomSelectionPool(): Constructor that initializes the selection pool, total weight, and random number generator.
+//  * - addEntry(EntityIMLiving entry, float weight): Adds a single entity to the pool with the specified weight.
+//  * - addEntry(ISelect<EntityIMLiving> entry, float weight): Adds an entry that can select entities to the pool with the specified weight.
+//  * - selectNext(): Randomly selects and returns an entity from the pool based on the weights of the entries.
+//  * - clone(): Creates and returns a copy of the current RandomSelectionPool with the same entries and weights.
+//  * - reset(): Currently, this method is empty and does not perform any action.
+//  * - toString(): Provides a string representation of the RandomSelectionPool, including the size of the pool and details of each entry.
+//  *
+//  * The class uses a list of Pair objects to store entries and their associated weights. The totalWeight variable keeps track of the sum of all weights.
+//  * The selectNext method uses a random float to determine which entity to select, simulating a weighted probability distribution.
+//  * If an error occurs during selection, a safe fail mechanism returns the first entity in the pool.
+//  * The clone method allows for the duplication of the pool, preserving the state of the original.
+//  * The toString method is useful for debugging and logging the state of the pool.
+//  */
+// package invmod.util;
+// 
+// // ... (rest of the code)
+// ```
+// `^`^`^`
+
 package invmod.util;
 
 import java.util.ArrayList;

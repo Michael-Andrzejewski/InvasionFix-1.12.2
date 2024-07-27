@@ -1,3 +1,26 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class defines the AI behavior for a sprinting attack used by EntityIMZombiePigman entities in the game Minecraft.
+//  * It extends the EntityAIBase class from Minecraft's AI system and manages the sprinting attack cycle, including wind-up,
+//  * sprinting, and crashing if the attack fails.
+//  *
+//  * Methods:
+//  * - EntityAISprintPigman(EntityIMMob entity): Constructor that initializes the AI with the given entity.
+//  * - shouldExecute(): Determines if the AI should start executing, based on visibility of the target or if it's already sprinting.
+//  * - startExecuting(): Prepares the AI to start executing the sprint attack.
+//  * - updateTask(): Updates the task each tick, managing the sprinting behavior and transitions between states.
+//  * - startSprint(): Initiates the sprinting wind-up phase if the target is in a suitable position.
+//  * - sprint(): Transitions the entity into the sprinting state, increasing its speed and setting it to sprint.
+//  * - endSprint(): Ends the sprinting attack, resetting the entity's speed and sprinting state.
+//  * - crash(): Called when the entity crashes during a sprint, dealing damage to itself and playing a sound effect.
+//  *
+//  * The AI uses a timer to manage the sprinting attack's duration and cooldown, and tracks the last known position of the target
+//  * to determine if the entity has stopped moving. It also adjusts the entity's turn rate and move speed during the sprint.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.ai;
 
 import invmod.entity.monster.EntityIMMob;

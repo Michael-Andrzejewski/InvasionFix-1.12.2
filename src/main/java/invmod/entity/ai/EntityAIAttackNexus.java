@@ -1,3 +1,28 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class defines the AI behavior for an in-game mob entity to attack a Nexus block within the game.
+//  * The AI is designed for entities of type EntityIMMob and specifically handles the attack logic for EntityIMZombie.
+//  *
+//  * Methods:
+//  * - EntityAIAttackNexus(EntityIMMob entity): Constructor that initializes the AI with the given entity and sets mutex bits for task execution.
+//  * - shouldExecute(): Determines if the AI task should start executing by checking attack cooldown and proximity to the Nexus.
+//  * - startExecuting(): Resets the attack cooldown and marks the entity as not having attacked yet.
+//  * - shouldContinueExecuting(): Checks if the entity should continue attacking the Nexus.
+//  * - updateTask(): Handles the attack logic, including animation updates for zombies and dealing damage to the Nexus.
+//  * - resetTask(): Resets the attacked flag to allow for future attacks.
+//  * - isNexusInRange(): Checks if a Nexus block is within the attack range of the entity.
+//  * - isCorrectNexus(BlockPos pos): Validates that the Nexus block at the specified position is the correct target for the entity.
+//  *
+//  * Constants:
+//  * - ATTACK_COOLDOWN: The cooldown period between attacks.
+//  * - ATTACK_RANGE: The range within which the entity can attack the Nexus.
+//  *
+//  * The AI task is executed within the game loop, allowing the entity to periodically attempt to attack the Nexus when conditions are met.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.ai;
 
 import invmod.ModBlocks;

@@ -1,3 +1,27 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents an AI behavior for a flying entity, specifically the EntityIMBird, to perform
+//  * different types of attacks while in flight. The AI includes decision-making for executing a flying strike,
+//  * a fly-by attack, or other aggressive maneuvers.
+//  *
+//  * Methods:
+//  * - EntityAIFlyingStrike(EntityIMBird entity): Constructor that initializes the AI with the given bird entity.
+//  * - shouldExecute(): Determines if the AI should begin executing, based on the entity's current goal.
+//  * - shouldContinueExecuting(): Checks if the AI should continue executing, which is the same condition as shouldExecute().
+//  * - updateTask(): Updates the task each tick, deciding if a flying strike should be performed.
+//  * - doStrike(): Handles the logic for performing a flying strike, including choosing the type of attack based on chances.
+//  * - doFlyByAttack(EntityLivingBase entity): Performs a fly-by attack on the target entity, dealing damage.
+//  *
+//  * The AI uses a simple decision-making process based on random chances to determine which action to take when
+//  * attacking a target. It supports transitioning between different AI goals such as stabilizing flight after an attack,
+//  * tackling a target, or picking up a target.
+//  */
+// ```
+// 
+// This summary provides an overview of the class's purpose and describes each method's functionality within the `EntityAIFlyingStrike` class. It outlines the decision-making process for the flying entity's attacks and the conditions under which the AI decides to execute or continue an attack.
+// `^`^`^`
+
 package invmod.entity.ai;
 
 //NOOB HAUS:Done

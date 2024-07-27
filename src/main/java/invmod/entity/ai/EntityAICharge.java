@@ -1,3 +1,40 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class defines the AI behavior for a charging attack used by certain entities in Minecraft.
+//  * It extends the EntityAIMoveToEntity class, specifying the behavior for entities to charge towards a target.
+//  *
+//  * Constructor:
+//  * - EntityAICharge(EntityIMMob entity, Class<? extends T> targetClass, float f):
+//  *   Initializes the AI with the charging entity, the target class, and the speed of the charge.
+//  *
+//  * Methods:
+//  * - shouldExecute():
+//  *   Determines if the AI should start executing, checking conditions such as distance to target,
+//  *   whether the entity is on the ground, and if a charge position can be found.
+//  *
+//  * - startExecuting():
+//  *   Prepares the entity for charging by setting a windup time before the actual charge.
+//  *
+//  * - shouldContinueExecuting():
+//  *   Checks if the entity should continue executing the charge, based on windup time and run time.
+//  *
+//  * - updateTask():
+//  *   Updates the task each tick, handling the windup, movement towards the target, and attacking the target
+//  *   when in range.
+//  *
+//  * - resetTask():
+//  *   Resets the task after execution or if it's interrupted, resetting windup, target, and attack status.
+//  *
+//  * - findChargePoint(Entity attacker, Entity target, double overshoot):
+//  *   Calculates the point to charge towards, overshooting the target to ensure contact.
+//  *
+//  * This AI is typically used for entities that have a charging attack, such as the EntityIMZombiePigman,
+//  * allowing them to aggressively move towards and attack their target.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.ai;
 
 import invmod.entity.monster.EntityIMMob;

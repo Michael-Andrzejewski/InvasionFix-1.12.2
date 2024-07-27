@@ -1,3 +1,34 @@
+// `^`^`^`
+// ```java
+// /**
+//  * SoundHandler for Minecraft Mod
+//  * 
+//  * This class is part of the 'invmod' package and is responsible for handling the registration of custom sound events for a Minecraft mod. It utilizes the Forge modding API to interact with Minecraft's sound system.
+//  * 
+//  * Public Static Variables:
+//  * - bigzombie1, chime1, egghatch1, etc.: Static SoundEvent variables representing various custom sounds to be used in the game.
+//  * 
+//  * Private Static Variables:
+//  * - size: An integer tracking the number of registered sounds (currently unused).
+//  * 
+//  * Public Methods:
+//  * - init(): Initializes and registers all the custom sound events with their respective names. This method should be called during the mod initialization phase to ensure all custom sounds are available in the game.
+//  * 
+//  * Private Methods:
+//  * - registerSound(String name): Takes a sound name as a parameter and creates a new SoundEvent with a ResourceLocation based on the mod's ID and the sound name. It then registers the SoundEvent with Forge's SOUND_EVENTS registry and returns the SoundEvent object.
+//  * 
+//  * Note: The commented-out 'register' method appears to be an older version of the sound registration process and is not currently in use.
+//  * 
+//  * Usage:
+//  * This class should be utilized within the mod to register and manage custom sound events, which can then be played in various situations within the game, such as when an entity performs an action or an event occurs.
+//  */
+// package invmod;
+// 
+// // Import statements and class definition...
+// ```
+// 
+// `^`^`^`
+
 package invmod;
 
 import net.minecraft.util.ResourceLocation;

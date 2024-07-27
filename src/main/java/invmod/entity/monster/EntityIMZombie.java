@@ -1,3 +1,90 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This code defines the EntityIMZombie class, which is a custom entity class for a modded Minecraft zombie with specialized AI and digging abilities.
+//  * The class extends EntityIMMob and implements the ICanDig interface, allowing the zombie to interact with the game world in unique ways.
+//  *
+//  * - EntityIMZombie(World world): Constructor that initializes a basic zombie without a nexus reference.
+//  * - EntityIMZombie(World world, TileEntityNexus nexus): Overloaded constructor that allows specifying a nexus for the zombie.
+//  * - entityInit(): Initializes data parameters for the zombie, such as META_CHANGED, FLAVOUR, and IS_SWINGING.
+//  * - onUpdate(): Called every tick to update the zombie's state, including checking for metadata changes and handling fireball attacks.
+//  * - onLivingUpdate(): Called every tick to update the zombie's animations and sounds.
+//  * - onPathSet(): Cancels any terrain modification tasks when a new path is set.
+//  * - initEntityAI(): Initializes the zombie's AI tasks, such as swimming, attacking players or the nexus, wandering, and targeting.
+//  * - toString(): Provides a string representation of the zombie, including its tier.
+//  * - getTerrain(): Returns the world the zombie is in, used for terrain modification.
+//  * - avoidsBlock(Block block): Determines if the zombie should avoid certain blocks, considering its immunity to fire.
+//  * - getBlockRemovalCost(BlockPos pos): Calculates the cost to remove a block based on its strength.
+//  * - canClearBlock(BlockPos pos): Checks if the zombie can clear a block at the specified position.
+//  * - onPathBlocked(Path path, INotifyTask notifee): Handles path blocking by asking the terrain digger to clear the position.
+//  * - isBigRenderTempHack(): Temporary method to handle rendering for larger zombie tiers.
+//  * - attackEntityAsMob(Entity entity): Handles the zombie's attack logic, with special behavior for tier 3 zombies.
+//  * - canBePushed(): Determines if the zombie can be pushed, which tier 3 zombies cannot.
+//  * - knockBack(Entity par1Entity, float par2, double par3, double par5): Handles the zombie's knockback response, with special behavior for tier 3 zombies.
+//  * - getBlockPathCost(PathNode prevNode, PathNode node, IBlockAccess terrainMap): Calculates the path cost for the zombie, with special considerations for swimming zombies.
+//  * - canBreatheUnderwater(): Determines if the zombie can breathe underwater, which is true for tier 2, flavor 2 zombies.
+//  * - isBlockDestructible(IBlockAccess terrainMap, BlockPos pos, IBlockState state): Checks if the zombie can destroy a specific block, considering its destructiveness level and the steepness of the path to its target.
+//  *
+//  * The class also includes several private fields for managing the zombie's terrain modification abilities, metadata changes, item drops, and attack animations.
+//  */
+// ```
+// ```java
+// /**
+//  * This code defines a custom entity behavior for a zombie-like creature in a Minecraft mod. The entity has various states and behaviors, including destructiveness, scaling based on tiers, and custom sounds for different actions. The entity can also perform a charge attack and drop items upon death.
+// 
+//  * Destructible(terrainMap, pos, state): Initializes the destructible nature of the entity based on the terrain map, position, and state.
+// 
+//  * onFollowingEntity(Entity entity): Adjusts the destructiveness of the entity based on the type of entity it is following.
+// 
+//  * scaleAmount(): Returns a scaling factor based on the entity's tier.
+// 
+//  * getSpecies(): Returns the species of the entity, which is "Zombie".
+// 
+//  * writeEntityToNBT(NBTTagCompound nbttagcompound): Saves the entity's data to NBT.
+// 
+//  * readEntityFromNBT(NBTTagCompound nbttagcompound): Reads the entity's data from NBT and sets its texture and flavor.
+// 
+//  * setTier(int tier): Sets the entity's tier and updates its attributes accordingly.
+// 
+//  * setFlavour(int flavour): Sets the entity's flavor and updates its attributes.
+// 
+//  * sunlightDamageTick(): Handles the entity's damage from sunlight based on its tier and flavor.
+// 
+//  * updateAnimation(): Updates the entity's animation state.
+// 
+//  * isSwinging(): Checks if the entity is currently swinging.
+// 
+//  * setSwinging(boolean flag): Sets the entity's swinging state.
+// 
+//  * updateSound(): Plays sounds based on the entity's actions and state.
+// 
+//  * getSwingSpeed(): Returns the speed at which the entity swings.
+// 
+//  * chargeAttack(Entity entity): Performs a charge attack on the target entity.
+// 
+//  * updateAITasks(): Updates the entity's AI tasks.
+// 
+//  * getTerrainDig(): Returns the entity's terrain digging behavior.
+// 
+//  * getAmbientSound(): Returns the ambient sound for the entity based on its tier.
+// 
+//  * getHurtSound(DamageSource damageSourceIn): Returns the sound played when the entity is hurt.
+// 
+//  * getDeathSound(): Returns the sound played when the entity dies.
+// 
+//  * getDropItem(): Returns the item dropped by the entity upon death.
+// 
+//  * dropFewItems(boolean flag, int bonus): Drops items when the entity dies.
+// 
+//  * setAttributes(int tier, int flavour): Sets the entity's attributes based on its tier and flavor.
+// 
+//  * doFireball(): Performs an action that creates fireballs around the entity.
+// 
+//  * onBlockRemoved(BlockPos pos, IBlockState state): Defines behavior when a block is removed near the entity.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.monster;
 
 import java.util.List;

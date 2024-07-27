@@ -1,3 +1,33 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class is responsible for rendering the EntityIMZombie entities in the game.
+//  * It extends the RenderLiving class and customizes the rendering of the IMZombie entities
+//  * with various textures and models.
+//  *
+//  * Methods:
+//  * - RenderIMZombie(RenderManager): Constructor that sets up the renderer with a modified
+//  *   ModelZombie to fix a limb movement bug and adds layers for held items and armor.
+//  *
+//  * - doRender(EntityIMZombie, double, double, double, float, float): Renders the IMZombie
+//  *   entity at the specified location with the given rotation and partial tick time.
+//  *
+//  * - preRenderCallback(EntityIMZombie, float): A callback method that is called before the
+//  *   entity is rendered to apply a scaling transformation based on the IMZombie's scale amount.
+//  *
+//  * - getEntityTexture(EntityIMZombie): Returns the appropriate ResourceLocation for the
+//  *   entity's texture based on its texture ID. It maps various texture IDs to their corresponding
+//  *   texture files.
+//  *
+//  * The class also defines several static final ResourceLocation fields that hold the paths to
+//  * the different zombie textures used by the renderer.
+//  *
+//  * Note: The class contains commented-out code for rendering equipped items and handling different
+//  * entity states, which may be part of future or past functionality.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render;
 
 import org.lwjgl.opengl.GL11;

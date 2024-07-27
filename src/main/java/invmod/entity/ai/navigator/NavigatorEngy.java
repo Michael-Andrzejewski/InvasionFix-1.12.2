@@ -1,3 +1,34 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class, NavigatorEngy, extends the NavigatorIM class and is designed to provide navigation capabilities
+//  * specifically for the EntityIMPigEngy entity within the invmod mod. It handles pathfinding and instructs the
+//  * entity on how to interact with the environment, particularly in building structures necessary for navigation.
+//  *
+//  * Constructor:
+//  * - NavigatorEngy(EntityIMPigEngy entity, IPathSource pathSource): Initializes the navigator with the pig entity
+//  *   and a path source for pathfinding.
+//  *
+//  * Methods:
+//  * - createPath(EntityIMLiving entity, Vec3d vec, float targetRadius): Attempts to create a path to a target
+//  *   location, considering the terrain and any structures like the Nexus that may influence pathfinding.
+//  *
+//  * - handlePathAction(): Determines the action to take based on the current path node. This includes building
+//  *   ladders, bridges, and scaffolds as needed to navigate the terrain. It uses the pig entity's TerrainBuildEngy
+//  *   capabilities to execute these tasks and updates the navigation status accordingly.
+//  *
+//  * The class leverages the IBlockAccessExtended interface to interact with the game world's blocks and the
+//  * TileEntityNexus to potentially influence pathfinding. It also uses the Distance utility class to calculate
+//  * distances for pathfinding purposes. The class is part of the invmod.entity.ai.navigator package, which
+//  * suggests it is part of a larger AI system for entities in the mod.
+//  */
+// package invmod.entity.ai.navigator;
+// 
+// // ... (rest of the imports and class code)
+// ```
+// This summary provides an overview of the NavigatorEngy class, its constructor, and its methods, explaining the purpose and functionality within the context of the invmod mod's AI system for the EntityIMPigEngy.
+// `^`^`^`
+
 package invmod.entity.ai.navigator;
 
 import invmod.IBlockAccessExtended;

@@ -1,3 +1,65 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This abstract class, EntityIMFlying, extends the EntityIMMob class and provides the framework for flying entities within the Invasion Mod. It includes methods for navigation, movement, and state management of flying entities in Minecraft.
+//  *
+//  * - EntityIMFlying(World world, TileEntityNexus nexus): Constructor that initializes the entity with or without a nexus reference.
+//  * - onUpdate(): Called each tick to update the entity's state, including syncing data between server and client.
+//  * - getFlyState(): Returns the current flying state of the entity.
+//  * - isThrustOn(): Checks if the entity's thrust is currently active.
+//  * - getThrustEffort(): Retrieves the current effort being applied to the entity's thrust.
+//  * - getFlyTarget(): Returns the current target position for flying.
+//  * - getNavigatorNew(): Provides access to the entity's flying navigator.
+//  * - getMoveHelper(): Returns the entity's movement helper for flying.
+//  * - getLookHelper(): Returns the entity's look helper.
+//  * - getBodyHelper(): Returns the entity's body helper.
+//  * - moveRelative(float x, float up, float z, float friction): Handles the entity's movement while flying, swimming, or walking.
+//  * - isOnLadder(): Determines if the entity is on a ladder, which is not applicable to flying entities.
+//  * - hasFlyingDebug(): Indicates if debugging for flying is enabled.
+//  * - setPathfindFlying(boolean flag): Enables or disables pathfinding while flying.
+//  * - setFlyState(FlyState flyState): Sets the current flying state of the entity.
+//  * - getMaxPoweredFlightSpeed(): Retrieves the maximum speed the entity can fly under power.
+//  *
+//  * The class manages various flying-related parameters such as lift factor, thrust, and speed, and integrates with the navigation system to allow entities to move through the world. It also includes debug features to assist with development and testing.
+//  */
+// ```
+// ```java
+// /**
+//  * This code represents a component of a flight control system for an entity within a simulation or game environment.
+//  * It provides methods to get and set various flight-related parameters and to calculate pathfinding options and costs
+//  * for navigating through a 3D space, considering the entity's ability to fly and swim.
+//  *
+//  * Methods:
+//  * - getLiftFactor(): Returns the lift factor of the entity.
+//  * - getThrust(): Returns the current thrust value.
+//  * - getThrustComponentRatioMin(): Returns the minimum thrust component ratio.
+//  * - getThrustComponentRatioMax(): Returns the maximum thrust component ratio.
+//  * - getMaxTurnForce(): Returns the maximum force for turning.
+//  * - getMaxPitch(): Returns the optimal pitch value.
+//  * - getLandingSpeedThreshold(): Returns the speed threshold for landing.
+//  * - getMaxRunSpeed(): Returns the maximum running speed on the ground.
+//  * - setFlightAccelerationVector(float xAccel, float yAccel, float zAccel): Sets the flight acceleration vector.
+//  * - setThrustOn(boolean flag): Enables or disables thrust.
+//  * - setThrustEffort(float effortFactor): Sets the effort factor for thrust.
+//  * - setMaxPoweredFlightSpeed(float speed): Sets the maximum speed during powered flight and updates the navigator's fly speed.
+//  * - setThrust(float thrust): Sets the thrust value.
+//  * - setLiftFactor(float liftFactor): Sets the lift factor.
+//  * - setThrustComponentRatioMin(float ratio): Sets the minimum thrust component ratio.
+//  * - setThrustComponentRatioMax(float ratio): Sets the maximum thrust component ratio.
+//  * - setMaxTurnForce(float maxTurnForce): Sets the maximum turn force.
+//  * - setOptimalPitch(float pitch): Sets the optimal pitch value.
+//  * - setLandingSpeedThreshold(float speed): Sets the landing speed threshold.
+//  * - setMaxRunSpeed(float speed): Sets the maximum running speed.
+//  * - fall(float par1, float multiplier): Overrides the fall method without implementation.
+//  * - calcPathOptions(IBlockAccess terrainMap, PathNode currentNode, PathfinderIM pathFinder): Calculates path options, considering flying capabilities.
+//  * - calcPathOptionsFlying(IBlockAccess terrainMap, PathNode currentNode, PathfinderIM pathFinder): Calculates path options specifically for flying, including vertical movement and swimming if applicable.
+//  * - calcBlockPathCost(PathNode prevNode, PathNode node, IBlockAccess terrainMap): Calculates the cost of moving from one block to another, considering terrain and entity's movement capabilities.
+//  *
+//  * The code is designed to be part of an entity's AI system, allowing it to navigate its environment intelligently.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.monster;
 
 import invmod.IBlockAccessExtended;

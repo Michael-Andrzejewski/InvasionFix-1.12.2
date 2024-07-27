@@ -1,3 +1,40 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a custom projectile entity called EntityIMBolt within a Minecraft mod.
+//  * The entity simulates a bolt, such as a lightning bolt or energy beam, with visual and auditory effects.
+//  *
+//  * Constructors:
+//  * - EntityIMBolt(World world): Initializes a new bolt entity with default parameters in the given world.
+//  * - EntityIMBolt(World world, double x, double y, double z): Initializes a bolt at the specified coordinates.
+//  * - EntityIMBolt(World world, double x, double y, double z, double x2, double y2, double z2, int ticksToRender, int soundMade):
+//  *   Initializes a bolt with a specified trajectory, render duration, and sound effect.
+//  *
+//  * Public Methods:
+//  * - writeSpawnData(ByteArrayDataOutput data): Serializes the entity's spawn data into a byte array.
+//  * - readSpawnData(ByteArrayDataInput data): Deserializes the entity's spawn data from a byte array.
+//  * - onUpdate(): Called each tick to update the entity's age, play sound, and remove the entity when expired.
+//  * - getVertices(): Returns an array of vertices representing the bolt's shape, recalculating as needed.
+//  * - getYaw(): Returns the yaw angle of the bolt's heading.
+//  * - getPitch(): Returns the pitch angle of the bolt's heading.
+//  * - handleHealthUpdate(byte byte0): Handles health updates, playing a sound if necessary.
+//  *
+//  * Overridden Entity Methods:
+//  * - entityInit(): Initializes the entity; currently empty.
+//  * - readEntityFromNBT(NBTTagCompound nbttagcompound): Reads the entity's data from NBT; currently empty.
+//  * - writeEntityToNBT(NBTTagCompound nbttagcompound): Writes the entity's data to NBT; currently empty.
+//  *
+//  * Private Methods:
+//  * - setHeading(float x, float y, float z): Calculates the heading of the bolt based on the given vector.
+//  * - doVertexUpdate(): Updates the vertices representing the bolt's shape.
+//  * - createSegment(int begin, int end): Recursively creates segments of the bolt's path.
+//  * - createVertex(int begin, int mid, int end): Creates a vertex for the bolt's path with some randomness.
+//  *
+//  * The class also implements IEntityAdditionalSpawnData for custom spawn packet handling.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.projectile;
 
 import com.google.common.io.ByteArrayDataInput;

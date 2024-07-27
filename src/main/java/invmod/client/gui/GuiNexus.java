@@ -1,3 +1,24 @@
+// `^`^`^`
+// ```java
+// /**
+//  * GuiNexus is a graphical user interface (GUI) class for displaying the Nexus block entity's status and information to the player.
+//  * It extends GuiContainer, utilizing Minecraft's GUI system to draw a custom container interface.
+//  *
+//  * The class defines the following methods:
+//  *
+//  * - GuiNexus(InventoryPlayer inventoryplayer, TileEntityNexus tileentityNexus): Constructor that initializes the GUI with the player's inventory and the Nexus tile entity.
+//  *
+//  * - drawGuiContainerForegroundLayer(int x, int y): Overrides the method from GuiContainer to draw text elements on the GUI, such as the Nexus level, number of mobs killed, spawn radius, activation status, and current wave or power level, depending on the Nexus's mode.
+//  *
+//  * - drawGuiContainerBackgroundLayer(float f, int un1, int un2): Overrides the method from GuiContainer to handle the rendering of the GUI's background and dynamic elements, such as progress bars for generation and cooking progress, and activation status, which change based on the Nexus's mode and activation state.
+//  *
+//  * The class uses a ResourceLocation to reference the texture used for the GUI background and holds a reference to the TileEntityNexus to access and display its data.
+//  */
+// ```
+// 
+// This executive documentation provides a concise summary of the `GuiNexus` class, detailing its purpose and describing each method's functionality within the context of a Minecraft mod that adds a Nexus block entity with various states and information to display to the player.
+// `^`^`^`
+
 package invmod.client.gui;
 
 import org.lwjgl.opengl.GL11;

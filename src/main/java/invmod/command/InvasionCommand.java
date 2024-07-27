@@ -1,3 +1,33 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class defines a custom command for managing invasions in a Minecraft mod.
+//  * The command, named 'invasion', provides various subcommands to control and debug invasion events linked to a Nexus.
+//  *
+//  * Methods:
+//  * - execute: Processes the 'invasion' command and its subcommands. It identifies the nearest Nexus to the player,
+//  *   validates the command syntax, and delegates to specific methods based on the subcommand.
+//  * - sendHelp: Sends help information to the player about the 'invasion' command usage, split across multiple pages.
+//  * - changeRadius: Changes the spawn radius of the Nexus if the Nexus is not currently active and the radius is within valid bounds.
+//  * - spawnBolt: Spawns a lightning bolt at a specified location for a given duration, relative to the Nexus position.
+//  * - spawnDebugMob: Spawns a debug mob (either EntityIMLiving or EntityIMWolf) at the player's location and binds it to the Nexus.
+//  * - sendMessage: Overloaded method to send a formatted text message to the player.
+//  * - getName: Returns the name of the command ('invasion').
+//  * - getUsage: Returns the usage string for the command, which is empty in this implementation.
+//  *
+//  * The command supports various operations such as starting or ending an invasion, changing mob spawn radius, checking Nexus status,
+//  * spawning lightning bolts, and spawning debug mobs for testing purposes.
+//  */
+// package invmod.command;
+// 
+// // ... (import statements)
+// 
+// public class InvasionCommand extends CommandBase {
+//     // ... (class implementation)
+// }
+// ```
+// `^`^`^`
+
 package invmod.command;
 
 import java.lang.reflect.Constructor;

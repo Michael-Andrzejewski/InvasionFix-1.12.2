@@ -1,3 +1,48 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class is an AI behavior module for entities in a Minecraft mod that extends the EntityAIMoveToEntity class.
+//  * It is designed to enable an entity to seek out and attack a specified target entity within the game.
+//  *
+//  * Class: EntityAIKillEntity<T extends EntityLivingBase>
+//  * Purpose: To provide entities with the ability to identify, move towards, and attack a target entity.
+//  *
+//  * Constructor:
+//  * - EntityAIKillEntity(EntityIMMob entity, Class<? extends T> targetClass, int attackDelay)
+//  *   Initializes the AI with the attacking entity, the class of the target, and the delay between attacks.
+//  *
+//  * Methods:
+//  * - updateTask()
+//  *   Overrides the parent class method to decrement the attack timer and execute an attack when possible.
+//  *
+//  * - attackEntity(Entity target)
+//  *   Commands the entity to perform an attack on the target entity and resets the attack timer.
+//  *
+//  * - canAttackEntity(Entity target)
+//  *   Determines if the entity is in range and ready to attack the target based on the attack timer and distance.
+//  *
+//  * - getAttackTime()
+//  *   Returns the remaining time until the next attack is allowed.
+//  *
+//  * - setAttackTime(int time)
+//  *   Sets the attack timer to the specified time.
+//  *
+//  * - getAttackDelay()
+//  *   Retrieves the configured delay between attacks.
+//  *
+//  * - setAttackDelay(int time)
+//  *   Sets the delay between attacks to the specified time.
+//  *
+//  * Constants:
+//  * - ATTACK_RANGE
+//  *   Defines the range within which the entity can attack the target.
+//  *
+//  * Usage:
+//  * This AI module should be attached to an entity to enable aggressive behavior towards a specific target type.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.ai;
 
 import invmod.entity.monster.EntityIMMob;

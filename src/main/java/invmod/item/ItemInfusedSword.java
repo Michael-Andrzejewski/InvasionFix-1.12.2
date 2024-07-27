@@ -1,3 +1,39 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a custom item in Minecraft, an "Infused Sword", which extends the ItemSword class.
+//  * The Infused Sword has unique properties and behaviors as outlined by the overridden methods.
+//  *
+//  * - Constructor ItemInfusedSword(): Sets the sword to use diamond as its material, limits its stack size to 1, and sets its maximum damage to 40.
+//  *
+//  * - isDamageable(): Indicates that the sword is not damageable, overriding the default behavior.
+//  *
+//  * - hitEntity(ItemStack, EntityLivingBase, EntityLivingBase): Reduces the damage of the sword by 1 each time it hits an entity.
+//  *
+//  * - getItemUseAction(ItemStack): Returns the action type of the sword when being used, which is none.
+//  *
+//  * - getMaxItemUseDuration(ItemStack): Returns the duration for which the sword can be used, which is 0 (instant use).
+//  *
+//  * - onItemRightClick(World, EntityPlayer, EnumHand): Provides functionality when the player right-clicks with the sword.
+//  *   If the sword is fully repaired, it can either refill the player's hunger or health depending on whether the player is sneaking.
+//  *   It also plays a burp sound and spawns heart particles around the player. After use, the sword's damage is set to its maximum.
+//  *
+//  * - canHarvestBlock(IBlockState): Determines if the sword can harvest a specific block, which is true for cobwebs.
+//  *
+//  * - onBlockDestroyed(ItemStack, World, IBlockState, BlockPos, EntityLivingBase): Returns true, indicating that the sword can destroy blocks.
+//  *
+//  * Note: Some methods and registrations are commented out and may need to be included for full functionality within the game.
+//  */
+// package invmod.item;
+// 
+// // ... (imports)
+// 
+// public class ItemInfusedSword extends ItemSword {
+//     // ... (class implementation)
+// }
+// ```
+// `^`^`^`
+
 package invmod.item;
 
 import net.minecraft.block.state.IBlockState;

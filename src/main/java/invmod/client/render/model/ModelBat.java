@@ -1,3 +1,30 @@
+// `^`^`^`
+// ```java
+// /**
+//  * ModelBat is a custom model class for rendering a bat entity in Minecraft.
+//  * It extends the ModelBase class and defines the bat's body parts and their animations.
+//  *
+//  * Public Methods:
+//  * - ModelBat(): Constructor that initializes the bat model by creating and positioning the various body parts.
+//  * - getBatSize(): Returns an integer representing the size of the bat model.
+//  * - render(Entity par1Entity, float par2, float par3, float par4, float par5, float par6, float par7): 
+//  *   Handles the rendering of the bat model by setting the rotation angles and rendering each part.
+//  *
+//  * The model includes the following body parts:
+//  * - batHead: The head of the bat, with additional child models for ears or other head features.
+//  * - batBody: The main body of the bat, including the torso and parts of the wings.
+//  * - batRightWing: The right wing of the bat.
+//  * - batLeftWing: The left wing of the bat.
+//  * - batOuterRightWing: The outer section of the right wing.
+//  * - batOuterLeftWing: The outer section of the left wing.
+//  *
+//  * The constructor sets up the model's texture dimensions and defines the shapes and positions of the body parts.
+//  * The render method applies rotation transformations to the model parts to simulate flapping wings and head movement,
+//  * and then renders the head and body.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render.model;
 
 import net.minecraft.client.model.ModelBase;

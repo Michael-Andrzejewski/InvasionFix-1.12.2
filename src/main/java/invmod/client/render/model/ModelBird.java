@@ -1,3 +1,49 @@
+// `^`^`^`
+// ```java
+// /**
+//  * ModelBird is a custom 3D model class for rendering a bird entity in Minecraft.
+//  * It extends ModelBase, a standard class for creating entity models in Minecraft.
+//  * The model includes various body parts such as body, wings, head, beak, tail, and legs,
+//  * each represented by a ModelRenderer object. These parts are initialized with their
+//  * respective textures and geometries in the constructor.
+//  *
+//  * The constructor also initializes an animation for wing flapping using the ModelAnimator class,
+//  * which is a custom animation handler. It defines keyframes for the inner and outer parts of the wings
+//  * to simulate a bird's flight, and these animations are mirrored for the left side.
+//  *
+//  * The render method overrides the ModelBase render method to draw the bird model with the
+//  * provided entity and animation parameters.
+//  *
+//  * The setFlyingAnimations method is used to update the wing flapping and leg movement animations
+//  * based on the current progress of each animation. This allows the bird's wings and legs to move
+//  * in a realistic manner when it is flying.
+//  *
+//  * Note: The code snippet provided is incomplete and does not include the full implementation of the
+//  * setFlyingAnimations method or other potential methods and functionalities of the ModelBird class.
+//  */
+// ```
+// ```java
+// /**
+//  * This code is part of a model class for animating an entity in a Minecraft-like environment. It defines the rotation
+//  * angles for various parts of the entity's body to simulate movement and posture. The code snippet includes methods
+//  * for setting the rotation angles of body parts during animation cycles.
+//  *
+//  * - The first section sets the initial rotation angles for the body and limbs based on the roll and legSweepProgress
+//  *   variables, which likely represent the entity's current movement state.
+//  * - The body's Y rotation point is animated to simulate a flapping or bobbing motion using the flapProgress variable.
+//  * - Additional adjustments to the thigh and tail rotations are made based on the flapProgress, adding to the realism
+//  *   of the movement.
+//  * - The setRotation method is a utility function that directly sets the rotation angles for a given ModelRenderer
+//  *   instance.
+//  * - The setRotationAngles method overrides a superclass method to define custom behavior for the entity's body rotation
+//  *   based on the entity's pitch, which is the up/down angle of the entity's movement or look direction.
+//  *
+//  * Overall, this code is responsible for the procedural animation of an entity's body parts, making the entity's
+//  * movements appear more lifelike and dynamic in the game world.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render.model;
 
 import java.util.ArrayList;

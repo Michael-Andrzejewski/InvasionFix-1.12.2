@@ -1,3 +1,29 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents an AI targeting behavior for in-game entities in Minecraft. It extends the EntityAIBase class,
+//  * providing a simple targeting mechanism for entities to find and track targets within a specified range and with
+//  * optional line-of-sight requirements.
+//  *
+//  * Methods:
+//  * - EntityAISimpleTarget(EntityIMMob, Class<? extends EntityLivingBase>, float): Constructor to initialize the AI with a target type and range.
+//  * - EntityAISimpleTarget(EntityIMMob, Class<? extends EntityLivingBase>, float, boolean): Overloaded constructor allowing to specify if line-of-sight is needed.
+//  * - getEntity(): Returns the entity using this AI.
+//  * - shouldExecute(): Determines if the AI should begin execution, finding the closest player or entity of the specified class within range as a target.
+//  * - shouldContinueExecuting(): Checks if the AI should continue executing, verifying the target's presence, life status, distance, and line-of-sight.
+//  * - startExecuting(): Called when the AI begins executing, setting the found target as the entity's attack target.
+//  * - resetTask(): Resets the task, clearing the current attack target.
+//  * - getTargetType(): Returns the class type of the target.
+//  * - getAggroRange(): Returns the aggression range within which the entity will target others.
+//  * - setTarget(EntityLivingBase): Sets the given entity as the current target.
+//  * - isValidTarget(EntityLivingBase): Validates if the given entity is a suitable target, checking for null, self-targeting, life status, and line-of-sight.
+//  *
+//  * The AI uses a combination of distance checks and line-of-sight checks to determine valid targets, and it can specifically target players or other entity classes.
+//  * It also respects players in creative mode by not targeting them if they have damage disabled.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.ai;
 
 import java.util.Collections;

@@ -1,3 +1,27 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a generic animation system for animating various skeleton parts of an entity.
+//  * It is designed to handle animations for any enum type, allowing for flexible and reusable animation code.
+//  *
+//  * Public Methods:
+//  * - Animation: Constructor initializing the animation with the skeleton type, animation period, base speed, keyframes, and animation phases.
+//  * - getAnimationPeriod: Returns the duration of the animation cycle.
+//  * - getBaseSpeed: Returns the base speed of the animation.
+//  * - getAnimationPhases: Provides an unmodifiable list of the animation phases associated with the animation.
+//  * - getSkeletonType: Returns the class type of the skeleton that this animation is associated with.
+//  * - getKeyFramesFor: Retrieves an unmodifiable list of keyframes for a specific part of the skeleton, if available.
+//  *
+//  * The animation system uses a map of keyframes for each part of the skeleton, allowing for complex animations that can be defined per skeleton part.
+//  * The animation phases provide additional information about different stages of the animation, which can be used to control the flow and timing of the animation.
+//  * The use of generics ensures that this animation system can be adapted to any type of skeleton structure defined by an enum, making it versatile for various animation needs.
+//  */
+// package invmod.client.render.animation;
+// 
+// // ... (rest of the imports and class code)
+// ```
+// `^`^`^`
+
 package invmod.client.render.animation;
 
 import java.util.Collections;

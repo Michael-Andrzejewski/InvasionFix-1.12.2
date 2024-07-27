@@ -1,3 +1,29 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class is responsible for rendering the custom spider entities in the game.
+//  * It extends the RenderLiving class, utilizing the ModelSpider model for rendering.
+//  * 
+//  * - RenderSpiderIM(RenderManager): Constructor that sets up the renderer with a specific model and shadow size. It also adds a layer to handle the rendering of spider eyes.
+//  * 
+//  * - getDeathMaxRotation(EntityIMSpider): Returns the maximum rotation that the spider's corpse should have upon death.
+//  * 
+//  * - preRenderCallback(EntityIMSpider, float): A callback method that is called before the spider is rendered. It adjusts the spider's shadow size and scales the model based on the spider's scale amount.
+//  * 
+//  * - getEntityTexture(EntityIMSpider): Determines the texture to use for the spider based on its texture ID. It can return different textures for different spider types, such as a normal spider, a jumping spider, or a mother spider.
+//  * 
+//  * The class also defines several ResourceLocation objects that point to the textures used for the spider's eyes and body. The commented-out method setSpiderEyeBrightness appears to handle the brightness of the spider's eyes during rendering, but it is currently not in use.
+//  */
+// package invmod.client.render;
+// 
+// // ... (imports)
+// 
+// public class RenderSpiderIM extends RenderLiving<EntityIMSpider> {
+//     // ... (class implementation)
+// }
+// ```
+// `^`^`^`
+
 package invmod.client.render;
 
 import org.lwjgl.opengl.GL11;

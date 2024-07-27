@@ -1,3 +1,40 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a custom skeleton entity for the mod 'Invasion Mod' that extends the base mob class and implements ranged attack behavior.
+//  * The EntityIMSkeleton has various AI tasks that allow it to swim, attack the player and other entities with arrows, wander, watch the player, and target entities.
+//  * It also has specialized behavior for attacking the Nexus, a central block in the mod.
+//  *
+//  * Key methods and attributes:
+//  * - SWINGING_ARMS: DataParameter<Boolean> indicating if the skeleton is swinging its arms.
+//  * - aiArrowAttack: AI task for ranged bow attacks.
+//  * - aiAttackOnCollide: AI task for melee attacks when in close range.
+//  * - EntityIMSkeleton(World world): Constructor that initializes the entity in the given world.
+//  * - EntityIMSkeleton(World world, TileEntityNexus nexus): Constructor that initializes the entity with a reference to the Nexus.
+//  * - entityInit(): Registers the SWINGING_ARMS data parameter.
+//  * - initEntityAI(): Initializes the AI tasks for the entity.
+//  * - getLivingSound(): Returns the sound the entity makes while it's alive.
+//  * - getHurtSound(DamageSource damageSourceIn): Returns the sound the entity makes when hurt.
+//  * - getDeathSound(): Returns the sound the entity makes upon death.
+//  * - writeEntityToNBT(NBTTagCompound nbttagcompound): Writes the entity to NBT storage.
+//  * - readEntityFromNBT(NBTTagCompound nbttagcompound): Reads the entity from NBT storage.
+//  * - getSpecies(): Returns the species name of the entity.
+//  * - getTier(): Returns the tier of the skeleton.
+//  * - toString(): Provides a string representation of the entity.
+//  * - dropFewItems(boolean flag, int bonus): Handles item drops upon death.
+//  * - getHeldItem(): Returns the item the entity is holding.
+//  * - isSwingingArms(): Client-side method to check if the entity is swinging its arms.
+//  * - setSwingingArms(boolean swingingArms): Sets whether the entity is swinging its arms.
+//  * - setEquipmentBasedOnDifficulty(DifficultyInstance difficulty): Sets the entity's equipment based on the difficulty.
+//  * - setItemStackToSlot(EntityEquipmentSlot slotIn, @Nullable ItemStack stack): Sets the item stack in the specified slot.
+//  * - setCombatTask(): Updates the entity's combat task based on its held item.
+//  * - attackEntityWithRangedAttack(EntityLivingBase target, float p_82196_2_): Performs a ranged attack against the target.
+//  *
+//  * The class also handles the creation of arrows for ranged attacks, including enchantment effects and potion effects.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.monster;
 
 import javax.annotation.Nullable;

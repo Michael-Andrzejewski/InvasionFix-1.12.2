@@ -1,0 +1,17 @@
+```java
+/**
+ * This class provides utility methods to handle custom explosion effects in a Minecraft mod.
+ * It is designed to interact with the game world to create visual and auditory effects, as well as to manage block destruction and ignition post-explosion.
+ *
+ * Method Summary:
+ * - doExplosionB(World world, Explosion explosion, boolean p_77279_1_):
+ *   This method is responsible for executing the effects of an explosion in the game world. It plays sound effects, spawns particles to create visual effects of different explosion sizes, and iterates through the list of affected block positions to apply changes to the blocks.
+ *   If the explosion is set to affect blocks (isSmoking), it will iterate through each affected block position and perform the following:
+ *     - Spawn additional particles to simulate the explosion's impact on each block.
+ *     - If the block is not air and can drop items when exploded, it will drop items based on the explosion size and a configuration setting (DROP_DESTRUCTED_BLOCKS).
+ *     - Call the block's onBlockExploded method to handle the block's destruction.
+ *   If the explosion is set to cause fire (isFlaming), it will iterate through the affected block positions again and set fire to blocks that are above a non-air block and have a chance to ignite.
+ *
+ * Note: The method uses several Minecraft-specific classes and methods, such as World, Explosion, Block, and Material, to interact with the game world and blocks.
+ */
+```

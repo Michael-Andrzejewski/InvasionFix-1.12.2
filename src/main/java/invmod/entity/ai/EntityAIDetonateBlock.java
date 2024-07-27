@@ -1,3 +1,30 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class defines an AI behavior for the EntityIMCreeper, a custom creeper entity, to detonate blocks in its path.
+//  * The AI is designed to target specific blocks within a range and detonate them to achieve its goals, such as breaking
+//  * a Nexus or attacking an entity. It extends the EntityAIBase class from Minecraft's AI system.
+//  *
+//  * Constructors:
+//  * - EntityAIDetonateBlock(EntityIMCreeper, double, double): Initializes the AI with target and detonate ranges.
+//  * - EntityAIDetonateBlock(EntityIMCreeper, double, double, boolean): Additionally allows overriding the pathfinding.
+//  *
+//  * Key Methods:
+//  * - shouldExecute(): Determines if the AI should start executing, based on the presence of a block target within range.
+//  * - shouldContinueExecuting(): Checks if the AI should continue executing, which is the same condition as shouldExecute().
+//  * - startExecuting(): Sets the initial block target and initiates pathfinding towards the target if necessary.
+//  * - resetTask(): Resets the task, clearing the current block target.
+//  * - updateTask(): Updates the AI's task, checking the distance to the block target and triggering detonation or pathfinding.
+//  * - setPathToTarget(): Attempts to set a path to the block target, handling path failures and retries.
+//  * - wanderToTarget(): Sets the entity's movement towards the block target if no path is found.
+//  * - getNearestBlockOnSight(): Determines the nearest block in the entity's line of sight based on its current goal.
+//  *
+//  * The AI uses a combination of ray tracing and pathfinding to navigate towards the target and trigger its detonation ability.
+//  * It is capable of handling pathfinding failures and adjusting its behavior accordingly.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.ai;
 
 import invmod.entity.Goal;

@@ -1,3 +1,31 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents the custom block "Nexus" in the mod 'invmod'. The Nexus block is a central piece in the mod, providing a unique functionality and interaction for players.
+//  *
+//  * Constructor:
+//  * - BlockNexus(): Sets up the block with material properties, resistance, hardness, and associates an ItemBlock with it for inventory representation.
+//  *
+//  * Methods:
+//  * - onBlockActivated(World, BlockPos, IBlockState, EntityPlayer, EnumHand, EnumFacing, float, float, float): Handles block interaction. When a player right-clicks the block, it opens the Nexus GUI if the world is not remote.
+//  *
+//  * - randomDisplayTick(IBlockState, World, BlockPos, Random): A client-side method that creates particle effects around the Nexus block when it is active. This visual effect is similar to the one seen around Ender Chests.
+//  *
+//  * - hasTileEntity(IBlockState): Indicates that this block has an associated TileEntity, which is true for the Nexus block.
+//  *
+//  * - createTileEntity(World, IBlockState): Creates and returns a new TileEntityNexus instance, which is the TileEntity associated with the Nexus block.
+//  *
+//  * - setBlockView(boolean, World, BlockPos): A static method that updates the block state at the specified position. If the Nexus is active, it prints a message; otherwise, it resets the block state to the default Nexus block state.
+//  *
+//  * - getPlayerRelativeBlockHardness(IBlockState, EntityPlayer, World, BlockPos): Determines the block's hardness relative to the player. If the Nexus is active, it cannot be broken, indicated by returning -1.0F.
+//  *
+//  * - getRenderType(IBlockState): Specifies the rendering type for the block, which is set to model to allow for custom block models.
+//  *
+//  * This class is a key component of the 'invmod' mod, providing both a unique gameplay mechanic and visual effects to enhance player experience.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.block;
 
 import java.util.Random;

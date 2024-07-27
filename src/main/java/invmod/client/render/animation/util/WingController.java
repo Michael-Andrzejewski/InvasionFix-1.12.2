@@ -1,3 +1,20 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class, WingController, is designed to manage the wing animations of the EntityIMBird entity within the invmod game mod. It controls the wing flapping behavior based on the bird's movement and attack states.
+//  *
+//  * Public Methods:
+//  * - WingController(EntityIMBird entity, AnimationState stateObject): Constructor that initializes the WingController with a specific bird entity and its animation state.
+//  * - update(): This method updates the wing animation state based on the bird's current actions, such as attacking, flying, or gliding. It adjusts the flap effort dynamically and ensures the correct animation is played for the bird's current state.
+//  *
+//  * Private Methods:
+//  * - ensureAnimation(AnimationState state, AnimationAction action, float animationSpeed, boolean pauseAfterAction): Ensures that the specified animation action is set with the correct speed and pause behavior. If the action is already set, it updates the speed and pause settings.
+//  *
+//  * The WingController class uses a sampling system to average the flap effort over time, providing a more natural wing movement. It also handles transitions between different wing animations, such as tucking, spreading, flapping, and gliding, based on the bird's movement state (grounded, running, flying) and whether it is attacking with its wings.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render.animation.util;
 
 import invmod.client.render.animation.AnimationAction;

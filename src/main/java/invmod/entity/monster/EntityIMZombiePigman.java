@@ -1,3 +1,79 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This code defines the EntityIMZombiePigman class, which is a custom entity for a Minecraft mod. The entity represents a zombie pigman with specialized AI and behaviors.
+//  *
+//  * - EntityIMZombiePigman(World world): Constructor that initializes a zombie pigman in the given world without a nexus reference.
+//  * - EntityIMZombiePigman(World world, TileEntityNexus nexus): Overloaded constructor that initializes a zombie pigman with a reference to a nexus.
+//  * - entityInit(): Initializes the entity's data parameters.
+//  * - onUpdate(): Called each tick to update the entity's state and synchronize data parameters if they have changed.
+//  * - onLivingUpdate(): Called each tick to handle entity's living updates such as animations and sounds.
+//  * - onPathSet(): Called when a new path is set for the entity, used to cancel any terrain modification tasks.
+//  * - initEntityAI(): Initializes the entity's AI tasks and target tasks with priorities.
+//  * - setTier(int tier): Sets the tier of the zombie pigman and updates its attributes accordingly.
+//  * - setFlavour(int flavour): Sets the flavor (variant) of the zombie pigman and updates its attributes.
+//  * - toString(): Provides a string representation of the entity, including its tier.
+//  * - getTerrain(): Returns the world as an IBlockAccess instance, used for terrain modification.
+//  * - avoidsBlock(Block block): Determines if the zombie pigman should avoid a specific block type.
+//  * - getBlockRemovalCost(BlockPos pos): Calculates the cost to remove a block at the specified position.
+//  * - canClearBlock(BlockPos pos): Checks if the zombie pigman can clear a block at the specified position.
+//  * - onPathBlocked(Path path, INotifyTask notifee): Handles the event when the entity's path is blocked.
+//  * - isBigRenderTempHack(): Temporary method to handle rendering for larger zombie pigman tiers.
+//  * - attackEntityAsMob(Entity entity): Handles the attack behavior of the zombie pigman.
+//  * - canBePushed(): Determines if the zombie pigman can be pushed by other entities.
+//  * - knockBack(Entity par1Entity, float par2, double par3, double par5): Handles the knockback effect on the zombie pigman.
+//  * - getBlockPathCost(PathNode prevNode, PathNode node, IBlockAccess terrainMap): Calculates the path cost for pathfinding.
+//  * - canBreatheUnderwater(): Determines if the zombie pigman can breathe underwater.
+//  * - isBlockDestructible(IBlockAccess terrainMap, BlockPos pos, IBlockState state): Checks if a block is destructible by the zombie pigman.
+//  *
+//  * The class extends EntityIMMob and implements ICanDig, indicating that it has custom mob behaviors and can interact with terrain by digging or modifying it.
+//  */
+// ```
+// ```plaintext
+// This code appears to be part of a Minecraft mod, specifically dealing with a custom entity that extends the behavior of a standard mob, likely a Zombie Pigman. The entity has various behaviors and attributes that are defined and manipulated through the methods in the code.
+// 
+// 1. isBlockDestructible: Determines if the entity can destroy a block based on its steepness and calls a superclass method to check additional conditions.
+// 
+// 2. onFollowingEntity: Adjusts the destructiveness level of the entity based on the type of entity it is following.
+// 
+// 3. scaleAmount: Returns a scaling factor based on the entity's tier.
+// 
+// 4. getSpecies: Returns the species name of the entity.
+// 
+// 5. writeEntityToNBT: Saves the entity's 'flavour' attribute to NBT (used for saving entity states).
+// 
+// 6. readEntityFromNBT: Reads the entity's 'textureId' and 'flavour' from NBT and applies them.
+// 
+// 7. updateAnimation: Manages the entity's swinging animation and destruction behavior when charging, including playing sounds and dropping blocks as items.
+// 
+// 8. isSwinging and setSwinging: Get and set methods for the entity's swinging state.
+// 
+// 9. updateSound: Plays a scraping sound when the entity is modifying terrain.
+// 
+// 10. getSwingSpeed: Returns the speed at which the entity swings.
+// 
+// 11. chargeAttack: Performs a charge attack on another entity, applying knockback and damage.
+// 
+// 12. updateAITasks: Updates AI tasks and calls the terrain modifier's update method.
+// 
+// 13. getTerrainDig: Returns the terrain digging handler.
+// 
+// 14. getAmbientSound, getHurtSound, getDeathSound: Return the sounds for various entity states.
+// 
+// 15. getDropItem: Returns the item that the entity drops upon death.
+// 
+// 16. dropFewItems: Controls the dropping of items upon death, with chances for additional drops.
+// 
+// 17. setAttributes: Sets various attributes of the entity based on its tier and flavor, such as health, destructiveness, and equipment.
+// 
+// 18. isCharging and setCharging: Get and set methods for the entity's charging state.
+// 
+// 19. onBlockRemoved: Placeholder method for handling block removal events.
+// 
+// Overall, the code manages the behavior, attributes, and interactions of a custom entity within a Minecraft mod, including its combat, sound, animation, and block destruction capabilities.
+// ```
+// `^`^`^`
+
 package invmod.entity.monster;
 
 import invmod.IBlockAccessExtended;

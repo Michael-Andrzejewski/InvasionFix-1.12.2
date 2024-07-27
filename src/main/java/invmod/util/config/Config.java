@@ -1,3 +1,26 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This code represents the configuration management for the Invasion Mod, handling the loading, updating, and synchronization of configuration settings.
+//  * The configuration settings are divided into sections such as 'general' and 'continuousMode', with each section containing relevant settings.
+//  *
+//  * Class Summary:
+//  * - Config: A class that contains static variables and methods to manage the mod's configuration settings.
+//  * - Section: An inner class representing a configuration section, which includes a name and a method to register the section.
+//  *
+//  * Method Summary:
+//  * - load(FMLPreInitializationEvent event): Initializes the configuration system, creates the config directory if it doesn't exist, and loads the configuration from a file.
+//  * - onConfigChanged(OnConfigChangedEvent event): Listens for configuration changes and updates the configuration if the mod ID matches.
+//  * - syncConfig(): Reads and writes configuration settings from/to the configuration file and logs the loading process. It also handles exceptions and saves the configuration if changes have been made.
+//  * - Section(String name, String lang): Constructor for the Section class that registers the section upon creation.
+//  * - register(): Adds the section to the list of sections.
+//  * - getName(): Returns the lowercase name of the section.
+//  *
+//  * The configuration settings include toggles for update messages, block drops from destruction, and debug mode, as well as settings for continuous mode attack intervals and various night spawn behaviors (commented out).
+//  */
+// ```
+// `^`^`^`
+
 package invmod.util.config;
 
 import java.io.File;

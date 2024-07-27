@@ -1,3 +1,94 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This code defines the TileEntityNexus class, which is responsible for managing the Nexus block entity in a Minecraft mod. The Nexus is a central block that orchestrates invasions by spawning and controlling waves of enemy entities. The class extends TileEntity and implements ITickable to allow for regular updates each tick.
+// 
+//  * Key methods in TileEntityNexus:
+//  * - update(): Main update loop called each tick. Manages the status and AI updates, handles invasion and continuous mode logic, and performs cleanup checks.
+//  * - emergencyStop(): Immediately stops the Nexus and kills all associated mobs. Used for manual override.
+//  * - debugStatus(): Outputs the current status of the Nexus for debugging purposes.
+//  * - debugStartInvasion(int startWave): Starts an invasion at the specified wave number for debugging.
+//  * - debugStartContinuous(): Starts the Nexus in continuous mode for debugging.
+//  * - createBolt(int x, int y, int z, int t): Spawns a bolt entity at the specified coordinates.
+//  * - setSpawnRadius(int radius): Sets the radius within which the Nexus can spawn entities, if not currently active.
+//  * - attackNexus(int damage): Inflicts damage to the Nexus, potentially ending the invasion if health drops to zero.
+//  * - registerMobDied(): Updates the count of mobs left in the current wave and handles the messaging when the wave is cleared.
+//  * - isActivating(): Returns whether the Nexus is currently in the process of activating.
+//  * - getMode(): Returns the current operational mode of the Nexus.
+//  * - getActivationTimer(): Returns the current activation timer value.
+//  * - getSpawnRadius(): Returns the current spawn radius for entities.
+//  * - getNexusKills(): Returns the total number of kills attributed to the Nexus.
+//  * - getGeneration(): Returns the current generation value of the Nexus.
+//  * - getNexusLevel(): Returns the current level of the Nexus.
+//  * - getPowerLevel(): Returns the current power level of the Nexus.
+//  * - getCookTime(): Returns the current cook time value.
+// 
+//  * The class also includes several private fields for managing the Nexus's state, such as activation timers, health points, wave information, and player bindings. It uses an ItemStackHandler for inventory management and has methods for saving and loading from NBT (not shown in the provided code).
+//  */
+// ```
+// This code appears to be part of a larger system, likely a mod for a game such as Minecraft, which involves managing a "Nexus" that is subject to waves of enemy attacks. The code includes methods for handling the state of the Nexus, including its activation, power levels, and the waves of enemies it faces. Here is a summary of the key methods and their purposes:
+// 
+// - `getNexusID()`: Returns a default ID for the Nexus, which is -1 in this case.
+// - `getPosition()`: Retrieves the current position of the Nexus as a `BlockPos` object.
+// - `getMobList()`: Returns a list of `EntityIMLiving` objects, which are likely the entities associated with the Nexus.
+// - `getActivationProgressScaled(int i)`: Calculates the progress of Nexus activation based on a scaling factor.
+// - `getGenerationProgressScaled(int i)`: Calculates the progress of some generation process, again based on a scaling factor.
+// - `getCookProgressScaled(int i)`: Calculates the progress of a cooking process, scaled by the provided factor.
+// - `getNexusPowerLevel()`: Returns the current power level of the Nexus.
+// - `getCurrentWave()`: Retrieves the current wave number of the invasion the Nexus is facing.
+// - `readFromNBT(NBTTagCompound nbttagcompound)`: Reads the Nexus's state from a saved NBT (Named Binary Tag) compound, restoring its state upon game load.
+// - `writeToNBT(NBTTagCompound nbttagcompound)`: Writes the Nexus's current state to an NBT compound for saving.
+// - `askForRespawn(EntityIMLiving entity)`: Requests a respawn for a stuck entity associated with the Nexus.
+// - `getAttackerAI()`: Returns the `AttackerAI` object, likely responsible for managing the behavior of attacking entities.
+// - `setActivationTimer(int i)`, `setNexusLevel(int i)`, `setNexusKills(int i)`, `setGeneration(int i)`, `setNexusPowerLevel(int i)`, `setCookTime(int i)`, `setWave(int wave)`: These setter methods allow for updating various properties of the Nexus, such as activation timer, level, kills, generation, power level, cook time, and current wave.
+// - `startInvasion(int startWave)`: Initiates an invasion starting at the specified wave number.
+// - `startContinuousPlay()`: Begins continuous play mode for the Nexus, likely a mode where waves of enemies attack without pause.
+// - `doInvasion(int elapsed)`: Handles the ongoing invasion, updating the state of the Nexus and managing the waves of enemies.
+// 
+// Overall, the code is designed to manage the complex behavior of a Nexus entity within a game, including its interactions with players and enemy entities, its state across game sessions, and the progression of invasions it must withstand.
+// ```plaintext
+// This code appears to be part of a game mod, specifically for managing a "Nexus" entity that is subject to waves of enemy attacks. The Nexus seems to be a central point that players must defend, with the code handling the spawning of enemy waves, the timing of attacks, and the Nexus's power and health status.
+// 
+// - playSoundForBoundPlayers(SoundEvent sound): Plays a specified sound effect for all players bound to the Nexus.
+// 
+// - doContinuous(int elapsed): Manages the continuous mode of the Nexus, where it generates "Flux" over time, handles the spawning of enemy waves, and updates the Nexus's power level and health points. It also handles the transition between day and night within the game, signaling the approach of enemy waves.
+// 
+// - updateStatus(): Updates the status of the Nexus, including its activation state, the processing of items in its inventory slots, and the countdown to the next wave of attacks. It also handles the activation of the Nexus using various catalyst items, which seems to trigger different types of invasions.
+// 
+// - generateFlux(int increment): Generates "Flux" at a specified increment, which is a resource or currency within the game. Once a certain threshold is reached, it adds a Rift Flux item to the Nexus's inventory.
+// 
+// - stop(): Stops the current invasion or continuous mode, resets the Nexus to a waiting state, and schedules the next attack after a random number of in-game days.
+// 
+// Overall, the code is designed to create a challenging and dynamic game environment where players must actively defend the Nexus from periodic enemy invasions, manage resources, and utilize items to influence the behavior of the Nexus.
+// ```
+// ```java
+// /**
+//  * This code represents the core functionality of a Nexus entity within a Minecraft mod, which is central to a game mechanic involving invasions and player interactions with the Nexus. The Nexus manages waves of enemies, player bindings, and the overall state of invasions.
+// 
+//  * Methods:
+//  * - endInvasion(): Ends the current invasion, resets the Nexus state, and notifies players.
+//  * - bindPlayers(): Binds nearby players to the Nexus, making their lives dependent on it.
+//  * - updateMobList(): Updates the list of nearby mobs that are part of the invasion.
+//  * - setMode(int i): Sets the operational mode of the Nexus.
+//  * - acquireEntities(): Acquires nearby enemy entities and binds them to the Nexus.
+//  * - theEnd(): Handles the destruction of the Nexus, killing bound players and stopping the invasion.
+//  * - continuousNexusHurt(): Inflicts damage on the Nexus, potentially stopping the invasion if the Nexus is too damaged.
+//  * - killAllMobs(): Kills all mobs within the Nexus' range.
+//  * - zapEnemy(int sfx): Targets and damages a single enemy with a lightning bolt effect.
+//  * - resumeSpawnerContinuous(): Attempts to resume the continuous spawning of mobs for the invasion.
+//  * - resumeSpawnerInvasion(): Attempts to resume the spawning of mobs for the current wave of the invasion.
+//  * - updateAI(): Updates the AI of the attackers during an invasion.
+//  * - getBoundPlayers(): Returns a list of players currently bound to the Nexus.
+//  * - isActive(): Checks if the Nexus is currently active.
+//  * - getNearest(EntityPlayer player, int searchRange): Static method to find the nearest Nexus to a player within a certain range.
+//  * - getDisplayName(): Returns the display name of the Nexus.
+//  * - getCapability(Capability<T> capability, EnumFacing facing): Overrides the default method to handle item handler capabilities.
+// 
+//  * The code also includes methods for handling network packets and capabilities, which are essential for the Nexus' interaction with the game world and players.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.tileentity;
 
 

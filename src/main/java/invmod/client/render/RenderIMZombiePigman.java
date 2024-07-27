@@ -1,3 +1,30 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class is responsible for rendering the custom entity EntityIMZombiePigman in Minecraft.
+//  * It extends RenderBiped, utilizing the ModelZombie as its default model and applying various
+//  * layers to enhance its appearance.
+//  *
+//  * Methods:
+//  * - RenderIMZombiePigman(RenderManager): Constructor that sets up the renderer with a ModelZombie,
+//  *   initializes the modelBiped, and adds held item and armor layers.
+//  * - doRender(EntityIMZombiePigman, double, double, double, float, float): Handles the rendering logic
+//  *   for the EntityIMZombiePigman, switching between big biped and normal models based on the entity's state.
+//  * - doRenderBigBiped(EntityIMZombiePigman, double, double, double, float, float): Placeholder for rendering
+//  *   the big biped version of the entity.
+//  * - preRenderCallback(EntityIMZombiePigman, float): Applies a scaling transformation to the entity before rendering,
+//  *   based on its scaleAmount.
+//  * - getTexture(EntityIMZombiePigman): Returns the appropriate ResourceLocation for the entity's texture based on its
+//  *   textureId.
+//  * - getEntityTexture(EntityIMZombiePigman): Overrides the method from RenderBiped to provide the correct texture for
+//  *   the entity.
+//  *
+//  * The class also defines two static ResourceLocation objects for the textures and contains protected fields for
+//  * different models and layers that can be applied to the entity.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render;
 
 import org.lwjgl.opengl.GL11;

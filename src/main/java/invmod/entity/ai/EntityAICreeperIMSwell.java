@@ -1,3 +1,26 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class defines the AI behavior for a custom creeper entity in a Minecraft mod to control its swelling action.
+//  * The creeper will swell (prepare to explode) when certain conditions are met, specifically targeting certain entities.
+//  *
+//  * Class: EntityAICreeperIMSwell
+//  * Package: invmod.entity.ai
+//  *
+//  * Constructor:
+//  * - EntityAICreeperIMSwell(EntityIMCreeper par1EntityCreeper): Initializes the AI with the given creeper entity and sets the mutex bits to control AI execution order.
+//  *
+//  * Methods:
+//  * - boolean shouldExecute(): Determines if the AI should start executing. It checks if the creeper is already in the state of swelling or if a target entity is within a certain range and is of a specific type (player or allied entity).
+//  * - void startExecuting(): Called when the AI should start executing. Clears the creeper's current path and sets the target entity.
+//  * - void resetTask(): Resets the task, clearing the target entity.
+//  * - void updateTask(): Updates the task each tick. If the target is null, out of range, or not visible, it stops the creeper from swelling. Otherwise, it sets the creeper state to swelling.
+//  *
+//  * This AI component is essential for the creeper's behavior, making it a critical part of the entity's interaction with the world and the player.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.ai;
 
 //NOOB HAUS: Done 

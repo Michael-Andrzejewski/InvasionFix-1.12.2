@@ -1,3 +1,21 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class, WaveBuilderNormal, is an implementation of the IWaveSource interface, designed to generate wave configurations for a game. The primary purpose of this class is to create a wave of enemies with varying group sizes and timings based on the game's difficulty and desired wave length.
+//  *
+//  * Methods:
+//  * - getWave(): This method calculates the distribution and timing of enemy groups for a wave. It uses the game's difficulty level and the desired length of the wave in seconds to determine the number of enemies that will appear per second. The method then divides these enemies into groups, big groups, and steady streams. It calculates the number of enemies in each group and the intervals at which these groups will appear during the wave. The method also allocates a certain number of extra enemies for the finale and cleanup phases of the wave. Finally, it calculates the time intervals for both grouped and steady enemy appearances. The method currently returns null and is a placeholder for future implementation where it would return a Wave object configured with the calculated parameters.
+//  *
+//  * Note: The actual Wave object creation and return logic is not yet implemented in this method.
+//  */
+// package invmod.nexus;
+// 
+// public class WaveBuilderNormal implements IWaveSource {
+//     // Implementation of getWave method here
+// }
+// ```
+// `^`^`^`
+
 package invmod.nexus;
 
 public class WaveBuilderNormal implements IWaveSource {

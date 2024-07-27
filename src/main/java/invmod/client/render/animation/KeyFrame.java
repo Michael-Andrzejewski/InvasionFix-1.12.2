@@ -1,3 +1,41 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a keyframe in an animation sequence, encapsulating rotation and position data at a specific time point.
+//  * It provides methods to manipulate and transform a collection of keyframes for use in animations.
+//  *
+//  * KeyFrame(float time, float rotX, float rotY, float rotZ, InterpType interpType):
+//  *     Constructs a keyframe with specified rotation, time, and interpolation type, without position data.
+//  *
+//  * KeyFrame(float time, float rotX, float rotY, float rotZ, float posX, float posY, float posZ, InterpType interpType):
+//  *     Constructs a keyframe with specified rotation, position, time, and interpolation type.
+//  *
+//  * Getters for time, rotation (rotX, rotY, rotZ), position (posX, posY, posZ), interpolation type, and position flag (hasPos).
+//  *
+//  * toString():
+//  *     Provides a string representation of the keyframe's time and rotation data.
+//  *
+//  * cloneFrames(List<KeyFrame> keyFrames):
+//  *     Returns a shallow copy of a list of keyframes.
+//  *
+//  * toRadians(List<KeyFrame> keyFrames):
+//  *     Converts the rotation values of a list of keyframes from degrees to radians.
+//  *
+//  * mirrorFramesX(List<KeyFrame> keyFrames):
+//  *     Mirrors the rotation and position of a list of keyframes across the X-axis.
+//  *
+//  * mirrorFramesY(List<KeyFrame> keyFrames):
+//  *     Mirrors the rotation and position of a list of keyframes across the Y-axis.
+//  *
+//  * mirrorFramesZ(List<KeyFrame> keyFrames):
+//  *     Mirrors the rotation and position of a list of keyframes across the Z-axis.
+//  *
+//  * offsetFramesCircular(List<KeyFrame> keyFrames, float start, float end, float offset):
+//  *     Offsets the time of keyframes within a specified range circularly by a given offset value.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render.animation;
 
 import java.util.ArrayList;

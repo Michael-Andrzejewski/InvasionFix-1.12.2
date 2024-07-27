@@ -1,3 +1,22 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class is responsible for rendering the EntityIMSkeleton, a custom skeleton entity in the game.
+//  * It extends the RenderBiped class, utilizing Minecraft's rendering system to display the entity with its unique model and textures.
+//  *
+//  * Public Methods:
+//  * - RenderIMSkeleton(RenderManager renderManager): Constructs the renderer with a default model and shadow size.
+//  * - RenderIMSkeleton(RenderManager renderManager, ModelBiped model, float shadowSize): Constructs the renderer with a specified model and shadow size.
+//  * - RenderIMSkeleton(RenderManager renderManager, ModelBiped model, float shadowSize, float scale): Constructs the renderer with a specified model, shadow size, and scale.
+//  *   It also initializes additional layers for the entity, such as held items, armor, and a cloak.
+//  * - getEntityTexture(EntityIMSkeleton entity): Returns the ResourceLocation of the entity's texture.
+//  *
+//  * The constructor initializes the rendering layers for the EntityIMSkeleton, including held items, armor with custom models, and a cloak layer.
+//  * The getEntityTexture method provides the specific texture used for the EntityIMSkeleton, which is defined as a static final ResourceLocation.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render;
 
 import invmod.Reference;

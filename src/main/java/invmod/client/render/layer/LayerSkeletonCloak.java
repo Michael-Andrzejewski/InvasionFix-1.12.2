@@ -1,3 +1,26 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a custom rendering layer for the EntityIMSkeleton, which is a type of skeleton entity in the game.
+//  * It is responsible for adding an additional cloak layer with a specific texture to the skeleton's appearance.
+//  *
+//  * Class: LayerSkeletonCloak
+//  * Package: invmod.client.render.layer
+//  * Extends: None
+//  * Implements: LayerRenderer<EntityIMSkeleton>
+//  *
+//  * Methods:
+//  * - LayerSkeletonCloak(RenderIMSkeleton renderer): Constructor that initializes the renderer and the model with a specific scale and overlay flag.
+//  * - doRenderLayer(EntityIMSkeleton entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale): 
+//  *   Renders the cloak layer on the skeleton using the provided model attributes and animation settings. It binds the custom texture before rendering.
+//  * - shouldCombineTextures(): Indicates that the cloak texture should be combined with the default entity texture.
+//  *
+//  * The class utilizes a static texture resource located at 'textures/skeleton_overlay.png' within the mod's assets, defined by the mod's ID.
+//  * The cloak's appearance is defined by the ModelIMSkeleton, which is adjusted to the skeleton's current animations and rendered onto the entity.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render.layer;
 
 import invmod.Reference;

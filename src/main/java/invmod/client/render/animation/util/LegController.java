@@ -1,3 +1,20 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class, LegController, is part of the invmod.client.render.animation.util package and is responsible for managing the leg animations of the EntityIMBird entity in a game or simulation. It uses the AnimationState object to control the transition and speed of animations based on the movement state of the entity.
+// 
+//  * Constructor:
+//  * - LegController(EntityIMBird entity, AnimationState stateObject): Initializes the controller with the specified bird entity and animation state object, setting default values for the animation run, time attacking, flap effort, and flap effort samples.
+// 
+//  * Methods:
+//  * - update(): Evaluates the current movement state of the bird entity (running, standing, or flying) and adjusts the animation accordingly. It calculates the speed of the entity and ensures the correct animation action is set, transitioning between actions like standing, running, and various attack phases.
+//  * - ensureAnimation(AnimationState state, AnimationAction action, float animationSpeed, boolean pauseAfterAction): Ensures that the specified animation action is set with the given speed and pause behavior. If the action is already set, it updates the speed and pause state.
+// 
+//  * The class maintains internal state such as the time spent attacking and an array of flap effort samples to potentially influence the animation, although these are not directly manipulated in the provided code snippet. The update method is the core of the class, integrating entity movement data to provide a seamless animation experience.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render.animation.util;
 
 import invmod.client.render.animation.AnimationAction;

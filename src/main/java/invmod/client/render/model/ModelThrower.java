@@ -1,3 +1,35 @@
+// `^`^`^`
+// ```java
+// /**
+//  * ModelThrower is a custom model class extending ModelBase for rendering a thrower entity in Minecraft.
+//  * It defines the structure and animation of the thrower's body parts including head, body, arms, and legs.
+//  *
+//  * Constructors:
+//  * - ModelThrower(): Initializes the model with default size parameters.
+//  * - ModelThrower(float f): Initializes the model with a specified size parameter for scaling.
+//  * - ModelThrower(float f, float f1): Initializes the model with two size parameters for scaling.
+//  *
+//  * Fields:
+//  * - ModelRenderer bipedHead: Represents the head of the thrower.
+//  * - ModelRenderer bipedBody: Represents the upper part of the thrower's body.
+//  * - ModelRenderer bipedBody2: Represents the lower part of the thrower's body.
+//  * - ModelRenderer bipedRightArm: Represents the right arm of the thrower.
+//  * - ModelRenderer bipedLeftArm: Represents the left arm of the thrower.
+//  * - ModelRenderer bipedRightLeg: Represents the right leg of the thrower.
+//  * - ModelRenderer bipedLeftLeg: Represents the left leg of the thrower.
+//  * - boolean heldItemLeft: Indicates whether the left hand is holding an item.
+//  * - boolean heldItemRight: Indicates whether the right hand is holding an item.
+//  * - boolean isSneak: Indicates whether the thrower is sneaking.
+//  *
+//  * Methods:
+//  * - render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5): Renders the model components with the given animation parameters.
+//  * - setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity): Sets the rotation angles for all the model components based on the animation parameters.
+//  *
+//  * The model's rotation angles are calculated to simulate natural movement such as walking, arm swinging, and head turning.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render.model;
 
 import net.minecraft.client.model.ModelBase;

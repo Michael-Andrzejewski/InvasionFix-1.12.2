@@ -1,3 +1,43 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class is part of the Invasion Mod and is responsible for creating various types of mod-specific
+//  * monster entities based on provided construction templates. The MobBuilder class uses a factory method
+//  * to instantiate different monster entities, which are all subclasses of EntityIMMob, according to the
+//  * type specified in the EntityConstruct object. Each monster entity is associated with a TileEntityNexus
+//  * and a World object, which are passed during creation.
+//  *
+//  * Methods:
+//  * - createMobFromConstruct(EntityConstruct mobConstruct, World world, TileEntityNexus nexus): This method
+//  *   takes an EntityConstruct object containing the specifications for the monster to be created, the world
+//  *   the monster will exist in, and the nexus associated with the monster. It uses a switch statement to
+//  *   determine the type of monster to create based on the mob type specified in the EntityConstruct. It sets
+//  *   up the monster's properties such as texture, flavour, and tier when applicable. If the mob type is not
+//  *   recognized, it logs a warning. The method returns the created EntityIMMob or null if the type is missing.
+//  *
+//  * Monster Types Handled:
+//  * - ZOMBIE: Creates an EntityIMZombie with texture, flavour, and tier.
+//  * - ZOMBIEPIGMAN: Creates an EntityIMZombiePigman with texture and tier.
+//  * - SPIDER: Creates an EntityIMSpider with texture, flavour, and tier.
+//  * - SKELETON: Creates an EntityIMSkeleton.
+//  * - PIG_ENGINEER: Creates an EntityIMPigEngy.
+//  * - THROWER: Creates an EntityIMThrower with texture and tier.
+//  * - BURROWER: Creates an EntityIMBurrower.
+//  * - CREEPER: Creates an EntityIMCreeper.
+//  * - IMP: Creates an EntityIMImp.
+//  *
+//  * If the mob type is not recognized, a warning is logged using ModLogger.
+//  */
+// package invmod.nexus;
+// 
+// // ... (imports)
+// 
+// public class MobBuilder {
+//     // ... (class code)
+// }
+// ```
+// `^`^`^`
+
 package invmod.nexus;
 
 import invmod.entity.monster.EntityIMBurrower;

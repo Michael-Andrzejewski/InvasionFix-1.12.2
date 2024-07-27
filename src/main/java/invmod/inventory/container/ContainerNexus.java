@@ -1,3 +1,27 @@
+// `^`^`^`
+// ```java
+// /**
+//  * ContainerNexus is a custom container class that interfaces with the TileEntityNexus to provide a GUI for players.
+//  * It extends the Minecraft Container class and is used to manage the inventory slots and interaction logic for the Nexus.
+//  *
+//  * Methods:
+//  * - ContainerNexus(InventoryPlayer, TileEntityNexus): Constructor that initializes the container with player inventory and Nexus slots.
+//  * - detectAndSendChanges(): Overrides the Container method to update GUI elements when the Nexus data changes.
+//  * - updateProgressBar(int, int): Overrides the Container method to update Nexus properties based on progress bar changes.
+//  * - canInteractWith(EntityPlayer): Overrides the Container method to allow interaction with the Nexus.
+//  * - transferStackInSlot(EntityPlayer, int): Overrides the Container method to handle item transfers between the player inventory and Nexus slots.
+//  *
+//  * The constructor sets up two custom slots for the Nexus (one that accepts items and one that doesn't) and the standard player inventory slots.
+//  * The detectAndSendChanges method checks for changes in the Nexus state and sends updates to the GUI listeners to keep the display in sync.
+//  * The updateProgressBar method is used to update the Nexus state based on GUI actions.
+//  * The canInteractWith method is a formality that returns true to allow players to open the GUI.
+//  * The transferStackInSlot method handles the logic for shift-clicking items between the Nexus inventory and the player's inventory.
+//  *
+//  * The class also maintains several private fields to track the Nexus state, such as activationTimer, currentWave, nexusLevel, nexusKills, spawnRadius, generation, and mode.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.inventory.container;
 
 import invmod.tileentity.TileEntityNexus;

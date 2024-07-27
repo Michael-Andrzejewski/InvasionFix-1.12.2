@@ -1,3 +1,41 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class, AnimationState, manages the state and progression of an animation sequence for a given type of animation.
+//  * It handles the timing, speed, and transitions between different phases of the animation.
+//  *
+//  * Public Methods:
+//  * - AnimationState(Animation<T> animation): Constructs an AnimationState with a default start time of 0.0F.
+//  * - AnimationState(Animation<T> animation, float startTime): Constructs an AnimationState with a specified start time.
+//  * - setNewAction(AnimationAction action): Sets a new action for the animation and updates the transition.
+//  * - setNewAction(AnimationAction action, float animationSpeedFactor, boolean pauseAfterAction): Sets a new action with a speed factor and an option to pause after the action.
+//  * - setPauseAfterCurrentAction(boolean shouldPause): Sets whether the animation should pause after the current action.
+//  * - setPauseAfterSetAction(boolean shouldPause): Sets whether the animation should pause after the action is set.
+//  * - setPaused(boolean isPaused): Pauses or unpauses the animation.
+//  * - update(): Updates the animation state based on the current time and handles transitions.
+//  * - getNextSetAction(): Returns the next action to be set for the animation.
+//  * - getCurrentAction(): Returns the current action of the animation.
+//  * - getCurrentAnimationTime(): Returns the current time within the animation.
+//  * - getCurrentAnimationTimeInterp(float parTick): Returns the interpolated current time for rendering purposes.
+//  * - getCurrentAnimationPercent(): Returns the current progress percentage of the animation.
+//  * - getAnimationSpeed(): Returns the current animation speed.
+//  * - getNextTransition(): Returns the next transition in the animation.
+//  * - getAnimationPeriod(): Returns the total period of the animation.
+//  * - getBaseAnimationTime(): Returns the base speed of the animation.
+//  * - getAnimationPhases(): Returns a list of all animation phases.
+//  * - setAnimationSpeed(float speedFactor): Sets the animation speed based on a speed factor.
+//  *
+//  * Private Methods:
+//  * - updateTransition(AnimationAction action): Updates the next transition based on the given action.
+//  * - updatePhase(float time): Updates the current phase of the animation based on the given time.
+//  * - findPhase(float time): Finds the animation phase that corresponds to the given time.
+//  *
+//  * The class is designed to be used in rendering systems where animations are defined by phases and transitions,
+//  * allowing for smooth and controllable animations for various entities or objects.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render.animation;
 
 import java.util.List;

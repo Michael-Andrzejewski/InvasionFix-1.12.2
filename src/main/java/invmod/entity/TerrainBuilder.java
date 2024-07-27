@@ -1,3 +1,30 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class, TerrainBuilder, is part of a Minecraft mod that allows entities to modify the game world's terrain.
+//  * It implements the ITerrainBuild interface, providing methods for building structures such as scaffolds, ladders,
+//  * ladder towers, and bridges. The class uses a modifier object to execute the actual changes to the world.
+//  *
+//  * - TerrainBuilder Constructors:
+//  *   - TerrainBuilder(ICanBuild, ITerrainModify, float): Initializes the builder with default costs and block types.
+//  *   - TerrainBuilder(ICanBuild, ITerrainModify, float, float, float, Block): Allows specifying custom costs and block types.
+//  *
+//  * - Methods:
+//  *   - setBuildRate(float): Sets the rate at which the entity can build.
+//  *   - getBuildRate(): Retrieves the current build rate.
+//  *   - askBuildScaffoldLayer(BlockPos, INotifyTask): Requests to build a scaffold layer at the specified position.
+//  *   - askBuildLadderTower(BlockPos, int, int, INotifyTask): Requests to build a ladder tower with a specified orientation and number of layers.
+//  *   - askBuildLadder(BlockPos, INotifyTask): Requests to build a ladder at the specified position.
+//  *   - askBuildBridge(BlockPos, INotifyTask): Requests to build a bridge at the specified position.
+//  *
+//  * The class uses the INotifyTask interface to notify when tasks are completed and relies on the ICanBuild interface
+//  * to check if the entity can build at a certain location. It also uses the ITerrainModify interface to request
+//  * the actual block modifications in the world. The class defines constants for the cost of building with different
+//  * materials and uses the Validate class from Apache Commons Lang to ensure proper initialization.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity;
 
 import java.util.ArrayList;

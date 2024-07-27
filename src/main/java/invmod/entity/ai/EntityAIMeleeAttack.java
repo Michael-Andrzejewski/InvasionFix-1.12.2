@@ -1,3 +1,50 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents an AI module for melee attacks within a Minecraft mod. It defines the behavior of an in-game
+//  * monster entity (EntityIMMob) to perform melee attacks on a specified target entity class.
+//  *
+//  * Class: EntityAIMeleeAttack<T extends EntityLivingBase>
+//  * - Extends Minecraft's EntityAIBase to integrate with the game's AI system.
+//  *
+//  * Constructor:
+//  * - EntityAIMeleeAttack(EntityIMMob entity, Class<? extends T> targetClass, int attackDelay)
+//  *   Initializes the AI with the attacking entity, the target class, and the delay between attacks.
+//  *
+//  * Methods:
+//  * - boolean shouldExecute()
+//  *   Determines if the AI should begin executing, based on the presence of a target and if the target is within range.
+//  *
+//  * - void updateTask()
+//  *   Called every tick to manage the attack timing and execution against the target.
+//  *
+//  * - Class<? extends T> getTargetClass()
+//  *   Returns the Class object representing the target's class.
+//  *
+//  * - protected void attackEntity(EntityLivingBase target)
+//  *   Performs the actual attack on the target entity.
+//  *
+//  * - protected boolean canAttackEntity(EntityLivingBase target)
+//  *   Checks if the entity can currently attack the target based on attack timing and distance.
+//  *
+//  * - protected int getAttackTime()
+//  *   Retrieves the remaining time until the next attack is allowed.
+//  *
+//  * - protected void setAttackTime(int time)
+//  *   Sets the cooldown time until the next attack can be performed.
+//  *
+//  * - protected int getAttackDelay()
+//  *   Returns the configured delay between attacks.
+//  *
+//  * - protected void setAttackDelay(int time)
+//  *   Sets the delay time between attacks.
+//  *
+//  * The AI uses a simple timing mechanism to add a delay between attacks and checks for the appropriate conditions
+//  * before executing an attack, such as the target being within a certain range and being of the correct entity class.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.ai;
 
 import invmod.entity.Goal;

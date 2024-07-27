@@ -1,3 +1,26 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This Java class is part of the invmod.util package and is used to compare two Minecraft entities based on their distance from a specific point in the game world. It implements the Comparator interface for the Entity type.
+//  *
+//  * Class: ComparatorEntityDistance
+//  * Purpose: Provide a comparator to sort entities based on their distance from a given point (x, y, z).
+//  * Usage: Can be used to sort collections of entities or to find the closest/farthest entity from a point.
+//  *
+//  * Constructor:
+//  * ComparatorEntityDistance(double x, double y, double z)
+//  * - Initializes the comparator with a specific point in the world (x, y, z) to compare distances against.
+//  *
+//  * Methods:
+//  * int compare(Entity entity1, Entity entity2)
+//  * - Compares two entities based on their squared distance from the point initialized in the constructor.
+//  * - Returns -1 if entity1 is farther than entity2, 1 if closer, and 0 if the distances are equal.
+//  *
+//  * Note: This comparator uses squared distances to avoid the computational cost of square root operations, which is acceptable when only the relative distance is needed for comparison.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.util;
 
 import java.util.Comparator;

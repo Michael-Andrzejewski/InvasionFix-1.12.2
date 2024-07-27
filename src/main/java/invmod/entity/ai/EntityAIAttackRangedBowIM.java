@@ -1,3 +1,27 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents an AI behavior for a custom skeleton entity (EntityIMSkeleton) in Minecraft that allows it to
+//  * use a bow for ranged attacks. The AI handles the logic for the skeleton to attack its target with a bow, manage its
+//  * movement while attacking, and adjust its strafing behavior to make it a more challenging opponent.
+//  *
+//  * Methods:
+//  * - EntityAIAttackRangedBowIM: Constructor that initializes the AI with the skeleton entity, movement speed amplifier,
+//  *   attack cooldown, and maximum attack distance.
+//  * - setAttackCooldown: Sets the cooldown period between the skeleton's ranged attacks.
+//  * - shouldExecute: Determines if the AI should start executing, checking if the skeleton has a target and a bow in hand.
+//  * - isBowInMainhand: Helper method to check if the skeleton is holding a bow in its main hand.
+//  * - shouldContinueExecuting: Checks if the AI should continue executing, based on the presence of a target and a bow.
+//  * - startExecuting: Called when the AI begins execution, sets the skeleton to use its arms.
+//  * - resetTask: Resets the AI task, stopping the arm swinging animation and resetting attack timers.
+//  * - updateTask: Updates the AI task each tick, handling the logic for movement, strafing, and attacking behavior.
+//  *
+//  * The AI uses a combination of timers and distance checks to decide when to move towards the target, when to strafe,
+//  * and when to attack. It also dynamically adjusts its strafing direction and whether to move forwards or backwards.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.ai;
 
 import invmod.entity.monster.EntityIMSkeleton;

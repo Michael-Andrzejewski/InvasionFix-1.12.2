@@ -1,3 +1,36 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a custom layer renderer for entities in Minecraft that
+//  * renders a held item in the hand of a "BigBiped" model entity. It is designed
+//  * to be attached to a RenderLivingBase instance to add additional rendering
+//  * capability for entities using the ModelBigBiped model.
+//  *
+//  * Methods:
+//  * - LayerHeldItemBigBiped(RenderLivingBase): Constructor that takes a
+//  *   RenderLivingBase instance to which this layer will be applied.
+//  * - doRenderLayer(EntityLivingBase, float, float, float, float, float, float, float):
+//  *   The core method that handles the rendering of the held item. It adjusts the
+//  *   rendering based on whether the entity is a child, whether the entity is a
+//  *   player fishing, and the type of item (block or bow) being held. It applies
+//  *   transformations to position and scale the item correctly in the entity's hand.
+//  * - shouldCombineTextures(): Returns false indicating that this layer does not
+//  *   need to combine textures with the underlying entity texture.
+//  *
+//  * The rendering process involves several OpenGL transformations to position the
+//  * item correctly relative to the entity's hand. Special cases for fishing rods,
+//  * blocks, and bows are handled to ensure they are displayed appropriately.
+//  */
+// package invmod.client.render.layer;
+// 
+// // ... (imports)
+// 
+// public class LayerHeldItemBigBiped implements LayerRenderer<EntityLivingBase> {
+//     // ... (class contents)
+// }
+// ```
+// `^`^`^`
+
 package invmod.client.render.layer;
 
 import invmod.client.render.model.ModelBigBiped;

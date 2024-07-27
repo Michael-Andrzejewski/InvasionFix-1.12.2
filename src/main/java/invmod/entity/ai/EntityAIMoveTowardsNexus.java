@@ -1,3 +1,30 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class is part of the 'invmod' package and extends the EntityAIBase class to define AI behavior for in-game entities.
+//  * The AI behavior defined in this class is for entities to move towards a specific target, referred to as the Nexus.
+//  *
+//  * Class: EntityAIMoveTowardsNexus
+//  * Package: invmod.entity.ai
+//  * 
+//  * Purpose:
+//  * - To guide EntityIMLiving instances towards a designated Nexus point within the game world.
+//  * 
+//  * Methods:
+//  * - EntityAIMoveTowardsNexus(EntityIMLiving creature): Constructor that initializes the AI with the given creature and sets the mutex bits to control AI execution.
+//  * - shouldExecute(): Returns true if the Nexus exists, indicating that the AI should start executing.
+//  * - shouldContinueExecuting(): Returns true if the entity is more than 4 blocks away from the target (16 square distance), indicating that the AI should keep executing.
+//  * - startExecuting(): Sets the target to the Nexus's position and resets the pathSetTicks counter, preparing the entity to start moving towards the Nexus.
+//  * - resetTask(): Resets the target to the origin point and pathSetTicks counter, effectively stopping the entity's movement towards the Nexus.
+//  * - updateTask(): Updates the entity's path every 40 ticks to move towards the Nexus if the path is not already set.
+//  *
+//  * Usage:
+//  * - This AI is used to make entities in the game move towards a central point, the Nexus, for strategic gameplay elements such as defense or attack.
+//  */
+// ```
+// This summary provides an overview of the class's purpose and functionality, as well as descriptions of each method and their roles within the AI behavior.
+// `^`^`^`
+
 package invmod.entity.ai;
 
 import invmod.entity.EntityIMLiving;

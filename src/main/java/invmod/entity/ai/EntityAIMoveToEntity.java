@@ -1,3 +1,46 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This AI class is designed for entities in Minecraft to move towards a specific target entity. It extends the EntityAIBase class, which is part of Minecraft's AI system.
+//  *
+//  * Constructor EntityAIMoveToEntity(EntityIMLiving entity):
+//  * Initializes the AI with the entity that will be moving and sets the target entity class to EntityLivingBase by default.
+//  *
+//  * Constructor EntityAIMoveToEntity(EntityIMLiving entity, Class<? extends T> target):
+//  * Allows specifying a particular class of the target entity for the moving entity to approach.
+//  *
+//  * Method shouldExecute():
+//  * Determines if the AI should start executing. It checks if the target entity is valid and assignable from the target class.
+//  *
+//  * Method shouldContinueExecuting():
+//  * Checks if the AI should continue executing based on whether the target entity is still the current attack target.
+//  *
+//  * Method startExecuting():
+//  * Called when the AI begins execution. It sets the targetMoves flag to true and attempts to set a path to the target.
+//  *
+//  * Method resetTask():
+//  * Resets the task, setting the targetMoves flag to false.
+//  *
+//  * Method updateTask():
+//  * Updates the task, recalculating the path to the target entity if necessary and handling path failure logic.
+//  *
+//  * Method setTargetMoves(boolean flag):
+//  * Allows external modification of the targetMoves flag.
+//  *
+//  * Method getEntity():
+//  * Provides access to the entity that is using this AI.
+//  *
+//  * Method getTarget():
+//  * Provides access to the current target entity.
+//  *
+//  * Method setPath():
+//  * Attempts to set a path to the target entity and handles path success and failure logic, including updating path request timing and failure count.
+//  *
+//  * The AI uses a timer to manage path requests and keeps track of the last known position of the target entity. It also counts pathfinding failures to adjust behavior accordingly.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.ai;
 
 import invmod.entity.EntityIMLiving;

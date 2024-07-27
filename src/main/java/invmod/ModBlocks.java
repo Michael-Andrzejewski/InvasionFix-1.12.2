@@ -1,3 +1,29 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This code is part of the 'invmod' package and is responsible for defining and registering custom blocks and their corresponding item forms in a Minecraft mod. It utilizes the Forge modding API to interact with Minecraft's block and item systems.
+//  *
+//  * Classes:
+//  * - ModBlocks: Holds the static reference to the custom block 'NEXUS_BLOCK' and contains the inner class 'BlockRegistrationHandler'.
+//  * - BlockRegistrationHandler: Handles the registration of blocks and item blocks to the game registry during the mod initialization phase.
+//  *
+//  * Methods:
+//  * - registerBlocks: Subscribed to the Forge 'RegistryEvent.Register<Block>' event with high priority, this method registers all custom blocks defined in the mod.
+//  * - setBlockName: Helper method to set the unlocalized name of a block.
+//  * - setBlockNameAndTab: Helper method to set both the unlocalized name and the creative tab of a block.
+//  * - registerItemBlocks: Subscribed to the Forge 'RegistryEvent.Register<Item>' event, this method registers item forms of the custom blocks so they can be held in the player's inventory.
+//  * - createItemBlock: Helper method to create an ItemBlock from a Block, setting its unlocalized name, registry name, and creative tab.
+//  *
+//  * Usage:
+//  * - The 'NEXUS_BLOCK' is initialized as null and later set to an actual instance of 'BlockNexus' during the registration process.
+//  * - The 'ITEM_BLOCKS' list is used to keep track of all item blocks created for the custom blocks.
+//  *
+//  * Note:
+//  * - The code contains commented out debug statements and a potential error handling comment indicating a check for null blocks, which suggests that the code may be in a development or debugging stage.
+//  */
+// ```
+// `^`^`^`
+
 package invmod;
 
 import static invmod.util.InjectionUtil.Null;

@@ -1,3 +1,35 @@
+// `^`^`^`
+// ```java
+// /**
+//  * ModelEgg: A custom 3D model for an egg entity in Minecraft.
+//  *
+//  * This class extends ModelBase and is used to define the shape and structure of an egg entity's model
+//  * for rendering in Minecraft. It includes a series of ModelRenderer instances that represent different
+//  * parts of the egg model.
+//  *
+//  * Constructor:
+//  * - ModelEgg(): Initializes the model by setting the texture dimensions and creating the ModelRenderer
+//  *   components with their respective texture coordinates, dimensions, and initial rotations. Each part
+//  *   of the egg is created using the addBox method, and the setRotation method is used to define the
+//  *   initial rotation for each part.
+//  *
+//  * Methods:
+//  * - render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5): Renders the egg
+//  *   model by calling the render method on each ModelRenderer instance. It also sets the rotation angles
+//  *   for the model based on the entity's current state.
+//  * - setRotation(ModelRenderer model, float x, float y, float z): Helper method to set the rotation
+//  *   angles for a ModelRenderer instance.
+//  * - setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity): Called
+//  *   to update the model's rotation angles before rendering, typically used for animations or to react
+//  *   to entity state changes.
+//  *
+//  * The model is composed of multiple layers and sides, each represented by a ModelRenderer instance,
+//  * such as base, top, l1s1-l1s4 (layer 1 sides), l2s1-l2s4 (layer 2 sides), l3s1-l3s4 (layer 3 sides),
+//  * and l4s1-l4s4 (layer 4 sides). The naming convention lXsY refers to layer X side Y.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render.model;
 
 import net.minecraft.client.model.ModelBase;

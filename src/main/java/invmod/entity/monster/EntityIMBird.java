@@ -1,3 +1,31 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a custom bird entity within the 'invmod' mod, which is an extension to the base flying entity class 'EntityIMFlying'.
+//  * The bird entity features specialized animations and behaviors, such as wing flapping, leg movement, and beak opening.
+//  *
+//  * Key Methods:
+//  * - EntityIMBird(World world, TileEntityNexus nexus): Constructor that initializes the bird entity with animations and properties.
+//  * - doScreech(), doMeleeSound(), doHurtSound(), doDeathSound(): Methods for playing various sounds, currently empty and can be overridden.
+//  * - getWingAnimationState(), getLegSweepProgress(), getLegAnimationState(), getBeakAnimationState(): Accessor methods for retrieving animation states.
+//  * - onUpdate(): Overrides the base update method to handle animation updates and synchronization of animation flags between server and client.
+//  * - getSpecies(): Returns the species name of the entity.
+//  * - getClawsForward(), isAttackingWithWings(), isBeakOpen(): Boolean methods to check the state of the bird's claws, wings, and beak.
+//  * - getCarriedEntityYawOffset(): Returns the yaw offset for any entity being carried by the bird.
+//  * - attackEntityFrom(DamageSource par1DamageSource, float par2): Handles the bird's response to taking damage, including playing hurt sounds and death logic.
+//  * - setBeakState(int timeOpen): Sets the state of the bird's beak for a specified duration.
+//  * - onPickedUpEntity(Entity entity): Updates the yaw offset when the bird picks up another entity.
+//  * - setClawsForward(boolean flag), setAttackingWithWings(boolean flag), setBeakOpen(boolean flag): Methods to set the state of the bird's claws, wings, and beak.
+//  * - updateAITick(): Empty method for future AI updates.
+//  * - updateFlapAnimation(), updateLegAnimation(), updateBeakAnimation(): Methods to update the respective animations.
+//  * - getTier(): Returns the tier of the bird entity.
+//  * - toString(): Provides a string representation of the bird entity, including its tier.
+//  *
+//  * The class also manages an internal set of animation flags to track the state of the bird's animations and behaviors.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.monster;
 
 import invmod.mod_invasion;

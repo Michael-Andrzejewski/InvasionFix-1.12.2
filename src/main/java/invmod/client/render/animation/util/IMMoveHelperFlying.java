@@ -1,3 +1,41 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This code defines the IMMoveHelperFlying class, which extends the IMMoveHelper class and is designed to control the flying behavior of the EntityIMFlying entity in a Minecraft mod. The class manages the entity's movement in the air, including takeoff, flying, and landing sequences, as well as ground movement when not flying.
+// 
+//  * Class IMMoveHelperFlying:
+//  * - EntityIMFlying a: The flying entity being controlled.
+//  * - double targetFlySpeed: The desired speed for the entity while flying.
+//  * - boolean wantsToBeFlying: A flag indicating whether the entity wants to be in flight.
+// 
+//  * Constructor:
+//  * - IMMoveHelperFlying(EntityIMFlying entity): Initializes the helper with the specified flying entity.
+// 
+//  * Methods:
+//  * - setHeading(float yaw, float pitch, float idealSpeed, int time): Sets the entity's heading based on yaw and pitch angles, desired speed, and time.
+//  * - setWantsToBeFlying(boolean flag): Sets the wantsToBeFlying flag to indicate if the entity should attempt to fly.
+//  * - onUpdateMoveHelper(): Updates the entity's movement state each tick, handling transitions between flying, takeoff, and landing.
+//  * - doGroundMovement(): Handles the entity's ground movement when not flying.
+//  * - doFlying(): Manages the flying behavior when the entity is in the air.
+//  * - fly(): Calculates and applies forces for flying, including lift, thrust, and banking.
+//  * - doTakeOff(): Manages the takeoff sequence, preparing the entity for flight.
+// 
+//  * The code uses various mathematical calculations to simulate realistic flying dynamics, including acceleration, turning, and pitch adjustments. It also accounts for environmental factors such as being in water or lava.
+//  */
+// ```
+// This code appears to be part of a flight control system for an entity within a game or simulation environment, possibly for an aircraft or flying creature. The code manages different states of flight such as taking off, flying, and landing, and calculates the necessary thrust for movement.
+// 
+// - `setJumping()`: This method is likely to initiate the takeoff sequence or to set the entity in a pre-flight state, preparing it for liftoff.
+// 
+// - `calcThrust(double desiredVThrustRatio)`: This method calculates the thrust vector based on a desired vertical thrust ratio. It adjusts the horizontal and vertical components of the thrust within specified minimum and maximum ratios, and then calculates the acceleration in the x, y, and z directions based on the entity's current yaw (direction).
+// 
+// - `doTakeoff()`: This method handles the takeoff procedure. It calculates the entity's current speed and determines if the lift force generated is sufficient for takeoff. If the lift force is greater than gravity, the entity enters the FLYING state; otherwise, it remains in the TAKEOFF state.
+// 
+// - `doLanding()`: This method manages the landing process. It sets ground friction, checks the blocks beneath the entity to adjust the target flight speed for a smooth landing, and then calls the `fly()` method to continue flying or transition to landing. It ensures that the entity sets its thrust on and checks if the entity has touched the ground with a speed below a certain threshold to transition to the GROUNDED state, or if further adjustments are needed for a TOUCHDOWN state.
+// 
+// Overall, the code is designed to provide a realistic flight experience by dynamically adjusting the entity's flight behavior based on its speed, orientation, and interaction with the environment. It uses a state machine approach to transition between different phases of flight.
+// `^`^`^`
+
 package invmod.client.render.animation.util;
 
 import invmod.entity.MoveState;

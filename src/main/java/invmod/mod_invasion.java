@@ -1,3 +1,57 @@
+// `^`^`^`
+// ```java
+// /**
+//  * Executive Summary:
+//  * This code is part of the 'invmod' package, which appears to be a Minecraft mod focused on adding new invasion mechanics and entities to the game. The mod introduces various entities, custom events, and commands that enhance the gameplay experience by providing new challenges and content for players. The code is structured around the Forge modding API, which allows for integration with Minecraft's systems and other mods.
+//  *
+//  * Key Components:
+//  * - ProxyClient: Handles client-side operations such as rendering entities and registering animations.
+//  * - GuiHandler: Manages GUI elements for the mod.
+//  * - deathList: A HashMap tracking player deaths, possibly for invasion mechanics.
+//  * - defaultMobBuilder: Used to construct default mob entities for invasions.
+//  * - nightSpawnPool1: A selection pool for entities that spawn at night.
+//  * - mobHealthNightspawn & mobHealthInvasion: HashMaps defining health configurations for various mobs during night spawns and invasions.
+//  * - tabInvmod: A custom creative tab for the mod's items.
+//  * - mod_invasion: The main mod class annotated with @Mod, containing event handlers for different stages of the mod lifecycle (preInit, load, postInitialise, onServerStart).
+//  * - loadHealthConfig: Loads health configurations for mobs.
+//  * - loadEntities: Registers entities and their renderers with the game.
+//  *
+//  * Event Handlers:
+//  * - preInit: Loads configurations, registers entity renderers, initializes network GUI handler, and other setup tasks.
+//  * - load: Registers event handlers, adds recipes, and sets up mob spawns based on configuration.
+//  * - postInitialise: Placeholder for post-initialization tasks.
+//  * - onServerStart: Registers custom commands when the server starts.
+//  * - PlayerLoggedInEvent: Placeholder for handling player login events.
+//  */
+// ```
+// ```plaintext
+// This code is part of a Minecraft mod that extends the game's functionality by adding custom entities, spawn behaviors, and player interaction features. The code primarily deals with entity registration, spawn egg creation, and player communication.
+// 
+// Entity Registration:
+// - The code registers several custom entities such as IMBoulder, IMBolt, IMTrap, IMPrimedTNT, and optionally IMBird and IMGiantBird if in debug mode. These entities are registered with specific characteristics such as update frequency and whether they send velocity updates.
+// 
+// Spawn Egg Registration:
+// - The code includes a section for registering custom spawn eggs for various entities like zombies, skeletons, spiders, creepers, and more. Each spawn egg is associated with a unique entity type, name, and color codes.
+// 
+// Night Spawn Configuration (Deprecated):
+// - A deprecated method 'nightSpawnConfig' exists, which was intended to configure night spawn patterns for entities. It includes a mechanism for loading configurations and adding entries to a spawn pool based on weights and patterns.
+// 
+// Player Interaction:
+// - Methods for broadcasting messages to all players, sending messages to specific players, and adjusting player-specific settings are included. These methods support sending formatted text messages in-game to players.
+// 
+// Mob Spawning:
+// - The code provides functionality to spawn custom mobs at night with specific attributes such as sight range, sense range, and whether they burn in daylight. It uses a selection pool to determine which mobs to spawn.
+// 
+// Utility Methods:
+// - Several utility methods are present, such as 'getMobBuilder' for creating mobs, 'getRenderHammerItem' for getting a specific item stack, and 'instance' for getting the mod's instance.
+// 
+// Health Management:
+// - A method 'getMobHealth' is provided to determine the health of custom mobs based on whether they are bound to a Nexus and other factors.
+// 
+// Overall, the code is structured to enhance the gameplay experience by introducing new entities and interactions within the Minecraft world.
+// ```
+// `^`^`^`
+
 package invmod;
 
 import java.util.HashMap;

@@ -1,3 +1,25 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class extends the RenderWolf class to provide custom rendering for a wolf entity in Minecraft.
+//  * It is part of the invmod client rendering system and utilizes OpenGL for rendering adjustments.
+//  *
+//  * Constructor:
+//  * - RenderIMWolf(RenderManager renderManager): Initializes the renderer with the specified RenderManager.
+//  *
+//  * Methods:
+//  * - preRenderCallback(EntityWolf par1EntityLiving, float par2): A callback method that is called before the wolf entity is rendered.
+//  *   It applies a scaling transformation to the wolf model to make it appear larger in the game.
+//  *
+//  * - getEntityTexture(EntityWolf entity): Overrides the method to provide a custom texture for the wolf entity.
+//  *   It returns a ResourceLocation object pointing to the texture file defined by the mod's resource identifier.
+//  *
+//  * The class uses a static final ResourceLocation to store the path to the custom wolf texture.
+//  * The texture is expected to be located in the 'textures' directory within the mod's assets folder.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render;
 
 import org.lwjgl.opengl.GL11;

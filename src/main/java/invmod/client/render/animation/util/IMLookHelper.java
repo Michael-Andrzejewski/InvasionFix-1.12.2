@@ -1,3 +1,22 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class extends the EntityLookHelper to provide custom look behavior for EntityIMMob entities.
+//  * It allows the entity to set its look position based on another entity or a specific location in the world,
+//  * and updates the entity's head rotation to face that position.
+//  *
+//  * Methods:
+//  * - IMLookHelper(EntityIMMob entity): Constructor that sets the entity for which the look behavior is being customized.
+//  * - setLookPositionWithEntity(Entity target, float deltaYaw, float deltaPitch): Sets the look position based on the target entity's position, adjusting for eye height.
+//  * - setLookPosition(double x, double y, double z, float deltaYaw, float deltaPitch): Sets the look position based on specific world coordinates.
+//  * - onUpdateLook(): Updates the entity's head rotation to face the look position if a new position has been set.
+//  * - updateRotation(float currentAngle, float targetAngle, float maxIncrease): Helper method that adjusts the current angle towards the target angle without exceeding the max increase.
+//  *
+//  * The class maintains internal state to track whether the look position needs to be updated and performs calculations to smoothly transition the entity's head rotation.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render.animation.util;
 
 import invmod.entity.monster.EntityIMMob;

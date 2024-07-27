@@ -1,3 +1,41 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a custom creeper entity with specialized AI for the mod 'invmod'.
+//  * It extends the EntityIMMob class, which is a type of mod-specific mob entity.
+//  *
+//  * Purpose:
+//  * - To define a creeper entity that interacts with the game world and the player in specific ways,
+//  *   including a unique AI behavior that allows it to attack a Nexus, avoid ocelots, target players,
+//  *   and explode under certain conditions.
+//  *
+//  * Methods:
+//  * - EntityIMCreeper(World world): Constructor that initializes the creeper in the world without a Nexus.
+//  * - EntityIMCreeper(World world, TileEntityNexus nexus): Overloaded constructor that initializes the creeper with a reference to a Nexus.
+//  * - initEntityAI(): Initializes the AI tasks and target tasks for the creeper.
+//  * - updateAITick(): Updates the AI each tick; inherited and can be overridden for additional behavior.
+//  * - onPathBlocked(Path path, INotifyTask notifee): Called when the creeper's path is blocked, potentially triggering an explosion.
+//  * - entityInit(): Registers the creeper's data parameters.
+//  * - onUpdate(): Called each tick to update the creeper's state, handling the ignition and explosion logic.
+//  * - getHurtSound(DamageSource damageSourceIn): Returns the sound to play when the creeper is hurt.
+//  * - getDeathSound(): Returns the sound to play when the creeper dies.
+//  * - getSpecies(): Returns the species name of the creeper.
+//  * - onDeath(DamageSource par1DamageSource): Handles additional logic when the creeper dies, potentially dropping records if killed by a skeleton.
+//  * - attackEntityAsMob(Entity par1Entity): Defines the attack behavior of the creeper.
+//  * - setCreeperFlashTime(float par1): Sets the creeper's flash time during ignition.
+//  * - getBlockPathCost(PathNode prevNode, PathNode node, IBlockAccess terrainMap): Calculates the cost of pathing over a block, considering obstacles.
+//  * - toString(): Provides a string representation of the creeper, including its tier.
+//  * - dropFewItems(boolean flag, int amount): Drops items upon death.
+//  * - doExplosion(): Handles the explosion logic when the creeper detonates.
+//  * - getCreeperState(): Gets the current state of the creeper (idle, ignited, etc.).
+//  * - setCreeperState(int state): Sets the creeper's state, controlling its behavior.
+//  *
+//  * The creeper's behavior is influenced by its AI tasks, which include swimming, avoiding ocelots, targeting players and entities, and attacking the Nexus.
+//  * The creeper has a state that determines whether it is idle, ignited, or exploding, and this state is used to control its AI and interactions.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.monster;
 
 import com.google.common.base.Predicate;

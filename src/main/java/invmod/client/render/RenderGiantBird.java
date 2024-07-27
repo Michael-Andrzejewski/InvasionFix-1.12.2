@@ -1,3 +1,29 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class provides the rendering logic for the Giant Bird entity in the mod.
+//  * It extends the RenderIMMob class, which is a custom renderer for mod-specific mobs.
+//  *
+//  * - RenderGiantBird(RenderManager renderManager):
+//  *   Constructor that initializes the renderer with a specific model and shadow size.
+//  *
+//  * - doRenderLiving(EntityIMBird entityBird, double renderX, double renderY, double renderZ, float interpYaw, float partialTick):
+//  *   Handles the rendering of the living Giant Bird entity. It renders navigation vectors if debug is enabled and sets up the model's animations.
+//  *
+//  * - renderModel(EntityLiving par1EntityLiving, float par2, float par3, float par4, float par5, float par6, float par7):
+//  *   Renders the model of the Giant Bird with the given animation parameters. This method is currently commented out and may be overridden by its parent class.
+//  *
+//  * - renderNavigationVector(EntityIMBird entityBird, double entityRenderOffsetX, double entityRenderOffsetY, double entityRenderOffsetZ):
+//  *   Renders a visual representation of the navigation path of the Giant Bird for debugging purposes. It uses OpenGL calls to draw lines in the world.
+//  *
+//  * - getEntityTexture(EntityIMBird entity):
+//  *   Returns the ResourceLocation of the texture used for the Giant Bird entity.
+//  *
+//  * The class utilizes OpenGL and Minecraft's Tessellator and BufferBuilder classes to handle custom rendering of the Giant Bird entity, including its texture and animations.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render;
 
 import org.lwjgl.opengl.GL11;

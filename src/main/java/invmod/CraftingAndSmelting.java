@@ -1,3 +1,31 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class is responsible for defining the crafting and smelting recipes for various items within a Minecraft mod.
+//  * It utilizes the GameRegistry class from the Minecraft Forge API to add these recipes to the game.
+//  *
+//  * Methods:
+//  * - addRecipes(): This method is used to register all the crafting and smelting recipes for the mod. It includes
+//  *   commented-out sections that suggest the method previously handled crafting recipes directly, but these are now
+//  *   managed via a resource pack (as indicated by the TODO comment). The method currently contains only smelting
+//  *   recipes, which convert input items into new items with the help of a furnace. Three smelting recipes are added:
+//  *   1. Smelting CATALYST_MIXTURE to produce NEXUS_CATALYST with an experience reward of 1f.
+//  *   2. Smelting STABLE_CATALYST_MIXTURE to produce STABLE_NEXUS_CATALYST with an experience reward of 1f.
+//  *   3. Smelting STRONG_CATALYST_MIXTURE to produce STRONG_CATALYST with a higher experience reward of 10f.
+//  *
+//  * Note: The actual items and blocks (e.g., ModItems.CATALYST_MIXTURE) are presumably defined elsewhere in the mod's codebase.
+//  * The commented-out code and the TODO indicate that there may be future plans to reintroduce or modify the crafting recipes.
+//  */
+// package invmod;
+// 
+// // Import statements...
+// 
+// public class CraftingAndSmelting {
+//     // Method definitions...
+// }
+// ```
+// `^`^`^`
+
 package invmod;
 
 import net.minecraft.item.ItemStack;

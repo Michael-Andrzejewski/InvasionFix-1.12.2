@@ -1,3 +1,27 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class is responsible for rendering the EntityIMBird entity within the game, providing a visual representation of the bird entity using OpenGL. It extends the RenderLiving class, which is a part of Minecraft's rendering system for entities.
+//  *
+//  * - RenderB(RenderManager renderManager):
+//  *   Constructor that initializes the renderer with a specific model (ModelBird) and shadow size.
+//  *
+//  * - doRender(EntityIMBird entityBird, double renderX, double renderY, double renderZ, float interpYaw, float partialTick):
+//  *   Handles the rendering of the EntityIMBird. It checks if the bird has a debug flag for flying and renders navigation vectors if necessary. It also sets the wing and leg animations based on the bird's current state before delegating to the superclass for actual rendering.
+//  *
+//  * - renderNavigationVector(EntityIMBird entityBird, double entityRenderOffsetX, double entityRenderOffsetY, double entityRenderOffsetZ):
+//  *   Renders a navigation vector line from the bird to its target, which is useful for debugging purposes. It uses OpenGL calls to draw the line with appropriate blending and coloring.
+//  *
+//  * - getEntityTexture(EntityIMBird entity):
+//  *   Returns the ResourceLocation object that points to the texture file for the EntityIMBird.
+//  *
+//  * The class also includes a static final field 'texture' that holds the ResourceLocation of the bird's texture, which is used in the getEntityTexture method.
+//  *
+//  * Note: The commented out override method 'doRender' seems to be a legacy or alternative render method that is not currently in use.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render;
 
 import org.lwjgl.opengl.GL11;

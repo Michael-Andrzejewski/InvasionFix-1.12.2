@@ -1,3 +1,75 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This code is part of the invmod.nexus package and is responsible for generating waves of enemy entities for a game.
+//  * The IMWaveBuilder class uses various methods to create complex and varied waves of enemies that increase in difficulty
+//  * and complexity as the game progresses. The class utilizes a combination of random and weighted selection pools to
+//  * ensure diversity in the enemy types and behaviors within each wave.
+//  *
+//  * Methods:
+//  * - IMWaveBuilder(): Constructor that initializes a random number generator.
+//  * - generateWave(float difficulty, float tierLevel, int lengthSeconds): Generates a wave based on difficulty, tier level,
+//  *   and wave duration. It calculates the number of enemy groups, their sizes, and timing for their appearance.
+//  * - generateGroupPool(float tierLevel): Creates a pool of enemy groups with varying types and weights based on the tier level.
+//  * - generateGroupPool(float tierLevel, FiniteSelectionPool<IEntityIMPattern> startPool, int amount): Overloaded method that
+//  *   adds a specified amount of enemy groups to an existing pool.
+//  * - generateGroupPool(float tierLevel, RandomSelectionPool<IEntityIMPattern> startPool, float weight): Overloaded method that
+//  *   adds weighted enemy groups to an existing pool.
+//  * - generateSteadyPool(float tierLevel): Generates a pool of enemies that appear at a steady rate throughout the wave.
+//  * - getPattern(String s): Retrieves an enemy pattern by name, logging a warning if the pattern does not exist.
+//  * - isPatternNameValid(String s): Checks if a given pattern name is valid.
+//  * - generateWave(int waveNumber, int difficulty): Placeholder method for generating a wave based on wave number and difficulty.
+//  * - generateMainInvasionWave(int waveNumber): Generates predefined waves for the first 11 wave numbers, with special cases
+//  *   for each wave.
+//  *
+//  * The class also defines constants for the weights of different enemy types and maintains a collection of common enemy patterns.
+//  */
+// ```
+// ```plaintext
+// This code is designed to manage the spawning of enemy waves in a game, likely a tower defense or survival game. Each case within the switch statement corresponds to a different wave number, with specific configurations for the types and frequencies of enemies that will appear during that wave. The code uses various pools (RandomSelectionPool and FiniteSelectionPool) to manage the randomness and finite occurrences of enemy types.
+// 
+// - RandomSelectionPool: This pool allows for the random selection of enemies based on assigned probabilities.
+// - FiniteSelectionPool: This pool allows for a fixed selection of enemies, ensuring that only a set number of each enemy type can spawn.
+// 
+// Each wave is defined by creating WaveEntry objects, which specify the timing, frequency, and type of enemies that will spawn. These entries are then added to an entryList, which is used to construct a Wave object representing the entire wave.
+// 
+// - WaveEntry: Defines the start and end times for enemy spawns, the number of enemies, the delay between spawns, the pool of enemies to choose from, and optionally, the number of enemies to spawn at once and the delay between these bursts. Some WaveEntry objects also include alerts to notify players of certain events.
+// 
+// The Wave object created at the end of each case represents the entire wave, including its duration and the delay before the next wave starts.
+// 
+// In summary, this code is a configuration tool for defining the behavior and composition of enemy waves in a game, allowing for both random and predetermined enemy encounters to challenge the player.
+// ```
+// ```plaintext
+// This code is part of a game that manages the spawning of enemy waves, with a focus on creating varied and challenging encounters for the player. It defines the composition and behavior of enemy waves based on the wave number. Each wave is composed of different types of enemies with varying tiers and quantities, which are determined by the wave number.
+// 
+// Key components of the code:
+// 
+// - FiniteSelectionPool: A pool that allows for a fixed selection of enemy types to be added, each with a specified quantity.
+// - RandomSelectionPool: A pool that allows for the addition of enemy types with a weighted chance of being selected.
+// - WaveEntry: Represents a segment of a wave, with properties such as the time range of the wave, the number of enemies, the delay between spawns, the pool of enemies to select from, and additional parameters like the number of simultaneous spawns and the spawn cap.
+// - Wave: Represents an entire wave of enemies, with properties such as the total duration and the list of WaveEntries that make up the wave.
+// 
+// The code snippet shows the setup for waves 9, 10, and 11, each with different pools and entries to create diverse gameplay experiences. Additionally, there is a method to generate extended waves for wave numbers beyond 11, which scales the difficulty based on the wave number.
+// 
+// Each WaveEntry can also include special alerts or messages to enhance the player's experience, such as a warning about a large number of mobs approaching.
+// 
+// The static block at the end defines various EntityPatterns, which are templates for enemy types with specific tiers, flavors, and textures, used to create the enemy pools for the waves.
+// 
+// Overall, this code is responsible for dynamically generating challenging enemy waves to engage players in a combat scenario within the game.
+// ```
+// ```plaintext
+// This code is part of a game entity management system, specifically designed to define and register different types of enemy entities with varying difficulty tiers. Each entity is represented by an instance of `EntityPattern`, which is associated with a specific type of enemy, such as a pig engineer, skeleton, thrower, burrower, creeper, or imp. The purpose of the code is to initialize these entities with their respective types and difficulty tiers, and then store them in a common pattern registry for later retrieval and use within the game.
+// 
+// Methods within the code:
+// - `EntityPattern(IMEntityType)`: Constructor that creates an `EntityPattern` object for a given entity type.
+// - `addTier(int, float)`: Method to assign a difficulty tier and a spawn probability to the entity pattern.
+// - `commonPatterns.put(String, EntityPattern)`: Method to add the initialized entity patterns to a common registry with a unique key for each entity type and tier combination.
+// 
+// Each entity pattern is created with a specific type and a tier level of 1 or 2, with a spawn probability set to 1.0F, indicating a default spawn rate. After setting up the entity patterns, they are stored in the `commonPatterns` map using descriptive keys that include the entity type and tier, allowing for easy identification and access within the game's spawning system.
+// ```
+// 
+// `^`^`^`
+
 package invmod.nexus;
 
 import java.util.ArrayList;

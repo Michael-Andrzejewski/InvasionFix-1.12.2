@@ -1,3 +1,91 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This abstract class, EntityIMMob, extends EntityIMLiving and implements the IMob and SparrowAPI interfaces,
+//  * providing a framework for creating custom mob entities for the "Invasion Mod" in Minecraft. It includes various
+//  * attributes and behaviors that these mobs can exhibit, such as climbing, jumping, attacking, and responding to
+//  * environmental conditions like water and lava.
+//  *
+//  * Methods:
+//  * - EntityIMMob(World world): Constructor that initializes the mob in the given world.
+//  * - EntityIMMob(World world, TileEntityNexus nexus): Overloaded constructor that also binds the mob to a Nexus.
+//  * - entityInit(): Registers data parameters and initializes entity properties.
+//  * - onUpdate(): Called each tick to update the entity's state and synchronize client-server data.
+//  * - onEntityUpdate(): Handles air management and checks for adjacent climbable blocks.
+//  * - onLivingUpdate(): Manages sunlight damage and other living entity updates.
+//  * - attackEntityFrom(DamageSource damagesource, float damage): Processes incoming damage and sets the attacker.
+//  * - stunEntity(int ticks): Stuns the entity, preventing movement for a specified number of ticks.
+//  * - attackEntityAsMob(Entity entity): Attacks the specified entity using the mob's attack strength.
+//  * - attackEntityAsMob(Entity entity, int damageOverride): Overloaded attack method allowing for a custom damage value.
+//  * - moveRelative(float strafe, float up, float forward, float friction): Handles movement while swimming or flying.
+//  *
+//  * The class also includes various attributes for managing the mob's health, attack power, movement, and environmental
+//  * interactions. It is designed to be extended by specific mob classes that will define their unique behaviors and
+//  * characteristics.
+//  */
+// ```
+// This code appears to be part of an entity class for a modded Minecraft game, specifically for a creature with various behaviors and interactions with the game world. The code manages the entity's movement, health, interactions with blocks, detection of other entities, and saving/loading of entity data. Here's a summary of the methods within the code:
+// 
+// - `moveFlying`: Adjusts the entity's flying movement based on strafe and forward movement inputs, applying a movement factor and adjusting for the entity's yaw rotation.
+// - `onBlockRemoved`: Handles the event when a block is removed near the entity, playing a sound effect and applying a throttle to limit the frequency of sound playback.
+// - `canEntityBeDetected`: Determines if another entity can be detected by this entity based on distance and visibility.
+// - `findDistanceToNexus`: Calculates the distance from the entity to a 'nexus' point, which is likely a significant location or objective for the entity.
+// - `writeEntityToNBT` and `readEntityFromNBT`: Methods for saving and loading the entity's data to and from NBT (Named Binary Tag) format, which is used for storing Minecraft game data.
+// - Getter methods (`getPrevRotationRoll`, `getRotationRoll`, etc.): Retrieve various properties of the entity, such as rotation angles and attack range.
+// - `setMaxHealth` and `setMaxHealthAndHealth`: Set the maximum health of the entity and optionally set the current health to the same value.
+// - `getCanSpawnHere`: Determines if the entity can spawn in the current location based on light levels, ground conditions, and whether the entity is inside a block.
+// - `isEntityInOpaqueBlockBeforeSpawn`: Checks if the entity is inside an opaque block before spawning.
+// - `getBlockStrength`: Calculates the strength of a block at a given position, which may be used for determining how easily the entity can break it.
+// - `getCanClimb`, `getCanDigDown`, `getAggroRange`, `getSenseRange`: Return boolean values or ranges for the entity's abilities, such as climbing, digging, and detection ranges.
+// - `getBlockPathWeight`: Used in pathfinding, returns the cost of a path through a block, which may be influenced by light levels.
+// - `getAIGoal` and `getPrevAIGoal`: Return the current and previous AI goals of the entity.
+// - `getBlockPathCost` and `getPathOptionsFromNode`: Methods used in pathfinding to calculate the cost of a path and to generate path options from a node.
+// - `getRenderLabel`: Returns a label used for rendering the entity, possibly for debugging purposes.
+// - `getDebugMode`: Returns the debug mode state of the entity.
+// - `isHostile`, `isNeutral`, `isThreatTo`, `getAttackingTarget`, `isStupidToAttack`, `doNotVaporize`, `isPredator`, `isPeaceful`, `isPrey`, `isUnkillable`, `isFriendOf`: A series of methods that define the entity's behavior and interactions with other entities, such as whether it is hostile, neutral, or a predator.
+// 
+// Overall, the code is designed to manage a complex entity's behavior in a Minecraft mod, including movement, health, interactions with the environment, and AI goals.
+// ```plaintext
+// This code appears to be part of an entity class for a modded Minecraft game, specifically for entities with advanced AI and pathfinding capabilities. The entity has various behaviors and states, such as climbing, swimming, jumping, and interacting with a "nexus" object. Below is a summary of the key methods and their purposes:
+// 
+// - isNPC(), isPet(), getName(), getGender(), getPetOwner(), getSize(), customStringAndResponse(), getSimplyID(): These methods provide basic entity information and behaviors, such as whether the entity is an NPC or a pet, its name, gender, owner, size, and ID.
+// 
+// - isNexusBound(), isOnLadder(), isAdjacentClimbBlock(), checkForAdjacentClimbBlock(): These methods determine whether the entity is bound to a nexus, on a ladder, or adjacent to a climbable block, and check for climbable blocks in the entity's vicinity.
+// 
+// - canSwimHorizontal(), canSwimVertical(), shouldRenderLabel(): These methods define the entity's swimming capabilities and whether its label should be rendered.
+// 
+// - acquiredByNexus(TileEntityNexus nexus), setDead(), setEntityIndependent(), setBurnsInDay(), setAggroRange(), setSenseRange(), setJumping(), setAdjacentClimbBlock(), setRenderLabel(), setShouldRenderLabel(), setDebugMode(): These methods manage the entity's interactions with a nexus, its life state, independence, day burning behavior, aggression and sensing ranges, jumping state, adjacent climbable block state, label rendering, and debug mode.
+// 
+// - updateAITasks(), updateAITick(): These methods update the entity's AI tasks and tick, handling navigation, movement, and goal-setting based on the entity's current target or nexus.
+// 
+// - canDespawn(): Determines if the entity can despawn based on its nexus binding.
+// 
+// - setRotationRoll(), setRotationYawHeadIM(), setRotationPitchHead(), setAttackRange(): These methods set the entity's rotation and attack range.
+// 
+// - sunlightDamageTick(), dealFireDamage(), dropFewItems(): These methods handle the entity's damage from sunlight, fire, and item dropping behavior upon death.
+// 
+// - calcBlockPathCost(), calcPathOptions(), calcPathOptionsVertical(): These methods calculate path costs and options for the entity's movement through the terrain, considering factors like block resistance, swimming, climbing, and digging.
+// 
+// The code is designed to provide a complex and dynamic behavior pattern for entities, allowing them to navigate the world with a variety of actions and respond to different environmental challenges and player interactions.
+// ```
+// 
+// This code appears to be part of an AI system for a game entity, possibly within a Minecraft-like environment, where the entity navigates through a block-based terrain. The code includes methods for pathfinding, movement, and interaction with the game world.
+// 
+// - `addAdjacent`: Adds adjacent nodes to the pathfinder if the entity can either climb or if the adjacent block is a ladder, indicating possible paths the entity can take.
+// - `getNextLowestSafeYOffset`: Determines the next lowest vertical position the entity can safely move to, considering whether the entity can stand on a block or swim in liquid.
+// - `canStandOnBlock`: Checks if a block at a given position is solid and not avoidable, indicating whether the entity can stand on it.
+// - `getLightLevelBelow8`: Determines if the light level at the entity's position is below a certain threshold, which could be used for spawning conditions or stealth mechanics.
+// - `setAIGoal`, `setPrevAIGoal`, `transitionAIGoal`: Methods for managing the entity's current and previous AI goals, allowing for behavior transitions.
+// - `setDestructiveness`: Sets a destructiveness level for the entity, which could influence how it interacts with the environment (e.g., breaking blocks).
+// - `setGravity`, `setGroundFriction`: Configures the entity's gravity and ground friction, affecting its movement physics.
+// - `setCanClimb`, `setJumpHeight`: Sets the entity's ability to climb and its jump height, modifying its navigation capabilities.
+// - `setName`, `setGender`: Assigns a name and gender to the entity, likely for identification or role-playing elements.
+// - `onDebugChange`: A placeholder for a method that would be called when a debug-related change occurs.
+// - `getBlockStrength`: A static method that calculates the strength of a block based on its explosion resistance and the presence of the same type of blocks adjacent to it.
+// 
+// Overall, the code is designed to give an entity the ability to navigate a 3D block-based world with various movement capabilities and environmental interactions. It includes methods for pathfinding, adjusting physical properties, and responding to the game world's state.
+// `^`^`^`
+
 package invmod.entity.monster;
 
 import invmod.IBlockAccessExtended;

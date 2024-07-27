@@ -1,3 +1,92 @@
+// `^`^`^`
+// ```plaintext
+// This code defines the NavigatorFlying class, which extends the NavigatorIM class and implements the INavigationFlying interface, providing navigation capabilities for flying entities in a Minecraft mod. The class is designed to control the movement of flying entities, such as determining flight paths, circling targets, and landing.
+// 
+// Key methods and their purposes:
+// 
+// - Constructor (NavigatorFlying): Initializes the navigator with the flying entity and path source, setting default values for movement type, vision distance, and other parameters.
+// 
+// - setMovementType: Allows changing the movement type (flying, walking, or mixed) for the entity's navigation.
+// 
+// - enableDirectTarget: Toggles whether the entity should move directly towards a target without pathfinding.
+// 
+// - setLandingPath: Clears the current path and sets the entity's movement type to prefer walking, indicating it should land.
+// 
+// - setCirclingPath: Sets a path for the entity to circle around a given point or target at a specified height and radius.
+// 
+// - getDistanceToCirclingRadius: Calculates the distance from the entity to the defined circling radius around a target.
+// 
+// - setFlySpeed: Sets the target speed for flying.
+// 
+// - setPitchBias: Applies a pitch bias to influence the entity's flying angle.
+// 
+// - updateAutoPathToEntity: Updates the path to a target entity, considering visibility and distance to determine if a new path needs to be created.
+// 
+// - autoPathToEntity: Initiates automatic pathfinding to a target entity.
+// 
+// - tryMoveToEntity: Attempts to move the entity to a target entity, considering the movement type.
+// 
+// - tryMoveToXYZ: Attempts to move the entity to a specific XYZ coordinate, considering the movement type.
+// 
+// - tryMoveTowardsXZ: Attempts to move the entity towards a point on the XZ plane within a specified range.
+// 
+// - clearPath: Clears the current path and resets related flags.
+// 
+// - isCircling: Returns whether the entity is currently circling a target.
+// 
+// - getStatus: Provides a status string indicating the entity's current navigation state (e.g., flying, landing, circling).
+// 
+// - pathFollow: Follows the current path, updating the path index as the entity moves.
+// 
+// - noPathFollow: Handles movement when there is no path, such as updating the heading or deciding whether to fly or walk based on the movement type.
+// 
+// The class uses a combination of 3D vectors, entity states, and internal flags to manage the complex behavior of flying entities, including their ability to see targets, fly towards them, circle around points of interest, and land.
+// ```
+// ```plaintext
+// This code appears to be part of an AI system for an entity in a game or simulation environment, possibly for flying entities such as birds or drones. The code is responsible for handling movement and navigation by updating the entity's heading and target position based on various factors such as obstacles, targets, and desired behaviors.
+// 
+// - setMoveTo: Sets the entity's movement target to a specified intermediate target position at a given speed.
+// 
+// - convertToVector: Converts yaw and pitch angles into a 3D vector, representing a direction and distance based on an ideal speed and a fixed time interval.
+// 
+// - updateHeading: Updates the entity's heading by scanning the environment in a grid pattern, simulating a vision system. It calculates potential targets and obstacles, adjusts the heading based on biases towards certain angles, and determines the best direction to move towards.
+// 
+// - updateHeadingDirectTarget: Directly updates the entity's heading to face a specific target entity.
+// 
+// - chooseCoordinate: Selects the best coordinate (pixel) from a grid that represents the entity's field of view, based on the appeal of each point, which is influenced by various biases and environmental factors.
+// 
+// - setTarget: Sets an intermediate target position for the entity to move towards.
+// 
+// - getTarget: Retrieves the current intermediate target position.
+// 
+// - doHeadingBiasPass: Applies biases to the entity's heading based on preferred yaw and pitch angles, influencing the entity's movement direction.
+// 
+// - setWantsToBeFlying: Sets whether the entity wants to be flying or not, which likely affects its movement behavior.
+// 
+// - appraiseLanding: Evaluates potential landing spots by simulating downward-looking rays and assessing the safety and distance of the landing area.
+// 
+// Overall, the code is designed to provide a sophisticated navigation system for an AI-controlled entity, allowing it to move through its environment intelligently by avoiding obstacles, following targets, and making landing decisions.
+// ```
+// ```java
+// /**
+//  * This code is part of an entity's navigation system, specifically designed to evaluate the safety and distance of a potential landing area relative to the entity's current position. The code calculates a safety score and distance for a given trajectory or path that the entity might take.
+// 
+//  * Method Summary:
+//  * - The method takes in parameters for the angle of horizontal movement, the distance in the XZ plane, and the resolution of landing checks.
+//  * - It calculates a target position based on the entity's current position, the given angle, and distance.
+//  * - It performs a ray trace from the entity's position to the target position to detect if there are any blocks in the path.
+//  * - If a block is encountered, the method checks if the entity avoids that type of block and adjusts the safety score accordingly.
+//  * - It also checks if the ray trace hit the top of a block (EnumFacing.UP), which increases the safety score.
+//  * - The method calculates the distance to the hit block and adds it to the total distance.
+//  * - If no block is hit, a default value is added to the distance.
+//  * - The method averages the safety and distance scores over the number of checks (landingResolution) to provide a final assessment.
+//  * - It returns a Pair object containing the safety score and distance as Float values.
+// 
+//  * This method is useful for AI routines where an entity needs to assess the viability of moving to a new position, such as pathfinding or when simulating physics-based movements like jumping or flying.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.ai.navigator;
 
 import invmod.client.render.animation.util.FlyState;

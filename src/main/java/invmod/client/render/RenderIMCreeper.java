@@ -1,3 +1,25 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class provides the rendering logic for the custom EntityIMCreeper entity in the Minecraft mod.
+//  * It extends RenderLiving to utilize the rendering capabilities provided by Minecraft for living entities.
+//  *
+//  * Methods:
+//  * - RenderIMCreeper(RenderManager): Constructor that sets the render manager and the model to be used for rendering.
+//  * - preRenderCallback(EntityIMCreeper, float): Applies a scaling transformation to the creeper before rendering, 
+//  *   based on its flash time, causing it to inflate as it gets closer to exploding.
+//  * - getColorMultiplier(EntityIMCreeper, float, float): Changes the color of the creeper based on its flash time, 
+//  *   giving it a flashing effect as it gets closer to exploding.
+//  * - func_27007_b(EntityIMCreeper, int, float): A placeholder method that currently returns -1, potentially for future use.
+//  * - inheritRenderPass(EntityLivingBase, int, float): Hooks into the rendering passes, delegating to func_27007_b.
+//  * - getEntityTexture(EntityIMCreeper): Returns the ResourceLocation of the texture to be used for the creeper.
+//  *
+//  * The class also includes an anonymous inner class extending ModelCreeper to override rendering and rotation angle settings.
+//  * This inner class is used to adjust the limb swing of the creeper model and synchronize the armor rotation with the head.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render;
 
 import org.lwjgl.opengl.GL11;

@@ -1,3 +1,35 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This Java class, CustomTags, is part of the invmod.util.spawneggs package and is used to create custom NBTTagCompound instances for various entities in Minecraft. These tags are used to define specific properties and behaviors for entities when they are spawned into the game world. The class contains a collection of static methods, each returning an NBTTagCompound with predefined attributes for different entity types and scenarios.
+// 
+//  * Methods:
+//  * - poweredCreeper(): Creates a tag for a powered creeper (charged by lightning).
+//  * - IMZombie_T1 to IMZombie_T3(): Creates tags for different tiers of custom zombies.
+//  * - IMZombie_T2_tar(): Creates a tag for a tar-flavored tier 2 custom zombie.
+//  * - IMSpider_T1_baby(): Creates a tag for a baby tier 1 custom spider.
+//  * - IMSpider_T2(): Creates a tag for a tier 2 custom spider.
+//  * - IMSpider_T2_mother(): Creates a tag for a mother tier 2 custom spider.
+//  * - IMThrower_T2(): Creates a tag for a tier 2 custom thrower entity.
+//  * - IMZombiePigman_T1 to IMZombiePigman_T3(): Creates tags for different tiers of custom zombie pigmen.
+//  * - witherSkeleton(): Creates a tag for a wither skeleton with equipment.
+//  * - villagerZombie(): Creates a tag for a zombie villager.
+//  * - babyZombie(): Creates a tag for a baby zombie.
+//  * - horseType(int type): Creates a tag for a horse with a specified type.
+//  * - createItemTag(byte count, short damage, short id): Creates a tag for an item with specified count, damage, and ID.
+//  * - getEntityTag(String entityID): Creates a tag with an entity ID.
+//  * - ridingTag(NBTTagCompound ridden): Creates a tag for an entity riding another entity.
+//  * - spiderJockey(boolean wither): Creates a tag for a spider jockey, with an option for a wither skeleton rider.
+//  * - chickenJockey(boolean villager): Creates a tag for a chicken jockey, with an option for a villager zombie rider.
+// 
+//  * This class is essential for customizing entities in Minecraft modding, allowing for the creation of unique mobs with specific characteristics.
+//  */
+// package invmod.util.spawneggs;
+// 
+// // ... (rest of the imports and class code)
+// ```
+// `^`^`^`
+
 package invmod.util.spawneggs;
 
 import net.minecraft.nbt.NBTTagCompound;

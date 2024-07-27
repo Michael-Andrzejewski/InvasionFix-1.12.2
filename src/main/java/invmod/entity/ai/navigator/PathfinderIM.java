@@ -1,3 +1,30 @@
+// `^`^`^`
+// ```java
+// /**
+//  * PathfinderIM is a pathfinding class designed for use within the Minecraft mod 'invmod'. It provides functionality
+//  * to calculate paths for entities that implement the IPathfindable interface. The class utilizes A* search algorithm
+//  * principles to find the shortest path between two points in the game world, considering various movement capabilities
+//  * and obstacles.
+//  *
+//  * Methods:
+//  * - createPath: A static synchronized method that serves as an entry point to create a path from one point to another.
+//  * - PathfinderIM (constructor): Initializes the pathfinder with default values and data structures.
+//  * - createEntityPathTo: Sets up the pathfinding process, initializes the start and end nodes, and calls addToPath to
+//  *   begin the search.
+//  * - addToPath: The core method that iterates through potential path nodes, evaluating and expanding the path until
+//  *   the destination is reached or the search is aborted.
+//  * - addNode: Adds a new node to the path options if it is within the search range and not already the first node.
+//  * - estimateDistance: Estimates the distance between two nodes as part of the heuristic used in pathfinding.
+//  * - openPoint (overloaded): Creates or retrieves a PathNode at a given position, with an optional PathAction.
+//  * - findPathOptions: Populates the pathOptions array with possible next steps from the current node.
+//  * - createEntityPath: Constructs the final Path object from the calculated nodes leading to the destination.
+//  *
+//  * The class also maintains several private members for internal state management, such as the world map, path nodes,
+//  * and various parameters for controlling the search behavior and limits.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.entity.ai.navigator;
 
 import invmod.IPathfindable;

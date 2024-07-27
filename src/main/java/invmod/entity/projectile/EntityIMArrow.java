@@ -1,3 +1,52 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a custom arrow entity for the Minecraft mod 'invmod'. It extends the EntityTippedArrow class
+//  * from Minecraft and includes additional functionality for arrow behavior in the game.
+//  *
+//  * Constructors:
+//  * - EntityIMArrow(World world): Constructs an arrow in the specified world.
+//  * - EntityIMArrow(World world, double x, double y, double z): Constructs an arrow at the given coordinates in the world.
+//  * - EntityIMArrow(World world, EntityLivingBase shooter): Constructs an arrow with a specified shooter entity.
+//  *
+//  * Methods:
+//  * - onUpdate(): Overrides the EntityTippedArrow's onUpdate method to handle the arrow's update cycle, including its
+//  *   movement, collision detection, and block interaction logic. It manages the arrow's flight, checks for collisions
+//  *   with entities and blocks, applies damage to hit entities, plays sound effects, and handles the arrow's sticking
+//  *   and despawning when it hits a block.
+//  *
+//  * Fields:
+//  * - posX, posY, posZ: The current position of the arrow.
+//  * - inBlock: The block the arrow is currently in.
+//  * - inGround: A flag indicating whether the arrow is stuck in the ground.
+//  * - canBePickedUp: Indicates if the arrow can be picked up by players.
+//  * - arrowShake: Timer for arrow animation after it hits something.
+//  * - shootingEntity: The entity that shot the arrow.
+//  * - ticksInGround: The number of ticks the arrow has been in the ground.
+//  * - ticksInAir: The number of ticks the arrow has been in the air.
+//  * - damage: The amount of damage the arrow deals.
+//  * - knockbackStrength: The amount of knockback the arrow applies to hit entities.
+//  *
+//  * The onUpdate method is the core of the arrow's behavior, handling its physics and interactions with the world.
+//  */
+// ```
+// ```plaintext
+// This code appears to be part of a simulation or game, specifically handling the physics and behavior of a projectile-like entity (possibly an arrow or similar object) within a 3D environment. The code updates the entity's position, rotation, and motion, taking into account environmental factors such as water resistance and gravity.
+// 
+// - The code first updates the entity's position based on its motion vectors.
+// - It calculates the entity's new yaw (rotation around the vertical axis) and pitch (rotation around the horizontal axis) based on its motion vectors.
+// - It ensures that the change in rotation angles does not exceed 180 degrees by adjusting the previous rotation angles, preventing sudden jumps in rotation.
+// - The entity's rotation is smoothed out by interpolating between the previous and current rotation angles.
+// - The code checks if the entity is in water and, if so, spawns water bubble particles to simulate the entity moving through water, and applies a drag coefficient to slow down the entity's motion.
+// - If the entity is wet, it calls an extinguish method, which could be related to putting out a fire effect on the entity.
+// - The entity's motion is dampened by a constant factor to simulate air resistance, and gravity is applied by reducing the vertical motion.
+// - The entity's position is updated, and it checks for collisions with blocks in the world.
+// 
+// The commented-out `getArrowStack` method suggests that there might be additional functionality related to retrieving the type of arrow or item associated with the entity, but this method is not implemented in the provided code snippet.
+// ```
+// 
+// `^`^`^`
+
 package invmod.entity.projectile;
 
 import java.util.List;

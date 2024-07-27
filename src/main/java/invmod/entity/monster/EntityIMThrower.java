@@ -1,3 +1,44 @@
+// `^`^`^`
+// This code defines the `EntityIMThrower` class, which is a custom mob entity for a Minecraft mod. The entity represents a specialized monster with throwing abilities, likely part of an invasion mod where entities attack a central nexus or the player.
+// 
+// **Class Overview:**
+// - `EntityIMThrower` extends `EntityIMMob`, indicating it is a type of mob within the mod.
+// - It includes various AI tasks and behaviors, such as swimming, attacking the nexus, throwing boulders, wandering, and targeting players.
+// - The class manages its own AI tasks (`tasksIM`) and target tasks (`targetTasksIM`) for behavior control.
+// - It has a tier system that adjusts its stats and behaviors based on the tier level.
+// 
+// **Key Methods:**
+// - `initEntityAI()`: Initializes the entity's AI tasks and target tasks.
+// - `updateAITick()`: Updates the entity's AI each tick, managing the throw timer and clearing points if necessary.
+// - `knockBack(...)`: Handles the knockback effect when the entity is hit, with special behavior for tier 2 entities.
+// - `canThrow()`: Checks if the entity is ready to throw again based on the throw timer.
+// - `onPathBlocked(...)`: Called when the entity's path is blocked, potentially clearing the obstruction.
+// - `setTier(int tier)`: Sets the entity's tier, adjusting its stats and size accordingly.
+// - `getSpecies()`, `getGender()`: Returns the species and gender of the entity.
+// - `getAmbientSound()`, `getHurtSound(...)`, `getDeathSound()`: Sound event handlers for various entity states.
+// - `clearPoint()`: Attempts to clear a blockage in the entity's path.
+// - `tryDestroyBlock(...)`: Helper methods to destroy blocks at specified positions.
+// 
+// The entity is designed to interact with the game world by attacking players and the nexus, clearing its path, and responding to being attacked. The tier system provides a way to scale the difficulty and abilities of the entity. The code also includes sound event handlers for a more immersive experience. Overall, the `EntityIMThrower` class adds a complex mob with specific behaviors to the mod, enhancing the challenge and dynamics of an invasion scenario.
+// ```plaintext
+// This code appears to be part of a larger file, likely a class for a modded entity in a Minecraft-like game. The entity has specialized behaviors for interacting with blocks and other entities, including attacking and throwing projectiles.
+// 
+// - The first block of code handles the destruction of a block at a specific position (`pos`). It retrieves the block state, sets the block to air (effectively removing it), and then calls a method to simulate the block being destroyed by a player. If configured, it drops the block as an item in the world. Additionally, it plays an explosion sound effect with a throttle to prevent sound spamming.
+// 
+// - The `attackEntityAsMob` method allows the entity to attack another entity. If certain conditions are met (a cooldown is not active and the attack strength is above a threshold), it throws a boulder at the target entity. Otherwise, it falls back to the superclass's attack method.
+// 
+// - The `throwBoulder` method is overloaded with two versions. Both calculate the trajectory for throwing a boulder projectile at a target position, but one version includes a `forced` parameter that alters the behavior if the calculated angle is not suitable. The method creates a new boulder entity, sets its heading, and spawns it in the world.
+// 
+// - The `throwTNT` method is similar to `throwBoulder`, but it creates and throws a TNT projectile instead.
+// 
+// - The `dropFewItems` method is overridden to add custom item drops for the entity. It calls the superclass method and then drops an additional custom item defined in the mod.
+// 
+// - The `toString` method provides a string representation of the entity, including its type and tier.
+// 
+// Overall, this code is designed to give a modded entity in a game the ability to interact with the environment and other entities by destroying blocks, throwing projectiles, and dropping custom items upon death.
+// ```
+// `^`^`^`
+
 package invmod.entity.monster;
 
 import invmod.INotifyTask;

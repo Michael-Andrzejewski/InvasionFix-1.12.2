@@ -1,3 +1,30 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class represents a custom item within a Minecraft mod, specifically a "Strange Bone" item.
+//  * The item is designed to interact with tamed wolves to potentially convert them into a special ally entity.
+//  *
+//  * Class: ItemStrangeBone
+//  * Superclass: ModItem
+//  * Package: invmod.item
+//  *
+//  * Public Methods:
+//  * - ItemStrangeBone(): Constructor that sets the item's name and maximum stack size to 1.
+//  * - getDamage(ItemStack stack): Returns the damage value of the item, which is always 0.
+//  * - itemInteractionForEntity(ItemStack itemStack, EntityPlayer player, EntityLivingBase targetEntity, EnumHand hand):
+//  *   Attempts to interact with an entity. If the entity is a tamed wolf (but not an EntityIMWolf), it searches for a TileEntityNexus
+//  *   within a certain radius. If found, it converts the wolf into an EntityIMWolf associated with the nexus, spawns it into the world,
+//  *   and kills the original wolf. The item stack is then reduced by 1. If no nexus is found, it sends a message to the player.
+//  *   Returns true if the entity is a wolf and false otherwise.
+//  *
+//  * Usage:
+//  * - The item can be used by players to convert tamed wolves near a nexus block into EntityIMWolf, a special ally entity.
+//  * - This conversion will only happen if the wolf is tamed and a nexus block is within the search radius.
+//  * - The item has a limited use as it shrinks the item stack upon successful conversion of a wolf.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.item;
 
 import invmod.ModBlocks;

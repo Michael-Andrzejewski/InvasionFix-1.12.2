@@ -1,3 +1,23 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class defines the AI behavior for an EntityIMThrower to attack entities in Minecraft.
+//  * It extends the EntityAIKillEntity class, specifying the attack strategy for the thrower entity.
+//  *
+//  * Methods:
+//  * - EntityAIThrowerKillEntity: Constructor initializing the AI with the thrower entity, target class, attack delay, throw range, and launch speed.
+//  * - attackEntity: Executes the attack on the target entity. If in melee mode, it performs a melee attack. Otherwise, it calculates a random position near the target to throw boulders or TNT, depending on the entity's tier.
+//  * - canAttackEntity: Determines whether the thrower can attack the target. It checks if melee attack is possible, if the entity can throw projectiles, and if the target is within a calculable range based on the launch speed.
+//  *
+//  * The AI uses a random number generator to vary the attack pattern and keeps track of the attack range and launch speed to decide on the attack method. The maximum number of boulders thrown is limited to three.
+//  */
+// package invmod.entity.ai;
+// 
+// // ... (rest of the imports and class code)
+// ```
+// This summary provides an overview of the class's purpose, the methods it contains, and the logic behind the attack decisions for the EntityIMThrower in the game.
+// `^`^`^`
+
 package invmod.entity.ai;
 
 import java.util.Random;

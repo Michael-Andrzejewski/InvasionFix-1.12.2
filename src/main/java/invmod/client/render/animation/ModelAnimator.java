@@ -1,3 +1,28 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This class, ModelAnimator, is designed to animate model parts in a Minecraft mod using keyframe-based animation.
+//  * It allows for the interpolation of model part rotations and positions over time to create smooth animations.
+//  *
+//  * Public Methods:
+//  * - ModelAnimator(): Constructs an animator with a default animation period.
+//  * - ModelAnimator(float animationPeriod): Constructs an animator with a specified animation period.
+//  * - ModelAnimator(Map<T, ModelRenderer> modelParts, Animation<T> animation): Constructs an animator using a map of model parts and a predefined animation.
+//  * - addPart(ModelRenderer part, List<KeyFrame> keyFrames): Adds a new part to be animated with its corresponding keyframes.
+//  * - clearParts(): Clears all parts from the animator, effectively resetting it.
+//  * - updateAnimation(float newTime): Updates the animation of all parts to the new time, interpolating between keyframes as necessary.
+//  *
+//  * Private Methods:
+//  * - interpolate(KeyFrame prevFrame, KeyFrame nextFrame, float time, ModelRenderer part): Interpolates between two keyframes for a model part at a given time.
+//  * - validate(List<KeyFrame> keyFrames): Validates a list of keyframes to ensure they are in the correct order and have the correct timing for animation.
+//  *
+//  * The class relies on a list of triplets, each containing a ModelRenderer, an integer index, and a list of KeyFrames. The ModelRenderer represents a part of the model to be animated, the integer index tracks the current keyframe, and the list of KeyFrames defines the animation sequence for that part.
+//  *
+//  * The updateAnimation method is the core of the class, where it calculates the new state of each part based on the current time and the keyframes. The interpolate method is used to perform the actual interpolation between keyframes.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.client.render.animation;
 
 import java.util.ArrayList;

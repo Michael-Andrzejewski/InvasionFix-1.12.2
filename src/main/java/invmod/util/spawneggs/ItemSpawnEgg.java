@@ -1,3 +1,28 @@
+// `^`^`^`
+// ```java
+// /**
+//  * This code defines a custom item class for spawn eggs in a Minecraft mod. The class extends the base Item class and is used to create items that can spawn entities in the game world.
+//  *
+//  * Class ItemSpawnEgg:
+//  * - Purpose: Represents a custom spawn egg item that can be used to spawn entities in the game world.
+//  * - Methods:
+//  *   - ItemSpawnEgg(): Constructor that sets up the item's properties, such as its name, registry name, and creative tab.
+//  *   - getItemStackDisplayName(ItemStack stack): Returns the display name of the item stack, which includes the entity's name that it can spawn.
+//  *   - getColorFromItemStack(ItemStack stack, int par2): Returns the color of the spawn egg based on the entity it spawns.
+//  *   - onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ): Handles the item's usage behavior when a player uses it on a block in the world.
+//  *   - onItemRightClick(World world, EntityPlayer player, EnumHand handIn): Handles the item's usage behavior when a player right-clicks while holding it.
+//  *   - spawnCreature(World world, ItemStack stack, BlockPos blockpos): Spawns the creature associated with the spawn egg at the specified position in the world.
+//  *   - spawnRiddenCreatures(Entity entity, World world, NBTTagCompound cur): Spawns entities that are riding on top of the spawned entity, if any.
+//  *   - addNBTData(Entity entity, NBTTagCompound spawnData): Adds NBT data to the spawned entity based on the spawn egg's information.
+//  *   - getSubItems(CreativeTabs tab, NonNullList<ItemStack> items): Adds all the different types of spawn eggs to the specified creative tab.
+//  *   - attemptToTranslate(String key, String _default): Attempts to translate a given key into the player's language. If the translation is not available, it returns the default string.
+//  *   - getName(): Returns the name of the item.
+//  *
+//  * Note: Some methods and functionalities are commented out or marked with TODO, indicating that they may need to be implemented or fixed.
+//  */
+// ```
+// `^`^`^`
+
 package invmod.util.spawneggs;
 
 import java.util.Set;
