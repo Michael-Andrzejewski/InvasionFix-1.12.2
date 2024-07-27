@@ -1,7 +1,3 @@
-# Invasion
+# The Invasion Mod (updated for 1.12.2)
 
-### A mod for Minecraft 1.12.2 with Forge Version 14.23.5.2772
-
-Forked from [DerToaster98](https://github.com/DerToaster98) / [Invasion-mod](https://github.com/UnstoppableN/Invasion-mod)<br/>
-
-Many thanks to [HarryTechRevs](https://github.com/HarryTechRevs) and his [1.12 Modding Tutorial](https://github.com/HarryTechRevs/Minecraft-Modding-1.12)
+### A custom rewriting of the Classic Invasion mod! I tried out the other 1.12.2 ports but they didn't work well and crashed frequently and so I have begun modifying the files for this one.

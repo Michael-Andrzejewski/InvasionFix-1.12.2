@@ -7,111 +7,86 @@ import invmod.entity.monster.EntityIMZombie;
 import invmod.tileentity.TileEntityNexus;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.AxisAlignedBB;
 
 public class EntityAIAttackNexus extends EntityAIBase {
-	private EntityIMMob theEntity;
-	private boolean attacked;
+    private EntityIMMob theEntity;
+    private boolean attacked;
+    private int attackTime;
+    private static final int ATTACK_COOLDOWN = 40;
+    private static final double ATTACK_RANGE = 4.0D;
 
-	public EntityAIAttackNexus(EntityIMMob par1EntityLiving) {
-		this.theEntity = par1EntityLiving;
-		this.setMutexBits(3);
-	}
+    public EntityAIAttackNexus(EntityIMMob entity) {
+        this.theEntity = entity;
+        this.setMutexBits(3);
+    }
 
-	@Override
-	public boolean shouldExecute() {
-		if ((this.theEntity.getAIGoal() == Goal.BREAK_NEXUS) && (this.theEntity.findDistanceToNexus() > 2.0D)) {
-			return false;
-		}
+    @Override
+    public boolean shouldExecute() {
+        if (this.attackTime > 0) {
+            this.attackTime--;
+            return false;
+        }
 
-		return this.isNexusInRange();
-	}
+        if (this.theEntity.getAIGoal() != Goal.BREAK_NEXUS || this.theEntity.findDistanceToNexus() > ATTACK_RANGE) {
+            return false;
+        }
 
-	@Override
-	public void startExecuting() {
-	}
+        return isNexusInRange();
+    }
 
-	@Override
-	public boolean shouldContinueExecuting() {
-		return !this.attacked;
-	}
+    @Override
+    public void startExecuting() {
+        this.attackTime = ATTACK_COOLDOWN;
+        this.attacked = false;
+    }
 
-	@Override
-	public void updateTask() {
-		if (this.isNexusInRange()) {
-			if (this.theEntity instanceof EntityIMZombie) {
-				((EntityIMZombie) this.theEntity).updateAnimation(true);
-			}
-			this.theEntity.getNexus().attackNexus(2);
-		}
-		this.attacked = true;
-	}
+    @Override
+    public boolean shouldContinueExecuting() {
+        return !this.attacked && isNexusInRange();
+    }
 
-	@Override
-	public void resetTask() {
-		this.attacked = false;
-	}
+    @Override
+    public void updateTask() {
+        if (this.attackTime <= 0 && isNexusInRange()) {
+            if (this.theEntity instanceof EntityIMZombie) {
+                ((EntityIMZombie) this.theEntity).updateAnimation(true);
+            }
+            TileEntityNexus nexus = this.theEntity.getNexus();
+            if (nexus != null) {
+                nexus.attackNexus(this.theEntity.getAttackDamage());
+            }
+            this.attacked = true;
+            this.attackTime = ATTACK_COOLDOWN;
+        }
+    }
 
-	private boolean isNexusInRange() {
-		BlockPos size = this.theEntity.getCollideSize();
-		int x = this.theEntity.getPosition().getX();
-		int y = this.theEntity.getPosition().getY();
-		int z = this.theEntity.getPosition().getZ();
-		for (int i = 0; i < size.getY(); i++) {
-			for (int j = 0; j < size.getX(); j++) {
-				if (this.theEntity.world.getBlockState(new BlockPos(x + j, y, z - 1))
-						.getBlock() == /* BlocksAndItems.blockNexus */ModBlocks.NEXUS_BLOCK) {
-					if (this.isCorrectNexus(x + j, y, z - 1)) {
-						return true;
-					}
-				}
-				if (this.theEntity.world.getBlockState(new BlockPos(x + j, y, z + 1 + size.getZ()))
-						.getBlock() == /* BlocksAndItems.blockNexus */ModBlocks.NEXUS_BLOCK) {
-					if (this.isCorrectNexus(x + j, y, z + 1 + size.getZ())) {
-						return true;
-					}
-				}
-			}
+    @Override
+    public void resetTask() {
+        this.attacked = false;
+    }
 
-			for (int j = 0; j < size.getZ(); j++) {
-				if (this.theEntity.world.getBlockState(new BlockPos(x - 1, y, z + j))
-						.getBlock() == /* BlocksAndItems.blockNexus */ModBlocks.NEXUS_BLOCK) {
-					if (this.isCorrectNexus(x - 1, y, z + j)) {
-						return true;
-					}
-				}
-				if (this.theEntity.world.getBlockState(new BlockPos(x + 1 + size.getX(), y, z + j))
-						.getBlock() == /* BlocksAndItems.blockNexus */ModBlocks.NEXUS_BLOCK) {
-					if (this.isCorrectNexus(x + 1 + size.getX(), y, z + j)) {
-						return true;
-					}
-				}
-			}
-		}
+    private boolean isNexusInRange() {
+        BlockPos entityPos = this.theEntity.getPosition();
+        BlockPos size = this.theEntity.getCollideSize();
+        AxisAlignedBB searchBox = new AxisAlignedBB(
+            entityPos.add(-1, -1, -1),
+            entityPos.add(size.getX() + 1, size.getY() + 1, size.getZ() + 1)
+        );
 
-		for (int i = 0; i < size.getX(); i++) {
-			for (int j = 0; j < size.getZ(); j++) {
-				if (this.theEntity.world.getBlockState(new BlockPos(x + i, y + 1 + size.getY(), z + j))
-						.getBlock() == /* BlocksAndItems.blockNexus */ModBlocks.NEXUS_BLOCK) {
-					if (this.isCorrectNexus(x + i, y + 1 + size.getY(), z + j)) {
-						return true;
-					}
-				}
-				if (this.theEntity.world.getBlockState(new BlockPos(x + i, y - 1, z + j))
-						.getBlock() == /* BlocksAndItems.blockNexus */ModBlocks.NEXUS_BLOCK) {
-					if (this.isCorrectNexus(x + i, y - 1, z + j)) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
+        for (BlockPos pos : BlockPos.getAllInBox(searchBox.minX, searchBox.minY, searchBox.minZ,
+                                                 searchBox.maxX, searchBox.maxY, searchBox.maxZ)) {
+            if (this.theEntity.world.getBlockState(pos).getBlock() == ModBlocks.NEXUS_BLOCK) {
+                if (isCorrectNexus(pos)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
-	private boolean isCorrectNexus(int x, int y, int z) {
-		TileEntityNexus nexus = (TileEntityNexus) this.theEntity.world.getTileEntity(new BlockPos(x, y, z));
-		if ((nexus != null) && (nexus == this.theEntity.getNexus())) {
-			return true;
-		}
-		return false;
-	}
+    private boolean isCorrectNexus(BlockPos pos) {
+        TileEntityNexus nexus = (TileEntityNexus) this.theEntity.world.getTileEntity(pos);
+        return nexus != null && nexus == this.theEntity.getNexus();
+    }
 }
